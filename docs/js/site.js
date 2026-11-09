@@ -73,31 +73,42 @@
   }
 
   /* ---- Groups reveal one after another (a short stagger) ---------------------------- */
-  document.querySelectorAll('.timeline, .numbers, .faqs, .shows, .pledges, .profile-facts, .pv-cards').forEach((group) => {
+  document.querySelectorAll('.ruler-steps, .faqs, .shows, .pledges, .pv-cards').forEach((group) => {
     group.querySelectorAll(':scope > [data-reveal], :scope > * > [data-reveal]').forEach((el, i) => el.style.setProperty('--rd', `${Math.min(i, 6) * 80}ms`));
   });
 
-  /* ---- The hero: one real site at a time on its stone mount. It changes by itself; the caption and link follow ----
+  /* ---- The hero: one real site at a time on its stone panel. It changes by itself; the caption and link follow,
+     and a thin orange line along the rule shows when the next one is coming.
      Hovering with a mouse, focusing or pressing Next stops it. Nothing moves when the visitor asked for reduced motion. */
   document.querySelectorAll('[data-sites]').forEach((box) => {
     const imgs = [...box.querySelectorAll('[data-site-img]')];
     if (imgs.length < 2) return;
     const name = box.querySelector('[data-site-name]');
     const link = box.querySelector('[data-site-link]');
+    const domain = box.querySelector('[data-site-domain]');
+    const now = box.querySelector('[data-site-now]');
     const frame = box.querySelector('[data-site-frame]');
     const next = box.querySelector('[data-site-next]');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let i = 0, timer = null, stopped = reduce, seen = false;
+    const every = +box.dataset.every || 5200;
+    box.style.setProperty('--tick', every + 'ms');
+    let i = 0, timer = null, stopped = reduce.matches, seen = false;
+    const tick = (on) => { box.classList.remove('is-ticking'); if (on) { void box.offsetWidth; box.classList.add('is-ticking'); } };
     const show = (n) => {
       i = (n + imgs.length) % imgs.length;
       imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
       const d = imgs[i].dataset;
       if (name) name.textContent = d.name;
-      if (link) { link.href = d.link; link.textContent = d.domain; }
-      if (frame) { frame.href = d.link; frame.setAttribute('aria-label', 'Open ' + d.name + ' in a new tab'); }
+      if (link) link.href = d.link;
+      if (domain) domain.textContent = d.domain;
+      if (now) now.textContent = String(i + 1);
+      if (frame) frame.href = d.link;
     };
-    const stop = () => { clearInterval(timer); timer = null; };
-    const start = () => { if (stopped || timer || !seen || document.hidden) return; timer = setInterval(() => show(i + 1), 5200); };
+    const stop = () => { clearInterval(timer); timer = null; tick(false); };
+    const start = () => {
+      if (stopped || timer || !seen || document.hidden) return;
+      tick(true);
+      timer = setInterval(() => { show(i + 1); tick(true); }, every);
+    };
     if (next) next.addEventListener('click', () => { show(i + 1); stopped = true; stop(); });
     box.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') stop(); });
     box.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !box.matches(':focus-within')) start(); });
@@ -109,24 +120,23 @@
     } else { seen = true; start(); }
   });
 
-  /* ---- How it works: the line fills as you scroll past, each step lights up when reached ---- */
+  /* ---- How it works: an orange line runs along the 30-day ruler as you scroll past it,
+     and each step lights up once the line reaches its day ---- */
   document.querySelectorAll('[data-timeline]').forEach((tl) => {
-    const steps = Array.from(tl.querySelectorAll('.tl-step'));
-    const nodes = steps.map((s) => s.querySelector('.tl-node'));
-    if (reduce.matches) { tl.style.setProperty('--p', '1'); steps.forEach((s) => s.classList.add('is-reached')); return; }
+    const steps = Array.from(tl.querySelectorAll('[data-day]'));
+    const at = steps.map((s) => Math.max(0, (parseInt(s.dataset.day, 10) - 1) / 29));
+    const set = (p) => {
+      tl.style.setProperty('--p', p.toFixed(3));
+      steps.forEach((s, i) => s.classList.toggle('is-reached', p >= at[i] - 0.001 && p > 0));
+    };
+    if (reduce.matches) { set(1); return; }
     let ticking = false;
     const update = () => {
       ticking = false;
-      const mark = innerHeight * 0.62;   // a step counts as reached once it passes this line on the screen
-      const first = nodes[0].getBoundingClientRect();
-      const last = nodes[nodes.length - 1].getBoundingClientRect();
-      const vertical = Math.abs(last.top - first.top) > Math.abs(last.left - first.left);
-      let p;
-      if (vertical) p = (mark - first.top) / Math.max(1, last.top - first.top);
-      else p = (mark - first.top + 40) / 240;   // side by side: fill across while the row crosses the line
-      p = Math.min(1, Math.max(0, p));
-      tl.style.setProperty('--p', p.toFixed(3));
-      steps.forEach((s, i) => s.classList.toggle('is-reached', p >= (steps.length > 1 ? i / (steps.length - 1) : 1) - 0.001));
+      const r = tl.getBoundingClientRect();
+      const from = innerHeight * 0.8;            // the line starts when the ruler is this far down the screen
+      const span = Math.max(1, r.height + innerHeight * 0.25);
+      set(Math.min(1, Math.max(0, (from - r.top) / span)));
     };
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     addEventListener('resize', update);
@@ -298,7 +308,7 @@
         seen.forEach((v, k) => { if (v > r) { r = v; best = k; } });
         if (!best) return;
         document.querySelectorAll('[data-progress-link]').forEach((a) => a.classList.toggle('is-current', a.dataset.progressLink === best.id));
-        if (mini) mini.textContent = best.querySelector('legend').textContent.replace(/^\d+/, '').trim();
+        if (mini) mini.textContent = best.querySelector('legend').textContent.replace(/^[\d\s/]+/, '').trim();
       }, { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: '-20% 0px -40% 0px' });
       groups.forEach((g) => io.observe(g));
     }

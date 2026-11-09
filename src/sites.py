@@ -14,6 +14,9 @@ so the newest site shows first, and change the words. Then:
   image   a short name for the screenshot files, lowercase, no spaces
   tag     leave empty "" for a normal client site. For a concept, use
           "Volunteer concept, not the official site" or similar.
+  extra   optional: a second picture for the Work page, as
+          ("<file name>", "what it shows", <height of the 800px-wide file>).
+          The files are docs/images/work/<file name>-800.webp and -1200.webp.
 
 The homepage carousel and the Work page both show them all.
 """
@@ -32,6 +35,7 @@ SITES = [
         "link": "https://glphomeoptions.com/",
         "image": "glp",
         "tag": "",
+        "extra": ("glp-netsheet", "The net sheet: listing and selling direct, side by side", 632),
     },
     {
         "name": "Friends of The Colony Public Library",
@@ -39,5 +43,6 @@ SITES = [
         "link": "https://fotcpl.org/",
         "image": "fotcpl",
         "tag": "Volunteer concept, not the official site",
+        "extra": ("fotcpl-join", "The membership section", 370),
     },
 ]

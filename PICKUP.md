@@ -1,19 +1,19 @@
 # Pick up here (Stray Wolf Technology)
 
-Last updated November 9, 2026, after the v9 round (the About page rebuilt from scratch; the numbers strip removed at Jeremy's request). This repository (`jsglisson3/Stray-Wolf-Technology`) replaces `jsglisson3/Firemark` for the new brand.
+Last updated November 9, 2026, after the V12 round (V11's "print plate" redesign of the whole site, then a much calmer hero and three new pages: Pricing, Care plan and Reviews). This repository (`jsglisson3/Stray-Wolf-Technology`) replaces `jsglisson3/Firemark` for the new brand.
 
 ## Where things stand
 
 The site is rebuilt as **Stray Wolf Technology** (the rebrand of Firemark), in a clean, plain style: paper and stone, charcoal type, one orange. Headings are Outfit at medium weight (the orange accent at 600); text is Bricolage Grotesque; Zilla Slab lives in the logo only. (Nov 9: Zilla headings in v5, Instrument Serif in v7, Outfit from v8. The two instrument-serif woff2 files and their LICENSE in docs/fonts are unused now and safe to delete.) No illustration. Still a hidden **draft** (yellow banner, noindex) until launch.
 
-Pages: Home, Work, About, Start a project (the fourteen questions), thanks, privacy, 404.
+Pages: Home, Work, Pricing (first draft), Care plan (first draft), Reviews (coming soon), About, Start a project (the fourteen questions), thanks, privacy, 404.
 
-About (v9, rebuilt Nov 9 at Jeremy's request): hero "One person, start to finish." with a profile card (the logo until `HEADSHOT = True`, then the photo; name, "Taking a few projects at a time", three facts) → "Six things you can count on" (a sticky heading beside six numbered pledges that light up as you scroll) → "Is this a fit?" (three yes/no questions answered on the page by site.js, nothing sent; the answer text lives in site.js) → "No pack. One person." (the wolf on stone, the name story) → the closing card. No services block on About any more (it is on the homepage). `contact.html` and `brand.html` (old Firemark addresses) redirect.
+About (v9 content, V11 look): hero "One person, start to finish." with a profile panel (the logo until `HEADSHOT = True`, then the photo; name, "Taking a few projects at a time", three facts) → "Six things you can count on" (six plain promises on a ruled grid) → "Is this a fit?" (three yes/no questions answered on the page by site.js, nothing sent; the answer text lives in site.js) → "No pack. One person." (the wolf on stone, the name story) → the closing card. No services block on About any more (it is on the homepage). `contact.html` and `brand.html` (old Firemark addresses) redirect.
 
-Homepage (v8), top to bottom: the hero (an Outfit headline with "your needs." in orange; three promises: hand-built, yours to keep, about 30 days; and a light stone panel where the real client sites sit stacked like windows and turn every few seconds, with a "Recent work, live now" label, a count and arrows on top and the name underneath), 01 How it works (four steps on a line that fills as you scroll), 02 What I do (four tabs; each plays a short scene of that service, and the tabs move on by themselves until someone picks one), 03 Recent work (big centred slides that rotate by themselves, with pause, arrows and dots; TVIS first), 04 Questions (accordion), the closing card (type a business name, it carries into the form), the footer. Removed in v6 at Jeremy's request: the comparison section and "Who you'll work with" (the story and numbers still live on About). The design system (colours, type, spacing, shadows, buttons, fields) is the `:root` block and the sections of `docs/css/site.css`; icons are in `src/partials/sprite.html`.
+Homepage (V12), top to bottom: the hero (the headline with "your needs." in orange on the left; the lead, the buttons and one small "Recently built" thumbnail that changes every 3 seconds on the right; nothing else), How it works ("From first call to launch.", the 30-day ruler with four steps), What I do (four services set large; each plays a short scene on a stone stage, and they move on by themselves until someone picks one), Recent work (one site at a time on its mount, with pause, arrows and bars; TVIS first), Questions (accordion), the close (type a business name, it carries into the form), the footer. The design system (colours, type, rules, buttons, fields) is the `:root` block and the sections of `docs/css/site.css`; icons are in `src/partials/sprite.html`. See "V11" at the bottom for the details.
 
 Checks on this build:
-- Accessibility scan (axe): 0 issues on all seven pages at phone and desktop widths.
+- Accessibility scan (axe): 0 issues on all ten pages at phone and desktop widths.
 - No `[PLACEHOLDER]` or `[CONFIRM]` tags anywhere. The build stops if one would reach a page.
 
 Preview of the current build: https://claude.ai/artifact/4Ra3dXbmWZopH7tLtSyNQQ
@@ -48,7 +48,9 @@ Preview of the current build: https://claude.ai/artifact/4Ra3dXbmWZopH7tLtSyNQQ
   3. For firemarktech.com: once Stray Wolf is live, add a Cloudflare **Redirect Rule** from `firemarktech.com/*` and `www.firemarktech.com/*` to `https://straywolftech.com/${1}` (301), and turn off Pages on the old Firemark repository so the two don't compete. Keep firemarktech.com registered while any old links exist.
 - [ ] **Email at the new domain**: Google Workspace on straywolftech.com (jeremy@ as the user, hello@ as a free alias), then set `EMAIL` and swap `FALLBACK_EMAIL`.
 - [ ] **Form service: Web3Forms**. Sign up at web3forms.com with the address the form should deliver to (free plan is enough). Paste the access key into `WEB3FORMS_KEY`, rebuild, send yourself a test. Until then the form opens a pre-filled email, so nothing is broken meanwhile.
-- [ ] **Headshot** (optional): save as `docs/images/jeremy.webp` (4:3, 1200px wide or more), set `HEADSHOT = True`. It replaces the demo in the hero and the logo panel on the About page.
+- [ ] **Prices (V12 first draft)**: `STARTER_FROM`, `LARGER_FROM` and `CARE_MONTH` at the top of `tools/build.py` are Claude's suggestions, not Jeremy's decisions. Confirm or change them, and read every line of `pricing.html` and `care.html` (the words are in `src/pages.py` under Pricing and Care plan) before launch.
+- [ ] **Reviews**: `reviews.html` says "Coming soon" and lists the three sites. Once two or three clients have sent real words (with their OK), replace the list with their quotes.
+- [ ] **Headshot** (optional): save as `docs/images/jeremy.webp` (4:3, 1200px wide or more), set `HEADSHOT = True`. It replaces the logo panel on the About page.
 - [ ] Phone and booking link, if wanted (`PHONE`, `BOOKING_URL`).
 - [ ] Install the Claude GitHub App on this repository so Claude can push changes: https://github.com/apps/claude/installations/select_target
 
@@ -57,7 +59,7 @@ Preview of the current build: https://claude.ai/artifact/4Ra3dXbmWZopH7tLtSyNQQ
 2. Commit and sync in VS Code. Don't delete `docs/CNAME`.
 3. After launch: add the site to Google Search Console, submit `sitemap.xml`, send yourself a test from the form.
 
-- Copy rule (Jeremy, Nov 9): never say "anywhere in the US" (or "nationwide") on the site; say "for owner-run businesses" instead. Never "small business". The About name story is two short paragraphs after "A stray wolf doesn't run with a pack."
+- Copy rule (Jeremy, Nov 9): never say "anywhere in the US" (or "nationwide") on the site; say "for owner-run businesses" instead. Never "small business". The About name story is one short paragraph starting "A stray wolf doesn't run with a pack."
 
 ## V10 (Nov 9, 2026): the hero, redone from Dribbble research
 - The homepage hero is now: three promises and a "Taking a few projects at a time" status small on the left, the headline in the middle, and the bottom row is the Stray Wolf wordmark (images/brand/stray-wolf-wordmark-color.svg) set across eight columns with one real client site mounted on stone beside it. Built by `hero()` in tools/build.py; styles in docs/css/site.css under "Hero"; script block "The hero" in docs/js/site.js.
@@ -65,3 +67,28 @@ Preview of the current build: https://claude.ai/artifact/4Ra3dXbmWZopH7tLtSyNQQ
 - When HEADSHOT = True the panel shows the photo instead (images/jeremy.webp).
 - The old stacked "deck" (build_deck, data-deck) is gone. VERSION is '10'.
 - Dribbble research that drove it lives on Jeremy's PC: Documents\FiremarkTech\research-shots\stray-wolf-hero (research.md, shots.csv, 60 shots).
+
+## V11 (Nov 9, 2026): the whole site, redone the same way as the V10 hero
+Jeremy asked for "a full site overhaul the same way" as the V10 hero, and said the hero still needed work. The look is now "the print plate", taken from the Dribbble research: paper and stone, charcoal type, one orange; square corners; flat surfaces with no resting shadows, gradients or grid textures; thin charcoal rules where a list or a zone needs one; no small uppercase labels above headings; real client sites shown on stone "mounts".
+- Hero: the headline, lead and buttons top left; the full colour wordmark under them (drawn into the page so the cactus grows in after the name wipes on); three promises on a ruled strip along the bottom; one real client site on a stone panel that runs from the header to the bottom rule and off the right edge of the screen. The site still changes every 5.2 seconds; a thin orange line along the rule shows when, and a "1 / 3" count sits by the Next button. On phones: text, wordmark, site, promises.
+- How it works: a 30-day ruler. An orange line runs along it as you scroll, and each of the four steps lights up when the line reaches its day (STEPS in tools/build.py now starts each step with its day).
+- What I do: the four services set large as a list (the chosen one in charcoal with an orange timer line), the scene on a flat stone stage, and the description as a caption under the scene.
+- Recent work: one site at a time on its stone mount (with its phone view when there is one), the name and words beside it; bars, pause and arrows underneath. TVIS first.
+- Questions and the close: ruled rows; the close is a full-width stone band with "Let’s talk about yours." set very large and the business-name box.
+- Header: a plain paper bar, the current page underlined in orange, a charcoal rule once you scroll. Footer: stone, a charcoal rule, plain columns; "Built with love, one site at a time." unchanged.
+- Work page: each site big on its mount, a second page of it beside when `extra` is set in src/sites.py (GLP: the net sheet; FOTCPL: the membership section), words under a rule.
+- About: the same head, the profile on a stone panel off the right edge, the six promises as a ruled grid (no numbers or icons), square Yes/No buttons, the wolf on stone beside the name story (story text unchanged).
+- Start a project: sections under charcoal rules with a "1 / 6" count, square fields and choices, the progress list and "What happens next" as ruled lists. The Web3Forms key slot and the email fallback are untouched.
+- Privacy, thanks and 404 follow the same heads and rules.
+- VERSION is '11'. docs/css/site.css was rewritten from scratch; the old "light pass" overrides are gone.
+- Checks: axe 0 issues on all seven pages at 390 and 1440; no sideways scroll from 320 to 1920; the hero rotation, ruler, service tabs, carousel, questions, close form, start form, fit check and phone menu all tested with no console errors.
+
+## V12 (Nov 9, 2026): a much calmer hero, and three new pages
+Jeremy on the V10/V11 hero: "there is so much going on"; the site previews "need to be much much smaller and subtle", but keep "the natural rotation every couple of seconds". He picked option C of three.
+- Hero: only the words. The headline on the left (three lines on a laptop); on the right the lead, the two buttons and one small "Recently built" line under a thin rule: an 88px thumbnail of a client site that changes every 3.2 seconds (`data-every` on the `data-sites` box; site.js reads it), the site's name, and "See the work" to the Work page. The wordmark, the promises strip, the status line and the big stone panel are gone from the hero. Hovering the line pauses it; reduced motion never rotates.
+- How it works is now headed "From first call to launch." (Jeremy wanted "Four steps. One person. No surprises." changed).
+- New pages, all first drafts for Jeremy to confirm: **pricing.html** (what projects usually cost: a starter site from $1,800, a larger site from $3,500, the care plan after launch; what's in every price; what costs extra; how paying works, half to start and half at launch), **care.html** (the care plan: hosting, domain watched, small changes up to an hour a month within five days, fixes, backups, a monthly check; what's not covered; how it works), **reviews.html** (coming soon, with the three sites listed until real quotes exist). The numbers are the `STARTER_FROM`, `LARGER_FROM`, `CARE_MONTH` settings at the top of tools/build.py. The homepage questions "How much does a website cost?" and "Can I make changes after it's live?" now point at these pages.
+- Menu: Work, Pricing, Care plan, Reviews, About, Start a project. The phone menu now shows up to 1023px wide (it was 767px) and the header tagline only from 1280px up, so six items fit. Footer "Pages" and sitemap.xml list the new pages.
+- Thanks and 404 pages: the small labels above the headings are gone. "Your colours" is now "Your colors".
+- VERSION is '12'.
+- Checks: axe 0 issues on all ten pages at 390 and 1440; no sideways scroll from 320 to 1920; the hero rotation, ruler, service tabs, carousel, questions, close form, start form, fit check and phone menu all tested with no console errors.

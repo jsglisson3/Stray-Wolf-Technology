@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=10">
+  <link rel="stylesheet" href="css/site.css?v=12">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
   {
@@ -114,10 +114,13 @@
           <ul class="nav-list" role="list">
             <li class="nav-home"><a href="index.html" aria-current="page"><span>Home</span></a></li>
             <li><a href="work.html"><span>Work</span></a></li>
+            <li><a href="pricing.html"><span>Pricing</span></a></li>
+            <li><a href="care.html"><span>Care plan</span></a></li>
+            <li><a href="reviews.html"><span>Reviews</span></a></li>
             <li><a href="about.html"><span>About</span></a></li>
             <li class="nav-act"><a class="button button-sm" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
           </ul>
-          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Hand-built websites. One person, start to finish.</p>
+          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
         </nav>
       </div>
     </div>
@@ -126,122 +129,104 @@
   <main id="main">
     <section class="hero" aria-labelledby="hero-h">
       <div class="wrap hero-grid">
-        <div class="hero-side">
-          <p class="hero-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
-          <ul class="hero-notes" role="list"><li><strong>Hand-built</strong><span>No templates or page builders</span></li><li><strong>Yours to keep</strong><span>Your domain, your site</span></li><li><strong>About 30 days</strong><span>From answers to launch</span></li></ul>
-        </div>
+        <h1 id="hero-h" class="hero-h1">A website built around <em>your needs.</em></h1>
         <div class="hero-text">
-          <h1 id="hero-h" class="hero-h1">A website built around <em>your needs.</em></h1>
-          <p class="lead hero-lead">Hand-built websites, designed around your business. I work on my own, so you deal with one person from the first call to launch day.</p>
+          <p class="hero-lead">Hand-built websites, designed around your business. I work on my own, so you deal with one person from the first call to launch day.</p>
           <div class="button-row">
             <a class="button button-lg" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
             <a class="button button-quiet button-lg" href="#how">How it works</a>
           </div>
+          <a class="hero-recent" href="work.html" data-sites data-every="3200">
+            <span class="hero-recent-frame" aria-hidden="true"><img src="images/work/tvis-desktop-480.webp" srcset="images/work/tvis-desktop-480.webp 480w, images/work/tvis-desktop-640.webp 640w" sizes="88px" width="480" height="300" alt="TVIS Construction: the homepage" class="is-on" data-site-img data-name="TVIS Construction" data-link="https://tvisconstruction.com/" data-domain="tvisconstruction.com" decoding="async"><img src="images/work/glp-desktop-480.webp" srcset="images/work/glp-desktop-480.webp 480w, images/work/glp-desktop-640.webp 640w" sizes="88px" width="480" height="300" alt="GLP Home Options: the homepage" class="" data-site-img data-name="GLP Home Options" data-link="https://glphomeoptions.com/" data-domain="glphomeoptions.com" loading="lazy" decoding="async"><img src="images/work/fotcpl-desktop-480.webp" srcset="images/work/fotcpl-desktop-480.webp 480w, images/work/fotcpl-desktop-640.webp 640w" sizes="88px" width="480" height="300" alt="Friends of The Colony Public Library: the homepage" class="" data-site-img data-name="Friends of The Colony Public Library" data-link="https://fotcpl.org/" data-domain="fotcpl.org" loading="lazy" decoding="async"></span>
+            <span class="hero-recent-text"><span class="hero-recent-k">Recently built</span><span class="hero-recent-name" data-site-name>TVIS Construction</span></span>
+            <span class="hero-recent-go">See the work<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
         </div>
-        <div class="hero-mark" aria-hidden="true"><img src="images/brand/stray-wolf-wordmark-color.svg" width="479" height="92" alt="" fetchpriority="high"></div>
-        <figure class="hero-site" data-sites>
-          <a class="hero-site-frame" href="https://tvisconstruction.com/" target="_blank" rel="noopener" data-site-frame aria-label="Open TVIS Construction in a new tab"><img src="images/work/tvis-desktop-960.webp" srcset="images/work/tvis-desktop-640.webp 640w, images/work/tvis-desktop-960.webp 960w, images/work/tvis-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="TVIS Construction: the homepage" class="is-on" data-site-img data-name="TVIS Construction" data-link="https://tvisconstruction.com/" data-domain="tvisconstruction.com" fetchpriority="high" decoding="async"><img src="images/work/glp-desktop-960.webp" srcset="images/work/glp-desktop-640.webp 640w, images/work/glp-desktop-960.webp 960w, images/work/glp-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="GLP Home Options: the homepage" class="" data-site-img data-name="GLP Home Options" data-link="https://glphomeoptions.com/" data-domain="glphomeoptions.com" loading="lazy" decoding="async"><img src="images/work/fotcpl-desktop-960.webp" srcset="images/work/fotcpl-desktop-640.webp 640w, images/work/fotcpl-desktop-960.webp 960w, images/work/fotcpl-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="Friends of The Colony Public Library: the homepage" class="" data-site-img data-name="Friends of The Colony Public Library" data-link="https://fotcpl.org/" data-domain="fotcpl.org" loading="lazy" decoding="async"></a>
-          <figcaption class="hero-site-cap">
-            <span class="hero-site-name" data-site-name>TVIS Construction</span>
-            <a class="hero-site-link" href="https://tvisconstruction.com/" target="_blank" rel="noopener" data-site-link>tvisconstruction.com</a>
-            <button type="button" class="hero-site-next" data-site-next aria-label="Show the next site"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-          </figcaption>
-        </figure>
       </div>
     </section>
 
     <section class="section on-stone" id="how" aria-labelledby="how-h">
       <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div>
-            <p class="eyebrow" data-reveal><span>01</span>How it works</p>
-            <h2 id="how-h" class="h2" data-reveal>Four steps. One person. No surprises.</h2>
-          </div>
+        <header class="sec-head">
+          <h2 id="how-h" class="h2" data-reveal>From first call to launch.</h2>
           <p class="lead" data-reveal>From your first answers to launch day in about 30 days, with a price in writing before any work starts.</p>
         </header>
-        <ol class="timeline" role="list" data-timeline>
-          <li class="tl-track" aria-hidden="true"><span class="tl-fill"></span></li>
-          <li class="tl-step" data-reveal>
-            <span class="tl-node"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg></span>
-            <p class="tl-when">Day 1</p>
-            <h3 class="tl-h">You answer fourteen questions</h3>
-            <p class="tl-p">About five minutes on the Start a project page.</p>
+        <div class="ruler" data-timeline>
+          <div class="ruler-scale" aria-hidden="true"><div class="ruler-ticks"><i class="is-5"><b>1</b></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>5</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5 is-10"><b>10</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>15</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5 is-10"><b>20</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>25</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>30 <small>days</small></b></i></div><span class="ruler-fill"></span></div>
+          <ol class="ruler-steps" role="list">
+          <li class="rs-step" data-day="1" data-reveal>
+            <p class="rs-when">Day 1</p>
+            <h3>You answer fourteen questions</h3>
+            <p>About five minutes on the Start a project page.</p>
           </li>
-          <li class="tl-step" data-reveal>
-            <span class="tl-node"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span>
-            <p class="tl-when">Within 5 days</p>
-            <h3 class="tl-h">We talk</h3>
-            <p class="tl-p">I learn what you want from your website, then send a price in writing.</p>
+          <li class="rs-step" data-day="5" data-reveal>
+            <p class="rs-when">Within 5 days</p>
+            <h3>We talk</h3>
+            <p>I learn what you want from your website, then send a price in writing.</p>
           </li>
-          <li class="tl-step" data-reveal>
-            <span class="tl-node"><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg></span>
-            <p class="tl-when">The build</p>
-            <h3 class="tl-h">I design and build it by hand</h3>
-            <p class="tl-p">You see it before anyone else and we shape it together.</p>
+          <li class="rs-step" data-day="17" data-reveal>
+            <p class="rs-when">The build</p>
+            <h3>I design and build it by hand</h3>
+            <p>You see it before anyone else and we shape it together.</p>
           </li>
-          <li class="tl-step" data-reveal>
-            <span class="tl-node"><svg class="icon" aria-hidden="true"><use href="#i-rocket"/></svg></span>
-            <p class="tl-when">About day 30</p>
-            <h3 class="tl-h">You say yes. It goes live.</h3>
-            <p class="tl-p">Nothing launches until you’ve seen it and approved it.</p>
+          <li class="rs-step" data-day="30" data-reveal>
+            <p class="rs-when">About day 30</p>
+            <h3>You say yes. It goes live.</h3>
+            <p>Nothing launches until you’ve seen it and approved it.</p>
           </li>
-        </ol>
+          </ol>
+        </div>
       </div>
     </section>
 
     <section class="section" id="services" aria-labelledby="services-h">
       <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div>
-            <p class="eyebrow" data-reveal><span>02</span>What I do</p>
-            <h2 id="services-h" class="h2" data-reveal>Everything your site needs, handled.</h2>
-          </div>
+        <header class="sec-head">
+          <h2 id="services-h" class="h2" data-reveal>Everything your site needs, handled.</h2>
           <p class="lead" data-reveal>The website, the address it lives at, the email that goes with it, and the small changes after launch. Pick one to see it in action.</p>
         </header>
         <div class="svc" data-svc data-reveal>
-          <div class="svc-tabs" role="tablist" aria-label="What I do">
+          <div class="svc-tabs" role="tablist" aria-label="What I do" aria-orientation="vertical">
             <button class="svc-tab" type="button" role="tab" id="svc-tab-0" aria-controls="svc-panel-0" aria-selected="true" tabindex="0">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg></span><span class="svc-t"><strong>Website design and build</strong><small>By hand, for your business. No templates, no page builders.</small></span>
               <span class="svc-timer" aria-hidden="true"><i></i></span>
+              <span class="svc-name">Website design and build<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
             </button><button class="svc-tab" type="button" role="tab" id="svc-tab-1" aria-controls="svc-panel-1" aria-selected="false" tabindex="-1">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg></span><span class="svc-t"><strong>Domain registration and setup</strong><small>I register it in your name and point it at your site.</small></span>
               <span class="svc-timer" aria-hidden="true"><i></i></span>
+              <span class="svc-name">Domain registration and setup<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
             </button><button class="svc-tab" type="button" role="tab" id="svc-tab-2" aria-controls="svc-panel-2" aria-selected="false" tabindex="-1">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg></span><span class="svc-t"><strong>Hosting and small updates</strong><small>After launch I keep the site up and make the small changes as they come.</small></span>
               <span class="svc-timer" aria-hidden="true"><i></i></span>
+              <span class="svc-name">Hosting and small updates<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
             </button><button class="svc-tab" type="button" role="tab" id="svc-tab-3" aria-controls="svc-panel-3" aria-selected="false" tabindex="-1">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span><span class="svc-t"><strong>Business email setup</strong><small>A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.</small></span>
               <span class="svc-timer" aria-hidden="true"><i></i></span>
+              <span class="svc-name">Business email setup<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
             </button>
           </div>
           <div class="svc-stage">
-            <div class="hero-grid-lines" aria-hidden="true"></div>
             <div class="svc-panel is-active" role="tabpanel" id="svc-panel-0" aria-labelledby="svc-tab-0" tabindex="0">
-              <p class="visually-hidden">Website design and build: By hand, for your business. No templates, no page builders.</p>
-              <div aria-hidden="true"><div class="sc sc-build">
+              <div class="svc-scene" aria-hidden="true"><div class="sc sc-build">
                 <div class="rs-frame"><div class="rs-bar"><span class="dw-dots"><i></i><i></i><i></i></span></div>
                   <div class="rs-page"><i class="rs-h"></i><i class="rs-l"></i><i class="rs-b"></i>
                     <div class="rs-grid"><i></i><i></i><i></i></div></div></div>
-                <ul class="sc-ticks" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your words</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your photos</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your colours</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Every screen size</li></ul>
+                <ul class="sc-ticks" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your words</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your photos</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your colors</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Every screen size</li></ul>
               </div></div>
+              <p class="svc-cap">By hand, for your business. No templates, no page builders.</p>
             </div><div class="svc-panel" role="tabpanel" id="svc-panel-1" aria-labelledby="svc-tab-1" tabindex="0">
-              <p class="visually-hidden">Domain registration and setup: I register it in your name and point it at your site.</p>
-              <div aria-hidden="true"><div class="sc sc-domain">
+              <div class="svc-scene" aria-hidden="true"><div class="sc sc-domain">
                 <div class="dm-search"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="dm-type">yourbusiness.com</span></div>
                 <div class="dm-result"><span class="dm-name">yourbusiness.com</span><span class="dm-avail">Available</span><span class="dm-own"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Registered to you</span></div>
                 <div class="dm-link"><span class="dm-line"></span><span class="dm-site"><i></i><i></i><i></i></span><span class="dm-cap">Points to your new site</span></div>
               </div></div>
+              <p class="svc-cap">I register it in your name and point it at your site.</p>
             </div><div class="svc-panel" role="tabpanel" id="svc-panel-2" aria-labelledby="svc-tab-2" tabindex="0">
-              <p class="visually-hidden">Hosting and small updates: After launch I keep the site up and make the small changes as they come.</p>
-              <div aria-hidden="true"><div class="sc sc-host">
+              <div class="svc-scene" aria-hidden="true"><div class="sc sc-host">
                 <div class="hs-status"><span class="hs-dot"></span>Your site is online</div>
                 <div class="hs-msg hs-you"><small>You</small>Can we add our holiday hours?</div>
                 <div class="hs-msg hs-me"><small>Jeremy</small>On it. I’ll let you know when it’s live.</div>
                 <div class="hs-done"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Done. Holiday hours are on your site.</div>
               </div></div>
+              <p class="svc-cap">After launch I keep the site up and make the small changes as they come.</p>
             </div><div class="svc-panel" role="tabpanel" id="svc-panel-3" aria-labelledby="svc-tab-3" tabindex="0">
-              <p class="visually-hidden">Business email setup: A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.</p>
-              <div aria-hidden="true"><div class="sc sc-mail">
+              <div class="svc-scene" aria-hidden="true"><div class="sc sc-mail">
                 <div class="ml-head"><span class="ml-av">Y</span><span><strong>you@yourbusiness.com</strong><small>Inbox</small></span></div>
                 <ul class="ml-list" role="list">
                   <li><i></i><span><strong>New customer</strong>Question about a quote</span></li>
@@ -249,55 +234,60 @@
                   <li><i></i><span><strong>Supplier</strong>Your order has shipped</span></li>
                 </ul>
               </div></div>
+              <p class="svc-cap">A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.</p>
             </div>
           </div>
         </div>
-        <p class="svc-note" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</span></p>
+        <p class="svc-note" data-reveal><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</p>
       </div>
     </section>
 
     <section class="section work-band" id="work" aria-labelledby="work-h">
-      <div class="carousel" data-carousel data-autoplay="6000">
-        <div class="wrap">
-          <header class="sec-head sec-head-split car-head">
-            <div>
-              <p class="eyebrow" data-reveal><span>03</span>Recent work</p>
-              <h2 id="work-h" class="h2" data-reveal>Sites I’ve built.</h2>
-            </div>
-            <div class="car-nav" data-reveal>
-              <p class="car-count" aria-hidden="true"><span data-count-now>01</span> / 03</p>
-              <button class="car-btn car-play" type="button" data-play aria-label="Pause the slideshow"><svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
-              <button class="car-btn" type="button" data-prev aria-label="Previous site"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
-              <button class="car-btn" type="button" data-next aria-label="Next site"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            </div>
-          </header>
-        </div>
+      <div class="wrap carousel" data-carousel data-autoplay="6000">
+        <header class="sec-head">
+          <h2 id="work-h" class="h2" data-reveal>Sites I’ve built.</h2>
+          <p class="lead" data-reveal>Each one made for one business, from a blank page.</p>
+        </header>
         <ul class="track" role="list" data-track aria-label="Websites" tabindex="0">
           <li class="slide">
-            <div class="frame"><div class="frame-bar" aria-hidden="true"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">tvisconstruction.com</span></div><a class="frame-pic" href="https://tvisconstruction.com/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/tvis-desktop-960.webp" srcset="images/work/tvis-desktop-480.webp 480w, images/work/tvis-desktop-640.webp 640w, images/work/tvis-desktop-960.webp 960w, images/work/tvis-desktop-1440.webp 1440w" sizes="(min-width: 80rem) 68rem, 88vw" width="1440" height="900" loading="lazy" decoding="async" alt="The TVIS Construction homepage."></a></div>
+            <div class="mount"><a class="mount-pic" href="https://tvisconstruction.com/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/tvis-desktop-960.webp" srcset="images/work/tvis-desktop-480.webp 480w, images/work/tvis-desktop-640.webp 640w, images/work/tvis-desktop-960.webp 960w, images/work/tvis-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 60vw, 100vw" width="1440" height="900" loading="lazy" decoding="async" alt=""></a></div>
             <div class="slide-text">
-              <div><h3 class="slide-name">TVIS Construction</h3><p class="slide-about">An excavation and sitework company in Chattanooga, Tennessee.</p></div>
-              <a class="button button-quiet button-sm slide-link" href="https://tvisconstruction.com/" target="_blank" rel="noopener">Visit the site<svg class="icon" aria-hidden="true"><use href="#i-arrow-out"/></svg><span class="visually-hidden">: TVIS Construction (opens in a new tab)</span></a>
+              <h3 class="slide-name">TVIS Construction</h3>
+              <p class="slide-about">An excavation and sitework company in Chattanooga, Tennessee.</p>
+              
+              <p class="slide-host">tvisconstruction.com</p>
+              <a class="button button-quiet slide-link" href="https://tvisconstruction.com/" target="_blank" rel="noopener">Visit the site<svg class="icon" aria-hidden="true"><use href="#i-arrow-out"/></svg><span class="visually-hidden">: TVIS Construction (opens in a new tab)</span></a>
             </div>
           </li>
           <li class="slide">
-            <div class="frame"><div class="frame-bar" aria-hidden="true"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">glphomeoptions.com</span></div><a class="frame-pic" href="https://glphomeoptions.com/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/glp-desktop-960.webp" srcset="images/work/glp-desktop-480.webp 480w, images/work/glp-desktop-640.webp 640w, images/work/glp-desktop-960.webp 960w, images/work/glp-desktop-1440.webp 1440w" sizes="(min-width: 80rem) 68rem, 88vw" width="1440" height="900" loading="lazy" decoding="async" alt="The GLP Home Options homepage."></a></div>
+            <div class="mount"><a class="mount-pic" href="https://glphomeoptions.com/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/glp-desktop-960.webp" srcset="images/work/glp-desktop-480.webp 480w, images/work/glp-desktop-640.webp 640w, images/work/glp-desktop-960.webp 960w, images/work/glp-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 60vw, 100vw" width="1440" height="900" loading="lazy" decoding="async" alt=""></a><div class="mount-phone" aria-hidden="true"><img src="images/work/glp-phone-300.webp" srcset="images/work/glp-phone-300.webp 300w, images/work/glp-phone-600.webp 600w" sizes="10rem" width="300" height="650" loading="lazy" decoding="async" alt=""></div></div>
             <div class="slide-text">
-              <div><h3 class="slide-name">GLP Home Options</h3><p class="slide-about">A home-buying business in Chattanooga, Tennessee.</p></div>
-              <a class="button button-quiet button-sm slide-link" href="https://glphomeoptions.com/" target="_blank" rel="noopener">Visit the site<svg class="icon" aria-hidden="true"><use href="#i-arrow-out"/></svg><span class="visually-hidden">: GLP Home Options (opens in a new tab)</span></a>
+              <h3 class="slide-name">GLP Home Options</h3>
+              <p class="slide-about">A home-buying business in Chattanooga, Tennessee.</p>
+              
+              <p class="slide-host">glphomeoptions.com</p>
+              <a class="button button-quiet slide-link" href="https://glphomeoptions.com/" target="_blank" rel="noopener">Visit the site<svg class="icon" aria-hidden="true"><use href="#i-arrow-out"/></svg><span class="visually-hidden">: GLP Home Options (opens in a new tab)</span></a>
             </div>
           </li>
           <li class="slide">
-            <div class="frame"><div class="frame-bar" aria-hidden="true"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">fotcpl.org</span></div><a class="frame-pic" href="https://fotcpl.org/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/fotcpl-desktop-960.webp" srcset="images/work/fotcpl-desktop-480.webp 480w, images/work/fotcpl-desktop-640.webp 640w, images/work/fotcpl-desktop-960.webp 960w, images/work/fotcpl-desktop-1440.webp 1440w" sizes="(min-width: 80rem) 68rem, 88vw" width="1440" height="900" loading="lazy" decoding="async" alt="The Friends of The Colony Public Library homepage."></a></div>
+            <div class="mount"><a class="mount-pic" href="https://fotcpl.org/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="images/work/fotcpl-desktop-960.webp" srcset="images/work/fotcpl-desktop-480.webp 480w, images/work/fotcpl-desktop-640.webp 640w, images/work/fotcpl-desktop-960.webp 960w, images/work/fotcpl-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 60vw, 100vw" width="1440" height="900" loading="lazy" decoding="async" alt=""></a><div class="mount-phone" aria-hidden="true"><img src="images/work/fotcpl-phone-300.webp" srcset="images/work/fotcpl-phone-300.webp 300w, images/work/fotcpl-phone-600.webp 600w" sizes="10rem" width="300" height="650" loading="lazy" decoding="async" alt=""></div></div>
             <div class="slide-text">
-              <div><h3 class="slide-name">Friends of The Colony Public Library</h3><p class="slide-about">A redesign concept for the library&#x27;s nonprofit friends group in The Colony, Texas, built as a volunteer.</p><span class="tag">Volunteer concept, not the official site</span></div>
-              <a class="button button-quiet button-sm slide-link" href="https://fotcpl.org/" target="_blank" rel="noopener">Visit the site<svg class="icon" aria-hidden="true"><use href="#i-arrow-out"/></svg><span class="visually-hidden">: Friends of The Colony Public Library (opens in a new tab)</span></a>
+              <h3 class="slide-name">Friends of The Colony Public Library</h3>
+              <p class="slide-about">A redesign concept for the library&#x27;s nonprofit friends group in The Colony, Texas, built as a volunteer.</p>
+              <span class="tag">Volunteer concept, not the official site</span>
+              <p class="slide-host">fotcpl.org</p>
+              <a class="button button-quiet slide-link" href="https://fotcpl.org/" target="_blank" rel="noopener">Visit the site<svg class="icon" aria-hidden="true"><use href="#i-arrow-out"/></svg><span class="visually-hidden">: Friends of The Colony Public Library (opens in a new tab)</span></a>
             </div>
           </li>
         </ul>
-        <div class="wrap car-foot">
+        <div class="car-foot">
           <div class="car-dots" role="group" aria-label="Choose a site"><button type="button" class="car-dot" data-dot="0" aria-label="Show site 1: TVIS Construction"><i></i></button><button type="button" class="car-dot" data-dot="1" aria-label="Show site 2: GLP Home Options"><i></i></button><button type="button" class="car-dot" data-dot="2" aria-label="Show site 3: Friends of The Colony Public Library"><i></i></button></div>
-          <a class="link link-arrow" href="work.html">See all the work<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <div class="car-nav">
+            <button class="car-btn car-play" type="button" data-play aria-label="Pause the slideshow"><svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
+            <button class="car-btn" type="button" data-prev aria-label="Previous site"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+            <button class="car-btn" type="button" data-next aria-label="Next site"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+          <a class="link-arrow car-all" href="work.html"><span>See all the work</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
     </section>
@@ -305,14 +295,13 @@
     <section class="section faq-section" aria-labelledby="faq-h">
       <div class="wrap faq-grid">
         <header class="faq-head">
-          <p class="eyebrow" data-reveal><span>04</span>Questions</p>
           <h2 id="faq-h" class="h2" data-reveal>Good to know before we start.</h2>
-          <p class="muted" data-reveal>Something else on your mind? The last box on the <a class="link" href="start.html">Start a project</a> page is for exactly that.</p>
+          <p data-reveal>Something else on your mind? The last box on the <a class="link" href="start.html">Start a project</a> page is for exactly that.</p>
         </header>
         <div class="faqs">
             <details class="faq" data-reveal>
               <summary><span>How much does a website cost?</span><span class="faq-ic" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-              <div class="faq-a"><p>Let’s talk. Every site is different, so after we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.</p></div>
+              <div class="faq-a"><p>Starter sites begin at $1,800 and larger ones at $3,500; the <a class="link" href="pricing.html">Pricing</a> page has the details. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.</p></div>
             </details>
             <details class="faq" data-reveal>
               <summary><span>How long does it take?</span><span class="faq-ic" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
@@ -328,7 +317,7 @@
             </details>
             <details class="faq" data-reveal>
               <summary><span>Can I make changes after it’s live?</span><span class="faq-ic" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-              <div class="faq-a"><p>Yes. I can host the site and make the small changes as they come, or you can make them yourself. You choose in the form.</p></div>
+              <div class="faq-a"><p>Yes. The <a class="link" href="care.html">care plan</a> covers hosting, small changes and fixes for $40 a month, or you can take the files and look after it yourself. You choose in the form.</p></div>
             </details>
             <details class="faq" data-reveal>
               <summary><span>Do you work outside my area?</span><span class="faq-ic" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
@@ -343,20 +332,17 @@
     </section>
 
     <section class="close-wrap" aria-labelledby="close-h">
-      <div class="wrap">
-        <div class="close" data-reveal>
-          <img class="close-mark" src="images/brand/stray-wolf-symbol-mono-dark.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
-          <div class="close-text">
-            <h2 id="close-h">Let’s talk about yours.</h2>
-            <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
-          </div>
+      <div class="wrap close">
+        <h2 id="close-h" data-reveal>Let’s talk about yours.</h2>
+        <div class="close-side" data-reveal>
+          <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
           <form class="close-form" action="start.html" method="get">
             <label for="close-h-biz">Your business name</label>
             <div class="close-row">
               <input class="field" id="close-h-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
               <button class="button button-lg" type="submit">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
             </div>
-            <p class="close-fine"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>About five minutes. Nothing is sent until you finish the form.</p>
+            <p class="close-fine"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Nothing is sent until you finish the form.</p>
           </form>
         </div>
       </div>
@@ -376,6 +362,9 @@
         <ul class="foot-menu" role="list">
           <li><a href="index.html">Home</a></li>
           <li><a href="work.html">Work</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="care.html">Care plan</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="start.html">Start a project</a></li>
           <li><a href="privacy.html">Privacy</a></li>
@@ -396,6 +385,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=10" defer></script>
+  <script src="js/site.js?v=12" defer></script>
 </body>
 </html>

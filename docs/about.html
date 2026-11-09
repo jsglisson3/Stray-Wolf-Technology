@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=10">
+  <link rel="stylesheet" href="css/site.css?v=12">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="inner">
@@ -85,10 +85,13 @@
           <ul class="nav-list" role="list">
             <li class="nav-home"><a href="index.html"><span>Home</span></a></li>
             <li><a href="work.html"><span>Work</span></a></li>
+            <li><a href="pricing.html"><span>Pricing</span></a></li>
+            <li><a href="care.html"><span>Care plan</span></a></li>
+            <li><a href="reviews.html"><span>Reviews</span></a></li>
             <li><a href="about.html" aria-current="page"><span>About</span></a></li>
             <li class="nav-act"><a class="button button-sm" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
           </ul>
-          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Hand-built websites. One person, start to finish.</p>
+          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
         </nav>
       </div>
     </div>
@@ -98,75 +101,47 @@
     <section class="about-hero" aria-labelledby="about-h">
       <div class="wrap about-hero-grid">
         <div class="about-text">
-          <p class="eyebrow eyebrow-plain">About</p>
           <h1 id="about-h" class="h1">One person, <em>start to finish.</em></h1>
           <p class="lead about-lead">Hi, I’m Jeremy. I design and build websites on my own, for owner-run businesses. No account manager and no hand-offs: the person you talk to is the person doing the work.</p>
           <div class="button-row"><a class="button button-lg" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="button button-quiet button-lg" href="work.html">See the work</a></div>
         </div>
-        <div class="profile" data-reveal>
-          <div class="profile-pic">
-            <div class="hero-grid-lines" aria-hidden="true"></div>
-            <img src="images/brand/stray-wolf-logo-stacked-color.svg" width="200" height="190" loading="lazy" decoding="async" alt="">
-          </div>
-          <div class="profile-body">
+        <figure class="profile" data-reveal>
+          <div class="profile-pic"><img src="images/brand/stray-wolf-logo-stacked-color.svg" width="200" height="190" loading="lazy" decoding="async" alt=""></div>
+          <figcaption class="profile-body">
             <p class="profile-name">Jeremy<span>Designer and developer</span></p>
             <p class="profile-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
-            <ul class="profile-facts" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-person"/></svg><span>Works alone</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span>By referral</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg><span>Hand-built</span></li></ul>
-          </div>
-        </div>
+            <ul class="profile-facts" role="list"><li>Works alone</li><li>By referral</li><li>Hand-built</li></ul>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
     <section class="section" aria-labelledby="how-h">
-      <div class="wrap how-grid">
-        <div class="how-side">
-          <p class="eyebrow" data-reveal>How I work</p>
+      <div class="wrap">
+        <header class="sec-head">
           <h2 id="how-h" class="h2" data-reveal>Six things you can count on.</h2>
-          <p class="lead" data-reveal>The same promises on every project, written down so you can hold me to them.</p>
-          <p data-reveal><a class="link link-arrow" href="index.html#how">See the four steps<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
-        </div>
-        <ol class="pledges" role="list">
-          <li class="pledge" data-reveal>
-            <span class="pledge-n" aria-hidden="true">01</span>
-            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg></span>
-            <div><h3>Hand-built</h3><p>Designed and written for your business. No templates, no page builders.</p></div>
-          </li>
-          <li class="pledge" data-reveal>
-            <span class="pledge-n" aria-hidden="true">02</span>
-            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span>
-            <div><h3>You first, then the design</h3><p>I get to know you and what you want from a website before I design anything. Everything in plain English.</p></div>
-          </li>
-          <li class="pledge" data-reveal>
-            <span class="pledge-n" aria-hidden="true">03</span>
-            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg></span>
-            <div><h3>A price in writing</h3><p>Before anything starts. No tiers and no surprise add-ons.</p></div>
-          </li>
-          <li class="pledge" data-reveal>
-            <span class="pledge-n" aria-hidden="true">04</span>
-            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></span>
-            <div><h3>Nothing goes live without you</h3><p>You see the site before anyone else, and it launches when you say yes.</p></div>
-          </li>
-          <li class="pledge" data-reveal>
-            <span class="pledge-n" aria-hidden="true">05</span>
-            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-key"/></svg></span>
-            <div><h3>Yours to keep</h3><p>Your domain, your content and your site belong to you.</p></div>
-          </li>
-          <li class="pledge" data-reveal>
-            <span class="pledge-n" aria-hidden="true">06</span>
-            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-person"/></svg></span>
-            <div><h3>One person to call</h3><p>Me, before and after launch. No account manager in between.</p></div>
-          </li>
-        </ol>
+          <div class="sec-aside" data-reveal>
+            <p class="lead">The same promises on every project, written down so you can hold me to them.</p>
+            <p><a class="link-arrow" href="index.html#how"><span>See the four steps</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+          </div>
+        </header>
+        <ul class="pledges" role="list">
+          <li class="pledge" data-reveal><h3>Hand-built</h3><p>Designed and written for your business. No templates, no page builders.</p></li>
+          <li class="pledge" data-reveal><h3>You first, then the design</h3><p>I get to know you and what you want from a website before I design anything. Everything in plain English.</p></li>
+          <li class="pledge" data-reveal><h3>A price in writing</h3><p>Before anything starts. No tiers and no surprise add-ons.</p></li>
+          <li class="pledge" data-reveal><h3>Nothing goes live without you</h3><p>You see the site before anyone else, and it launches when you say yes.</p></li>
+          <li class="pledge" data-reveal><h3>Yours to keep</h3><p>Your domain, your content and your site belong to you.</p></li>
+          <li class="pledge" data-reveal><h3>One person to call</h3><p>Me, before and after launch. No account manager in between.</p></li>
+        </ul>
       </div>
     </section>
 
     <section class="section on-stone" aria-labelledby="fit-h">
       <div class="wrap fit-grid">
         <div class="fit-side">
-          <p class="eyebrow" data-reveal>Who it’s for</p>
           <h2 id="fit-h" class="h2" data-reveal>Is this a fit?</h2>
           <p class="lead" data-reveal>Three quick questions and a straight answer. Nothing is sent anywhere.</p>
-          <p class="muted" data-reveal>I only take a few clients at a time, so every site gets my full attention. Owner-run shops, trades, practices and one-truck outfits are my usual work.</p>
+          <p data-reveal>I only take a few clients at a time, so every site gets my full attention. Owner-run shops, trades, practices and one-truck outfits are my usual work.</p>
         </div>
         <div class="fitcheck" data-fitcheck data-reveal>
           <div class="fq-list">
@@ -203,32 +178,27 @@
     <section class="section story" aria-labelledby="story-h">
       <div class="wrap story-grid">
         <div class="story-art" aria-hidden="true">
-          <div class="hero-grid-lines"></div>
           <img src="images/brand/stray-wolf-symbol-color.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
         </div>
         <div class="story-text">
-          <p class="eyebrow" data-reveal>The name</p>
           <h2 id="story-h" class="h2" data-reveal>No pack. <em>One person.</em></h2>
-          <p data-reveal>A stray wolf doesn’t run with a pack. That’s how I work. I don’t start from a template, and I don’t farm the work out. Every site I put my name on, I designed and built myself.</p>
+          <p class="lead" data-reveal>A stray wolf doesn’t run with a pack. That’s how I work. I don’t start from a template, and I don’t farm the work out. Every site I put my name on, I designed and built myself.</p>
         </div>
       </div>
     </section>
 
     <section class="close-wrap" aria-labelledby="about-close-h">
-      <div class="wrap">
-        <div class="close" data-reveal>
-          <img class="close-mark" src="images/brand/stray-wolf-symbol-mono-dark.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
-          <div class="close-text">
-            <h2 id="about-close-h">Let’s talk about yours.</h2>
-            <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
-          </div>
+      <div class="wrap close">
+        <h2 id="about-close-h" data-reveal>Let’s talk about yours.</h2>
+        <div class="close-side" data-reveal>
+          <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
           <form class="close-form" action="start.html" method="get">
             <label for="about-close-h-biz">Your business name</label>
             <div class="close-row">
               <input class="field" id="about-close-h-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
               <button class="button button-lg" type="submit">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
             </div>
-            <p class="close-fine"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>About five minutes. Nothing is sent until you finish the form.</p>
+            <p class="close-fine"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Nothing is sent until you finish the form.</p>
           </form>
         </div>
       </div>
@@ -247,6 +217,9 @@
         <ul class="foot-menu" role="list">
           <li><a href="index.html">Home</a></li>
           <li><a href="work.html">Work</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="care.html">Care plan</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="start.html">Start a project</a></li>
           <li><a href="privacy.html">Privacy</a></li>
@@ -267,6 +240,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=10" defer></script>
+  <script src="js/site.js?v=12" defer></script>
 </body>
 </html>

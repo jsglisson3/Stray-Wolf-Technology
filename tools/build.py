@@ -16,17 +16,22 @@ import pathlib, re, subprocess, sys, importlib.util, datetime, html as htmlesc
 DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same thing
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
-PUBLIC = ['index.html', 'work.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '10'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+PUBLIC = ['index.html', 'work.html', 'pricing.html', 'care.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
+VERSION = '12'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
 EMAIL = ''                    # e.g. 'jeremy@straywolftech.com'  (shows in the footer and on the Start page)
 PHONE = ''                    # e.g. '(469) 555-0123'            (same places; tap to call on phones)
 BOOKING_URL = ''              # e.g. a Cal.com or Calendly link for "Book a 15-minute call"
-HEADSHOT = False              # True once docs/images/jeremy.webp is a real photo (4:3 or square, 1200px wide or more)
+HEADSHOT = False              # True once docs/images/jeremy.webp is a real photo (4:3 or square, 1200px wide or more); used on the About page
 WEB3FORMS_KEY = ''            # the access key from web3forms.com; until then the form opens a pre-filled email
 FALLBACK_EMAIL = 'jsglisson@gmail.com'   # where that pre-filled email goes. Swap for the straywolftech.com address once it exists.
+
+# ---- Prices (FIRST DRAFT, Nov 9 2026: Jeremy's call; change the numbers here and rebuild) ----------
+STARTER_FROM = '1,800'        # a starter site, up to five pages ("from $...")
+LARGER_FROM = '3,500'         # a larger site: more pages, booking, a menu, a gallery, a small shop
+CARE_MONTH = '40'             # the care plan, per month (care.html)
 # -----------------------------------------------------------------------------------
 
 TAGLINE = 'Bespoke, hand-built websites. One designer, working by referral, for owner-run businesses.'
@@ -100,62 +105,55 @@ PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
 
 
 def hero():
-    """The name set huge, with one real site standing in front of it. Three promises small on the left."""
-    notes = ''.join(f'<li><strong>{h}</strong><span>{t}</span></li>' for _, h, t in PROMISES)
-    if HEADSHOT:
-        panel = f'<div class="hero-site"><div class="hero-site-frame hero-site-photo">{photo_or_mark(dark=False)}</div></div>'
-    else:
-        imgs = []
-        for i, s in enumerate(SITES):
-            im = s['image']; domain = s['link'].replace('https://', '').replace('http://', '').rstrip('/')
-            imgs.append(f'<img src="images/work/{im}-desktop-960.webp" srcset="images/work/{im}-desktop-640.webp 640w, images/work/{im}-desktop-960.webp 960w, images/work/{im}-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="{s["name"]}: the homepage" class="{"is-on" if i == 0 else ""}" data-site-img data-name="{s["name"]}" data-link="{s["link"]}" data-domain="{domain}"{" fetchpriority=\"high\"" if i == 0 else " loading=\"lazy\""} decoding="async">')
-        first = SITES[0]; first_domain = first['link'].replace('https://', '').rstrip('/')
-        panel = f'''<figure class="hero-site" data-sites>
-          <a class="hero-site-frame" href="{first['link']}" target="_blank" rel="noopener" data-site-frame aria-label="Open {first['name']} in a new tab">{''.join(imgs)}</a>
-          <figcaption class="hero-site-cap">
-            <span class="hero-site-name" data-site-name>{first['name']}</span>
-            <a class="hero-site-link" href="{first['link']}" target="_blank" rel="noopener" data-site-link>{first_domain}</a>
-            <button type="button" class="hero-site-next" data-site-next aria-label="Show the next site">{ARROW}</button>
-          </figcaption>
-        </figure>'''
+    """The words. The headline on the left; the lead, the buttons and one small picture of a recent site on the right.
+    The picture changes by itself every few seconds (site.js, "The hero"); the full showcase is on the Work page."""
+    imgs = []
+    for i, s in enumerate(SITES):
+        im = s['image']
+        imgs.append(f'<img src="images/work/{im}-desktop-480.webp" srcset="images/work/{im}-desktop-480.webp 480w, images/work/{im}-desktop-640.webp 640w" sizes="88px" width="480" height="300" alt="{esc(s["name"])}: the homepage" class="{"is-on" if i == 0 else ""}" data-site-img data-name="{esc(s["name"])}" data-link="{esc(s["link"])}" data-domain="{esc(host(s["link"]))}"{"" if i == 0 else " loading=\"lazy\""} decoding="async">')
+    first = SITES[0]
     return f'''    <section class="hero" aria-labelledby="hero-h">
       <div class="wrap hero-grid">
-        <div class="hero-side">
-          <p class="hero-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
-          <ul class="hero-notes" role="list">{notes}</ul>
-        </div>
+        <h1 id="hero-h" class="hero-h1">{H1_A} <em>{H1_B}</em></h1>
         <div class="hero-text">
-          <h1 id="hero-h" class="hero-h1">{H1_A} <em>{H1_B}</em></h1>
-          <p class="lead hero-lead">{LEAD}</p>
+          <p class="hero-lead">{LEAD}</p>
           <div class="button-row">
             <a class="button button-lg" href="start.html">Start a project{ARROW}</a>
             <a class="button button-quiet button-lg" href="#how">How it works</a>
           </div>
+          <a class="hero-recent" href="work.html" data-sites data-every="3200">
+            <span class="hero-recent-frame" aria-hidden="true">{''.join(imgs)}</span>
+            <span class="hero-recent-text"><span class="hero-recent-k">Recently built</span><span class="hero-recent-name" data-site-name>{esc(first['name'])}</span></span>
+            <span class="hero-recent-go">See the work{ARROW}</span>
+          </a>
         </div>
-        <div class="hero-mark" aria-hidden="true"><img src="images/brand/stray-wolf-wordmark-color.svg" width="479" height="92" alt="" fetchpriority="high"></div>
-        {panel}
       </div>
     </section>'''
 
 
-# ---- How it works: four steps on a line ------------------------------------------------
-STEPS = [('list', 'Day 1', 'You answer fourteen questions', 'About five minutes on the Start a project page.'),
-         ('chat', 'Within 5 days', 'We talk', 'I learn what you want from your website, then send a price in writing.'),
-         ('craft', 'The build', 'I design and build it by hand', 'You see it before anyone else and we shape it together.'),
-         ('rocket', 'About day 30', 'You say yes. It goes live.', 'Nothing launches until you’ve seen it and approved it.')]
+# ---- How it works: a 30-day ruler with the four steps under it ---------------------------------
+# Each step lights up when the orange line along the ruler reaches its day (DAY is where that is, out of 30).
+STEPS = [(1, 'Day 1', 'You answer fourteen questions', 'About five minutes on the Start a project page.'),
+         (5, 'Within 5 days', 'We talk', 'I learn what you want from your website, then send a price in writing.'),
+         (17, 'The build', 'I design and build it by hand', 'You see it before anyone else and we shape it together.'),
+         (30, 'About day 30', 'You say yes. It goes live.', 'Nothing launches until you’ve seen it and approved it.')]
 
 
 def timeline():
+    ticks = ''.join(
+        f'<i class="{"is-5" if d in (1, 5, 10, 15, 20, 25, 30) else ""}{" is-10" if d in (10, 20) else ""}">{f"<b>{d}</b>" if d in (1, 5, 10, 15, 20, 25) else ("<b>30 <small>days</small></b>" if d == 30 else "")}</i>'
+        for d in range(1, 31))
     items = ''.join(f'''
-          <li class="tl-step" data-reveal>
-            <span class="tl-node">{icon(i)}</span>
-            <p class="tl-when">{when}</p>
-            <h3 class="tl-h">{h}</h3>
-            <p class="tl-p">{t}</p>
-          </li>''' for i, when, h, t in STEPS)
-    return f'''        <ol class="timeline" role="list" data-timeline>
-          <li class="tl-track" aria-hidden="true"><span class="tl-fill"></span></li>{items}
-        </ol>'''
+          <li class="rs-step" data-day="{day}" data-reveal>
+            <p class="rs-when">{when}</p>
+            <h3>{h}</h3>
+            <p>{t}</p>
+          </li>''' for day, when, h, t in STEPS)
+    return f'''        <div class="ruler" data-timeline>
+          <div class="ruler-scale" aria-hidden="true"><div class="ruler-ticks">{ticks}</div><span class="ruler-fill"></span></div>
+          <ol class="ruler-steps" role="list">{items}
+          </ol>
+        </div>'''
 
 
 # ---- What I do: four tabs, each with a small animated scene of what it means ---------------
@@ -173,7 +171,7 @@ def svc_scene(i):
                 <div class="rs-frame"><div class="rs-bar"><span class="dw-dots"><i></i><i></i><i></i></span></div>
                   <div class="rs-page"><i class="rs-h"></i><i class="rs-l"></i><i class="rs-b"></i>
                     <div class="rs-grid"><i></i><i></i><i></i></div></div></div>
-                <ul class="sc-ticks" role="list"><li>{icon('check')}Your words</li><li>{icon('check')}Your photos</li><li>{icon('check')}Your colours</li><li>{icon('check')}Every screen size</li></ul>
+                <ul class="sc-ticks" role="list"><li>{icon('check')}Your words</li><li>{icon('check')}Your photos</li><li>{icon('check')}Your colors</li><li>{icon('check')}Every screen size</li></ul>
               </div>'''
     if i == 1:   # find the name, register it to you, point it at the site
         return f'''<div class="sc sc-domain">
@@ -200,26 +198,25 @@ def svc_scene(i):
 
 def services():
     tabs, panels = [], []
-    for i, ((h, t), ic) in enumerate(zip(SERVICES, SVC_ICONS)):
+    for i, (h, t) in enumerate(SERVICES):
         sel = i == 0
         tabs.append(f'''<button class="svc-tab" type="button" role="tab" id="svc-tab-{i}" aria-controls="svc-panel-{i}" aria-selected="{str(sel).lower()}" tabindex="{0 if sel else -1}">
-              <span class="svc-ic">{icon(ic)}</span><span class="svc-t"><strong>{h}</strong><small>{t}</small></span>
               <span class="svc-timer" aria-hidden="true"><i></i></span>
+              <span class="svc-name">{h}{ARROW}</span>
             </button>''')
         panels.append(f'''<div class="svc-panel{' is-active' if sel else ''}" role="tabpanel" id="svc-panel-{i}" aria-labelledby="svc-tab-{i}" tabindex="0">
-              <p class="visually-hidden">{h}: {t}</p>
-              <div aria-hidden="true">{svc_scene(i)}</div>
+              <div class="svc-scene" aria-hidden="true">{svc_scene(i)}</div>
+              <p class="svc-cap">{t}</p>
             </div>''')
     return f'''        <div class="svc" data-svc data-reveal>
-          <div class="svc-tabs" role="tablist" aria-label="What I do">
+          <div class="svc-tabs" role="tablist" aria-label="What I do" aria-orientation="vertical">
             {''.join(tabs)}
           </div>
           <div class="svc-stage">
-            <div class="hero-grid-lines" aria-hidden="true"></div>
             {''.join(panels)}
           </div>
         </div>
-        <p class="svc-note" data-reveal>{icon('x')}<span><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</span></p>'''
+        <p class="svc-note" data-reveal><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</p>'''
 
 
 # ---- Who you'll work with: the brand story beside the promises in numbers ------------------------
@@ -243,87 +240,99 @@ def host(link):
     return re.sub(r'^https?://', '', link).rstrip('/')
 
 
-def browser(s, sizes, link_it=True):
+def phone_of(img):
+    """The phone picture of a site, when there is one (docs/images/work/<image>-phone-300.webp)."""
+    if (DOCS / 'images' / 'work' / f'{img}-phone-300.webp').exists():
+        return f'<div class="mount-phone" aria-hidden="true"><img src="images/work/{img}-phone-300.webp" srcset="images/work/{img}-phone-300.webp 300w, images/work/{img}-phone-600.webp 600w" sizes="10rem" width="300" height="650" loading="lazy" decoding="async" alt=""></div>'
+    return ''
+
+
+def mount(s, sizes, phone=True):
+    """A site's homepage on a stone mount (and its phone view, when there is one). The picture links to the live site."""
     name, img, link = esc(s['name']), s['image'], esc(s['link'])
-    pic = f'<img src="images/work/{img}-desktop-960.webp" srcset="{srcset(img)}" sizes="{sizes}" width="1440" height="900" loading="lazy" decoding="async" alt="The {name} homepage.">'
-    inner = f'<a class="frame-pic" href="{link}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{pic}</a>' if link_it else f'<div class="frame-pic">{pic}</div>'
-    return f'''<div class="frame"><div class="frame-bar" aria-hidden="true"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">{esc(host(s["link"]))}</span></div>{inner}</div>'''
+    pic = f'<img src="images/work/{img}-desktop-960.webp" srcset="{srcset(img)}" sizes="{sizes}" width="1440" height="900" loading="lazy" decoding="async" alt="">'
+    return f'''<div class="mount"><a class="mount-pic" href="{link}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{pic}</a>{phone_of(img) if phone else ''}</div>'''
 
 
-def site_card(s, cls, h='h3', sizes='(min-width: 64rem) 54rem, 86vw'):
-    name, about, link = esc(s['name']), esc(s['about']), esc(s['link'])
-    tag = f'<span class="tag">{esc(s["tag"])}</span>' if s.get('tag') else ''
-    return f'''          <li class="{cls}">
-            {browser(s, sizes)}
-            <div class="slide-text">
-              <div><{h} class="slide-name">{name}</{h}><p class="slide-about">{about}</p>{tag}</div>
-              <a class="button button-quiet button-sm slide-link" href="{link}" target="_blank" rel="noopener">Visit the site{icon('arrow-out')}<span class="visually-hidden">: {name} (opens in a new tab)</span></a>
-            </div>
-          </li>'''
+def visit(s, cls='button button-quiet'):
+    name, link = esc(s['name']), esc(s['link'])
+    return f'<a class="{cls}" href="{link}" target="_blank" rel="noopener">Visit the site{icon("arrow-out")}<span class="visually-hidden">: {name} (opens in a new tab)</span></a>'
 
 
 def carousel(sites):
-    """The homepage work: big slides that move on by themselves every few seconds, with a pause button.
-    They stop for good once someone uses the arrows, the dots or swipes, and never move for reduced motion."""
-    slides = '\n'.join(site_card(s, 'slide', sizes='(min-width: 80rem) 68rem, 88vw') for s in sites)
+    """The homepage work: one site at a time on its mount, moving on by itself every few seconds, with a pause button.
+    It stops once someone uses the arrows, the bars or swipes, and never moves for reduced motion."""
+    slides = []
+    for s in sites:
+        tag = f'<span class="tag">{esc(s["tag"])}</span>' if s.get('tag') else ''
+        slides.append(f'''          <li class="slide">
+            {mount(s, '(min-width: 64rem) 60vw, 100vw')}
+            <div class="slide-text">
+              <h3 class="slide-name">{esc(s['name'])}</h3>
+              <p class="slide-about">{esc(s['about'])}</p>
+              {tag}
+              <p class="slide-host">{esc(host(s['link']))}</p>
+              {visit(s, 'button button-quiet slide-link')}
+            </div>
+          </li>''')
     dots = ''.join(f'<button type="button" class="car-dot" data-dot="{i}" aria-label="Show site {i + 1}: {esc(s["name"])}"><i></i></button>' for i, s in enumerate(sites))
-    return f'''      <div class="carousel" data-carousel data-autoplay="6000">
-        <div class="wrap">
-          <header class="sec-head sec-head-split car-head">
-            <div>
-              <p class="eyebrow" data-reveal><span>03</span>Recent work</p>
-              <h2 id="work-h" class="h2" data-reveal>Sites I’ve built.</h2>
-            </div>
-            <div class="car-nav" data-reveal>
-              <p class="car-count" aria-hidden="true"><span data-count-now>01</span> / {len(sites):02d}</p>
-              <button class="car-btn car-play" type="button" data-play aria-label="Pause the slideshow"><svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
-              <button class="car-btn" type="button" data-prev aria-label="Previous site">{icon('arrow-left')}</button>
-              <button class="car-btn" type="button" data-next aria-label="Next site">{icon('arrow')}</button>
-            </div>
-          </header>
-        </div>
+    return f'''      <div class="wrap carousel" data-carousel data-autoplay="6000">
+        <header class="sec-head">
+          <h2 id="work-h" class="h2" data-reveal>Sites I’ve built.</h2>
+          <p class="lead" data-reveal>Each one made for one business, from a blank page.</p>
+        </header>
         <ul class="track" role="list" data-track aria-label="Websites" tabindex="0">
-{slides}
+{chr(10).join(slides)}
         </ul>
-        <div class="wrap car-foot">
+        <div class="car-foot">
           <div class="car-dots" role="group" aria-label="Choose a site">{dots}</div>
-          <a class="link link-arrow" href="work.html">See all the work{ARROW}</a>
+          <div class="car-nav">
+            <button class="car-btn car-play" type="button" data-play aria-label="Pause the slideshow"><svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
+            <button class="car-btn" type="button" data-prev aria-label="Previous site">{icon('arrow-left')}</button>
+            <button class="car-btn" type="button" data-next aria-label="Next site">{icon('arrow')}</button>
+          </div>
+          <a class="link-arrow car-all" href="work.html"><span>See all the work</span>{ARROW}</a>
         </div>
       </div>'''
 
 
 def work_list(sites):
+    """The Work page: each site big on its mount, with a second page of it beside when there is one, and the words under a rule."""
     rows = []
     for i, s in enumerate(sites):
-        name, about, link, img = esc(s['name']), esc(s['about']), esc(s['link']), s['image']
+        name, img = esc(s['name']), s['image']
         tag = f'<span class="tag">{esc(s["tag"])}</span>' if s.get('tag') else ''
-        phone = ''
-        if (DOCS / 'images' / 'work' / f'{img}-phone-300.webp').exists():
-            phone = f'<div class="phone" aria-hidden="true"><img src="images/work/{img}-phone-300.webp" srcset="images/work/{img}-phone-300.webp 300w, images/work/{img}-phone-600.webp 600w" sizes="10rem" width="300" height="650" loading="lazy" decoding="async" alt=""></div>'
+        extra = s.get('extra')
+        side = ''
+        if extra and (DOCS / 'images' / 'work' / f'{extra[0]}-800.webp').exists():
+            side = f'''<figure class="show-extra"><div class="mount-pic"><img src="images/work/{extra[0]}-800.webp" srcset="images/work/{extra[0]}-800.webp 800w, images/work/{extra[0]}-1200.webp 1200w" sizes="(min-width: 64rem) 30vw, 92vw" width="800" height="{extra[2]}" loading="lazy" decoding="async" alt="{esc(name)}: {esc(extra[1].lower())}."></div><figcaption>{esc(extra[1])}</figcaption></figure>'''
         rows.append(f'''          <li class="show{' show-flip' if i % 2 else ''}">
-            <div class="show-art" data-reveal>{browser(s, '(min-width: 64rem) 50vw, 92vw')}{phone}</div>
-            <div class="show-text" data-reveal>
-              <p class="show-n">{i + 1:02d}</p>
-              <h2 class="h3">{name}</h2>
-              <p class="show-about">{about}</p>
-              {tag}
-              <p><a class="button button-quiet" href="{link}" target="_blank" rel="noopener">Visit the site{icon('arrow-out')}<span class="visually-hidden">: {name} (opens in a new tab)</span></a></p>
+            <div class="show-art" data-reveal>{mount(s, '(min-width: 64rem) 62vw, 100vw')}</div>
+            <div class="show-side" data-reveal>
+              {side}
+              <div class="show-text">
+                <h2 class="show-name">{name}</h2>
+                <p>{esc(s['about'])}</p>
+                {tag}
+                <p class="show-host">{esc(host(s['link']))}</p>
+                {visit(s)}
+              </div>
             </div>
           </li>''')
     return '        <ol class="shows" role="list">\n' + '\n'.join(rows) + '\n        </ol>'
 
 
 # ---- Questions people ask -------------------------------------------------------------------
-FAQS = [('How much does a website cost?', 'Let’s talk. Every site is different, so after we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
+FAQS = [('How much does a website cost?', f'Starter sites begin at ${STARTER_FROM} and larger ones at ${LARGER_FROM}; the <a class="link" href="pricing.html">Pricing</a> page has the details. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
         ('How long does it take?', 'About 30 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
         ('What do you need from me?', 'Answers to the fourteen questions, then a conversation. A logo and photos of your work help if you have them. If you don’t, we’ll work it out.'),
-        ('Can I make changes after it’s live?', 'Yes. I can host the site and make the small changes as they come, or you can make them yourself. You choose in the form.'),
+        ('Can I make changes after it’s live?', f'Yes. The <a class="link" href="care.html">care plan</a> covers hosting, small changes and fixes for ${CARE_MONTH} a month, or you can take the files and look after it yourself. You choose in the form.'),
         ('Do you work outside my area?', 'Yes. The whole project runs over calls, email and shared links, so where you’re based doesn’t matter.'),
         ('Do you do social media or Google Business Profiles?', 'No. I stick to websites, domains, hosting and email, and do them well.')]
 
 
-def faq_section(num='04'):
+def faq_section():
     items = ''.join(f'''
             <details class="faq" data-reveal>
               <summary><span>{q}</span><span class="faq-ic" aria-hidden="true">{icon('plus')}</span></summary>
@@ -332,9 +341,8 @@ def faq_section(num='04'):
     return f'''    <section class="section faq-section" aria-labelledby="faq-h">
       <div class="wrap faq-grid">
         <header class="faq-head">
-          <p class="eyebrow" data-reveal><span>{num}</span>Questions</p>
           <h2 id="faq-h" class="h2" data-reveal>Good to know before we start.</h2>
-          <p class="muted" data-reveal>Something else on your mind? The last box on the <a class="link" href="start.html">Start a project</a> page is for exactly that.</p>
+          <p data-reveal>Something else on your mind? The last box on the <a class="link" href="start.html">Start a project</a> page is for exactly that.</p>
         </header>
         <div class="faqs">{items}
         </div>
@@ -342,23 +350,20 @@ def faq_section(num='04'):
     </section>'''
 
 
-# ---- The closing card: start the form right here ------------------------------------------
+# ---- The close: stone, one big line, and the first question right here -----------------------
 def close_section(hid='close-h', line='Let’s talk about yours.'):
     return f'''    <section class="close-wrap" aria-labelledby="{hid}">
-      <div class="wrap">
-        <div class="close" data-reveal>
-          <img class="close-mark" src="images/brand/stray-wolf-symbol-mono-dark.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
-          <div class="close-text">
-            <h2 id="{hid}">{line}</h2>
-            <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
-          </div>
+      <div class="wrap close">
+        <h2 id="{hid}" data-reveal>{line}</h2>
+        <div class="close-side" data-reveal>
+          <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
           <form class="close-form" action="start.html" method="get">
             <label for="{hid}-biz">Your business name</label>
             <div class="close-row">
               <input class="field" id="{hid}-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
               <button class="button button-lg" type="submit">Start a project{ARROW}</button>
             </div>
-            <p class="close-fine">{icon('clock')}About five minutes. Nothing is sent until you finish the form.</p>
+            <p class="close-fine">{icon('clock')}Nothing is sent until you finish the form.</p>
           </form>
         </div>
       </div>
@@ -443,7 +448,8 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
             .replace('{{SPRITE}}', sprite).replace('{{BANNER}}', BANNER if banner else '')
             .replace('{{LOGO_W}}', LOGO_W).replace('{{LOGO_H}}', LOGO_H)
             .replace('{{MAIN}}', main).replace('{{REACH}}', reach_block()))
-    for key, f in (('{{CUR_HOME}}', 'index.html'), ('{{CUR_WORK}}', 'work.html'), ('{{CUR_ABOUT}}', 'about.html'), ('{{CUR_START}}', 'start.html')):
+    for key, f in (('{{CUR_HOME}}', 'index.html'), ('{{CUR_WORK}}', 'work.html'), ('{{CUR_PRICING}}', 'pricing.html'), ('{{CUR_CARE}}', 'care.html'),
+                   ('{{CUR_REVIEWS}}', 'reviews.html'), ('{{CUR_ABOUT}}', 'about.html'), ('{{CUR_START}}', 'start.html')):
         html = html.replace(key, ' aria-current="page"' if current == f else '')
     (DOCS / file).write_text(finish(file, html), encoding='utf-8')
     print('built', file)
@@ -464,7 +470,8 @@ mod.SITES = SITES
 mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
-for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'timeline', 'browser', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark'):
+for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'timeline', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
+           'STARTER_FROM', 'LARGER_FROM', 'CARE_MONTH'):
     setattr(mod, _n, globals()[_n])
 mod.read = read
 mod.WAYS = WAYS

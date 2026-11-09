@@ -5,7 +5,7 @@ const axePath = require.resolve('axe-core', { paths: [process.cwd(), ...(process
 const fs = require('fs');
 (async () => {
   const base = process.argv[2] || 'http://localhost:8500';
-  const pages = ['index.html', 'work.html', 'about.html', 'start.html', 'privacy.html', '404.html', 'thanks.html'];
+  const pages = ['index.html', 'work.html', 'pricing.html', 'care.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', '404.html', 'thanks.html'];
   const b = await chromium.launch();
   let total = 0;
   for (const [w, h] of [[390, 844], [1440, 900]]) {

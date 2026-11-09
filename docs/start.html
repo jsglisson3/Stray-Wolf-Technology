@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=10">
+  <link rel="stylesheet" href="css/site.css?v=12">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="inner page-start">
@@ -85,10 +85,13 @@
           <ul class="nav-list" role="list">
             <li class="nav-home"><a href="index.html"><span>Home</span></a></li>
             <li><a href="work.html"><span>Work</span></a></li>
+            <li><a href="pricing.html"><span>Pricing</span></a></li>
+            <li><a href="care.html"><span>Care plan</span></a></li>
+            <li><a href="reviews.html"><span>Reviews</span></a></li>
             <li><a href="about.html"><span>About</span></a></li>
             <li class="nav-act"><a class="button button-sm" href="start.html" aria-current="page">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
           </ul>
-          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Hand-built websites. One person, start to finish.</p>
+          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
         </nav>
       </div>
     </div>
@@ -97,12 +100,8 @@
   <main id="main">
     <section class="page-head page-head-start">
       <div class="wrap page-head-grid">
-        <div class="page-head-text">
-          <p class="eyebrow eyebrow-plain">Start a project</p>
-          <h1 class="h1">Tell me about your business.</h1>
-          <p class="lead">Fourteen questions, about five minutes. I read every answer before I start, and you’ll hear from me within five days.</p>
-        </div>
-        <ul class="meta-chips" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>About 5 minutes</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg><span>Only 4 are required</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>A reply within 5 days</span></li></ul>
+        <h1 class="h1">Tell me about <em>your business.</em></h1>
+        <div class="page-head-side"><p class="lead">Fourteen questions, about five minutes. I read every answer before I start, and you’ll hear from me within five days.</p><ul class="page-notes" role="list"><li>About 5 minutes</li><li>Only 4 questions are required</li><li>A reply within 5 days</li></ul></div>
       </div>
     </section>
     <section class="section section-tight start-section" aria-label="The questions">
@@ -122,7 +121,7 @@
           </div>
 
           <fieldset class="qs" id="qs-business" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">01</span>About your business</legend>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">1 / 6</span>About your business</legend>
             <div class="q">
               <label for="q-business">Business name <span class="req">(required)</span></label>
               <input class="field" id="q-business" name="business_name" type="text" autocomplete="organization" required>
@@ -147,7 +146,7 @@
           </fieldset>
 
           <fieldset class="qs" id="qs-goal" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">02</span>The goal</legend>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">2 / 6</span>The goal</legend>
             <fieldset class="q">
               <legend>Besides a professional place online, what’s the main goal of the website? <span class="opt">(pick any)</span></legend>
               <div class="picks">
@@ -166,7 +165,7 @@
           </fieldset>
 
           <fieldset class="qs" id="qs-have" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">03</span>What you already have</legend>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">3 / 6</span>What you already have</legend>
             <div class="q">
               <label for="q-site">Do you have a website now? <span class="opt">(paste the link)</span></label>
               <input class="field" id="q-site" name="current_site" type="text" inputmode="url" autocomplete="url">
@@ -196,7 +195,7 @@
           </fieldset>
 
           <fieldset class="qs" id="qs-look" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">04</span>Look and feel</legend>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">4 / 6</span>Look and feel</legend>
             <div class="q">
               <label for="q-likes">Name two or three websites you like, from any industry, and what you like about them.</label>
               <textarea class="field" id="q-likes" name="sites_you_like" rows="3" maxlength="800"></textarea>
@@ -208,7 +207,7 @@
           </fieldset>
 
           <fieldset class="qs" id="qs-practical" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">05</span>The practical stuff</legend>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">5 / 6</span>The practical stuff</legend>
             <div class="q">
               <label for="q-pages">What pages or services need to be on the site?</label>
               <textarea class="field" id="q-pages" name="pages_needed" rows="2" maxlength="600"></textarea>
@@ -240,7 +239,7 @@
           </fieldset>
 
           <fieldset class="qs" id="qs-reach" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">06</span>How to reach you</legend>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">6 / 6</span>How to reach you</legend>
             <div class="q-row">
               <div class="q">
                 <label for="q-name">Your name <span class="req">(required)</span></label>
@@ -281,12 +280,12 @@
           <div class="aside-block">
             <h2 class="aside-h">What happens next</h2>
             <ol class="next-steps" role="list">
-              <li><span class="ns-ic"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span><span><strong>Within 5 days</strong>I read your answers and reply.</span></li>
-              <li><span class="ns-ic"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg></span><span><strong>Before anything starts</strong>You get a price in writing.</span></li>
-              <li><span class="ns-ic"><svg class="icon" aria-hidden="true"><use href="#i-rocket"/></svg></span><span><strong>About 30 days</strong>Your site goes live.</span></li>
+              <li><strong>Within 5 days</strong>I read your answers and reply.</li>
+              <li><strong>Before anything starts</strong>You get a price in writing.</li>
+              <li><strong>About 30 days</strong>Your site goes live.</li>
             </ol>
           </div>
-          <div class="aside-block aside-tip"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><p><strong>Just have a question?</strong> Put it in the last box. You don’t need every answer to send the form.</p></div>
+          <div class="aside-block aside-tip"><p><strong>Just have a question?</strong> Put it in the last box. You don’t need every answer to send the form.</p></div>
         </div>
       </div>
     </section>
@@ -304,6 +303,9 @@
         <ul class="foot-menu" role="list">
           <li><a href="index.html">Home</a></li>
           <li><a href="work.html">Work</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="care.html">Care plan</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="start.html">Start a project</a></li>
           <li><a href="privacy.html">Privacy</a></li>
@@ -324,6 +326,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=10" defer></script>
+  <script src="js/site.js?v=12" defer></script>
 </body>
 </html>
