@@ -30,6 +30,7 @@
   --flame: #EE7A45;
   --sage: #5E6E4E;           /* cactus green: small labels, ticks and tags */
   --sage-tint: #E3E8DB;
+  --dusk: #4A5F75;           /* dusk blue from the footer sky: the third phase */
   --on-ink: #F4F2EE;
   --on-ink-muted: #C2BBB0;
   --good: #2E6A4C; --good-tint: #E1EEE6;
@@ -258,8 +259,8 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 html:not(.js) .phase::before, .phase.is-in::before { transform: scaleX(1); }
 .phase-1 { --phase: var(--sage); }
 .phase-2 { --phase: var(--accent); }
+.phase-3 { --phase: var(--dusk); }
 .phase-k, .phase-h, .phase-list .icon { color: var(--phase); }
-.phase-3 .phase-k { color: var(--muted); }
 .phase-k { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 650; font-size: var(--t-small); }
 .phase-k .icon { width: 1rem; height: 1rem; }
 .phase-h { font-size: clamp(2.75rem, 1.4rem + 4vw, 5.5rem); line-height: 0.95; letter-spacing: -0.04em; font-weight: 600; }
