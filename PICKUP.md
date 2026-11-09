@@ -123,3 +123,10 @@ Jeremy: "Simplify everything on this whole site up a touch, it's very busy. If i
 - Header: the "Hand-built websites / One person, start to finish" tagline. Footer: the "What I do" column and the Start a project card; it is the brand line, Pages and Reach Jeremy now.
 - Code: scenes.css is no longer part of site.css; the tab and fit-check script is gone from site.js; svc_scene, SVC_ICONS, SVC_SCENES, FACTS, FIT_QS and PAY are gone from the source.
 - VERSION is '15'.
+
+## V16 (Nov 9, 2026): How it works, redone
+Jeremy (with a screenshot of the 30-day ruler): "Try to redo this completely." "Make it super super clear they are responsible for everything up front: logo, text, what they want, images, everything, and then it transitions to me and I'll take over. And we will have a checkpoint somewhere."
+- The ruler, the ticks and the five columns are gone (and the script that drew the orange line). In their place: three columns under a heavy rule, "You." / "Me." / "Us.", each with a small label (First, then, before launch), one line and a short checklist. `PHASES` at the top of tools/build.py holds the words.
+- Heading "Your part, then mine." with the lead "You bring everything up front: what you want, the words, the logo, the photos. Then I take over, and we meet once before it goes live. About 30 days, with a price in writing first."
+- VERSION is '16'.
+- Also in V16 (Jeremy, 19:00): prices about 15% down, rounded: starter from $1,500 (was 1,800), larger from $3,000 (3,500), fix from $125 (150), page from $350 (400), refresh from $750 (900). New: a mockup first, $50 to $100 depending on what goes in it, credited against the site if it goes ahead (`MOCKUP_FROM`, `MOCKUP_TO`; a Pricing row and a line in the cost question).

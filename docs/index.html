@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=15">
+  <link rel="stylesheet" href="css/site.css?v=16">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
   {
@@ -147,39 +147,29 @@
     <section class="section on-stone" id="how" aria-labelledby="how-h">
       <div class="wrap">
         <header class="sec-head">
-          <h2 id="how-h" class="h2" data-reveal>From first call to launch.</h2>
-          <p class="lead" data-reveal>About 30 days from your first answers to launch, with a price in writing before any work starts. The first 10% is yours: be clear about what you want, and send the words, photos and logo. The other 90% is mine.</p>
+          <h2 id="how-h" class="h2" data-reveal>Your part, then mine.</h2>
+          <p class="lead" data-reveal>You bring everything up front: what you want, the words, the logo, the photos. Then I take over, and we meet once before it goes live. About 30 days, with a price in writing first.</p>
         </header>
-        <div class="ruler" data-timeline>
-          <div class="ruler-scale" aria-hidden="true"><div class="ruler-ticks"><i class="is-5"><b>1</b></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>5</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5 is-10"><b>10</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>15</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5 is-10"><b>20</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>25</b></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="is-5"><b>30 <small>days</small></b></i></div><span class="ruler-fill"></span></div>
-          <ol class="ruler-steps" role="list">
-          <li class="rs-step" data-day="1" data-reveal>
-            <p class="rs-when">Day 1</p>
-            <h3>You answer six questions</h3>
-            <p>About two minutes on the Start a project page.</p>
+        <ol class="phases" role="list">
+          <li class="phase phase-1" data-reveal>
+            <p class="phase-k">First</p>
+            <h3 class="phase-h">You.</h3>
+            <p class="phase-lead">Everything up front, before I start.</p>
+            <ul class="phase-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>The six answers on the Start a project page</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>What you want out of the site</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>The words for each page</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Your logo</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Your photos and images</span></li></ul>
           </li>
-          <li class="rs-step" data-day="5" data-reveal>
-            <p class="rs-when">Within 5 days</p>
-            <h3>We talk</h3>
-            <p>I learn exactly what you want from your website, then send a price in writing.</p>
+          <li class="phase phase-2" data-reveal>
+            <p class="phase-k"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Then</p>
+            <h3 class="phase-h">Me.</h3>
+            <p class="phase-lead">I take over from here.</p>
+            <ul class="phase-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>A price in writing, within five days</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>The design and the build, by hand</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Domain, hosting and email set up</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>About 30 days, start to finish</span></li></ul>
           </li>
-          <li class="rs-step" data-day="8" data-reveal>
-            <p class="rs-when">Your 10%</p>
-            <h3>You send the words, photos and logo</h3>
-            <p>Be clear about what you want, and send the text, images and logo you have. The 30 days starts when they arrive.</p>
+          <li class="phase phase-3" data-reveal>
+            <p class="phase-k"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Before launch</p>
+            <h3 class="phase-h">Us.</h3>
+            <p class="phase-lead">One checkpoint.</p>
+            <ul class="phase-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>You see the finished site before anyone else</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>You say yes, or tell me what to change</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Then it goes live</span></li></ul>
           </li>
-          <li class="rs-step" data-day="19" data-reveal>
-            <p class="rs-when">The build</p>
-            <h3>I design and build it by hand</h3>
-            <p>You see it before anyone else and we shape it together.</p>
-          </li>
-          <li class="rs-step" data-day="30" data-reveal>
-            <p class="rs-when">About day 30</p>
-            <h3>You say yes. It goes live.</h3>
-            <p>Nothing launches until you’ve seen it and approved it.</p>
-          </li>
-          </ol>
-        </div>
+        </ol>
       </div>
     </section>
 
@@ -258,7 +248,7 @@
         <div class="faqs">
             <details class="faq" data-reveal>
               <summary><span>How much does a website cost?</span><span class="faq-ic" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-              <div class="faq-a"><p>Starter sites begin at $1,800 and larger ones at $3,500; the <a class="link" href="pricing.html">Pricing</a> page has the details. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.</p></div>
+              <div class="faq-a"><p>Starter sites begin at $1,500 and larger ones at $3,000; the <a class="link" href="pricing.html">Pricing</a> page has the details. Want to see something first? A mockup is $50 to $100, and it comes off the price if we go ahead. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.</p></div>
             </details>
             <details class="faq" data-reveal>
               <summary><span>Do you take every job?</span><span class="faq-ic" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
@@ -321,6 +311,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=15" defer></script>
+  <script src="js/site.js?v=16" defer></script>
 </body>
 </html>

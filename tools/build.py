@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '15'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '16'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -28,12 +28,14 @@ HEADSHOT = False              # True once docs/images/jeremy.webp is a real phot
 WEB3FORMS_KEY = '0cf93fa5-b765-42a7-9364-2d5a1517d084'            # the access key from web3forms.com; until then the form opens a pre-filled email
 FALLBACK_EMAIL = 'info@straywolftech.com'   # where the pre-filled email goes if the form service is ever unreachable
 
-# ---- Prices (FIRST DRAFT, Nov 9 2026: Jeremy's call; change the numbers here and rebuild) ----------
-STARTER_FROM = '1,800'        # a starter site, up to five pages ("from $...")
-LARGER_FROM = '3,500'         # a larger site: more pages, booking, a menu, a gallery, a small shop
-FIX_FROM = '150'              # smaller jobs on a site that already exists: a fix ...
-PAGE_FROM = '400'             # ... one new page ...
-REFRESH_FROM = '900'          # ... new photos and words across the pages you have
+# ---- Prices (Nov 9 2026: Jeremy took the first draft down about 15%, rounded; change the numbers here and rebuild) ----------
+STARTER_FROM = '1,500'        # a starter site, up to five pages ("from $...")
+LARGER_FROM = '3,000'         # a larger site: more pages, booking, a menu, a gallery, a small shop
+FIX_FROM = '125'              # smaller jobs on a site that already exists: a fix ...
+PAGE_FROM = '350'             # ... one new page ...
+REFRESH_FROM = '750'          # ... new photos and words across the pages you have
+MOCKUP_FROM = '50'            # a mockup of the homepage before anyone commits, $50 to $100 depending on what's in it; ...
+MOCKUP_TO = '100'             # ... and it comes off the price if the full site goes ahead
 # No monthly fees, ever (Jeremy, Nov 9 2026): the care plan is gone; care.html now sends people to pricing.html.
 # -----------------------------------------------------------------------------------
 
@@ -144,28 +146,38 @@ def hero():
 
 # ---- How it works: a 30-day ruler with the four steps under it ---------------------------------
 # Each step lights up when the orange line along the ruler reaches its day (DAY is where that is, out of 30).
-STEPS = [(1, 'Day 1', 'You answer six questions', 'About two minutes on the Start a project page.'),
-         (5, 'Within 5 days', 'We talk', 'I learn exactly what you want from your website, then send a price in writing.'),
-         (8, 'Your 10%', 'You send the words, photos and logo', 'Be clear about what you want, and send the text, images and logo you have. The 30 days starts when they arrive.'),
-         (19, 'The build', 'I design and build it by hand', 'You see it before anyone else and we shape it together.'),
-         (30, 'About day 30', 'You say yes. It goes live.', 'Nothing launches until you’ve seen it and approved it.')]
+# How it works (V16, Nov 9 2026): three columns. Everything up front is the client's, then Jeremy takes over, then one checkpoint.
+PHASES = [
+    ('First', 'You.', 'Everything up front, before I start.', [
+        'The six answers on the Start a project page',
+        'What you want out of the site',
+        'The words for each page',
+        'Your logo',
+        'Your photos and images']),
+    ('Then', 'Me.', 'I take over from here.', [
+        'A price in writing, within five days',
+        'The design and the build, by hand',
+        'Domain, hosting and email set up',
+        'About 30 days, start to finish']),
+    ('Before launch', 'Us.', 'One checkpoint.', [
+        'You see the finished site before anyone else',
+        'You say yes, or tell me what to change',
+        'Then it goes live'])]
 
 
-def timeline():
-    ticks = ''.join(
-        f'<i class="{"is-5" if d in (1, 5, 10, 15, 20, 25, 30) else ""}{" is-10" if d in (10, 20) else ""}">{f"<b>{d}</b>" if d in (1, 5, 10, 15, 20, 25) else ("<b>30 <small>days</small></b>" if d == 30 else "")}</i>'
-        for d in range(1, 31))
-    items = ''.join(f'''
-          <li class="rs-step" data-day="{day}" data-reveal>
-            <p class="rs-when">{when}</p>
-            <h3>{h}</h3>
-            <p>{t}</p>
-          </li>''' for day, when, h, t in STEPS)
-    return f'''        <div class="ruler" data-timeline>
-          <div class="ruler-scale" aria-hidden="true"><div class="ruler-ticks">{ticks}</div><span class="ruler-fill"></span></div>
-          <ol class="ruler-steps" role="list">{items}
-          </ol>
-        </div>'''
+def phases():
+    cols = []
+    for i, (k, h, lead, items) in enumerate(PHASES):
+        rows = ''.join(f'<li>{icon("check")}<span>{t}</span></li>' for t in items)
+        cols.append(f'''
+          <li class="phase phase-{i + 1}" data-reveal>
+            <p class="phase-k">{ARROW if i else ''}{k}</p>
+            <h3 class="phase-h">{h}</h3>
+            <p class="phase-lead">{lead}</p>
+            <ul class="phase-list" role="list">{rows}</ul>
+          </li>''')
+    return f'''        <ol class="phases" role="list">{''.join(cols)}
+        </ol>'''
 
 
 # ---- What I do: five services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler) ----
@@ -287,7 +299,7 @@ def work_list(sites):
 
 
 # ---- Questions people ask -------------------------------------------------------------------
-FAQS = [('How much does a website cost?', f'Starter sites begin at ${STARTER_FROM} and larger ones at ${LARGER_FROM}; the <a class="link" href="pricing.html">Pricing</a> page has the details. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
+FAQS = [('How much does a website cost?', f'Starter sites begin at ${STARTER_FROM} and larger ones at ${LARGER_FROM}; the <a class="link" href="pricing.html">Pricing</a> page has the details. Want to see something first? A mockup is ${MOCKUP_FROM} to ${MOCKUP_TO}, and it comes off the price if we go ahead. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
         ('Do you take every job?', 'No. I’m not trying to take on as much work as I can, or make as much money as I can. I take the jobs I know I can do well, a few at a time, and I turn down the ones I don’t think I can do right. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
         ('How long does it take?', 'About 30 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
@@ -415,7 +427,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
 # 1) Homepage
 home = (SRC / 'home.html').read_text(encoding='utf-8')
 home = (home.replace('{{HERO}}', hero()).replace('{{SERVICES}}', services()).replace('{{CAROUSEL}}', carousel(SITES))
-        .replace('{{TIMELINE}}', timeline()).replace('{{FAQ}}', faq_section())
+        .replace('{{TIMELINE}}', phases()).replace('{{FAQ}}', faq_section())
         .replace('{{CLOSE}}', close_section()))
 page('index.html', 'Stray Wolf Technology | Bespoke, hand-built websites', HOME_DESC, home, current='index.html', body_class='home', ld=True)
 
@@ -427,8 +439,8 @@ mod.SITES = SITES
 mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
-for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'timeline', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
-           'STARTER_FROM', 'LARGER_FROM', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM', 'REVIEWS'):
+for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'phases', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
+           'STARTER_FROM', 'LARGER_FROM', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM', 'MOCKUP_FROM', 'MOCKUP_TO', 'REVIEWS'):
     setattr(mod, _n, globals()[_n])
 mod.read = read
 mod.WAYS = WAYS

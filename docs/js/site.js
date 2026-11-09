@@ -73,7 +73,7 @@
   }
 
   /* ---- Groups reveal one after another (a short stagger) ---------------------------- */
-  document.querySelectorAll('.ruler-steps, .faqs, .shows, .pledges, .pv-cards').forEach((group) => {
+  document.querySelectorAll('.phases, .faqs, .shows, .pledges, .pv-cards').forEach((group) => {
     group.querySelectorAll(':scope > [data-reveal], :scope > * > [data-reveal]').forEach((el, i) => el.style.setProperty('--rd', `${Math.min(i, 6) * 80}ms`));
   });
 
@@ -118,29 +118,6 @@
     if ('IntersectionObserver' in window) {
       new IntersectionObserver((es) => es.forEach((en) => { seen = en.isIntersecting; en.isIntersecting ? start() : stop(); }), { threshold: 0.3 }).observe(box);
     } else { seen = true; start(); }
-  });
-
-  /* ---- How it works: an orange line runs along the 30-day ruler as you scroll past it,
-     and each step lights up once the line reaches its day ---- */
-  document.querySelectorAll('[data-timeline]').forEach((tl) => {
-    const steps = Array.from(tl.querySelectorAll('[data-day]'));
-    const at = steps.map((s) => Math.max(0, (parseInt(s.dataset.day, 10) - 1) / 29));
-    const set = (p) => {
-      tl.style.setProperty('--p', p.toFixed(3));
-      steps.forEach((s, i) => s.classList.toggle('is-reached', p >= at[i] - 0.001 && p > 0));
-    };
-    if (reduce.matches) { set(1); return; }
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const r = tl.getBoundingClientRect();
-      const from = innerHeight * 0.8;            // the line starts when the ruler is this far down the screen
-      const span = Math.max(1, r.height + innerHeight * 0.25);
-      set(Math.min(1, Math.max(0, (from - r.top) / span)));
-    };
-    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    addEventListener('resize', update);
-    update();
   });
 
   /* ---- The work carousel: big centred slides that move on by themselves ---------------------
