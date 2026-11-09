@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=9">
+  <link rel="stylesheet" href="css/site.css?v=10">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
   {
@@ -125,7 +125,11 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-h">
-      <div class="hero-grid">
+      <div class="wrap hero-grid">
+        <div class="hero-side">
+          <p class="hero-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
+          <ul class="hero-notes" role="list"><li><strong>Hand-built</strong><span>No templates or page builders</span></li><li><strong>Yours to keep</strong><span>Your domain, your site</span></li><li><strong>About 30 days</strong><span>From answers to launch</span></li></ul>
+        </div>
         <div class="hero-text">
           <h1 id="hero-h" class="hero-h1">A website built around <em>your needs.</em></h1>
           <p class="lead hero-lead">Hand-built websites, designed around your business. I work on my own, so you deal with one person from the first call to launch day.</p>
@@ -133,40 +137,16 @@
             <a class="button button-lg" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
             <a class="button button-quiet button-lg" href="#how">How it works</a>
           </div>
-          <ul class="promises" role="list"><li><span class="p-ic"><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg></span><span><strong>Hand-built</strong><small>No templates or page builders</small></span></li><li><span class="p-ic"><svg class="icon" aria-hidden="true"><use href="#i-key"/></svg></span><span><strong>Yours to keep</strong><small>Your domain, your site</small></span></li><li><span class="p-ic"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg></span><span><strong>About 30 days</strong><small>From answers to launch</small></span></li></ul>
         </div>
-        <div class="hero-panel">
-          <div class="hero-grid-lines" aria-hidden="true"></div>
-          <div class="deck" data-deck>
-            <p class="visually-hidden">Recent sites: TVIS Construction, GLP Home Options, Friends of The Colony Public Library.</p>
-            <div class="deck-head">
-              <p class="deck-kick"><span class="dot" aria-hidden="true"></span>Recent work, live now</p>
-              <div class="deck-nav">
-                <p class="deck-count" aria-hidden="true"><span data-deck-now>01</span> / 03</p>
-                <button class="deck-btn" type="button" data-deck-prev aria-label="Previous site"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
-                <button class="deck-btn" type="button" data-deck-next aria-label="Next site"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-              </div>
-            </div>
-            <div class="deck-stack" aria-hidden="true">
-              <figure class="deck-card" data-pos="0">
-                <div class="frame-bar"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">tvisconstruction.com</span></div>
-                <img src="images/work/tvis-desktop-960.webp" srcset="images/work/tvis-desktop-480.webp 480w, images/work/tvis-desktop-640.webp 640w, images/work/tvis-desktop-960.webp 960w, images/work/tvis-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 36rem, 88vw" width="1440" height="900" fetchpriority="high" decoding="async" alt="">
-              </figure><figure class="deck-card" data-pos="1">
-                <div class="frame-bar"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">glphomeoptions.com</span></div>
-                <img src="images/work/glp-desktop-960.webp" srcset="images/work/glp-desktop-480.webp 480w, images/work/glp-desktop-640.webp 640w, images/work/glp-desktop-960.webp 960w, images/work/glp-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 36rem, 88vw" width="1440" height="900" loading="lazy" decoding="async" alt="">
-              </figure><figure class="deck-card" data-pos="2">
-                <div class="frame-bar"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">fotcpl.org</span></div>
-                <img src="images/work/fotcpl-desktop-960.webp" srcset="images/work/fotcpl-desktop-480.webp 480w, images/work/fotcpl-desktop-640.webp 640w, images/work/fotcpl-desktop-960.webp 960w, images/work/fotcpl-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 36rem, 88vw" width="1440" height="900" loading="lazy" decoding="async" alt="">
-              </figure>
-            </div>
-            <div class="deck-bars" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
-            <div class="deck-foot">
-              <div class="deck-names" aria-hidden="true"><p class="deck-name is-on"><strong>TVIS Construction</strong><span>An excavation and sitework company in Chattanooga, Tennessee.</span></p><p class="deck-name"><strong>GLP Home Options</strong><span>A home-buying business in Chattanooga, Tennessee.</span></p><p class="deck-name"><strong>Friends of The Colony Public Library</strong><span>Volunteer concept, not the official site</span></p></div>
-              <a class="deck-link" href="#work">See the work<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </div>
-          </div>
-          <p class="hero-sign"><img src="images/brand/stray-wolf-symbol-color.svg" width="28" height="28" alt="">Designed and built by hand, for one business at a time.</p>
-        </div>
+        <div class="hero-mark" aria-hidden="true"><img src="images/brand/stray-wolf-wordmark-color.svg" width="479" height="92" alt="" fetchpriority="high"></div>
+        <figure class="hero-site" data-sites>
+          <a class="hero-site-frame" href="https://tvisconstruction.com/" target="_blank" rel="noopener" data-site-frame aria-label="Open TVIS Construction in a new tab"><img src="images/work/tvis-desktop-960.webp" srcset="images/work/tvis-desktop-640.webp 640w, images/work/tvis-desktop-960.webp 960w, images/work/tvis-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="TVIS Construction: the homepage" class="is-on" data-site-img data-name="TVIS Construction" data-link="https://tvisconstruction.com/" data-domain="tvisconstruction.com" fetchpriority="high" decoding="async"><img src="images/work/glp-desktop-960.webp" srcset="images/work/glp-desktop-640.webp 640w, images/work/glp-desktop-960.webp 960w, images/work/glp-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="GLP Home Options: the homepage" class="" data-site-img data-name="GLP Home Options" data-link="https://glphomeoptions.com/" data-domain="glphomeoptions.com" loading="lazy" decoding="async"><img src="images/work/fotcpl-desktop-960.webp" srcset="images/work/fotcpl-desktop-640.webp 640w, images/work/fotcpl-desktop-960.webp 960w, images/work/fotcpl-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="Friends of The Colony Public Library: the homepage" class="" data-site-img data-name="Friends of The Colony Public Library" data-link="https://fotcpl.org/" data-domain="fotcpl.org" loading="lazy" decoding="async"></a>
+          <figcaption class="hero-site-cap">
+            <span class="hero-site-name" data-site-name>TVIS Construction</span>
+            <a class="hero-site-link" href="https://tvisconstruction.com/" target="_blank" rel="noopener" data-site-link>tvisconstruction.com</a>
+            <button type="button" class="hero-site-next" data-site-next aria-label="Show the next site"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
@@ -411,11 +391,11 @@
       </div>
     </div>
     <div class="wrap foot-legal">
-      <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-color.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© 2026 Stray Wolf Technology. Designed and built by hand.</p>
+      <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-color.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© 2026 Stray Wolf Technology. Built with love, one site at a time.</p>
       <a class="to-top" href="#top"><span>Back to top</span><span class="to-top-ic"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></span></a>
     </div>
   </footer>
 
-  <script src="js/site.js?v=9" defer></script>
+  <script src="js/site.js?v=10" defer></script>
 </body>
 </html>

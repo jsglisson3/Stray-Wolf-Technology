@@ -58,3 +58,10 @@ Preview of the current build: https://claude.ai/artifact/4Ra3dXbmWZopH7tLtSyNQQ
 3. After launch: add the site to Google Search Console, submit `sitemap.xml`, send yourself a test from the form.
 
 - Copy rule (Jeremy, Nov 9): never say "anywhere in the US" (or "nationwide") on the site; say "for owner-run businesses" instead. Never "small business". The About name story is two short paragraphs after "A stray wolf doesn't run with a pack."
+
+## V10 (Nov 9, 2026): the hero, redone from Dribbble research
+- The homepage hero is now: three promises and a "Taking a few projects at a time" status small on the left, the headline in the middle, and the bottom row is the Stray Wolf wordmark (images/brand/stray-wolf-wordmark-color.svg) set across eight columns with one real client site mounted on stone beside it. Built by `hero()` in tools/build.py; styles in docs/css/site.css under "Hero"; script block "The hero" in docs/js/site.js.
+- The site panel rotates through SITES from src/sites.py every 5.2 seconds (first site first), with the name, domain and link following. A mouse over it, keyboard focus or the Next button stops it; reduced motion never rotates. Images come from docs/images/work/<image>-desktop-{640,960,1440}.webp, cropped from the top-left corner.
+- When HEADSHOT = True the panel shows the photo instead (images/jeremy.webp).
+- The old stacked "deck" (build_deck, data-deck) is gone. VERSION is '10'.
+- Dribbble research that drove it lives on Jeremy's PC: Documents\FiremarkTech\research-shots\stray-wolf-hero (research.md, shots.csv, 60 shots).

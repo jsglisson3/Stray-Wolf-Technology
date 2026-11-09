@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '9'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '10'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -99,49 +99,31 @@ PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
             ('calendar', 'About 30 days', 'From answers to launch')]
 
 
-def build_deck(sites):
-    """The hero panel: the real sites, stacked like windows on a desk. The front one steps away every few
-    seconds and the next comes forward, with its name underneath. Click the stack to move it on yourself."""
-    cards, names, bars = [], [], []
-    for i, s in enumerate(sites):
-        img = s['image']
-        first = i == 0
-        load = 'fetchpriority="high"' if first else 'loading="lazy"'
-        url = esc(s['link'].split('//', 1)[-1].rstrip('/'))
-        cards.append(f'''<figure class="deck-card" data-pos="{i}">
-                <div class="frame-bar"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">{url}</span></div>
-                <img src="images/work/{img}-desktop-960.webp" srcset="{srcset(img)}" sizes="(min-width: 64rem) 36rem, 88vw" width="1440" height="900" {load} decoding="async" alt="">
-              </figure>''')
-        line = esc(s['tag']) if s.get('tag') else esc(s['about'])
-        names.append(f'<p class="deck-name{" is-on" if first else ""}"><strong>{esc(s["name"])}</strong><span>{line}</span></p>')
-        bars.append('<i class="is-on"></i>' if first else '<i></i>')
-    listed = ', '.join(esc(s['name']) for s in sites)
-    return f'''<div class="deck" data-deck>
-            <p class="visually-hidden">Recent sites: {listed}.</p>
-            <div class="deck-head">
-              <p class="deck-kick"><span class="dot" aria-hidden="true"></span>Recent work, live now</p>
-              <div class="deck-nav">
-                <p class="deck-count" aria-hidden="true"><span data-deck-now>01</span> / {len(sites):02d}</p>
-                <button class="deck-btn" type="button" data-deck-prev aria-label="Previous site">{icon('arrow-left')}</button>
-                <button class="deck-btn" type="button" data-deck-next aria-label="Next site">{icon('arrow')}</button>
-              </div>
-            </div>
-            <div class="deck-stack" aria-hidden="true">
-              {''.join(cards)}
-            </div>
-            <div class="deck-bars" aria-hidden="true">{''.join(bars)}</div>
-            <div class="deck-foot">
-              <div class="deck-names" aria-hidden="true">{''.join(names)}</div>
-              <a class="deck-link" href="#work">See the work{ARROW}</a>
-            </div>
-          </div>'''
-
-
 def hero():
-    promises = ''.join(f'<li><span class="p-ic">{icon(i)}</span><span><strong>{h}</strong><small>{t}</small></span></li>' for i, h, t in PROMISES)
-    side = (f'<div class="hero-photo">{photo_or_mark(dark=True)}</div>' if HEADSHOT else build_deck(SITES))
+    """The name set huge, with one real site standing in front of it. Three promises small on the left."""
+    notes = ''.join(f'<li><strong>{h}</strong><span>{t}</span></li>' for _, h, t in PROMISES)
+    if HEADSHOT:
+        panel = f'<div class="hero-site"><div class="hero-site-frame hero-site-photo">{photo_or_mark(dark=False)}</div></div>'
+    else:
+        imgs = []
+        for i, s in enumerate(SITES):
+            im = s['image']; domain = s['link'].replace('https://', '').replace('http://', '').rstrip('/')
+            imgs.append(f'<img src="images/work/{im}-desktop-960.webp" srcset="images/work/{im}-desktop-640.webp 640w, images/work/{im}-desktop-960.webp 960w, images/work/{im}-desktop-1440.webp 1440w" sizes="(min-width: 64rem) 38vw, 92vw" width="960" height="600" alt="{s["name"]}: the homepage" class="{"is-on" if i == 0 else ""}" data-site-img data-name="{s["name"]}" data-link="{s["link"]}" data-domain="{domain}"{" fetchpriority=\"high\"" if i == 0 else " loading=\"lazy\""} decoding="async">')
+        first = SITES[0]; first_domain = first['link'].replace('https://', '').rstrip('/')
+        panel = f'''<figure class="hero-site" data-sites>
+          <a class="hero-site-frame" href="{first['link']}" target="_blank" rel="noopener" data-site-frame aria-label="Open {first['name']} in a new tab">{''.join(imgs)}</a>
+          <figcaption class="hero-site-cap">
+            <span class="hero-site-name" data-site-name>{first['name']}</span>
+            <a class="hero-site-link" href="{first['link']}" target="_blank" rel="noopener" data-site-link>{first_domain}</a>
+            <button type="button" class="hero-site-next" data-site-next aria-label="Show the next site">{ARROW}</button>
+          </figcaption>
+        </figure>'''
     return f'''    <section class="hero" aria-labelledby="hero-h">
-      <div class="hero-grid">
+      <div class="wrap hero-grid">
+        <div class="hero-side">
+          <p class="hero-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
+          <ul class="hero-notes" role="list">{notes}</ul>
+        </div>
         <div class="hero-text">
           <h1 id="hero-h" class="hero-h1">{H1_A} <em>{H1_B}</em></h1>
           <p class="lead hero-lead">{LEAD}</p>
@@ -149,13 +131,9 @@ def hero():
             <a class="button button-lg" href="start.html">Start a project{ARROW}</a>
             <a class="button button-quiet button-lg" href="#how">How it works</a>
           </div>
-          <ul class="promises" role="list">{promises}</ul>
         </div>
-        <div class="hero-panel">
-          <div class="hero-grid-lines" aria-hidden="true"></div>
-          {side}
-          <p class="hero-sign"><img src="images/brand/stray-wolf-symbol-color.svg" width="28" height="28" alt="">Designed and built by hand, for one business at a time.</p>
-        </div>
+        <div class="hero-mark" aria-hidden="true"><img src="images/brand/stray-wolf-wordmark-color.svg" width="479" height="92" alt="" fetchpriority="high"></div>
+        {panel}
       </div>
     </section>'''
 

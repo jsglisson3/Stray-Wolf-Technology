@@ -1,4 +1,4 @@
-/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the hero deck, the service tabs, the work carousel, the fit check and the intake form.
+/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the hero sites, the service tabs, the work carousel, the fit check and the intake form.
    Everything on the page works without it; this only adds the moving parts. */
 (() => {
   'use strict';
@@ -77,77 +77,36 @@
     group.querySelectorAll(':scope > [data-reveal], :scope > * > [data-reveal]').forEach((el, i) => el.style.setProperty('--rd', `${Math.min(i, 6) * 80}ms`));
   });
 
-  /* ---- The hero deck: the real sites, stacked like windows. The front one steps away and the next comes forward ----
-     A thin bar fills under the stack while each site is in front, then the deck turns. It rests while a pointer is
-     over it, while it's off screen or the tab is hidden. A click on the stack turns it by hand. No turning by itself
-     for reduced motion. */
-  document.querySelectorAll('[data-deck]').forEach((deck) => {
-    const stack = deck.querySelector('.deck-stack');
-    const cards = Array.from(deck.querySelectorAll('.deck-card'));
-    const names = Array.from(deck.querySelectorAll('.deck-name'));
-    const bars = Array.from(deck.querySelectorAll('.deck-bars i'));
-    if (cards.length < 2 || !stack) { deck.classList.add('is-ready'); return; }
-    let order = cards.map((_, i) => i);   // order[0] is the card in front
-    let busy = false;
-    const count = deck.querySelector('[data-deck-now]');
-    const label = () => {
-      names.forEach((n, i) => n.classList.toggle('is-on', i === order[0]));
-      bars.forEach((b, i) => b.classList.toggle('is-on', i === order[0]));
-      if (count) count.textContent = String(order[0] + 1).padStart(2, '0');
+  /* ---- The hero: one real site at a time on its stone mount. It changes by itself; the caption and link follow ----
+     Hovering with a mouse, focusing or pressing Next stops it. Nothing moves when the visitor asked for reduced motion. */
+  document.querySelectorAll('[data-sites]').forEach((box) => {
+    const imgs = [...box.querySelectorAll('[data-site-img]')];
+    if (imgs.length < 2) return;
+    const name = box.querySelector('[data-site-name]');
+    const link = box.querySelector('[data-site-link]');
+    const frame = box.querySelector('[data-site-frame]');
+    const next = box.querySelector('[data-site-next]');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = null, stopped = reduce, seen = false;
+    const show = (n) => {
+      i = (n + imgs.length) % imgs.length;
+      imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
+      const d = imgs[i].dataset;
+      if (name) name.textContent = d.name;
+      if (link) { link.href = d.link; link.textContent = d.domain; }
+      if (frame) { frame.href = d.link; frame.setAttribute('aria-label', 'Open ' + d.name + ' in a new tab'); }
     };
-    const turn = () => {
-      if (busy) return;
-      busy = true;
-      const front = cards[order[0]];
-      order = [...order.slice(1), order[0]];
-      front.dataset.pos = 'out';   // the front window steps down and fades
-      order.slice(0, -1).forEach((c, pos) => { cards[c].dataset.pos = String(pos); });
-      label();
-      setTimeout(() => {   // then it comes back in at the back of the stack
-        front.classList.add('no-tr', 'is-entering');
-        front.dataset.pos = String(cards.length - 1);
-        void front.offsetWidth;
-        front.classList.remove('no-tr');
-        front.classList.remove('is-entering');
-        busy = false;
-      }, reduce.matches ? 0 : 460);
-    };
-    // backwards: the last window comes round to the front
-    const back = () => {
-      if (busy) return;
-      busy = true;
-      const last = cards[order[order.length - 1]];
-      order = [order[order.length - 1], ...order.slice(0, -1)];
-      last.classList.add('no-tr');
-      last.dataset.pos = 'out';
-      void last.offsetWidth;
-      last.classList.remove('no-tr');
-      order.forEach((c, pos) => { cards[c].dataset.pos = String(pos); });
-      label();
-      setTimeout(() => { busy = false; }, reduce.matches ? 0 : 500);
-    };
-    const restart = () => { bars.forEach((b) => { if (b.classList.contains('is-on')) { b.classList.remove('is-on'); void b.offsetWidth; b.classList.add('is-on'); } }); };
-    stack.addEventListener('click', () => { turn(); restart(); });
-    const prev = deck.querySelector('[data-deck-prev]');
-    const next = deck.querySelector('[data-deck-next]');
-    if (prev) prev.addEventListener('click', () => { back(); restart(); });
-    if (next) next.addEventListener('click', () => { turn(); restart(); });
-    // the windows fan up into a stack once the page has settled
-    requestAnimationFrame(() => setTimeout(() => deck.classList.add('is-ready'), reduce.matches ? 0 : 500));
-
-    if (reduce.matches || !('IntersectionObserver' in window)) return;
-    deck.addEventListener('animationend', (e) => { if (e.animationName === 'deck-fill') turn(); });
-    let onScreen = true; let hovered = false; let started = false;
-    const check = () => {
-      if (!started) return;
-      deck.classList.add('is-auto');
-      deck.classList.toggle('is-paused', !onScreen || hovered || document.hidden);
-    };
-    deck.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hovered = true; check(); } });
-    deck.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hovered = false; check(); } });
-    document.addEventListener('visibilitychange', check);
-    new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; check(); }, { threshold: 0.3 }).observe(deck);
-    setTimeout(() => { started = true; check(); }, 1200);   // a moment to look before the first turn
+    const stop = () => { clearInterval(timer); timer = null; };
+    const start = () => { if (stopped || timer || !seen || document.hidden) return; timer = setInterval(() => show(i + 1), 5200); };
+    if (next) next.addEventListener('click', () => { show(i + 1); stopped = true; stop(); });
+    box.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') stop(); });
+    box.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !box.matches(':focus-within')) start(); });
+    box.addEventListener('focusin', stop);
+    box.addEventListener('focusout', () => setTimeout(() => { if (!box.matches(':focus-within')) start(); }, 0));
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => es.forEach((en) => { seen = en.isIntersecting; en.isIntersecting ? start() : stop(); }), { threshold: 0.3 }).observe(box);
+    } else { seen = true; start(); }
   });
 
   /* ---- How it works: the line fills as you scroll past, each step lights up when reached ---- */
