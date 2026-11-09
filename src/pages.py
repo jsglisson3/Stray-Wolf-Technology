@@ -160,6 +160,7 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Six quick quest
             <ol class="next-steps" role="list">
               <li><strong>Within 5 days</strong>I read your answers and reply.</li>
               <li><strong>Before anything starts</strong>You get a price in writing.</li>
+              <li><strong>Your 10%</strong>You send the words, photos and logo.</li>
               <li><strong>About 30 days</strong>Your site goes live.</li>
             </ol>
           </div>
@@ -201,7 +202,8 @@ thanks_main = end_page('Got it. Thanks.', 'Your answers are in. Here’s what ha
             <li class="is-done"><span class="ts-n">{icon('check')}</span><span><strong>Your answers are in</strong>Nothing else to do right now.</span></li>
             <li><span class="ts-n">2</span><span><strong>I reply within five days</strong>With questions, or a time to talk.</span></li>
             <li><span class="ts-n">3</span><span><strong>A price in writing</strong>Before anything starts.</span></li>
-            <li><span class="ts-n">4</span><span><strong>Live in about 30 days</strong>Only once you’ve seen it and said yes.</span></li>
+            <li><span class="ts-n">4</span><span><strong>Your 10%</strong>You send the words, photos and logo.</span></li>
+            <li><span class="ts-n">5</span><span><strong>Live in about 30 days</strong>Only once you’ve seen it and said yes.</span></li>
           </ol>
 ''' + go_cards([('index.html', 'arrow-left', 'Back to the homepage', 'Where you started'), ('work.html', 'layout', 'See the work', 'Sites I’ve built')], 'Where to next'),
     '', WOLF)
@@ -218,7 +220,7 @@ page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not 
 
 
 # ---------------------------------------------------------------- Pricing (FIRST DRAFT, Nov 9 2026)
-# The numbers are settings at the top of tools/build.py (STARTER_FROM, LARGER_FROM, CARE_MONTH). Every line here is
+# The numbers are settings at the top of tools/build.py (STARTER_FROM, LARGER_FROM, FIX_FROM). Every line here is
 # Jeremy's to confirm or change before launch.
 
 RATES = [
@@ -267,8 +269,8 @@ rates_html = ''.join(f'''
             <div class="rate-text"><p>{t}</p><p class="rate-who">{who}</p></div>
           </li>''' for n, price, t, who in RATES)
 
-pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. Here’s how I get to it, and where most projects land.',
-                         ['A price in writing first', 'Half to start, half at launch', 'No monthly fee required']) + f'''
+pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. No monthly fees after. Here’s how I get to it, and where most projects land.',
+                         ['A price in writing first', 'Half to start, half at launch', 'No monthly fees, ever']) + f'''
     <section class="section" aria-labelledby="rates-h">
       <div class="wrap">
         <header class="sec-head">
@@ -278,8 +280,8 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
         <ul class="rates" role="list">{rates_html}
           <li class="rate" data-reveal>
             <h3 class="rate-name">After launch</h3>
-            <p class="rate-price"><small>Optional</small>${CARE_MONTH}<span> a month</span></p>
-            <div class="rate-text"><p>Hosting, small changes and fixes, covered by the <a class="link" href="care.html">care plan</a>. Cancel any time. Or take the files and host the site yourself.</p></div>
+            <p class="rate-price"><small>Monthly</small>$0</p>
+            <div class="rate-text"><p>No monthly fee, no contract. The site is yours, the hosting I set up costs nothing a month, and any change later is quoted on its own.</p></div>
           </li>
         </ul>
       </div>
@@ -302,56 +304,34 @@ page('pricing.html', 'Pricing | Stray Wolf Technology',
      pricing_main, current='pricing.html')
 
 
-# ---------------------------------------------------------------- Care plan (FIRST DRAFT, Nov 9 2026)
-
-CARE_IN = [
-    ('Hosting', 'Fast, secure hosting with the padlock in the address bar. Included.'),
-    ('Your domain, watched', 'Renewals and settings looked after, so your address never lapses. The registrar’s yearly fee is passed on at cost.'),
-    ('Small changes', 'New hours, a price, a photo, a new team member. Up to an hour of changes a month, done within five days.'),
-    ('Fixes', 'If something breaks or looks wrong, it gets fixed. No charge.'),
-    ('A copy kept safe', 'Your whole site is backed up, so nothing is ever lost.'),
-    ('A look every month', 'Once a month I check the links, the speed and how it looks on a phone, and tell you if anything needs attention.'),
-]
-CARE_OUT = [
-    ('Bigger changes', 'A new page, a new section or a redesign is quoted on its own, and you’ll know the price before I start.'),
-    ('New writing', 'Changing words you send me is covered. Writing new pages from scratch is quoted.'),
-    ('Other people’s bills', 'Your domain renewal, a booking tool or a shop’s fees are paid to those services, not to me.'),
-]
-
-care_main = page_head('Your site, <em>looked after.</em>', f'A website isn’t finished at launch. The care plan keeps yours online, up to date and fixed when something breaks, for ${CARE_MONTH} a month.',
-                      ['One flat monthly price', 'Cancel any time', 'Changes made within five days']) + f'''
-    <section class="section" aria-labelledby="care-in-h">
-      <div class="wrap">
-        <header class="sec-head">
-          <h2 id="care-in-h" class="h2" data-reveal>What’s covered.</h2>
-          <p class="lead" data-reveal>Everything a site needs after it goes live, from the person who built it.</p>
-        </header>
-        <ul class="pledges" role="list">{''.join(f'<li class="pledge" data-reveal><h3>{h}</h3><p>{t}</p></li>' for h, t in CARE_IN)}</ul>
-      </div>
-    </section>
-''' + two_col('care-out-h', 'What’s not.', 'So there are no surprises on either side.', ruled(CARE_OUT), cls=' on-stone') + '\n' \
-  + two_col('care-how-h', 'How it works.', '', f'''<div class="plain" data-reveal>
-          <p>The plan starts at launch if you want it, or any time after. It’s ${CARE_MONTH} a month, invoiced monthly, and you can stop whenever you like.</p>
-          <p>Don’t want it? You still get everything. The files, the domain and the keys to every account are yours, and you can host the site wherever you choose. If you ever want help later, ask.</p>
-        </div>''') + f'''
-{close_section('care-close-h', 'Want yours looked after?')}'''
-
-page('care.html', 'Care plan | Stray Wolf Technology',
-     f'Hosting, small changes, fixes and a monthly check for ${CARE_MONTH} a month. Cancel any time, or take the files and host the site yourself.',
-     care_main, current='care.html')
-
-
-# ---------------------------------------------------------------- Reviews (coming soon)
+# ---------------------------------------------------------------- Reviews (real quotes from REVIEWS in tools/build.py; "coming soon" while it is empty)
 
 sites_rows = ''.join(f'''<li data-reveal><h3>{s["name"]}</h3><p>{s["about"]}</p>{visit(s, 'link-arrow ruled-go').replace('Visit the site', '<span>Visit the site</span>')}</li>''' for s in SITES)
 
-reviews_main = page_head('What clients <em>say.</em>', 'This page is waiting on real words. The first sites launched recently, and I’d rather show what people actually said than fill the space.') + \
-  two_col('soon-h', 'Coming soon.', 'Real words from real clients, as they come in. Until then, the work speaks for itself.',
-          f'<ul class="ruled ruled-sites" role="list">{sites_rows}</ul>') + f'''
+if REVIEWS:
+    quotes = ''.join(f'''
+          <li class="quote" data-reveal>
+            <blockquote class="quote-text"><p>{esc(q)}</p></blockquote>
+            <p class="quote-by"><strong>{esc(who)}</strong><span>{esc(biz)}</span>{f'<a class="link" href="{url}" rel="noopener">Visit the site</a>' if url else ''}</p>
+          </li>''' for q, who, biz, url in REVIEWS)
+    reviews_main = page_head('What clients <em>say.</em>', 'In their own words, with their OK to quote them by name.') + f'''
+    <section class="section" aria-labelledby="quotes-h">
+      <div class="wrap">
+        <h2 id="quotes-h" class="visually-hidden">Reviews</h2>
+        <ul class="quotes" role="list">{quotes}
+        </ul>
+      </div>
+    </section>
 {close_section('reviews-close-h', 'Ready to start yours?')}'''
+    reviews_desc = 'What clients say about working with Stray Wolf Technology, in their own words.'
+else:
+    reviews_main = page_head('What clients <em>say.</em>', 'This page is waiting on real words. The first sites launched recently, and I’d rather show what people actually said than fill the space.') + \
+      two_col('soon-h', 'Coming soon.', 'Real words from real clients, as they come in. Until then, the work speaks for itself.',
+              f'<ul class="ruled ruled-sites" role="list">{sites_rows}</ul>') + f'''
+{close_section('reviews-close-h', 'Ready to start yours?')}'''
+    reviews_desc = 'What clients say about working with Stray Wolf Technology. Coming soon, as the first sites settle in.'
 
-page('reviews.html', 'Reviews | Stray Wolf Technology', 'What clients say about working with Stray Wolf Technology. Coming soon, as the first sites settle in.',
-     reviews_main, current='reviews.html')
+page('reviews.html', 'Reviews | Stray Wolf Technology', reviews_desc, reviews_main, current='reviews.html')
 
 
 # ---------------------------------------------------------------- Privacy

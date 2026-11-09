@@ -17,7 +17,7 @@ Start with **PICKUP.md**. It has where things stand, the before-launch list and 
 | `src/` | The page sources. **Edit these, not the `.html` files in `docs/`,** then run the build. |
 | `src/layout.html` | The shell every page shares: head, header, footer. |
 | `src/home.html` | The homepage's order of sections (each section is built in `tools/build.py`). |
-| `src/pages.py` | Work, Pricing, Care plan, Reviews, About, Start a project, thanks, privacy and the 404 page. |
+| `src/pages.py` | Work, Pricing, Reviews, About, Start a project, thanks, privacy and the 404 page. |
 | `src/sites.py` | The list of websites shown on the Work page and in the homepage carousel. |
 | `src/partials/` | The six questions (`intake-form.html`) and the icon set. |
 | `tools/build.py` | Rebuilds every page in `docs/` from `src/`. The settings block at the top holds the domain, the version number, the contact details and the prices. |

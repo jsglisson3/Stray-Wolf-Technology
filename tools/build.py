@@ -16,8 +16,8 @@ import pathlib, re, subprocess, sys, importlib.util, datetime, html as htmlesc
 DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same thing
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
-PUBLIC = ['index.html', 'work.html', 'pricing.html', 'care.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '13'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
+VERSION = '14'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -31,11 +31,19 @@ FALLBACK_EMAIL = 'info@straywolftech.com'   # where the pre-filled email goes if
 # ---- Prices (FIRST DRAFT, Nov 9 2026: Jeremy's call; change the numbers here and rebuild) ----------
 STARTER_FROM = '1,800'        # a starter site, up to five pages ("from $...")
 LARGER_FROM = '3,500'         # a larger site: more pages, booking, a menu, a gallery, a small shop
-CARE_MONTH = '40'             # the care plan, per month (care.html)
 FIX_FROM = '150'              # smaller jobs on a site that already exists: a fix ...
 PAGE_FROM = '400'             # ... one new page ...
 REFRESH_FROM = '900'          # ... new photos and words across the pages you have
+# No monthly fees, ever (Jeremy, Nov 9 2026): the care plan is gone; care.html now sends people to pricing.html.
 # -----------------------------------------------------------------------------------
+
+# ---- Reviews: real words only, with the client's OK to quote them by name. Empty = the page says "coming soon". ----
+REVIEWS = [
+    # ('The words the client wrote, as written.', 'First Last', 'Business name', 'https://their-site.com'),   # url can be ''
+]
+
+# ---- Google Search Console: paste the content value from the "HTML tag" method here, then rebuild ----
+SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site-verification" content="...">
 
 TAGLINE = 'Bespoke, hand-built websites. One designer, working by referral, for owner-run businesses.'
 HOME_DESC = 'Bespoke, hand-built websites for owner-run businesses. One designer, by referral, with a price in writing before anything starts.'   # the homepage's line in search results
@@ -137,8 +145,9 @@ def hero():
 # ---- How it works: a 30-day ruler with the four steps under it ---------------------------------
 # Each step lights up when the orange line along the ruler reaches its day (DAY is where that is, out of 30).
 STEPS = [(1, 'Day 1', 'You answer six questions', 'About two minutes on the Start a project page.'),
-         (5, 'Within 5 days', 'We talk', 'I learn what you want from your website, then send a price in writing.'),
-         (17, 'The build', 'I design and build it by hand', 'You see it before anyone else and we shape it together.'),
+         (5, 'Within 5 days', 'We talk', 'I learn exactly what you want from your website, then send a price in writing.'),
+         (8, 'Your 10%', 'You send the words, photos and logo', 'Be clear about what you want, and send the text, images and logo you have. The 30 days starts when they arrive.'),
+         (19, 'The build', 'I design and build it by hand', 'You see it before anyone else and we shape it together.'),
          (30, 'About day 30', 'You say yes. It goes live.', 'Nothing launches until you’ve seen it and approved it.')]
 
 
@@ -164,7 +173,7 @@ def timeline():
 SERVICES = [('Website design and build', 'By hand, for your business. No templates, no page builders.'),
             ('Fixes and single pages', 'Something broken on the site you have, or one new page added to it. Days, not weeks, with a price in writing first.'),
             ('Domain registration and setup', 'I register it in your name and point it at your site.'),
-            ('Hosting and small updates', 'After launch I keep the site up and make the small changes as they come.'),
+            ('Hosting and small updates', 'After launch the site stays up with no monthly fee. Small changes are quoted per job and done within days.'),
             ('Business email setup', 'A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.')]
 SVC_ICONS = ['layout', 'craft', 'globe', 'server', 'mail']
 SVC_SCENES = ['build', 'fix', 'domain', 'host', 'mail']   # which little scene plays for each service, in the same order
@@ -342,8 +351,8 @@ FAQS = [('How much does a website cost?', f'Starter sites begin at ${STARTER_FRO
         ('Do you take on smaller jobs?', f'Yes. A fix on the site you have, one new page, or a refresh of your photos and words. Smaller jobs take days, not weeks, and start at ${FIX_FROM}. Same rule as everything else: a price in writing first.'),
         ('How long does it take?', 'About 30 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
-        ('What do you need from me?', 'Answers to the six questions, then a conversation. A logo and photos of your work help if you have them. If you don’t, we’ll work it out.'),
-        ('Can I make changes after it’s live?', f'Yes. The <a class="link" href="care.html">care plan</a> covers hosting, small changes and fixes for ${CARE_MONTH} a month, or you can take the files and look after it yourself. You choose in the form.'),
+        ('What do you need from me?', 'Three things, and they’re your 10%: a clear idea of what you want, the words for each page, and your photos and logo. The other 90% is mine. The 30 days starts when I have them. No logo or photos yet? Say so and we’ll work it out.'),
+        ('Can I make changes after it’s live?', f'Yes. Small changes and fixes are quoted per job, from ${FIX_FROM}, and done within days. There’s no monthly fee and no contract: the site is yours, and the hosting I set up costs nothing a month.'),
         ('Do you work outside my area?', 'Yes. The whole project runs over calls, email and shared links, so where you’re based doesn’t matter.'),
         ('Do you do social media or Google Business Profiles?', 'No. I stick to websites, domains, hosting and email, and do them well.')]
 
@@ -456,6 +465,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
     url = f'https://{DOMAIN}/{"" if file == "index.html" else file}'
     html = (layout.replace('{{TITLE}}', esc(title)).replace('{{DESC}}', esc(desc))
             .replace('{{ROBOTS}}', ROBOTS_META)
+            .replace('{{VERIFY}}', f'  <meta name="google-site-verification" content="{esc(SEARCH_CONSOLE)}">\n' if SEARCH_CONSOLE else '')
             .replace('{{CANONICAL}}', '' if file == '404.html' else f'  <link rel="canonical" href="{url}">\n')
             .replace('{{OG_URL}}', '' if file == '404.html' else f'  <meta property="og:url" content="{url}">\n')
             .replace('{{FOOT_SERVICES}}', ''.join(f'<li>{icon(ic)}<span>{h}</span></li>' for (h, _), ic in zip(SERVICES, SVC_ICONS))).replace('{{YEAR}}', YEAR)
@@ -464,7 +474,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
             .replace('{{SPRITE}}', sprite).replace('{{BANNER}}', BANNER if banner else '')
             .replace('{{LOGO_W}}', LOGO_W).replace('{{LOGO_H}}', LOGO_H)
             .replace('{{MAIN}}', main).replace('{{REACH}}', reach_block()))
-    for key, f in (('{{CUR_HOME}}', 'index.html'), ('{{CUR_WORK}}', 'work.html'), ('{{CUR_PRICING}}', 'pricing.html'), ('{{CUR_CARE}}', 'care.html'),
+    for key, f in (('{{CUR_HOME}}', 'index.html'), ('{{CUR_WORK}}', 'work.html'), ('{{CUR_PRICING}}', 'pricing.html'),
                    ('{{CUR_REVIEWS}}', 'reviews.html'), ('{{CUR_ABOUT}}', 'about.html'), ('{{CUR_START}}', 'start.html')):
         html = html.replace(key, ' aria-current="page"' if current == f else '')
     (DOCS / file).write_text(finish(file, html), encoding='utf-8')
@@ -487,7 +497,7 @@ mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
 for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'timeline', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
-           'STARTER_FROM', 'LARGER_FROM', 'CARE_MONTH', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM'):
+           'STARTER_FROM', 'LARGER_FROM', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM', 'REVIEWS'):
     setattr(mod, _n, globals()[_n])
 mod.read = read
 mod.WAYS = WAYS
@@ -502,8 +512,8 @@ s = re.sub(r'(href|src)="(?!https?:|#|mailto:|tel:|/)([^"]+)"', lambda m: f'{m.g
 p404.write_text(s, encoding='utf-8')
 print('404.html made root-relative')
 
-# 4) Old addresses from the Firemark site: send them on
-for old, new in (('contact.html', 'start.html'), ('brand.html', 'index.html')):
+# 4) Old addresses: send them on (contact and brand from the Firemark site; care.html from the dropped care plan)
+for old, new in (('contact.html', 'start.html'), ('brand.html', 'index.html'), ('care.html', 'pricing.html')):
     (DOCS / old).write_text(f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Moved</title><meta name="robots" content="noindex, nofollow">
 <meta http-equiv="refresh" content="0; url={new}"><link rel="canonical" href="https://{DOMAIN}/{new}"></head>
