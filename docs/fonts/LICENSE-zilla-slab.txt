@@ -1,0 +1,3 @@
+Zilla Slab, designed by Typotheque for Mozilla. Copyright 2017 The Mozilla Foundation.
+Licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org
+The latin subset (700) is served from this folder as a woff2 file, downloaded from Google Fonts.

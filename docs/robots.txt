@@ -1,0 +1,5 @@
+# Draft: every page also carries a noindex tag until launch (LAUNCHED in tools/build.py).
+User-agent: *
+Allow: /
+
+Sitemap: https://straywolftech.com/sitemap.xml
