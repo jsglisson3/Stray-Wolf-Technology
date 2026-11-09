@@ -29,6 +29,7 @@
   --accent-tint: #F7E4D9;
   --flame: #EE7A45;
   --sage: #5E6E4E;           /* cactus green: small labels, ticks and tags */
+  --sage-ink: #4E5D40;       /* the same green, deep enough for small text on sand (5.2:1) */
   --sage-tint: #E3E8DB;
   --dusk: #4A5F75;           /* dusk blue from the footer sky: the third phase */
   --on-ink: #F4F2EE;
@@ -261,6 +262,9 @@ html:not(.js) .phase::before, .phase.is-in::before { transform: scaleX(1); }
 .phase-2 { --phase: var(--accent); }
 .phase-3 { --phase: var(--dusk); }
 .phase-k, .phase-h, .phase-list .icon { color: var(--phase); }
+/* the small labels sit on sand: the deeper green and orange keep them above 4.5:1 */
+.phase-1 .phase-k { color: var(--sage-ink); }
+.phase-2 .phase-k { color: var(--accent-dark); }
 .phase-k { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 650; font-size: var(--t-small); }
 .phase-k .icon { width: 1rem; height: 1rem; }
 .phase-h { font-size: clamp(2.75rem, 1.4rem + 4vw, 5.5rem); line-height: 0.95; letter-spacing: -0.04em; font-weight: 600; }
@@ -368,11 +372,12 @@ a.mount-pic:hover img { transform: scale(1.012); }
 }
 
 /* ------------------------------------------------------------------ Questions */
-.faq-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s6) var(--s5); align-items: start; padding-top: var(--s5); border-top: var(--rule); }
+.faq-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s6) var(--s5); align-items: start; padding-top: var(--s5); background: linear-gradient(var(--ink), var(--ink)) no-repeat center top / calc(100% - 2 * var(--gutter)) 1px; }   /* the rule stays inside the column, like every other section head */
 .faq-head { grid-column: 1 / span 6; display: grid; gap: var(--s5); justify-items: start; position: sticky; top: 7rem; }
 .faq-head .h2 { max-width: 10ch; }
 .faqs { grid-column: 7 / -1; border-bottom: var(--rule); }
 .faq { border-top: var(--rule); }
+.faq:first-child { border-top: 0; }   /* the section rule above already opens the list */
 .faq summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; padding: 1.35rem 0; cursor: pointer; font-family: var(--display); font-weight: 500; font-size: var(--t-h4); line-height: 1.2; letter-spacing: -0.02em; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary:hover { color: var(--accent-dark); }
@@ -686,6 +691,15 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .shoot { opacity: 0; animation: shoot 18s linear infinite; }
 @keyframes shoot { 0%, 60% { opacity: 0; transform: translate(0, 0); } 61% { opacity: 0.9; } 64%, 100% { opacity: 0; transform: translate(-230px, 86px); } }
 .scene { display: block; width: 100%; height: clamp(170px, 18.67vw, 440px); }
+/* a pause button for the scene (WCAG 2.2.2: anything that moves for more than five seconds can be stopped); the scene also rests while it is off screen */
+.scene-toggle { position: absolute; z-index: 1; top: 0.75rem; right: var(--gutter); width: 2.5rem; height: 2.5rem; display: grid; place-items: center; border: 0; border-radius: var(--r); background: rgb(36 34 31 / 0.6); color: var(--on-ink); box-shadow: inset 0 0 0 1.5px var(--on-ink-muted); cursor: pointer; transition: background 200ms ease, color 200ms ease; }
+.scene-toggle:hover { background: var(--on-ink); color: var(--ink); }
+.scene-toggle:focus-visible { outline-color: var(--flame); }
+.scene-toggle .icon { width: 1rem; height: 1rem; }
+.scene-toggle .i-play, .foot-scene.is-paused .scene-toggle .i-pause { display: none; }
+.foot-scene.is-paused .scene-toggle .i-play { display: block; }
+.foot-scene.is-paused *, .foot-scene.is-off * { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) { .scene-toggle { display: none; } }
 .stars circle { animation: twinkle 5s ease-in-out infinite; }
 .stars circle:nth-child(3n) { animation-delay: -1.7s; }
 .stars circle:nth-child(3n + 1) { animation-delay: -3.1s; animation-duration: 6s; }
@@ -716,7 +730,7 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 @keyframes pose-level { 0%, 11% { opacity: 1; } 12.5%, 28% { opacity: 0; } 29.5%, 100% { opacity: 1; } }
 @keyframes pose-howl { 0%, 11% { opacity: 0; } 12.5%, 28% { opacity: 1; } 29.5%, 100% { opacity: 0; } }
 @keyframes run-wolf {
-  0%, 39% { opacity: 0; transform: translate(400px, 0); }
+  0%, 39% { opacity: 0; transform: translate(480px, 0); }
   40% { opacity: 1; }
   82% { opacity: 1; transform: translate(1500px, 0); }
   83%, 100% { opacity: 0; transform: translate(1500px, 0); }
@@ -766,7 +780,7 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .pv-warn strong { color: var(--ink); }
 .consent { margin-top: var(--s2); }
 .consent-check { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.75rem; align-items: start; font-weight: 500; line-height: 1.45; cursor: pointer; }
-.consent-check input { width: 1.375rem; height: 1.375rem; margin: 0.08rem 0 0; accent-color: var(--ink); cursor: pointer; }
+.consent-check input { width: 1.5rem; height: 1.5rem; margin: 0.08rem 0 0; accent-color: var(--ink); cursor: pointer; }
 .consent-check input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .consent-check input[aria-invalid="true"] { outline: 2px solid var(--error); outline-offset: 2px; }
 .consent-check a { color: var(--ink); text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.2em; }

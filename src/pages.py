@@ -3,8 +3,8 @@
    form                      the intake questions (src/partials/intake-form.html, with the settings filled in)
    SITES, work_list(sites)   the Work showcase (src/sites.py)
    services()                the "What I do" tiles
-   close_section(hid, line)  the closing card with the business-name box
-   numbers_html()            the four numbers (1 person, 14 questions, 5 days, about 30 days)
+   close_section(hid, line)  the closing band with one big line and the Start a project button
+   numbers_html()            the four numbers (5 days, 1 price, 30 days, $0 a month)
    icon(name), ARROW         an icon from src/partials/sprite.html
    photo_or_mark(dark), HEADSHOT, STORY
    read(name)                a partial from src/partials
@@ -38,7 +38,7 @@ work_main = page_head('Sites I’ve designed and built <em>by hand.</em>', 'Each
     </section>
 {close_section('work-close-h', 'Want yours on this list?')}'''
 
-page('work.html', 'Work | Stray Wolf Technology',
+page('work.html', 'Work: websites built by hand | Stray Wolf Technology',
      'Websites Stray Wolf Technology has designed and built by hand for owner-run businesses. Tap any one to see it live.',
      work_main, current='work.html')
 
@@ -106,7 +106,7 @@ about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
 
 {close_section('about-close-h')}'''
 
-page('about.html', 'About | Stray Wolf Technology',
+page('about.html', 'About: bold, hand-built websites | Stray Wolf Technology',
      'About Stray Wolf Technology and Jeremy: bold, hand-built websites made around your business, not a template.',
      about_main, current='about.html')
 
@@ -147,7 +147,7 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Six quick quest
       </div>
     </section>'''
 
-page('start.html', 'Start a project | Stray Wolf Technology',
+page('start.html', 'Start a website project | Stray Wolf Technology',
      'Six quick questions about your business and your website, about two minutes. Answer them and Jeremy replies within five days.',
      start_main, current='start.html', body_class='inner page-start')
 
@@ -272,7 +272,7 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
   + f'''
 {close_section('pricing-close-h', 'Want a number for yours?')}'''
 
-page('pricing.html', 'Pricing | Stray Wolf Technology',
+page('pricing.html', 'Pricing: what a website costs | Stray Wolf Technology',
      f'What a hand-built website costs: starter sites from ${STARTER_FROM}, larger sites from ${LARGER_FROM}, one price in writing before anything starts.',
      pricing_main, current='pricing.html')
 
@@ -304,7 +304,7 @@ else:
 {close_section('reviews-close-h', 'Ready to start yours?')}'''
     reviews_desc = 'What clients say about working with Stray Wolf Technology. Coming soon, as the first sites settle in.'
 
-page('reviews.html', 'Reviews | Stray Wolf Technology', reviews_desc, reviews_main, current='reviews.html')
+page('reviews.html', 'Client reviews | Stray Wolf Technology', reviews_desc, reviews_main, current='reviews.html')
 
 
 # ---------------------------------------------------------------- Privacy and Terms (legal pass, Nov 9 2026)
@@ -356,7 +356,7 @@ PRIVACY_SUMMARY = [('cookie', 'No cookies, ads or tracking', 'Nothing follows yo
 privacy_main = page_head('Privacy, in <em>plain English.</em>', 'The short version: this site only collects what you send, and only uses it to reply to you and plan your project.', cls=' page-head-privacy') \
     + legal_page(PRIVACY, PRIVACY_SUMMARY, 'Privacy details')
 
-page('privacy.html', 'Privacy | Stray Wolf Technology', 'What this website collects, who handles it, how long it’s kept and how to have it deleted. No cookies, ads or tracking.', privacy_main)
+page('privacy.html', 'Privacy policy | Stray Wolf Technology', 'What this website collects, who handles it, how long it’s kept and how to have it deleted. No cookies, ads or tracking.', privacy_main)
 
 
 # ---- Terms

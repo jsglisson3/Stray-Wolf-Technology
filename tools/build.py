@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '18.1'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '19'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -48,7 +48,7 @@ REVIEWS = [
 SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site-verification" content="...">
 
 TAGLINE = 'Bespoke, hand-built websites, by referral, for owner-run businesses. Bold, different and built around yours.'
-HOME_DESC = 'Bespoke, hand-built websites for owner-run businesses. One designer, by referral, with a price in writing before anything starts.'   # the homepage's line in search results
+HOME_DESC = 'Bespoke, hand-built websites for owner-run businesses, by referral. Design, domain, hosting and email, with one price in writing before anything starts.'   # the homepage's line in search results
 YEAR = str(datetime.date.today().year)
 ROBOTS_META = '  <meta name="robots" content="noindex, nofollow">\n'
 BANNER = '  <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>\n'
@@ -109,10 +109,7 @@ def words(s, start=0):
     return ' '.join(f'<span class="w" style="--i:{start + i}">{w}</span>' for i, w in enumerate(s.split()))
 
 
-# ---- Hero: paper on the left, a charcoal panel on the right ------------------------------
-# The panel shows a small example website going from sketch to finished: "built around your needs".
-# It's made of plain HTML boxes (no client's site, no stock photo). Visitors can flip between the sketch
-# and the finished page, and between three kinds of business, each with its own colours, layout and button.
+# ---- Hero: the headline on the left; the lead, the buttons and a small "Recently built" thumbnail on the right ----
 H1_A = 'A website built around'
 H1_B = 'your needs.'
 H1 = f'{H1_A} {H1_B}'
@@ -128,7 +125,7 @@ def hero():
     imgs = []
     for i, s in enumerate(SITES):
         im = s['image']
-        imgs.append(f'<img src="images/work/{im}-desktop-480.webp" srcset="images/work/{im}-desktop-480.webp 480w, images/work/{im}-desktop-640.webp 640w" sizes="88px" width="480" height="300" alt="{esc(s["name"])}: the homepage" class="{"is-on" if i == 0 else ""}" data-site-img data-name="{esc(s["name"])}" data-link="{esc(s["link"])}" data-domain="{esc(host(s["link"]))}"{"" if i == 0 else " loading=\"lazy\""} decoding="async">')
+        imgs.append(f'<img src="images/work/{im}-desktop-480.webp" srcset="images/work/{im}-desktop-240.webp 240w, images/work/{im}-desktop-480.webp 480w" sizes="88px" width="480" height="300" alt="{esc(s["name"])}: the homepage" class="{"is-on" if i == 0 else ""}" data-site-img data-name="{esc(s["name"])}" data-link="{esc(s["link"])}" data-domain="{esc(host(s["link"]))}"{"" if i == 0 else " loading=\"lazy\""} decoding="async">')
     first = SITES[0]
     return f'''    <section class="hero has-facets" aria-labelledby="hero-h">
       <div class="wrap hero-grid">
@@ -149,9 +146,7 @@ def hero():
     </section>'''
 
 
-# ---- How it works: a 30-day ruler with the four steps under it ---------------------------------
-# Each step lights up when the orange line along the ruler reaches its day (DAY is where that is, out of 30).
-# How it works (V16, Nov 9 2026): three columns. Everything up front is the client's, then Jeremy takes over, then one checkpoint.
+# ---- How it works (V16, Nov 9 2026): three columns. Everything up front is the client's, then Jeremy takes over, then one checkpoint.
 PHASES = [
     ('First', 'You.', 'Everything up front.', [
         'What you want from the site',
@@ -353,6 +348,15 @@ def close_section(hid='close-h', line='Let’s talk about yours.'):
 sprite = read('sprite.html')
 form = read('intake-form.html').replace('{{WEB3FORMS_KEY}}', esc(WEB3FORMS_KEY)).replace('{{FALLBACK_EMAIL}}', esc(FALLBACK_EMAIL)).replace('{{DOMAIN}}', DOMAIN)
 layout = (SRC / 'layout.html').read_text(encoding='utf-8')
+# Content Security Policy as a meta tag (GitHub Pages can't send headers): only this site's own files run or load.
+# The one inline script in the layout is allowed by its hash, worked out here so editing it can't break the page.
+# form-action is left out on purpose so the Web3Forms post and its redirect are never blocked.
+import hashlib, base64
+_hashes = ' '.join("'sha256-" + base64.b64encode(hashlib.sha256(m.encode('utf-8')).digest()).decode() + "'"
+                   for m in re.findall(r'<script>(.*?)</script>', layout, re.S))
+CSP = ("default-src 'self'; script-src 'self' " + _hashes + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+       "font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests")
+layout = layout.replace('{{CSP}}', f'  <meta http-equiv="Content-Security-Policy" content="{CSP}">\n')
 LOGO_W, LOGO_H = viewbox((DOCS / 'images' / 'brand' / 'stray-wolf-logo-color.svg').read_text(encoding='utf-8'))
 
 
@@ -421,8 +425,8 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
     html = (layout.replace('{{TITLE}}', esc(title)).replace('{{DESC}}', esc(desc))
             .replace('{{ROBOTS}}', ROBOTS_META)
             .replace('{{VERIFY}}', f'  <meta name="google-site-verification" content="{esc(SEARCH_CONSOLE)}">\n' if SEARCH_CONSOLE else '')
-            .replace('{{CANONICAL}}', '' if file == '404.html' else f'  <link rel="canonical" href="{url}">\n')
-            .replace('{{OG_URL}}', '' if file == '404.html' else f'  <meta property="og:url" content="{url}">\n')
+            .replace('{{CANONICAL}}', '' if file in HIDDEN else f'  <link rel="canonical" href="{url}">\n')
+            .replace('{{OG_URL}}', '' if file in HIDDEN else f'  <meta property="og:url" content="{url}">\n')
             .replace('{{YEAR}}', YEAR)
             .replace('{{DOMAIN}}', DOMAIN).replace('{{V}}', VERSION).replace('{{LD}}', ld_json() if ld else '')
             .replace('{{BODY_CLASS}}', body_class)
@@ -469,9 +473,10 @@ print('404.html made root-relative')
 
 # 4) Old addresses: send them on (contact and brand from the Firemark site; care.html from the dropped care plan)
 for old, new in (('contact.html', 'start.html'), ('brand.html', 'index.html'), ('care.html', 'pricing.html')):
+    clean = '' if new == 'index.html' else new
     (DOCS / old).write_text(f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Moved</title><meta name="robots" content="noindex, nofollow">
-<meta http-equiv="refresh" content="0; url={new}"><link rel="canonical" href="https://{DOMAIN}/{new}"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Moved | Stray Wolf Technology</title><meta name="robots" content="noindex, nofollow">
+<meta http-equiv="refresh" content="0; url={new}"><link rel="canonical" href="https://{DOMAIN}/{clean}"></head>
 <body><p>This page has moved to <a href="{new}">{new}</a>.</p></body></html>
 ''', encoding='utf-8')
     print('redirect', old, '->', new)

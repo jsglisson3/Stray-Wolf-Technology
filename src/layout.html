@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{TITLE}}</title>
+{{CSP}}  <title>{{TITLE}}</title>
   <meta name="description" content="{{DESC}}">
 {{ROBOTS}}{{CANONICAL}}{{VERIFY}}  <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#F8F5EE">
@@ -60,8 +60,9 @@
   </main>
 
   <footer class="site-footer">
-    <div class="foot-scene" aria-hidden="true">
-      <svg class="scene" viewBox="0 0 1200 224" preserveAspectRatio="xMidYMax slice" focusable="false">
+    <div class="foot-scene" data-scene>
+      <button class="scene-toggle" type="button" data-scene-toggle aria-label="Pause the animation"><svg class="icon i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="icon i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
+      <svg class="scene" viewBox="0 0 1200 224" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
         <defs>
           <radialGradient id="moon-glow"><stop offset="0" stop-color="#F4F2EE" stop-opacity=".16"/><stop offset="1" stop-color="#F4F2EE" stop-opacity="0"/></radialGradient>
           <radialGradient id="dusk" cx="50%" cy="100%" r="55%"><stop offset="0" stop-color="#C94B17" stop-opacity=".26"/><stop offset="1" stop-color="#C94B17" stop-opacity="0"/></radialGradient>
@@ -98,7 +99,7 @@
         <use href="#cactus" fill="#F4F2EE" opacity=".7" transform="translate(1120 200) scale(0.5)"/>
         <rect x="0" y="200" width="1200" height="40" fill="#24221F"/>
         <path d="M0 200 H1200" stroke="#C94B17" stroke-width="2"/>
-        <g transform="translate(400 200)">
+        <g transform="translate(480 200)">
           <g class="howl-wolf">
             <ellipse cx="-30" cy="2" rx="78" ry="4" fill="#000" opacity=".3"/>
             <g transform="scale(0.75)" fill="#F4F2EE">
@@ -149,7 +150,7 @@
     </div>
     <div class="wrap foot-legal">
       <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-reverse.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© {{YEAR}} Stray Wolf Technology. Built with love, one site at a time.</p>
-      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>No cookies, no tracking. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</p>
+      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No cookies, no tracking. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
       <a class="to-top" href="#top"><span>Back to top</span><span class="to-top-ic"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></span></a>
     </div>
   </footer>

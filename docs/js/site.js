@@ -57,7 +57,7 @@
       if (e.shiftKey && i <= 0) { e.preventDefault(); items[items.length - 1].focus(); }
       else if (!e.shiftKey && i === items.length - 1) { e.preventDefault(); items[0].focus(); }
     });
-    matchMedia('(min-width: 48em)').addEventListener('change', (m) => { if (m.matches) setOpen(false); });
+    matchMedia('(min-width: 64em)').addEventListener('change', (m) => { if (m.matches) setOpen(false); });   // where the full menu takes over (site.css)
   }
 
   /* ---- Reveal once, when a block enters the screen ---------------------------------- */
@@ -137,6 +137,7 @@
     const next = box.querySelector('[data-site-next]');
     const every = +box.dataset.every || 5200;
     box.style.setProperty('--tick', every + 'ms');
+    // It goes round once (each site shown, back to the first) and then rests, so nothing keeps changing beside the text.
     let i = 0, timer = null, stopped = reduce.matches, seen = false;
     const tick = (on) => { box.classList.remove('is-ticking'); if (on) { void box.offsetWidth; box.classList.add('is-ticking'); } };
     const show = (n) => {
@@ -153,7 +154,7 @@
     const start = () => {
       if (stopped || timer || !seen || document.hidden) return;
       tick(true);
-      timer = setInterval(() => { show(i + 1); tick(true); }, every);
+      timer = setInterval(() => { show(i + 1); if (i === 0) { stopped = true; stop(); } else tick(true); }, every);
     };
     if (next) next.addEventListener('click', () => { show(i + 1); stopped = true; stop(); });
     box.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') stop(); });
@@ -242,6 +243,18 @@
     document.addEventListener('visibilitychange', check);
     new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; check(); }, { threshold: 0.35 }).observe(car);
     check();
+  });
+
+  /* ---- The footer scene: a pause button, and no animating while it is off screen ---------- */
+  document.querySelectorAll('[data-scene]').forEach((scene) => {
+    const btn = scene.querySelector('[data-scene-toggle]');
+    if (btn) btn.addEventListener('click', () => {
+      const paused = scene.classList.toggle('is-paused');
+      btn.setAttribute('aria-label', paused ? 'Play the animation' : 'Pause the animation');
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => es.forEach((en) => scene.classList.toggle('is-off', !en.isIntersecting))).observe(scene);
+    }
   });
 
   /* ---- Questions: only one answer open at a time ------------------------------------ */

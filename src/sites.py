@@ -35,7 +35,7 @@ SITES = [
         "link": "https://glphomeoptions.com/",
         "image": "glp",
         "tag": "",
-        "logo": ("glp-logo.png", 240, 132),
+        "logo": ("glp-logo.webp", 240, 132),
     },
     {
         "name": "Friends of The Colony Public Library",
