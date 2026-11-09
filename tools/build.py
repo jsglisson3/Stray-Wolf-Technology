@@ -5,7 +5,7 @@ Sources live in src/ (not published):
   src/home.html                  the homepage
   src/pages.py                   the inner pages (Work, About, Start a project, thanks, privacy, 404)
   src/sites.py                   the list of websites shown on the Work page and in the homepage carousel
-  src/partials/intake-form.html  the fourteen questions (the Start a project page)
+  src/partials/intake-form.html  the six questions (the Start a project page)
   src/partials/sprite.html       the icons
 
 Run from the project folder:  python3 tools/build.py
@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'care.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '12'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '13'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -32,6 +32,9 @@ FALLBACK_EMAIL = 'info@straywolftech.com'   # where the pre-filled email goes if
 STARTER_FROM = '1,800'        # a starter site, up to five pages ("from $...")
 LARGER_FROM = '3,500'         # a larger site: more pages, booking, a menu, a gallery, a small shop
 CARE_MONTH = '40'             # the care plan, per month (care.html)
+FIX_FROM = '150'              # smaller jobs on a site that already exists: a fix ...
+PAGE_FROM = '400'             # ... one new page ...
+REFRESH_FROM = '900'          # ... new photos and words across the pages you have
 # -----------------------------------------------------------------------------------
 
 TAGLINE = 'Bespoke, hand-built websites. One designer, working by referral, for owner-run businesses.'
@@ -133,7 +136,7 @@ def hero():
 
 # ---- How it works: a 30-day ruler with the four steps under it ---------------------------------
 # Each step lights up when the orange line along the ruler reaches its day (DAY is where that is, out of 30).
-STEPS = [(1, 'Day 1', 'You answer fourteen questions', 'About five minutes on the Start a project page.'),
+STEPS = [(1, 'Day 1', 'You answer six questions', 'About two minutes on the Start a project page.'),
          (5, 'Within 5 days', 'We talk', 'I learn what you want from your website, then send a price in writing.'),
          (17, 'The build', 'I design and build it by hand', 'You see it before anyone else and we shape it together.'),
          (30, 'About day 30', 'You say yes. It goes live.', 'Nothing launches until you’ve seen it and approved it.')]
@@ -159,27 +162,39 @@ def timeline():
 # ---- What I do: four tabs, each with a small animated scene of what it means ---------------
 # The tabs move on by themselves (a timer bar shows it) until someone picks one, and pause while hovered.
 SERVICES = [('Website design and build', 'By hand, for your business. No templates, no page builders.'),
+            ('Fixes and single pages', 'Something broken on the site you have, or one new page added to it. Days, not weeks, with a price in writing first.'),
             ('Domain registration and setup', 'I register it in your name and point it at your site.'),
             ('Hosting and small updates', 'After launch I keep the site up and make the small changes as they come.'),
             ('Business email setup', 'A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.')]
-SVC_ICONS = ['layout', 'globe', 'server', 'mail']
+SVC_ICONS = ['layout', 'craft', 'globe', 'server', 'mail']
+SVC_SCENES = ['build', 'fix', 'domain', 'host', 'mail']   # which little scene plays for each service, in the same order
 
 
 def svc_scene(i):
-    if i == 0:   # one design that fits every screen, made of your own things
+    k = SVC_SCENES[i]
+    if k == 'build':   # one design that fits every screen, made of your own things
         return f'''<div class="sc sc-build">
                 <div class="rs-frame"><div class="rs-bar"><span class="dw-dots"><i></i><i></i><i></i></span></div>
                   <div class="rs-page"><i class="rs-h"></i><i class="rs-l"></i><i class="rs-b"></i>
                     <div class="rs-grid"><i></i><i></i><i></i></div></div></div>
                 <ul class="sc-ticks" role="list"><li>{icon('check')}Your words</li><li>{icon('check')}Your photos</li><li>{icon('check')}Your colors</li><li>{icon('check')}Every screen size</li></ul>
               </div>'''
-    if i == 1:   # find the name, register it to you, point it at the site
+    if k == 'fix':   # something broken, fixed; one page added
+        return f'''<div class="sc sc-fix">
+                <div class="fx-row">
+                  <div class="fx-page"><i class="fx-h"></i><i class="fx-l"></i><div class="fx-bad">Form not sending</div></div>
+                  <span class="fx-arrow">{icon('arrow')}</span>
+                  <div class="fx-page"><i class="fx-h"></i><i class="fx-l"></i><div class="fx-good">{icon('check')}Fixed</div></div>
+                </div>
+                <div class="fx-new">{icon('plus')}<span><strong>One new page</strong>Added to the site you already have</span></div>
+              </div>'''
+    if k == 'domain':   # find the name, register it to you, point it at the site
         return f'''<div class="sc sc-domain">
                 <div class="dm-search">{icon('globe')}<span class="dm-type">yourbusiness.com</span></div>
                 <div class="dm-result"><span class="dm-name">yourbusiness.com</span><span class="dm-avail">Available</span><span class="dm-own">{icon('check')}Registered to you</span></div>
                 <div class="dm-link"><span class="dm-line"></span><span class="dm-site"><i></i><i></i><i></i></span><span class="dm-cap">Points to your new site</span></div>
               </div>'''
-    if i == 2:   # you ask, it's done
+    if k == 'host':   # you ask, it's done
         return f'''<div class="sc sc-host">
                 <div class="hs-status"><span class="hs-dot"></span>Your site is online</div>
                 <div class="hs-msg hs-you"><small>You</small>Can we add our holiday hours?</div>
@@ -324,9 +339,10 @@ def work_list(sites):
 
 # ---- Questions people ask -------------------------------------------------------------------
 FAQS = [('How much does a website cost?', f'Starter sites begin at ${STARTER_FROM} and larger ones at ${LARGER_FROM}; the <a class="link" href="pricing.html">Pricing</a> page has the details. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
+        ('Do you take on smaller jobs?', f'Yes. A fix on the site you have, one new page, or a refresh of your photos and words. Smaller jobs take days, not weeks, and start at ${FIX_FROM}. Same rule as everything else: a price in writing first.'),
         ('How long does it take?', 'About 30 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
-        ('What do you need from me?', 'Answers to the fourteen questions, then a conversation. A logo and photos of your work help if you have them. If you don’t, we’ll work it out.'),
+        ('What do you need from me?', 'Answers to the six questions, then a conversation. A logo and photos of your work help if you have them. If you don’t, we’ll work it out.'),
         ('Can I make changes after it’s live?', f'Yes. The <a class="link" href="care.html">care plan</a> covers hosting, small changes and fixes for ${CARE_MONTH} a month, or you can take the files and look after it yourself. You choose in the form.'),
         ('Do you work outside my area?', 'Yes. The whole project runs over calls, email and shared links, so where you’re based doesn’t matter.'),
         ('Do you do social media or Google Business Profiles?', 'No. I stick to websites, domains, hosting and email, and do them well.')]
@@ -356,7 +372,7 @@ def close_section(hid='close-h', line='Let’s talk about yours.'):
       <div class="wrap close">
         <h2 id="{hid}" data-reveal>{line}</h2>
         <div class="close-side" data-reveal>
-          <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
+          <p>Six quick questions, about two minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
           <form class="close-form" action="start.html" method="get">
             <label for="{hid}-biz">Your business name</label>
             <div class="close-row">
@@ -471,7 +487,7 @@ mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
 for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'timeline', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
-           'STARTER_FROM', 'LARGER_FROM', 'CARE_MONTH'):
+           'STARTER_FROM', 'LARGER_FROM', 'CARE_MONTH', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM'):
     setattr(mod, _n, globals()[_n])
 mod.read = read
 mod.WAYS = WAYS

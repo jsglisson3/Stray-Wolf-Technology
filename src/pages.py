@@ -143,32 +143,18 @@ page('about.html', 'About | Stray Wolf Technology',
 
 # ---------------------------------------------------------------- Start a project (the intake)
 
-SECTIONS = [('qs-business', 'About your business'), ('qs-goal', 'The goal'), ('qs-have', 'What you already have'),
-            ('qs-look', 'Look and feel'), ('qs-practical', 'The practical stuff'), ('qs-reach', 'How to reach you')]
-
 if WAYS:
     talk = '<div class="aside-block"><h2 class="aside-h">Rather talk first?</h2>\n            <ul class="reach-list" role="list">' + ''.join(f'<li>{x}</li>' for x in WAYS) + '</ul></div>'
 else:
     talk = '<div class="aside-block aside-tip"><p><strong>Just have a question?</strong> Put it in the last box. You don’t need every answer to send the form.</p></div>'
 
-progress = f'''<nav class="progress-card" aria-label="Form sections" data-progress>
-            <div class="progress-top">
-              <p class="progress-h">Your answers</p>
-              <p class="progress-count" aria-live="polite"><span data-progress-done>0</span> of <span data-progress-total>17</span></p>
-            </div>
-            <div class="progress-bar" aria-hidden="true"><span data-progress-bar></span></div>
-            <ol class="progress-list" role="list">{''.join(f'<li><a href="#{sid}" data-progress-link="{sid}"><span class="pl-n" aria-hidden="true">{n}</span><span>{name}</span><span class="pl-check" aria-hidden="true">{icon("check")}</span></a></li>' for n, (sid, name) in enumerate(SECTIONS, 1))}</ol>
-          </nav>'''
-
-start_main = page_head('Tell me about <em>your business.</em>', 'Fourteen questions, about five minutes. I read every answer before I start, and you’ll hear from me within five days.',
-                       ['About 5 minutes', 'Only 4 questions are required', 'A reply within 5 days'], cls=' page-head-start') + f'''
+start_main = page_head('Tell me about <em>your business.</em>', 'Six quick questions, about two minutes. I read every answer, and you’ll hear from me within five days. The rest we work out on a call.',
+                       ['About 2 minutes', 'Most answers are optional', 'A reply within 5 days'], cls=' page-head-start') + f'''
     <section class="section section-tight start-section" aria-label="The questions">
       <div class="wrap start-grid">
         <h2 id="start-h" class="visually-hidden">The questions</h2>
-        <div class="mini-progress" aria-hidden="true"><span class="mini-label" data-mini-label>About your business</span><span class="mini-count"><span data-progress-done>0</span>/<span data-progress-total>17</span></span><span class="mini-bar"><span data-progress-bar></span></span></div>
         {form}
         <div class="start-aside">
-          {progress}
           <div class="aside-block">
             <h2 class="aside-h">What happens next</h2>
             <ol class="next-steps" role="list">
@@ -183,7 +169,7 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Fourteen questi
     </section>'''
 
 page('start.html', 'Start a project | Stray Wolf Technology',
-     'Fourteen quick questions about your business and your website. Answer them and Jeremy replies within five days.',
+     'Six quick questions about your business and your website, about two minutes. Answer them and Jeremy replies within five days.',
      start_main, current='start.html', body_class='inner page-start')
 
 
@@ -225,7 +211,7 @@ page('thanks.html', 'Thanks | Stray Wolf Technology', 'Your answers are in.', th
 
 lost_main = end_page('That page isn’t here.', 'The link may be old, or the address may have a typo. One of these should get you where you were going.',
                      go_cards([('index.html', 'compass', 'Home', 'Start from the top'), ('work.html', 'layout', 'Work', 'Sites I’ve built'),
-                               ('about.html', 'person', 'About', 'One person, start to finish'), ('start.html', 'send', 'Start a project', 'About five minutes')], 'Pages on this site'),
+                               ('about.html', 'person', 'About', 'One person, start to finish'), ('start.html', 'send', 'Start a project', 'About two minutes')], 'Pages on this site'),
                      '', '<p class="end-404">404</p>' + WOLF)
 
 page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not be found.', lost_main)
@@ -238,6 +224,7 @@ page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not 
 RATES = [
     ('A starter site', STARTER_FROM, 'Up to five pages: home, about, what you do, your work, contact. Written with you, designed and built by hand, made for phones. Domain and business email set up.', 'What most owner-run businesses need.'),
     ('A larger site', LARGER_FROM, 'More pages, or a site that does more: online booking, a menu or price list you change yourself, a gallery that grows, a small shop.', 'For a business with more to show, or more to sell.'),
+    ('A fix, a page or a refresh', FIX_FROM, f'Something broken, fixed, from ${FIX_FROM}. One new page added to your site, from ${PAGE_FROM}. New photos and words across the pages you have, from ${REFRESH_FROM}. Days, not weeks.', 'For a website you already have.'),
 ]
 INCLUDED = [
     ('Help with the words', 'You know your business. I help turn that into clear pages people actually read.'),

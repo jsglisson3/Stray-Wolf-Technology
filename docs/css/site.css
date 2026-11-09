@@ -480,6 +480,30 @@ a.mount-pic:hover img { transform: scale(1.012); }
 .hs-me { background: var(--ink); color: var(--on-ink); box-shadow: none; }
 .dm-line { background: repeating-linear-gradient(90deg, var(--accent) 0 8px, transparent 8px 14px); }
 
+/* fixes and single pages: a broken block fixed, one page added */
+.sc-fix { width: min(100%, 28rem); gap: 1rem; }
+.fx-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0.75rem; }
+.fx-page { display: grid; gap: 0.5rem; align-content: start; min-height: 8.5rem; padding: 0.9rem; background: var(--white); border: 1px solid var(--line); }
+.fx-page i { display: block; height: 0.5rem; background: var(--stone-2); }
+.fx-page i.fx-h { width: 60%; height: 0.8rem; background: var(--ink); }
+.fx-page i.fx-l { width: 85%; }
+.fx-bad, .fx-good { justify-self: start; margin-top: 0.4rem; padding: 0.45rem 0.6rem; font-size: var(--t-small); font-weight: 600; line-height: 1.2; }
+.fx-bad { border: 1.5px dashed var(--accent); color: var(--accent-dark); }
+.fx-good { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--good-tint); color: var(--good); }
+.fx-good .icon { width: 1.15rem; height: 1.15rem; padding: 0.2rem; border-radius: 50%; background: var(--good); color: #fff; }
+.fx-arrow { display: grid; }
+.fx-arrow .icon { width: 1.4rem; height: 1.4rem; color: var(--accent); }
+.fx-new { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem; background: var(--white); border: 1px solid var(--line); font-size: var(--t-small); line-height: 1.3; }
+.fx-new > .icon { width: 1.6rem; height: 1.6rem; padding: 0.35rem; background: var(--ink); color: var(--on-ink); flex: none; }
+.fx-new strong { display: block; font-size: var(--t-body); }
+@media (prefers-reduced-motion: no-preference) {
+  .svc-panel.is-active .fx-row > .fx-page:first-child { animation: rise 500ms var(--ease-out) 200ms both; }
+  .svc-panel.is-active .fx-arrow { animation: rise 500ms var(--ease-out) 900ms both; }
+  .svc-panel.is-active .fx-row > .fx-page:last-child { animation: rise 500ms var(--ease-out) 1200ms both; }
+  .svc-panel.is-active .fx-good { animation: pop-in 600ms var(--ease-spring) 1900ms both; }
+  .svc-panel.is-active .fx-new { animation: rise 500ms var(--ease-out) 2700ms both; }
+}
+
 /* ------------------------------------------------------------------ Fields (shared by the intake form and the close) */
 .field { width: 100%; font: inherit; color: var(--ink); background: var(--paper-2); border: 0; border-radius: var(--r); padding: 0.85rem 1rem; min-height: 3.25rem; box-shadow: inset 0 0 0 1.5px var(--line-2); transition: box-shadow 180ms ease, background 180ms ease; }
 .field::placeholder { color: #7D766C; }
@@ -536,25 +560,9 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .start-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s6) var(--s5); align-items: start; }
 .start-grid > .intake { grid-column: 1 / span 8; }
 .start-aside { grid-column: 9 / -1; position: sticky; top: 6.5rem; display: grid; gap: var(--s6); }
-.progress-card { padding-top: var(--s4); border-top: var(--rule); }
 .aside-block { padding-top: var(--s4); border-top: var(--rule); }
-.progress-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
-.progress-h, .aside-h { font-family: var(--display); font-weight: 500; font-size: var(--t-h4); letter-spacing: -0.02em; line-height: 1.1; }
+.aside-h { font-family: var(--display); font-weight: 500; font-size: var(--t-h4); letter-spacing: -0.02em; line-height: 1.1; }
 .aside-h { margin-bottom: var(--s4); }
-.progress-count { font-weight: 600; font-size: var(--t-small); font-variant-numeric: tabular-nums; }
-.progress-bar, .mini-bar { display: block; height: 4px; background: var(--stone-2); overflow: hidden; margin: 0.9rem 0 0.6rem; }
-.progress-bar span, .mini-bar span { display: block; height: 100%; width: 100%; background: var(--accent); transform-origin: left; transform: scaleX(var(--done, 0)); transition: transform 500ms var(--ease-out); }
-.progress-list { display: grid; }
-.progress-list li + li { border-top: var(--rule-soft); }
-.progress-list a { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0; text-decoration: none; font-weight: 500; color: var(--muted); transition: color 160ms ease; }
-.progress-list a:hover { color: var(--ink); }
-.progress-list a.is-current { color: var(--ink); font-weight: 650; }
-.pl-n { width: 1.5rem; flex: none; font-weight: 650; font-size: var(--t-small); font-variant-numeric: tabular-nums; color: inherit; }
-.progress-list a.is-current .pl-n { color: var(--accent-dark); }
-.pl-check { margin-left: auto; color: var(--good); opacity: 0; transform: scale(0.6); transition: opacity 200ms ease, transform 300ms var(--ease-spring); }
-.pl-check .icon { width: 1.1rem; height: 1.1rem; }
-.progress-list a.is-started { color: var(--ink); }
-.progress-list a.is-started .pl-check { opacity: 1; transform: none; }
 .next-steps { display: grid; }
 .next-steps li { padding: 0.75rem 0; line-height: 1.4; }
 .next-steps li + li { border-top: var(--rule-soft); }
@@ -562,14 +570,9 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .next-steps strong { display: block; font-weight: 650; }
 .aside-tip { padding: 1.1rem 1.25rem; border-top: 0; background: var(--stone); }
 .reach-list li + li { margin-top: 0.4rem; }
-.mini-progress { display: none; }
 @media (max-width: 63.99em) {
   .start-grid > .intake, .start-aside { grid-column: 1 / -1; }
   .start-aside { position: static; order: 2; }
-  .progress-card { display: none; }
-  .mini-progress { display: grid; grid-column: 1 / -1; grid-template-columns: 1fr auto; align-items: center; gap: 0.25rem 1rem; position: sticky; top: 0; z-index: 5; margin-inline: calc(var(--gutter) * -1); padding: 0.75rem var(--gutter) 0; background: var(--paper); border-bottom: var(--rule); font-weight: 600; font-size: var(--t-small); }
-  .mini-count { font-variant-numeric: tabular-nums; }
-  .mini-bar { grid-column: 1 / -1; margin: 0.25rem 0 0.75rem; height: 3px; }
 }
 
 /* the form (class names come from src/partials/intake-form.html) */
@@ -577,7 +580,6 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .qs { border: 0; display: grid; gap: var(--s5); min-width: 0; padding-top: var(--s4); border-top: var(--rule); scroll-margin-top: 6.5rem; }
 .qs-h { float: left; width: 100%; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; font-family: var(--display); font-weight: 500; font-size: var(--t-h3); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: var(--s2); }
 .qs-h + * { clear: both; }
-.qs-n { order: 2; flex: none; font-family: var(--display); font-weight: 500; font-size: var(--t-small); letter-spacing: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
 .q { display: grid; gap: 0.55rem; border: 0; min-width: 0; }
 .q > label, .q > legend { font-weight: 600; line-height: 1.35; }
 .q > legend { margin-bottom: 0.6rem; float: left; width: 100%; }
@@ -603,10 +605,6 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .error-summary ul { padding-left: 1.25rem; list-style: disc; }
 .error-summary a { color: var(--error); font-weight: 500; }
 .form-actions { display: grid; gap: var(--s4); justify-items: start; background: var(--stone); padding: clamp(1.5rem, 3.5vw, 2.5rem); border-top: var(--rule); }
-.form-ready { display: flex; gap: 0.6rem; align-items: flex-start; font-size: var(--t-small); max-width: 52ch; color: var(--muted); }
-.form-ready .icon { width: 1.25rem; height: 1.25rem; flex: none; padding: 0.15rem; border-radius: 50%; background: var(--stone-2); color: var(--muted); transition: background 300ms ease, color 300ms ease; }
-.form-ready.is-ready { color: var(--ink); }
-.form-ready.is-ready .icon { background: var(--good); color: #fff; }
 .button-big { font-size: 1.125rem; }
 .form-fine { font-size: var(--t-small); max-width: 56ch; color: var(--muted); }
 .form-fine a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 0.2em; }

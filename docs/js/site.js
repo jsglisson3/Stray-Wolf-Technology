@@ -272,48 +272,6 @@
   const faqs = document.querySelectorAll('.faq');
   faqs.forEach((d) => d.addEventListener('toggle', () => { if (d.open) faqs.forEach((o) => { if (o !== d) o.open = false; }); }));
 
-  /* ---- Start a project: count the answers, tick off each section, show where you are ---- */
-  const form = document.querySelector('[data-intake]');
-  if (form) {
-    const groups = Array.from(form.querySelectorAll('[data-qs]'));
-    const qs = Array.from(form.querySelectorAll('[data-qs] .q')).filter((q) => !q.closest('.visually-hidden'));
-    const answered = (q) => Array.from(q.querySelectorAll('input, textarea')).some((el) => (el.type === 'checkbox' || el.type === 'radio') ? el.checked : el.value.trim() !== '');
-    const ready = form.querySelector('[data-form-ready]');
-    const readyText = ready ? ready.querySelector('span').textContent : '';
-    const mini = document.querySelector('[data-mini-label]');
-    const tally = () => {
-      const done = qs.filter(answered).length;
-      document.querySelectorAll('[data-progress-done]').forEach((el) => { el.textContent = done; });
-      document.querySelectorAll('[data-progress-total]').forEach((el) => { el.textContent = qs.length; });
-      document.querySelectorAll('[data-progress-bar]').forEach((el) => el.style.setProperty('--done', (done / qs.length).toFixed(3)));
-      groups.forEach((g) => {
-        const link = document.querySelector(`[data-progress-link="${g.id}"]`);
-        if (link) link.classList.toggle('is-started', Array.from(g.querySelectorAll('.q')).some(answered));
-      });
-      if (ready) {
-        const ok = Array.from(form.querySelectorAll('[required]')).every((el) => el.value.trim() !== '' && (el.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim())));
-        ready.classList.toggle('is-ready', ok);
-        ready.querySelector('span').textContent = ok ? 'All the required answers are in. Add anything else you like, then send.' : readyText;
-      }
-    };
-    form.addEventListener('input', tally);
-    form.addEventListener('change', tally);
-    tally();
-    setTimeout(tally, 50);   // after the business name is carried over from the homepage
-    if ('IntersectionObserver' in window) {
-      const seen = new Map();
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => seen.set(e.target, e.isIntersecting ? e.intersectionRatio : 0));
-        let best = null; let r = 0;
-        seen.forEach((v, k) => { if (v > r) { r = v; best = k; } });
-        if (!best) return;
-        document.querySelectorAll('[data-progress-link]').forEach((a) => a.classList.toggle('is-current', a.dataset.progressLink === best.id));
-        if (mini) mini.textContent = best.querySelector('legend').textContent.replace(/^[\d\s/]+/, '').trim();
-      }, { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: '-20% 0px -40% 0px' });
-      groups.forEach((g) => io.observe(g));
-    }
-  }
-
   /* ---- About: is this a fit? Three yes/no questions, answered on the page, sent nowhere ---- */
   document.querySelectorAll('[data-fitcheck]').forEach((box) => {
     const result = box.querySelector('[data-fit-result]');
@@ -336,7 +294,7 @@
       } else if (ref === 'no') {
         say('is-maybe', 'Could well be a fit.', 'I work mostly by referral, but tell me about your business and I’ll give you a straight answer within five days.', true);
       } else {
-        say('is-yes', 'Sounds like a fit.', 'Fourteen questions, about five minutes, and you’ll hear from me within five days with a price in writing.', true);
+        say('is-yes', 'Sounds like a fit.', 'Six quick questions, about two minutes, and you’ll hear from me within five days with a price in writing.', true);
       }
     };
     box.querySelectorAll('[data-fq]').forEach((row) => {

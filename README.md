@@ -19,7 +19,7 @@ Start with **PICKUP.md**. It has where things stand, the before-launch list and 
 | `src/home.html` | The homepage's order of sections (each section is built in `tools/build.py`). |
 | `src/pages.py` | Work, Pricing, Care plan, Reviews, About, Start a project, thanks, privacy and the 404 page. |
 | `src/sites.py` | The list of websites shown on the Work page and in the homepage carousel. |
-| `src/partials/` | The fourteen questions (`intake-form.html`) and the icon set. |
+| `src/partials/` | The six questions (`intake-form.html`) and the icon set. |
 | `tools/build.py` | Rebuilds every page in `docs/` from `src/`. The settings block at the top holds the domain, the version number, the contact details and the prices. |
 | `tools/` (other) | Helpers: accessibility checker (`a11y-check.js`), share-image source (`og-card.html`), the small logo files (`make-icons.js`: tab icon, phone home-screen icons, the logo for Google), screenshot tool (`shot.js`), curly-quote pass (`typeset.py`). |
 

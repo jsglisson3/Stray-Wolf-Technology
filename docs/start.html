@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Start a project | Stray Wolf Technology</title>
-  <meta name="description" content="Fourteen quick questions about your business and your website. Answer them and Jeremy replies within five days.">
+  <meta name="description" content="Six quick questions about your business and your website, about two minutes. Answer them and Jeremy replies within five days.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://straywolftech.com/start.html">
   <meta name="color-scheme" content="light">
@@ -15,7 +15,7 @@
   <meta property="og:site_name" content="Stray Wolf Technology">
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Start a project | Stray Wolf Technology">
-  <meta property="og:description" content="Fourteen quick questions about your business and your website. Answer them and Jeremy replies within five days.">
+  <meta property="og:description" content="Six quick questions about your business and your website, about two minutes. Answer them and Jeremy replies within five days.">
   <meta property="og:url" content="https://straywolftech.com/start.html">
   <meta property="og:image" content="https://straywolftech.com/images/og-card.jpg">
   <meta property="og:image:type" content="image/jpeg">
@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=12">
+  <link rel="stylesheet" href="css/site.css?v=13">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="inner page-start">
@@ -101,13 +101,12 @@
     <section class="page-head page-head-start">
       <div class="wrap page-head-grid">
         <h1 class="h1">Tell me about <em>your business.</em></h1>
-        <div class="page-head-side"><p class="lead">Fourteen questions, about five minutes. I read every answer before I start, and you’ll hear from me within five days.</p><ul class="page-notes" role="list"><li>About 5 minutes</li><li>Only 4 questions are required</li><li>A reply within 5 days</li></ul></div>
+        <div class="page-head-side"><p class="lead">Six quick questions, about two minutes. I read every answer, and you’ll hear from me within five days. The rest we work out on a call.</p><ul class="page-notes" role="list"><li>About 2 minutes</li><li>Most answers are optional</li><li>A reply within 5 days</li></ul></div>
       </div>
     </section>
     <section class="section section-tight start-section" aria-label="The questions">
       <div class="wrap start-grid">
         <h2 id="start-h" class="visually-hidden">The questions</h2>
-        <div class="mini-progress" aria-hidden="true"><span class="mini-label" data-mini-label>About your business</span><span class="mini-count"><span data-progress-done>0</span>/<span data-progress-total>17</span></span><span class="mini-bar"><span data-progress-bar></span></span></div>
         <form class="intake" method="post" action="https://api.web3forms.com/submit" novalidate data-intake data-fallback-email="info@straywolftech.com" aria-labelledby="start-h">
           <!-- Web3Forms: the access key comes from WEB3FORMS_KEY in tools/build.py. While it is empty, the form opens a pre-filled email instead, so nothing is lost. -->
           <input type="hidden" name="access_key" value="0cf93fa5-b765-42a7-9364-2d5a1517d084" data-access-key>
@@ -120,126 +119,45 @@
             <ul></ul>
           </div>
 
-          <fieldset class="qs" id="qs-business" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">1 / 6</span>About your business</legend>
+          <fieldset class="qs" id="qs-project" data-qs>
+            <legend class="qs-h">Your project</legend>
+            <fieldset class="q">
+              <legend>What do you need?</legend>
+              <div class="picks">
+                <label class="pick"><input type="radio" name="project_kind" value="A new website"><span>A new website</span></label>
+                <label class="pick"><input type="radio" name="project_kind" value="Changes to the website I have"><span>Changes to the website I have</span></label>
+              </div>
+            </fieldset>
             <div class="q">
               <label for="q-business">Business name <span class="req">(required)</span></label>
               <input class="field" id="q-business" name="business_name" type="text" autocomplete="organization" required>
             </div>
             <div class="q">
-              <label for="q-what">What do you do? <span class="req">(required)</span></label>
-              <textarea class="field" id="q-what" name="what_you_do" rows="2" maxlength="600" required></textarea>
+              <label for="q-what">What do you do, and who are your customers? <span class="req">(required)</span></label>
+              <textarea class="field" id="q-what" name="what_you_do" rows="3" maxlength="800" required></textarea>
             </div>
             <fieldset class="q">
-              <legend>Where are your customers?</legend>
-              <div class="picks">
-                <label class="pick"><input type="radio" name="customers_where" value="Local"><span>Local</span></label>
-                <label class="pick"><input type="radio" name="customers_where" value="A few states"><span>A few states</span></label>
-                <label class="pick"><input type="radio" name="customers_where" value="Nationwide"><span>Nationwide</span></label>
-                <label class="pick"><input type="radio" name="customers_where" value="Online only"><span>Online only</span></label>
-              </div>
-            </fieldset>
-            <div class="q">
-              <label for="q-best">Who’s your best kind of customer?</label>
-              <textarea class="field" id="q-best" name="best_customer" rows="2" maxlength="600"></textarea>
-            </div>
-          </fieldset>
-
-          <fieldset class="qs" id="qs-goal" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">2 / 6</span>The goal</legend>
-            <fieldset class="q">
-              <legend>Besides a professional place online, what’s the main goal of the website? <span class="opt">(pick any)</span></legend>
+              <legend>What should the website do for you? <span class="opt">(pick any)</span></legend>
               <div class="picks">
                 <label class="pick"><input type="checkbox" name="goal_new_customers" value="Yes"><span>Bring in new customers</span></label>
-                <label class="pick"><input type="checkbox" name="goal_calls_quotes" value="Yes"><span>Get calls or quote requests</span></label>
                 <label class="pick"><input type="checkbox" name="goal_show_work" value="Yes"><span>Show off my work</span></label>
+                <label class="pick"><input type="checkbox" name="goal_calls_quotes" value="Yes"><span>Get calls or quote requests</span></label>
                 <label class="pick"><input type="checkbox" name="goal_bookings" value="Yes"><span>Book appointments</span></label>
                 <label class="pick"><input type="checkbox" name="goal_sell_online" value="Yes"><span>Sell online</span></label>
-                <label class="pick"><input type="checkbox" name="goal_something_else" value="Yes"><span>Something else</span></label>
               </div>
             </fieldset>
-            <div class="q">
-              <label for="q-one">When someone lands on your site, what’s the one thing you want them to do?</label>
-              <input class="field" id="q-one" name="one_thing" type="text" maxlength="200">
-            </div>
-          </fieldset>
-
-          <fieldset class="qs" id="qs-have" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">3 / 6</span>What you already have</legend>
             <div class="q">
               <label for="q-site">Do you have a website now? <span class="opt">(paste the link)</span></label>
               <input class="field" id="q-site" name="current_site" type="text" inputmode="url" autocomplete="url">
             </div>
             <div class="q">
-              <label for="q-site-notes">What do you like and dislike about it?</label>
-              <textarea class="field" id="q-site-notes" name="current_site_notes" rows="2" maxlength="600"></textarea>
-            </div>
-            <fieldset class="q">
-              <legend>Which of these do you have? <span class="opt">(pick any)</span></legend>
-              <div class="picks">
-                <label class="pick"><input type="checkbox" name="have_domain" value="Yes"><span>A domain name</span></label>
-                <label class="pick"><input type="checkbox" name="have_logo" value="Yes"><span>A logo</span></label>
-                <label class="pick"><input type="checkbox" name="have_photos" value="Yes"><span>Photos of my work</span></label>
-              </div>
-            </fieldset>
-            <fieldset class="q">
-              <legend>Do you have a Google Business Profile, Facebook or Instagram? <span class="opt">(pick any)</span></legend>
-              <div class="picks">
-                <label class="pick"><input type="checkbox" name="has_google_profile" value="Yes"><span>Google Business Profile</span></label>
-                <label class="pick"><input type="checkbox" name="has_facebook" value="Yes"><span>Facebook</span></label>
-                <label class="pick"><input type="checkbox" name="has_instagram" value="Yes"><span>Instagram</span></label>
-              </div>
-              <label class="sub-label" for="q-profiles">Links, if you have them handy</label>
-              <input class="field" id="q-profiles" name="profile_links" type="text" maxlength="400">
-            </fieldset>
-          </fieldset>
-
-          <fieldset class="qs" id="qs-look" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">4 / 6</span>Look and feel</legend>
-            <div class="q">
-              <label for="q-likes">Name two or three websites you like, from any industry, and what you like about them.</label>
-              <textarea class="field" id="q-likes" name="sites_you_like" rows="3" maxlength="800"></textarea>
-            </div>
-            <div class="q">
-              <label for="q-words">Three words you want people to feel about your business.</label>
-              <input class="field" id="q-words" name="three_words" type="text" maxlength="120">
-            </div>
-          </fieldset>
-
-          <fieldset class="qs" id="qs-practical" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">5 / 6</span>The practical stuff</legend>
-            <div class="q">
-              <label for="q-pages">What pages or services need to be on the site?</label>
-              <textarea class="field" id="q-pages" name="pages_needed" rows="2" maxlength="600"></textarea>
-            </div>
-            <fieldset class="q">
-              <legend>Will you write the text, or want help with it?</legend>
-              <div class="picks">
-                <label class="pick"><input type="radio" name="writing" value="I'll write it"><span>I’ll write it</span></label>
-                <label class="pick"><input type="radio" name="writing" value="I want help"><span>I want help</span></label>
-                <label class="pick"><input type="radio" name="writing" value="Not sure yet"><span>Not sure yet</span></label>
-              </div>
-            </fieldset>
-            <div class="q">
-              <label for="q-deadline">Any deadline or date that matters?</label>
-              <input class="field" id="q-deadline" name="deadline" type="text" maxlength="200">
-            </div>
-            <fieldset class="q">
-              <legend>Who will make small updates after it’s live?</legend>
-              <div class="picks">
-                <label class="pick"><input type="radio" name="updates_by" value="Me"><span>Me</span></label>
-                <label class="pick"><input type="radio" name="updates_by" value="Jeremy"><span>Jeremy</span></label>
-                <label class="pick"><input type="radio" name="updates_by" value="Not sure yet"><span>Not sure yet</span></label>
-              </div>
-            </fieldset>
-            <div class="q">
-              <label for="q-else">Anything else I should know?</label>
+              <label for="q-else">Anything else? <span class="opt">(websites you like, a deadline, a question)</span></label>
               <textarea class="field" id="q-else" name="anything_else" rows="3" maxlength="1000"></textarea>
             </div>
           </fieldset>
 
           <fieldset class="qs" id="qs-reach" data-qs>
-            <legend class="qs-h"><span class="qs-n" aria-hidden="true">6 / 6</span>How to reach you</legend>
+            <legend class="qs-h">How to reach you</legend>
             <div class="q-row">
               <div class="q">
                 <label for="q-name">Your name <span class="req">(required)</span></label>
@@ -261,22 +179,13 @@
           </fieldset>
 
           <div class="form-actions">
-            <p class="form-ready" data-form-ready><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Ready when you are. Only your business name, what you do, your name and email are required.</span></p>
             <button class="button button-lg button-big" type="submit">Send my answers<svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></button>
-            <p class="form-fine">Your answers go straight to Jeremy and are only used for your project (<a href="privacy.html">privacy</a>). You’ll hear back within five days.</p>
+            <p class="form-fine">Your answers go straight to Jeremy and are only used for your project (<a href="privacy.html">privacy</a>). You’ll hear back within five days. The rest we work out on a call.</p>
             <p class="form-status" role="status" aria-live="polite" tabindex="-1" data-form-status></p>
           </div>
         </form>
 
         <div class="start-aside">
-          <nav class="progress-card" aria-label="Form sections" data-progress>
-            <div class="progress-top">
-              <p class="progress-h">Your answers</p>
-              <p class="progress-count" aria-live="polite"><span data-progress-done>0</span> of <span data-progress-total>17</span></p>
-            </div>
-            <div class="progress-bar" aria-hidden="true"><span data-progress-bar></span></div>
-            <ol class="progress-list" role="list"><li><a href="#qs-business" data-progress-link="qs-business"><span class="pl-n" aria-hidden="true">1</span><span>About your business</span><span class="pl-check" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></a></li><li><a href="#qs-goal" data-progress-link="qs-goal"><span class="pl-n" aria-hidden="true">2</span><span>The goal</span><span class="pl-check" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></a></li><li><a href="#qs-have" data-progress-link="qs-have"><span class="pl-n" aria-hidden="true">3</span><span>What you already have</span><span class="pl-check" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></a></li><li><a href="#qs-look" data-progress-link="qs-look"><span class="pl-n" aria-hidden="true">4</span><span>Look and feel</span><span class="pl-check" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></a></li><li><a href="#qs-practical" data-progress-link="qs-practical"><span class="pl-n" aria-hidden="true">5</span><span>The practical stuff</span><span class="pl-check" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></a></li><li><a href="#qs-reach" data-progress-link="qs-reach"><span class="pl-n" aria-hidden="true">6</span><span>How to reach you</span><span class="pl-check" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span></a></li></ol>
-          </nav>
           <div class="aside-block">
             <h2 class="aside-h">What happens next</h2>
             <ol class="next-steps" role="list">
@@ -297,7 +206,7 @@
       <div class="foot-about">
         <a class="foot-brand" href="index.html"><img src="images/brand/stray-wolf-logo-color.svg" width="642" height="150" alt="Stray Wolf Technology, home" loading="lazy" decoding="async"></a>
         <p class="foot-tag">Bespoke, hand-built websites. By referral, for owner-run businesses.</p>
-        <a class="foot-start" href="start.html"><span class="foot-start-ic"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></span><span><strong>Start a project</strong><small>Fourteen questions, about five minutes</small></span><svg class="icon foot-start-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="foot-start" href="start.html"><span class="foot-start-ic"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></span><span><strong>Start a project</strong><small>Six questions, about two minutes</small></span><svg class="icon foot-start-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <nav class="foot-col" aria-labelledby="foot-pages-h">
         <h2 class="foot-h" id="foot-pages-h">Pages</h2>
@@ -314,7 +223,7 @@
       </nav>
       <div class="foot-col">
         <h2 class="foot-h">What I do</h2>
-        <ul class="foot-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Website design and build</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Domain registration and setup</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg><span>Hosting and small updates</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>Business email setup</span></li></ul>
+        <ul class="foot-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Website design and build</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg><span>Fixes and single pages</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Domain registration and setup</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg><span>Hosting and small updates</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>Business email setup</span></li></ul>
       </div>
       <div class="foot-col foot-reach">
         <h2 class="foot-h">Reach Jeremy</h2>
@@ -327,6 +236,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=12" defer></script>
+  <script src="js/site.js?v=13" defer></script>
 </body>
 </html>

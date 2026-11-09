@@ -6,7 +6,7 @@ Last updated November 9, 2026, after the V12 round (V11's "print plate" redesign
 
 The site is rebuilt as **Stray Wolf Technology** (the rebrand of Firemark), in a clean, plain style: paper and stone, charcoal type, one orange. Headings are Outfit at medium weight (the orange accent at 600); text is Bricolage Grotesque; Zilla Slab lives in the logo only. (Nov 9: Zilla headings in v5, Instrument Serif in v7, Outfit from v8. The two instrument-serif woff2 files and their LICENSE in docs/fonts are unused now and safe to delete.) No illustration. Still a hidden **draft** (yellow banner, noindex) until launch.
 
-Pages: Home, Work, Pricing (first draft), Care plan (first draft), Reviews (coming soon), About, Start a project (the fourteen questions), thanks, privacy, 404.
+Pages: Home, Work, Pricing (first draft), Care plan (first draft), Reviews (coming soon), About, Start a project (the six questions), thanks, privacy, 404.
 
 About (v9 content, V11 look): hero "One person, start to finish." with a profile panel (the logo until `HEADSHOT = True`, then the photo; name, "Taking a few projects at a time", three facts) → "Six things you can count on" (six plain promises on a ruled grid) → "Is this a fit?" (three yes/no questions answered on the page by site.js, nothing sent; the answer text lives in site.js) → "No pack. One person." (the wolf on stone, the name story) → the closing card. No services block on About any more (it is on the homepage). `contact.html` and `brand.html` (old Firemark addresses) redirect.
 
@@ -92,3 +92,14 @@ Jeremy on the V10/V11 hero: "there is so much going on"; the site previews "need
 - Thanks and 404 pages: the small labels above the headings are gone. "Your colours" is now "Your colors".
 - VERSION is '12'.
 - Checks: axe 0 issues on all ten pages at 390 and 1440; no sideways scroll from 320 to 1920; the hero rotation, ruler, service tabs, carousel, questions, close form, start form, fit check and phone menu all tested with no console errors.
+
+## V13 (Nov 9, 2026): smaller jobs, and a much shorter form
+Jeremy wants fixes, single pages and refreshes offered as real work, not only whole sites (he just did one for Snip and Sprout Co). And he wants the Start a project form "much simpler", so nobody gets bogged down.
+- Pricing: a third row, "A fix, a page or a refresh", from `FIX_FROM` ($150, a suggestion to confirm), with `PAGE_FROM` and `REFRESH_FROM` ($400, $900) in the settings for later.
+- What I do: a new second tab, "Fixes and single pages", with its own little scene (a broken form fixed, one new page added). Five tabs now. The lead above the tabs mentions fixes and pages.
+- Homepage question: "Do you take on smaller jobs?" (yes, days not weeks, from $150, price in writing first). "How much does a website cost?" and "Can I make changes after it's live?" still point at Pricing and Care plan.
+- Start a project: fourteen questions in six sections became six questions and your contact details: what do you need (a new website, or changes to the one you have), business name, what you do and who your customers are, what the website should do (pick any), the link to the site you have, and anything else. Name, email and phone at the end. Only business name, what you do, name and email are required. The progress card, the sticky phone bar and the "ready" line are gone (site.js and the CSS too). Every mention of "fourteen questions, about five minutes" is now "six questions, about two minutes" (homepage steps and questions, close, footer, fit check).
+- Field names Web3Forms will show: project_kind, business_name, what_you_do, goal_new_customers, goal_show_work, goal_calls_quotes, goal_bookings, goal_sell_online, current_site, anything_else, name, email, phone.
+- VERSION is '13'.
+- Checks: axe 0 issues on all ten pages at 390 and 1440; no sideways scroll from 320 to 1920; hero rotation, ruler, service tabs (five), carousel, questions, close form, start form (9 fields, 4 required, validation), fit check and phone menu all tested with no console errors.
+- Still waiting on Jeremy: the prices (1,800 / 3,500 / 40 a month / 150 / 400 / 900), a live test send of the form, Dani's OK to list Snip and Sprout on Work.
