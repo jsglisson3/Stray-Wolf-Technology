@@ -21,12 +21,12 @@ VERSION = '12'                 # bump when docs/css/site.css or docs/js/site.js 
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
-EMAIL = ''                    # e.g. 'jeremy@straywolftech.com'  (shows in the footer and on the Start page)
+EMAIL = 'info@straywolftech.com'                    # e.g. 'jeremy@straywolftech.com'  (shows in the footer and on the Start page)
 PHONE = ''                    # e.g. '(469) 555-0123'            (same places; tap to call on phones)
 BOOKING_URL = ''              # e.g. a Cal.com or Calendly link for "Book a 15-minute call"
 HEADSHOT = False              # True once docs/images/jeremy.webp is a real photo (4:3 or square, 1200px wide or more); used on the About page
-WEB3FORMS_KEY = ''            # the access key from web3forms.com; until then the form opens a pre-filled email
-FALLBACK_EMAIL = 'jsglisson@gmail.com'   # where that pre-filled email goes. Swap for the straywolftech.com address once it exists.
+WEB3FORMS_KEY = '0cf93fa5-b765-42a7-9364-2d5a1517d084'            # the access key from web3forms.com; until then the form opens a pre-filled email
+FALLBACK_EMAIL = 'info@straywolftech.com'   # where the pre-filled email goes if the form service is ever unreachable
 
 # ---- Prices (FIRST DRAFT, Nov 9 2026: Jeremy's call; change the numbers here and rebuild) ----------
 STARTER_FROM = '1,800'        # a starter site, up to five pages ("from $...")
