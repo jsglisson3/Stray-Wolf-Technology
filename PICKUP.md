@@ -8,7 +8,7 @@ The site is rebuilt as **Stray Wolf Technology** (the rebrand of Firemark), in a
 
 Pages: Home, Work, About, Start a project (the fourteen questions), thanks, privacy, 404. `contact.html` and `brand.html` (old Firemark addresses) redirect.
 
-Homepage, top to bottom: the hero, How it works (three steps), What I do (four services), Who you'll work with, Recent work (one clean image and a link per site, in a carousel), the closing band, the footer.
+Homepage (v5), top to bottom: the hero (words on paper, and a charcoal panel where a small example website goes from sketch to finished), 01 The difference (the usual way vs. Stray Wolf), 02 How it works (four steps on a line that fills as you scroll), 03 What I do (four service tiles), 04 Who you'll work with (the story and four numbers), 05 Recent work (carousel in browser frames, TVIS first), 06 Questions (accordion), the closing card (type a business name, it carries into the form), the footer. The design system (colours, type, spacing, shadows, buttons, fields) is the `:root` block and the sections of `docs/css/site.css`; icons are in `src/partials/sprite.html`.
 
 Checks on this build:
 - Accessibility scan (axe): 0 issues on all seven pages at phone and desktop widths.
@@ -25,11 +25,11 @@ Preview of the current build: https://claude.ai/artifact/SNZHsAUkCtkusqKsvuurt5
 - Client sites: a simple list, one clean image and a link each, never case studies. On the homepage they sit near the end, in a carousel.
 - No Texas or personal-background copy on the site. Jeremy by first name only. Pricing stays "a price in writing", no numbers.
 - Promises: reply within five days; a price in writing before anything starts; live in about 45 days.
-- Hero layout: `HERO` in `tools/build.py` is `'A'`, `'B'` or `'C'` (the three mockups at https://claude.ai/artifact/TPeXbcUkEtfHxWK9ihi84d). Currently `'B'`.
+- Hero: the B layout (paper words, charcoal panel). The panel shows the sketch-to-site demo until `HEADSHOT = True`, then your photo.
 
 ## Settings block (top of `tools/build.py`)
 
-`DOMAIN`, `LAUNCHED`, `VERSION`, `HERO`, `EMAIL`, `PHONE`, `BOOKING_URL`, `HEADSHOT`, `WEB3FORMS_KEY`, `FALLBACK_EMAIL`. Anything empty is left off the site. Change a setting, rebuild, commit.
+`DOMAIN`, `LAUNCHED`, `VERSION`, `EMAIL`, `PHONE`, `BOOKING_URL`, `HEADSHOT`, `WEB3FORMS_KEY`, `FALLBACK_EMAIL`. Anything empty is left off the site. Change a setting, rebuild, commit.
 
 ## Add a site to Work
 
@@ -39,7 +39,6 @@ Preview of the current build: https://claude.ai/artifact/SNZHsAUkCtkusqKsvuurt5
 
 ## Before launch
 
-- [ ] **Pick the hero** (A, B or C) and set `HERO`.
 - [ ] **Turn on GitHub Pages for this repository**: Settings > Pages > Build and deployment > Source: **Deploy from a branch**, Branch: **main**, folder **/docs**, Save.
 - [ ] **Point straywolftech.com at it** (bought Nov 8, 2026 at Cloudflare Registrar, 2 years, auto-renew):
   1. In Cloudflare DNS for straywolftech.com, add four **A** records for `@` (DNS only, grey cloud): `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, and a **CNAME** `www` pointing to `jsglisson3.github.io` (DNS only).
@@ -47,7 +46,7 @@ Preview of the current build: https://claude.ai/artifact/SNZHsAUkCtkusqKsvuurt5
   3. For firemarktech.com: once Stray Wolf is live, add a Cloudflare **Redirect Rule** from `firemarktech.com/*` and `www.firemarktech.com/*` to `https://straywolftech.com/${1}` (301), and turn off Pages on the old Firemark repository so the two don't compete. Keep firemarktech.com registered while any old links exist.
 - [ ] **Email at the new domain**: Google Workspace on straywolftech.com (jeremy@ as the user, hello@ as a free alias), then set `EMAIL` and swap `FALLBACK_EMAIL`.
 - [ ] **Form service: Web3Forms**. Sign up at web3forms.com with the address the form should deliver to (free plan is enough). Paste the access key into `WEB3FORMS_KEY`, rebuild, send yourself a test. Until then the form opens a pre-filled email, so nothing is broken meanwhile.
-- [ ] **Headshot** (optional): save as `docs/images/jeremy.webp` (4:3, 1200px wide or more), set `HEADSHOT = True`. It replaces the logo tile in the hero and the About block.
+- [ ] **Headshot** (optional): save as `docs/images/jeremy.webp` (4:3, 1200px wide or more), set `HEADSHOT = True`. It replaces the demo in the hero and the logo panel on the About page.
 - [ ] Phone and booking link, if wanted (`PHONE`, `BOOKING_URL`).
 - [ ] Install the Claude GitHub App on this repository so Claude can push changes: https://github.com/apps/claude/installations/select_target
 

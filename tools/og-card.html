@@ -1,14 +1,13 @@
-<!-- The share image (docs/images/og-card.jpg). Open this file in a browser at 1200 x 630 and take a screenshot, or ask Claude to. -->
+<!-- The share image (docs/images/og-card.jpg): what shows when a link to the site is sent in a text, an email or a post.
+     Everything sits in the middle, so it still works when an app crops it to a square.
+     To remake it: node tools/shot.js tools/og-card.html, or ask Claude. -->
 <!doctype html><html><head><meta charset="utf-8"><style>
 @font-face { font-family: "Zilla Slab"; src: url("../docs/fonts/zilla-slab-latin-700.woff2") format("woff2"); font-weight: 700; }
-@font-face { font-family: "Bricolage Grotesque"; src: url("../docs/fonts/bricolage-grotesque-latin-opsz-normal.woff2") format("woff2"); font-weight: 200 800; }
-html, body { margin: 0; } body { width: 1200px; height: 630px; background: #F7F5F1; font-family: "Bricolage Grotesque", sans-serif; color: #24221F; display: grid; grid-template-columns: 1fr 440px; }
-.l { padding: 72px 0 72px 80px; display: grid; align-content: space-between; }
-.l img { height: 78px; width: auto; }
-h1 { font-family: "Zilla Slab", serif; font-size: 72px; line-height: 1.02; margin: 0; letter-spacing: -0.01em; max-width: 13ch; }
-p { font-size: 26px; color: #5B554D; margin: 18px 0 0; max-width: 24ch; line-height: 1.35; }
-.r { background: #24221F; display: grid; place-items: center; } .r img { width: 300px; }
+html, body { margin: 0; }
+body { width: 1200px; height: 630px; background: #24221F; display: grid; place-items: center; align-content: center; gap: 40px; }
+img { width: 400px; height: auto; display: block; }
+p { margin: 0; font-family: "Zilla Slab", Georgia, serif; font-weight: 700; font-size: 36px; letter-spacing: -0.005em; color: #C9C2B7; }
 </style></head><body>
-<div class="l"><img src="../docs/images/brand/stray-wolf-logo-color.svg"><div><h1>A website built around your needs.</h1><p>Bespoke, hand-built websites. By referral, anywhere in the US.</p></div></div>
-<div class="r"><img src="../docs/images/brand/stray-wolf-logo-stacked-reverse.svg"></div>
+<img src="../docs/images/brand/stray-wolf-logo-stacked-reverse.svg" alt="">
+<p>A website built around your needs.</p>
 </body></html>

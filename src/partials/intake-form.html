@@ -10,8 +10,8 @@
             <ul></ul>
           </div>
 
-          <fieldset class="qs">
-            <legend class="qs-h">About your business</legend>
+          <fieldset class="qs" id="qs-business" data-qs>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">01</span>About your business</legend>
             <div class="q">
               <label for="q-business">Business name <span class="req">(required)</span></label>
               <input class="field" id="q-business" name="business_name" type="text" autocomplete="organization" required>
@@ -35,8 +35,8 @@
             </div>
           </fieldset>
 
-          <fieldset class="qs">
-            <legend class="qs-h">The goal</legend>
+          <fieldset class="qs" id="qs-goal" data-qs>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">02</span>The goal</legend>
             <fieldset class="q">
               <legend>Besides a professional place online, what's the main goal of the website? <span class="opt">(pick any)</span></legend>
               <div class="picks">
@@ -54,8 +54,8 @@
             </div>
           </fieldset>
 
-          <fieldset class="qs">
-            <legend class="qs-h">What you already have</legend>
+          <fieldset class="qs" id="qs-have" data-qs>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">03</span>What you already have</legend>
             <div class="q">
               <label for="q-site">Do you have a website now? <span class="opt">(paste the link)</span></label>
               <input class="field" id="q-site" name="current_site" type="text" inputmode="url" autocomplete="url">
@@ -84,8 +84,8 @@
             </fieldset>
           </fieldset>
 
-          <fieldset class="qs">
-            <legend class="qs-h">Look and feel</legend>
+          <fieldset class="qs" id="qs-look" data-qs>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">04</span>Look and feel</legend>
             <div class="q">
               <label for="q-likes">Name two or three websites you like, from any industry, and what you like about them.</label>
               <textarea class="field" id="q-likes" name="sites_you_like" rows="3" maxlength="800"></textarea>
@@ -96,8 +96,8 @@
             </div>
           </fieldset>
 
-          <fieldset class="qs">
-            <legend class="qs-h">The practical stuff</legend>
+          <fieldset class="qs" id="qs-practical" data-qs>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">05</span>The practical stuff</legend>
             <div class="q">
               <label for="q-pages">What pages or services need to be on the site?</label>
               <textarea class="field" id="q-pages" name="pages_needed" rows="2" maxlength="600"></textarea>
@@ -128,8 +128,8 @@
             </div>
           </fieldset>
 
-          <fieldset class="qs">
-            <legend class="qs-h">How to reach you</legend>
+          <fieldset class="qs" id="qs-reach" data-qs>
+            <legend class="qs-h"><span class="qs-n" aria-hidden="true">06</span>How to reach you</legend>
             <div class="q-row">
               <div class="q">
                 <label for="q-name">Your name <span class="req">(required)</span></label>
@@ -151,7 +151,8 @@
           </fieldset>
 
           <div class="form-actions">
-            <button class="button button-big" type="submit">Send my answers</button>
+            <p class="form-ready" data-form-ready><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Ready when you are. Only your business name, what you do, your name and email are required.</span></p>
+            <button class="button button-lg button-big" type="submit">Send my answers<svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></button>
             <p class="form-fine">Your answers go straight to Jeremy and are only used for your project (<a href="privacy.html">privacy</a>). You'll hear back within five days.</p>
             <p class="form-status" role="status" aria-live="polite" tabindex="-1" data-form-status></p>
           </div>
