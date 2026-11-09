@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About | Stray Wolf Technology</title>
-  <meta name="description" content="Stray Wolf Technology is Jeremy: one designer building bespoke, hand-built websites for businesses anywhere in the US, by referral.">
+  <meta name="description" content="Stray Wolf Technology is Jeremy: one designer building hand-built websites for owner-run businesses, start to finish.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://straywolftech.com/about.html">
   <meta name="color-scheme" content="light">
@@ -15,7 +15,7 @@
   <meta property="og:site_name" content="Stray Wolf Technology">
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="About | Stray Wolf Technology">
-  <meta property="og:description" content="Stray Wolf Technology is Jeremy: one designer building bespoke, hand-built websites for businesses anywhere in the US, by referral.">
+  <meta property="og:description" content="Stray Wolf Technology is Jeremy: one designer building hand-built websites for owner-run businesses, start to finish.">
   <meta property="og:url" content="https://straywolftech.com/about.html">
   <meta property="og:image" content="https://straywolftech.com/images/og-card.jpg">
   <meta property="og:image:type" content="image/jpeg">
@@ -27,10 +27,9 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="preload" href="fonts/instrument-serif-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=7">
+  <link rel="stylesheet" href="css/site.css?v=9">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="inner">
@@ -77,7 +76,10 @@
   <header class="site-header" data-header>
     <div class="wrap header-wrap">
       <div class="header-row">
-        <a class="brand" href="index.html"><img src="images/brand/stray-wolf-logo-color.svg" width="642" height="150" alt="Stray Wolf Technology, home"></a>
+        <div class="brand-group">
+          <a class="brand" href="index.html"><img src="images/brand/stray-wolf-logo-color.svg" width="642" height="150" alt="Stray Wolf Technology, home"></a>
+          <p class="brand-tag"><strong>Hand-built websites</strong>One person, start to finish</p>
+        </div>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="menu-bars" aria-hidden="true"><span></span><span></span></span><span data-menu-label>Menu</span></button>
         <nav class="site-nav" id="site-nav" aria-label="Main">
           <ul class="nav-list" role="list">
@@ -86,141 +88,128 @@
             <li><a href="about.html" aria-current="page"><span>About</span></a></li>
             <li class="nav-act"><a class="button button-sm" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
           </ul>
-          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Bespoke, hand-built websites. By referral, for businesses anywhere in the US.</p>
+          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Hand-built websites. One person, start to finish.</p>
         </nav>
       </div>
     </div>
   </header>
 
   <main id="main">
-    <section class="about-hero">
+    <section class="about-hero" aria-labelledby="about-h">
       <div class="wrap about-hero-grid">
-        <div class="page-head-text">
+        <div class="about-text">
           <p class="eyebrow eyebrow-plain">About</p>
-          <h1 class="h1">Who you’ll work with</h1>
-          <p class="lead about-lead">A stray wolf doesn’t run with a pack, and neither do I. I build websites on my own, for businesses that want to stand out.</p>
+          <h1 id="about-h" class="h1">One person, <em>start to finish.</em></h1>
+          <p class="lead about-lead">Hi, I’m Jeremy. I design and build websites on my own, for owner-run businesses. No account manager and no hand-offs: the person you talk to is the person doing the work.</p>
           <div class="button-row"><a class="button button-lg" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="button button-quiet button-lg" href="work.html">See the work</a></div>
         </div>
-        <div class="about-panel">
-          <div class="hero-grid-lines" aria-hidden="true"></div>
-          <img src="images/brand/stray-wolf-logo-stacked-color.svg" width="200" height="190" loading="lazy" decoding="async" alt="">
-        </div>
-      </div>
-    </section>
-
-    <section class="numbers-band" aria-label="In numbers">
-      <div class="wrap"><dl class="numbers"><div data-reveal><dt>1</dt><dd>person, from the first call to launch day</dd></div><div data-reveal><dt>14</dt><dd>questions to get started</dd></div><div data-reveal><dt>5</dt><dd>days, at most, to hear back</dd></div><div data-reveal><dt>~30</dt><dd>days from yes to launch</dd></div></dl></div>
-    </section>
-
-    <section class="section" aria-labelledby="fit-h">
-      <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div><p class="eyebrow" data-reveal>Who it’s for</p><h2 id="fit-h" class="h2" data-reveal>Small on purpose.</h2></div>
-          <p class="lead" data-reveal>I only take work by referral, and only a few clients at a time, so every site gets my full attention.</p>
-        </header>
-        <div class="fit">
-          <div class="fit-card fit-yes" data-reveal>
-            <p class="fit-h"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>A good fit</p>
-            <ul role="list"><li>Owner-run businesses, anywhere in the US</li><li>The shop, the trade, the practice, the one-truck outfit</li><li>People referred by someone I’ve already built a site for</li></ul>
-          </div>
-          <div class="fit-card fit-no" data-reveal>
-            <p class="fit-h"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>Probably not the right fit</p>
-            <ul role="list"><li>A franchise with a head office</li><li>A large online store</li><li>A project that needs a full agency team</li></ul>
-            <p class="fit-note">If that’s you, I’ll say so up front.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section on-stone" aria-labelledby="how-h">
-      <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div><p class="eyebrow" data-reveal>How I work</p><h2 id="how-h" class="h2" data-reveal>Six things you can count on.</h2></div>
-          <p class="lead" data-reveal>The same promises on every project, written down so you can hold me to them.</p>
-        </header>
-        <ul class="principles" role="list">
-          <li class="principle" data-reveal><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg></span><h3>Hand-built</h3><p>Designed and written for your business. No templates, no page builders.</p></li>
-          <li class="principle" data-reveal><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span><h3>You first, then the design</h3><p>I get to know you and what you want from a website before I design anything. Everything in plain English.</p></li>
-          <li class="principle" data-reveal><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg></span><h3>A price in writing</h3><p>Before anything starts. No tiers and no surprise add-ons.</p></li>
-          <li class="principle" data-reveal><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></span><h3>Nothing goes live without you</h3><p>You see the site before anyone else, and it launches when you say yes.</p></li>
-          <li class="principle" data-reveal><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-key"/></svg></span><h3>Yours to keep</h3><p>Your domain, your content and your site belong to you.</p></li>
-          <li class="principle" data-reveal><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-person"/></svg></span><h3>One person to call</h3><p>Me, before and after launch. No account manager in between.</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="offer-h">
-      <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div><p class="eyebrow" data-reveal>What I do</p><h2 id="offer-h" class="h2" data-reveal>Everything your site needs, handled.</h2></div>
-          <p class="lead" data-reveal>The website, the address it lives at, the email that goes with it, and the small changes after launch.</p>
-        </header>
-        <div class="svc" data-svc data-reveal>
-          <div class="svc-tabs" role="tablist" aria-label="What I do">
-            <button class="svc-tab" type="button" role="tab" id="svc-tab-0" aria-controls="svc-panel-0" aria-selected="true" tabindex="0">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg></span><span class="svc-t"><strong>Website design and build</strong><small>By hand, for your business. No templates, no page builders.</small></span>
-              <span class="svc-timer" aria-hidden="true"><i></i></span>
-            </button><button class="svc-tab" type="button" role="tab" id="svc-tab-1" aria-controls="svc-panel-1" aria-selected="false" tabindex="-1">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg></span><span class="svc-t"><strong>Domain registration and setup</strong><small>I register it in your name and point it at your site.</small></span>
-              <span class="svc-timer" aria-hidden="true"><i></i></span>
-            </button><button class="svc-tab" type="button" role="tab" id="svc-tab-2" aria-controls="svc-panel-2" aria-selected="false" tabindex="-1">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg></span><span class="svc-t"><strong>Hosting and small updates</strong><small>After launch I keep the site up and make the small changes as they come.</small></span>
-              <span class="svc-timer" aria-hidden="true"><i></i></span>
-            </button><button class="svc-tab" type="button" role="tab" id="svc-tab-3" aria-controls="svc-panel-3" aria-selected="false" tabindex="-1">
-              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span><span class="svc-t"><strong>Email at your own domain</strong><small>An address like you@yourbusiness.com, set up and handed over to you.</small></span>
-              <span class="svc-timer" aria-hidden="true"><i></i></span>
-            </button>
-          </div>
-          <div class="svc-stage">
+        <div class="profile" data-reveal>
+          <div class="profile-pic">
             <div class="hero-grid-lines" aria-hidden="true"></div>
-            <div class="svc-panel is-active" role="tabpanel" id="svc-panel-0" aria-labelledby="svc-tab-0" tabindex="0">
-              <p class="visually-hidden">Website design and build: By hand, for your business. No templates, no page builders.</p>
-              <div aria-hidden="true"><div class="sc sc-build">
-                <div class="rs-frame"><div class="rs-bar"><span class="dw-dots"><i></i><i></i><i></i></span></div>
-                  <div class="rs-page"><i class="rs-h"></i><i class="rs-l"></i><i class="rs-b"></i>
-                    <div class="rs-grid"><i></i><i></i><i></i></div></div></div>
-                <ul class="sc-ticks" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your words</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your photos</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your colours</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Every screen size</li></ul>
-              </div></div>
-            </div><div class="svc-panel" role="tabpanel" id="svc-panel-1" aria-labelledby="svc-tab-1" tabindex="0">
-              <p class="visually-hidden">Domain registration and setup: I register it in your name and point it at your site.</p>
-              <div aria-hidden="true"><div class="sc sc-domain">
-                <div class="dm-search"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="dm-type">yourbusiness.com</span></div>
-                <div class="dm-result"><span class="dm-name">yourbusiness.com</span><span class="dm-avail">Available</span><span class="dm-own"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Registered to you</span></div>
-                <div class="dm-link"><span class="dm-line"></span><span class="dm-site"><i></i><i></i><i></i></span><span class="dm-cap">Points to your new site</span></div>
-              </div></div>
-            </div><div class="svc-panel" role="tabpanel" id="svc-panel-2" aria-labelledby="svc-tab-2" tabindex="0">
-              <p class="visually-hidden">Hosting and small updates: After launch I keep the site up and make the small changes as they come.</p>
-              <div aria-hidden="true"><div class="sc sc-host">
-                <div class="hs-status"><span class="hs-dot"></span>Your site is online</div>
-                <div class="hs-msg hs-you"><small>You</small>Can we add our holiday hours?</div>
-                <div class="hs-msg hs-me"><small>Jeremy</small>On it. I’ll let you know when it’s live.</div>
-                <div class="hs-done"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Done. Holiday hours are on your site.</div>
-              </div></div>
-            </div><div class="svc-panel" role="tabpanel" id="svc-panel-3" aria-labelledby="svc-tab-3" tabindex="0">
-              <p class="visually-hidden">Email at your own domain: An address like you@yourbusiness.com, set up and handed over to you.</p>
-              <div aria-hidden="true"><div class="sc sc-mail">
-                <div class="ml-head"><span class="ml-av">Y</span><span><strong>you@yourbusiness.com</strong><small>Inbox</small></span></div>
-                <ul class="ml-list" role="list">
-                  <li><i></i><span><strong>New customer</strong>Question about a quote</span></li>
-                  <li><i></i><span><strong>Website form</strong>Someone wants to book</span></li>
-                  <li><i></i><span><strong>Supplier</strong>Your order has shipped</span></li>
-                </ul>
-              </div></div>
+            <img src="images/brand/stray-wolf-logo-stacked-color.svg" width="200" height="190" loading="lazy" decoding="async" alt="">
+          </div>
+          <div class="profile-body">
+            <p class="profile-name">Jeremy<span>Designer and developer</span></p>
+            <p class="profile-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
+            <ul class="profile-facts" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-person"/></svg><span>Works alone</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span>By referral</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg><span>Hand-built</span></li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="how-h">
+      <div class="wrap how-grid">
+        <div class="how-side">
+          <p class="eyebrow" data-reveal>How I work</p>
+          <h2 id="how-h" class="h2" data-reveal>Six things you can count on.</h2>
+          <p class="lead" data-reveal>The same promises on every project, written down so you can hold me to them.</p>
+          <p data-reveal><a class="link link-arrow" href="index.html#how">See the four steps<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+        </div>
+        <ol class="pledges" role="list">
+          <li class="pledge" data-reveal>
+            <span class="pledge-n" aria-hidden="true">01</span>
+            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-craft"/></svg></span>
+            <div><h3>Hand-built</h3><p>Designed and written for your business. No templates, no page builders.</p></div>
+          </li>
+          <li class="pledge" data-reveal>
+            <span class="pledge-n" aria-hidden="true">02</span>
+            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span>
+            <div><h3>You first, then the design</h3><p>I get to know you and what you want from a website before I design anything. Everything in plain English.</p></div>
+          </li>
+          <li class="pledge" data-reveal>
+            <span class="pledge-n" aria-hidden="true">03</span>
+            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg></span>
+            <div><h3>A price in writing</h3><p>Before anything starts. No tiers and no surprise add-ons.</p></div>
+          </li>
+          <li class="pledge" data-reveal>
+            <span class="pledge-n" aria-hidden="true">04</span>
+            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></span>
+            <div><h3>Nothing goes live without you</h3><p>You see the site before anyone else, and it launches when you say yes.</p></div>
+          </li>
+          <li class="pledge" data-reveal>
+            <span class="pledge-n" aria-hidden="true">05</span>
+            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-key"/></svg></span>
+            <div><h3>Yours to keep</h3><p>Your domain, your content and your site belong to you.</p></div>
+          </li>
+          <li class="pledge" data-reveal>
+            <span class="pledge-n" aria-hidden="true">06</span>
+            <span class="pledge-ic"><svg class="icon" aria-hidden="true"><use href="#i-person"/></svg></span>
+            <div><h3>One person to call</h3><p>Me, before and after launch. No account manager in between.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section on-stone" aria-labelledby="fit-h">
+      <div class="wrap fit-grid">
+        <div class="fit-side">
+          <p class="eyebrow" data-reveal>Who it’s for</p>
+          <h2 id="fit-h" class="h2" data-reveal>Is this a fit?</h2>
+          <p class="lead" data-reveal>Three quick questions and a straight answer. Nothing is sent anywhere.</p>
+          <p class="muted" data-reveal>I only take a few clients at a time, so every site gets my full attention. Owner-run shops, trades, practices and one-truck outfits are my usual work.</p>
+        </div>
+        <div class="fitcheck" data-fitcheck data-reveal>
+          <div class="fq-list">
+            <div class="fq" data-fq="own">
+              <p class="fq-q" id="fq-own">Do you own and run the business yourself?</p>
+              <div class="fq-pick" role="group" aria-labelledby="fq-own">
+                <button type="button" data-ans="yes" aria-pressed="false">Yes</button>
+                <button type="button" data-ans="no" aria-pressed="false">No</button>
+              </div>
+            </div>
+            <div class="fq" data-fq="one">
+              <p class="fq-q" id="fq-one">Do you want one person handling the whole site, start to finish?</p>
+              <div class="fq-pick" role="group" aria-labelledby="fq-one">
+                <button type="button" data-ans="yes" aria-pressed="false">Yes</button>
+                <button type="button" data-ans="no" aria-pressed="false">No</button>
+              </div>
+            </div>
+            <div class="fq" data-fq="ref">
+              <p class="fq-q" id="fq-ref">Were you referred by someone I’ve built a site for?</p>
+              <div class="fq-pick" role="group" aria-labelledby="fq-ref">
+                <button type="button" data-ans="yes" aria-pressed="false">Yes</button>
+                <button type="button" data-ans="no" aria-pressed="false">No</button>
+              </div>
             </div>
           </div>
+          <div class="fit-result" data-fit-result aria-live="polite">
+            <p class="fit-result-h">Answer the three questions and I’ll tell you honestly.</p>
+            <p class="fit-result-p">If it’s not a fit, I’ll say so up front.</p>
+          </div>
         </div>
-        <p class="svc-note" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</span></p>
       </div>
     </section>
 
-    <section class="section on-ink story" aria-labelledby="story-h">
+    <section class="section story" aria-labelledby="story-h">
       <div class="wrap story-grid">
-        <img class="story-mark" src="images/brand/stray-wolf-symbol-reverse.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
+        <div class="story-art" aria-hidden="true">
+          <div class="hero-grid-lines"></div>
+          <img src="images/brand/stray-wolf-symbol-color.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
+        </div>
         <div class="story-text">
           <p class="eyebrow" data-reveal>The name</p>
-          <h2 id="story-h" class="quote" data-reveal>Why “Stray Wolf”</h2>
-          <p data-reveal>A stray wolf doesn’t run with a pack. There’s no agency behind me and no account manager between us. You talk to the person building your site.</p>
-          <p data-reveal>The internet is full of giants, and a small business can get lost in their shade. My job is to build the site that stands out among them.</p>
+          <h2 id="story-h" class="h2" data-reveal>No pack. <em>One person.</em></h2>
+          <p data-reveal>A stray wolf doesn’t run with a pack. That’s how I work. I don’t start from a template, and I don’t farm the work out. Every site I put my name on, I designed and built myself.</p>
         </div>
       </div>
     </section>
@@ -250,7 +239,7 @@
     <div class="wrap foot-grid">
       <div class="foot-about">
         <a class="foot-brand" href="index.html"><img src="images/brand/stray-wolf-logo-color.svg" width="642" height="150" alt="Stray Wolf Technology, home" loading="lazy" decoding="async"></a>
-        <p class="foot-tag">Bespoke, hand-built websites. By referral, for businesses anywhere in the US.</p>
+        <p class="foot-tag">Bespoke, hand-built websites. By referral, for owner-run businesses.</p>
         <a class="foot-start" href="start.html"><span class="foot-start-ic"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></span><span><strong>Start a project</strong><small>Fourteen questions, about five minutes</small></span><svg class="icon foot-start-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <nav class="foot-col" aria-labelledby="foot-pages-h">
@@ -265,7 +254,7 @@
       </nav>
       <div class="foot-col">
         <h2 class="foot-h">What I do</h2>
-        <ul class="foot-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Website design and build</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Domain registration and setup</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg><span>Hosting and small updates</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>Email at your own domain</span></li></ul>
+        <ul class="foot-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Website design and build</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Domain registration and setup</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg><span>Hosting and small updates</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>Business email setup</span></li></ul>
       </div>
       <div class="foot-col foot-reach">
         <h2 class="foot-h">Reach Jeremy</h2>
@@ -278,6 +267,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=7" defer></script>
+  <script src="js/site.js?v=9" defer></script>
 </body>
 </html>

@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '7'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '9'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -29,8 +29,8 @@ WEB3FORMS_KEY = ''            # the access key from web3forms.com; until then th
 FALLBACK_EMAIL = 'jsglisson@gmail.com'   # where that pre-filled email goes. Swap for the straywolftech.com address once it exists.
 # -----------------------------------------------------------------------------------
 
-TAGLINE = 'Bespoke, hand-built websites. One designer, working by referral, for businesses anywhere in the US.'
-HOME_DESC = 'Bespoke, hand-built websites for owner-run businesses anywhere in the US. One designer, by referral, with a price in writing before anything starts.'   # the homepage's line in search results
+TAGLINE = 'Bespoke, hand-built websites. One designer, working by referral, for owner-run businesses.'
+HOME_DESC = 'Bespoke, hand-built websites for owner-run businesses. One designer, by referral, with a price in writing before anything starts.'   # the homepage's line in search results
 YEAR = str(datetime.date.today().year)
 ROBOTS_META = '  <meta name="robots" content="noindex, nofollow">\n'
 BANNER = '  <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>\n'
@@ -118,6 +118,14 @@ def build_deck(sites):
     listed = ', '.join(esc(s['name']) for s in sites)
     return f'''<div class="deck" data-deck>
             <p class="visually-hidden">Recent sites: {listed}.</p>
+            <div class="deck-head">
+              <p class="deck-kick"><span class="dot" aria-hidden="true"></span>Recent work, live now</p>
+              <div class="deck-nav">
+                <p class="deck-count" aria-hidden="true"><span data-deck-now>01</span> / {len(sites):02d}</p>
+                <button class="deck-btn" type="button" data-deck-prev aria-label="Previous site">{icon('arrow-left')}</button>
+                <button class="deck-btn" type="button" data-deck-next aria-label="Next site">{icon('arrow')}</button>
+              </div>
+            </div>
             <div class="deck-stack" aria-hidden="true">
               {''.join(cards)}
             </div>
@@ -177,7 +185,7 @@ def timeline():
 SERVICES = [('Website design and build', 'By hand, for your business. No templates, no page builders.'),
             ('Domain registration and setup', 'I register it in your name and point it at your site.'),
             ('Hosting and small updates', 'After launch I keep the site up and make the small changes as they come.'),
-            ('Email at your own domain', 'An address like you@yourbusiness.com, set up and handed over to you.')]
+            ('Business email setup', 'A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.')]
 SVC_ICONS = ['layout', 'globe', 'server', 'mail']
 
 
@@ -333,7 +341,7 @@ FAQS = [('How much does a website cost?', 'Let’s talk. Every site is different
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
         ('What do you need from me?', 'Answers to the fourteen questions, then a conversation. A logo and photos of your work help if you have them. If you don’t, we’ll work it out.'),
         ('Can I make changes after it’s live?', 'Yes. I can host the site and make the small changes as they come, or you can make them yourself. You choose in the form.'),
-        ('Do you work outside my area?', 'Yes. I work with businesses anywhere in the US, by referral.'),
+        ('Do you work outside my area?', 'Yes. The whole project runs over calls, email and shared links, so where you’re based doesn’t matter.'),
         ('Do you do social media or Google Business Profiles?', 'No. I stick to websites, domains, hosting and email, and do them well.')]
 
 

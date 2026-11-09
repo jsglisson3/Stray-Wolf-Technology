@@ -1,4 +1,4 @@
-/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the hero deck, the service tabs, the work carousel and the intake form.
+/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the hero deck, the service tabs, the work carousel, the fit check and the intake form.
    Everything on the page works without it; this only adds the moving parts. */
 (() => {
   'use strict';
@@ -73,7 +73,7 @@
   }
 
   /* ---- Groups reveal one after another (a short stagger) ---------------------------- */
-  document.querySelectorAll('.timeline, .numbers, .faqs, .shows, .principles, .fit, .pv-cards').forEach((group) => {
+  document.querySelectorAll('.timeline, .numbers, .faqs, .shows, .pledges, .profile-facts, .pv-cards').forEach((group) => {
     group.querySelectorAll(':scope > [data-reveal], :scope > * > [data-reveal]').forEach((el, i) => el.style.setProperty('--rd', `${Math.min(i, 6) * 80}ms`));
   });
 
@@ -89,9 +89,11 @@
     if (cards.length < 2 || !stack) { deck.classList.add('is-ready'); return; }
     let order = cards.map((_, i) => i);   // order[0] is the card in front
     let busy = false;
+    const count = deck.querySelector('[data-deck-now]');
     const label = () => {
       names.forEach((n, i) => n.classList.toggle('is-on', i === order[0]));
       bars.forEach((b, i) => b.classList.toggle('is-on', i === order[0]));
+      if (count) count.textContent = String(order[0] + 1).padStart(2, '0');
     };
     const turn = () => {
       if (busy) return;
@@ -110,7 +112,26 @@
         busy = false;
       }, reduce.matches ? 0 : 460);
     };
-    stack.addEventListener('click', turn);
+    // backwards: the last window comes round to the front
+    const back = () => {
+      if (busy) return;
+      busy = true;
+      const last = cards[order[order.length - 1]];
+      order = [order[order.length - 1], ...order.slice(0, -1)];
+      last.classList.add('no-tr');
+      last.dataset.pos = 'out';
+      void last.offsetWidth;
+      last.classList.remove('no-tr');
+      order.forEach((c, pos) => { cards[c].dataset.pos = String(pos); });
+      label();
+      setTimeout(() => { busy = false; }, reduce.matches ? 0 : 500);
+    };
+    const restart = () => { bars.forEach((b) => { if (b.classList.contains('is-on')) { b.classList.remove('is-on'); void b.offsetWidth; b.classList.add('is-on'); } }); };
+    stack.addEventListener('click', () => { turn(); restart(); });
+    const prev = deck.querySelector('[data-deck-prev]');
+    const next = deck.querySelector('[data-deck-next]');
+    if (prev) prev.addEventListener('click', () => { back(); restart(); });
+    if (next) next.addEventListener('click', () => { turn(); restart(); });
     // the windows fan up into a stack once the page has settled
     requestAnimationFrame(() => setTimeout(() => deck.classList.add('is-ready'), reduce.matches ? 0 : 500));
 
@@ -323,6 +344,41 @@
       groups.forEach((g) => io.observe(g));
     }
   }
+
+  /* ---- About: is this a fit? Three yes/no questions, answered on the page, sent nowhere ---- */
+  document.querySelectorAll('[data-fitcheck]').forEach((box) => {
+    const result = box.querySelector('[data-fit-result]');
+    if (!result) return;
+    const answers = {};
+    const say = (cls, h, p, cta) => {
+      result.className = 'fit-result' + (cls ? ' ' + cls : '');
+      result.innerHTML = `<p class="fit-result-h">${h}</p><p class="fit-result-p">${p}</p>` +
+        (cta ? '<a class="button" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' : '');
+    };
+    const update = () => {
+      const { own, one, ref } = answers;
+      if (own === undefined || one === undefined || ref === undefined) {
+        const n = Object.keys(answers).length;
+        say('', n ? `${3 - n} more to go.` : 'Answer the three questions and I’ll tell you honestly.', 'If it’s not a fit, I’ll say so up front.', false);
+      } else if (own === 'no') {
+        say('is-no', 'Probably not the right fit.', 'A franchise with a head office, a large online store or a project that needs a full team is better served by an agency. If you’re not sure, ask anyway and I’ll point you the right way.', false);
+      } else if (one === 'no') {
+        say('is-no', 'Honest answer: maybe not.', 'If you’d rather have a team and an account manager, an agency will suit you better. If you want one person who does the work and answers the phone, that’s me.', false);
+      } else if (ref === 'no') {
+        say('is-maybe', 'Could well be a fit.', 'I work mostly by referral, but tell me about your business and I’ll give you a straight answer within five days.', true);
+      } else {
+        say('is-yes', 'Sounds like a fit.', 'Fourteen questions, about five minutes, and you’ll hear from me within five days with a price in writing.', true);
+      }
+    };
+    box.querySelectorAll('[data-fq]').forEach((row) => {
+      const buttons = row.querySelectorAll('[data-ans]');
+      buttons.forEach((b) => b.addEventListener('click', () => {
+        answers[row.dataset.fq] = b.dataset.ans;
+        buttons.forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+        update();
+      }));
+    });
+  });
 
   /* ---- Privacy: mark the section you're reading in the list ---------------------------- */
   const toc = document.querySelectorAll('.toc a');

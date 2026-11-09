@@ -29,14 +29,14 @@ SITES = [
     {
         "name": "GLP Home Options",
         "about": "A home-buying business in Chattanooga, Tennessee.",
-        "link": "https://jsglisson3.github.io/GLP-Home-Options/",
+        "link": "https://glphomeoptions.com/",
         "image": "glp",
         "tag": "",
     },
     {
         "name": "Friends of The Colony Public Library",
         "about": "A redesign concept for the library's nonprofit friends group in The Colony, Texas, built as a volunteer.",
-        "link": "https://jsglisson3.github.io/FOTCL/",
+        "link": "https://fotcpl.org/",
         "image": "fotcpl",
         "tag": "Volunteer concept, not the official site",
     },

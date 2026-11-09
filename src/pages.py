@@ -47,88 +47,102 @@ page('work.html', 'Work | Stray Wolf Technology',
 
 
 # ---------------------------------------------------------------- About
+# One person, start to finish: a profile card, the numbers, six pledges that light up as you scroll,
+# a three-question fit check, and the story behind the name. No case studies, no personal background.
 
-about_side = f'''<div class="about-panel{' has-photo' if HEADSHOT else ''}">
-          <div class="hero-grid-lines" aria-hidden="true"></div>
-          {photo_or_mark(dark=False)}
+FACTS = [('person', 'Works alone'), ('chat', 'By referral'), ('craft', 'Hand-built')]
+
+PLEDGES = [('craft', 'Hand-built', 'Designed and written for your business. No templates, no page builders.'),
+           ('chat', 'You first, then the design', 'I get to know you and what you want from a website before I design anything. Everything in plain English.'),
+           ('doc', 'A price in writing', 'Before anything starts. No tiers and no surprise add-ons.'),
+           ('eye', 'Nothing goes live without you', 'You see the site before anyone else, and it launches when you say yes.'),
+           ('key', 'Yours to keep', 'Your domain, your content and your site belong to you.'),
+           ('person', 'One person to call', 'Me, before and after launch. No account manager in between.')]
+
+FIT_QS = [('own', 'Do you own and run the business yourself?'),
+          ('one', 'Do you want one person handling the whole site, start to finish?'),
+          ('ref', 'Were you referred by someone I’ve built a site for?')]
+
+profile_card = f'''<div class="profile{' has-photo' if HEADSHOT else ''}" data-reveal>
+          <div class="profile-pic">
+            <div class="hero-grid-lines" aria-hidden="true"></div>
+            {photo_or_mark(dark=False)}
+          </div>
+          <div class="profile-body">
+            <p class="profile-name">Jeremy<span>Designer and developer</span></p>
+            <p class="profile-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
+            <ul class="profile-facts" role="list">{''.join(f'<li>{icon(i)}<span>{t}</span></li>' for i, t in FACTS)}</ul>
+          </div>
         </div>'''
 
-FIT_YES = ['Owner-run businesses, anywhere in the US', 'The shop, the trade, the practice, the one-truck outfit', 'People referred by someone I’ve already built a site for']
-FIT_NO = ['A franchise with a head office', 'A large online store', 'A project that needs a full agency team']
+fit_rows = ''.join(f'''
+            <div class="fq" data-fq="{k}">
+              <p class="fq-q" id="fq-{k}">{q}</p>
+              <div class="fq-pick" role="group" aria-labelledby="fq-{k}">
+                <button type="button" data-ans="yes" aria-pressed="false">Yes</button>
+                <button type="button" data-ans="no" aria-pressed="false">No</button>
+              </div>
+            </div>''' for k, q in FIT_QS)
 
-PRINCIPLES = [('craft', 'Hand-built', 'Designed and written for your business. No templates, no page builders.'),
-              ('chat', 'You first, then the design', 'I get to know you and what you want from a website before I design anything. Everything in plain English.'),
-              ('doc', 'A price in writing', 'Before anything starts. No tiers and no surprise add-ons.'),
-              ('eye', 'Nothing goes live without you', 'You see the site before anyone else, and it launches when you say yes.'),
-              ('key', 'Yours to keep', 'Your domain, your content and your site belong to you.'),
-              ('person', 'One person to call', 'Me, before and after launch. No account manager in between.')]
-
-about_main = f'''    <section class="about-hero">
+about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
       <div class="wrap about-hero-grid">
-        <div class="page-head-text">
+        <div class="about-text">
           <p class="eyebrow eyebrow-plain">About</p>
-          <h1 class="h1">Who you’ll work with</h1>
-          <p class="lead about-lead">{STORY}</p>
+          <h1 id="about-h" class="h1">One person, <em>start to finish.</em></h1>
+          <p class="lead about-lead">Hi, I’m Jeremy. I design and build websites on my own, for owner-run businesses. No account manager and no hand-offs: the person you talk to is the person doing the work.</p>
           <div class="button-row"><a class="button button-lg" href="start.html">Start a project{ARROW}</a><a class="button button-quiet button-lg" href="work.html">See the work</a></div>
         </div>
-        {about_side}
+        {profile_card}
       </div>
     </section>
 
-    <section class="numbers-band" aria-label="In numbers">
-      <div class="wrap">{numbers_html()}</div>
+    <section class="section" aria-labelledby="how-h">
+      <div class="wrap how-grid">
+        <div class="how-side">
+          <p class="eyebrow" data-reveal>How I work</p>
+          <h2 id="how-h" class="h2" data-reveal>Six things you can count on.</h2>
+          <p class="lead" data-reveal>The same promises on every project, written down so you can hold me to them.</p>
+          <p data-reveal><a class="link link-arrow" href="index.html#how">See the four steps{ARROW}</a></p>
+        </div>
+        <ol class="pledges" role="list">{''.join(f"""
+          <li class="pledge" data-reveal>
+            <span class="pledge-n" aria-hidden="true">{n:02d}</span>
+            <span class="pledge-ic">{icon(i)}</span>
+            <div><h3>{h}</h3><p>{t}</p></div>
+          </li>""" for n, (i, h, t) in enumerate(PLEDGES, 1))}
+        </ol>
+      </div>
     </section>
 
-    <section class="section" aria-labelledby="fit-h">
-      <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div><p class="eyebrow" data-reveal>Who it’s for</p><h2 id="fit-h" class="h2" data-reveal>Small on purpose.</h2></div>
-          <p class="lead" data-reveal>I only take work by referral, and only a few clients at a time, so every site gets my full attention.</p>
-        </header>
-        <div class="fit">
-          <div class="fit-card fit-yes" data-reveal>
-            <p class="fit-h">{icon('check')}A good fit</p>
-            <ul role="list">{''.join(f'<li>{t}</li>' for t in FIT_YES)}</ul>
+    <section class="section on-stone" aria-labelledby="fit-h">
+      <div class="wrap fit-grid">
+        <div class="fit-side">
+          <p class="eyebrow" data-reveal>Who it’s for</p>
+          <h2 id="fit-h" class="h2" data-reveal>Is this a fit?</h2>
+          <p class="lead" data-reveal>Three quick questions and a straight answer. Nothing is sent anywhere.</p>
+          <p class="muted" data-reveal>I only take a few clients at a time, so every site gets my full attention. Owner-run shops, trades, practices and one-truck outfits are my usual work.</p>
+        </div>
+        <div class="fitcheck" data-fitcheck data-reveal>
+          <div class="fq-list">{fit_rows}
           </div>
-          <div class="fit-card fit-no" data-reveal>
-            <p class="fit-h">{icon('x')}Probably not the right fit</p>
-            <ul role="list">{''.join(f'<li>{t}</li>' for t in FIT_NO)}</ul>
-            <p class="fit-note">If that’s you, I’ll say so up front.</p>
+          <div class="fit-result" data-fit-result aria-live="polite">
+            <p class="fit-result-h">Answer the three questions and I’ll tell you honestly.</p>
+            <p class="fit-result-p">If it’s not a fit, I’ll say so up front.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section on-stone" aria-labelledby="how-h">
-      <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div><p class="eyebrow" data-reveal>How I work</p><h2 id="how-h" class="h2" data-reveal>Six things you can count on.</h2></div>
-          <p class="lead" data-reveal>The same promises on every project, written down so you can hold me to them.</p>
-        </header>
-        <ul class="principles" role="list">{''.join(f"""
-          <li class="principle" data-reveal><span class="tile-ic">{icon(i)}</span><h3>{h}</h3><p>{t}</p></li>""" for i, h, t in PRINCIPLES)}
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="offer-h">
-      <div class="wrap">
-        <header class="sec-head sec-head-split">
-          <div><p class="eyebrow" data-reveal>What I do</p><h2 id="offer-h" class="h2" data-reveal>Everything your site needs, handled.</h2></div>
-          <p class="lead" data-reveal>The website, the address it lives at, the email that goes with it, and the small changes after launch.</p>
-        </header>
-{services()}
-      </div>
-    </section>
-
-    <section class="section on-ink story" aria-labelledby="story-h">
+    <section class="section story" aria-labelledby="story-h">
       <div class="wrap story-grid">
-        <img class="story-mark" src="images/brand/stray-wolf-symbol-reverse.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
+        <div class="story-art" aria-hidden="true">
+          <div class="hero-grid-lines"></div>
+          <img src="images/brand/stray-wolf-symbol-color.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
+        </div>
         <div class="story-text">
           <p class="eyebrow" data-reveal>The name</p>
-          <h2 id="story-h" class="quote" data-reveal>Why “Stray Wolf”</h2>
-          <p data-reveal>A stray wolf doesn’t run with a pack. There’s no agency behind me and no account manager between us. You talk to the person building your site.</p>
-          <p data-reveal>The internet is full of giants, and a small business can get lost in their shade. My job is to build the site that stands out among them.</p>
+          <h2 id="story-h" class="h2" data-reveal>No pack. <em>One person.</em></h2>
+          <p data-reveal>A stray wolf doesn’t run with a pack. That’s how I work. I don’t start from a template, and I don’t farm the work out. Every site I put my name on, I designed and built myself.</p>
         </div>
       </div>
     </section>
@@ -136,7 +150,7 @@ about_main = f'''    <section class="about-hero">
 {close_section('about-close-h')}'''
 
 page('about.html', 'About | Stray Wolf Technology',
-     'Stray Wolf Technology is Jeremy: one designer building bespoke, hand-built websites for businesses anywhere in the US, by referral.',
+     'Stray Wolf Technology is Jeremy: one designer building hand-built websites for owner-run businesses, start to finish.',
      about_main, current='about.html')
 
 
@@ -226,7 +240,7 @@ page('thanks.html', 'Thanks | Stray Wolf Technology', 'Your answers are in.', th
 
 lost_main = end_page('That page isn’t here.', 'The link may be old, or the address may have a typo. One of these should get you where you were going.',
                      go_cards([('index.html', 'compass', 'Home', 'Start from the top'), ('work.html', 'layout', 'Work', 'Sites I’ve built'),
-                               ('about.html', 'person', 'About', 'Who you’ll work with'), ('start.html', 'send', 'Start a project', 'About five minutes')], 'Pages on this site'),
+                               ('about.html', 'person', 'About', 'One person, start to finish'), ('start.html', 'send', 'Start a project', 'About five minutes')], 'Pages on this site'),
                      '<span class="end-badge">Error 404</span>', '<p class="end-404">404</p>' + WOLF)
 
 page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not be found.', lost_main)
