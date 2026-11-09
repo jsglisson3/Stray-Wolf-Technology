@@ -44,10 +44,8 @@ page('work.html', 'Work | Stray Wolf Technology',
 
 
 # ---------------------------------------------------------------- About
-# One person, start to finish: a profile card, the numbers, six pledges that light up as you scroll,
-# a three-question fit check, and the story behind the name. No case studies, no personal background.
+# One person, start to finish: a profile card, six pledges, and the story behind the name. No case studies, no personal background.
 
-FACTS = [('person', 'Works alone'), ('chat', 'By referral'), ('craft', 'Hand-built')]
 
 PLEDGES = [('craft', 'Hand-built', 'Designed and written for your business. No templates, no page builders.'),
            ('chat', 'You first, then the design', 'I get to know you and what you want from a website before I design anything. Everything in plain English.'),
@@ -56,33 +54,20 @@ PLEDGES = [('craft', 'Hand-built', 'Designed and written for your business. No t
            ('key', 'Yours to keep', 'Your domain, your content and your site belong to you.'),
            ('person', 'One person to call', 'Me, before and after launch. No account manager in between.')]
 
-FIT_QS = [('own', 'Do you own and run the business yourself?'),
-          ('one', 'Do you want one person handling the whole site, start to finish?'),
-          ('ref', 'Were you referred by someone I’ve built a site for?')]
-
 profile_card = f'''<figure class="profile{' has-photo' if HEADSHOT else ''}" data-reveal>
           <div class="profile-pic">{photo_or_mark(dark=False)}</div>
           <figcaption class="profile-body">
             <p class="profile-name">Jeremy<span>Designer and developer</span></p>
             <p class="profile-status"><span class="dot" aria-hidden="true"></span>Taking a few projects at a time</p>
-            <ul class="profile-facts" role="list">{''.join(f'<li>{t}</li>' for _, t in FACTS)}</ul>
           </figcaption>
         </figure>'''
-
-fit_rows = ''.join(f'''
-            <div class="fq" data-fq="{k}">
-              <p class="fq-q" id="fq-{k}">{q}</p>
-              <div class="fq-pick" role="group" aria-labelledby="fq-{k}">
-                <button type="button" data-ans="yes" aria-pressed="false">Yes</button>
-                <button type="button" data-ans="no" aria-pressed="false">No</button>
-              </div>
-            </div>''' for k, q in FIT_QS)
 
 about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
       <div class="wrap about-hero-grid">
         <div class="about-text">
           <h1 id="about-h" class="h1">One person, <em>start to finish.</em></h1>
           <p class="lead about-lead">Hi, I’m Jeremy. I design and build websites on my own, for owner-run businesses. No account manager and no hand-offs: the person you talk to is the person doing the work.</p>
+          <p class="about-more" data-reveal>I’m not trying to make as much money as I can. I want to do quality work. So I take a few clients at a time, only the jobs I know I can do well, and I’ll turn down one I don’t think I can do right.</p>
           <div class="button-row"><a class="button button-lg" href="start.html">Start a project{ARROW}</a><a class="button button-quiet button-lg" href="work.html">See the work</a></div>
         </div>
         {profile_card}
@@ -95,30 +80,11 @@ about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
           <h2 id="how-h" class="h2" data-reveal>Six things you can count on.</h2>
           <div class="sec-aside" data-reveal>
             <p class="lead">The same promises on every project, written down so you can hold me to them.</p>
-            <p><a class="link-arrow" href="index.html#how"><span>See the four steps</span>{ARROW}</a></p>
           </div>
         </header>
         <ul class="pledges" role="list">{''.join(f"""
           <li class="pledge" data-reveal><h3>{h}</h3><p>{t}</p></li>""" for _, h, t in PLEDGES)}
         </ul>
-      </div>
-    </section>
-
-    <section class="section on-stone" aria-labelledby="fit-h">
-      <div class="wrap fit-grid">
-        <div class="fit-side">
-          <h2 id="fit-h" class="h2" data-reveal>Is this a fit?</h2>
-          <p class="lead" data-reveal>Three quick questions and a straight answer. Nothing is sent anywhere.</p>
-          <p data-reveal>I only take a few clients at a time, so every site gets my full attention. Owner-run shops, trades, practices and one-truck outfits are my usual work.</p>
-        </div>
-        <div class="fitcheck" data-fitcheck data-reveal>
-          <div class="fq-list">{fit_rows}
-          </div>
-          <div class="fit-result" data-fit-result aria-live="polite">
-            <p class="fit-result-h">Answer the three questions and I’ll tell you honestly.</p>
-            <p class="fit-result-p">If it’s not a fit, I’ll say so up front.</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -158,7 +124,7 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Six quick quest
           <div class="aside-block">
             <h2 class="aside-h">What happens next</h2>
             <ol class="next-steps" role="list">
-              <li><strong>Within 5 days</strong>I read your answers and reply.</li>
+              <li><strong>Within 5 days</strong>I read your answers and reply. If it’s not something I can do well, I’ll say so.</li>
               <li><strong>Before anything starts</strong>You get a price in writing.</li>
               <li><strong>Your 10%</strong>You send the words, photos and logo.</li>
               <li><strong>About 30 days</strong>Your site goes live.</li>
@@ -200,7 +166,7 @@ WOLF = '<img src="images/brand/stray-wolf-symbol-color.svg" width="200" height="
 
 thanks_main = end_page('Got it. Thanks.', 'Your answers are in. Here’s what happens next.', f'''          <ol class="thanks-steps" role="list">
             <li class="is-done"><span class="ts-n">{icon('check')}</span><span><strong>Your answers are in</strong>Nothing else to do right now.</span></li>
-            <li><span class="ts-n">2</span><span><strong>I reply within five days</strong>With questions, or a time to talk.</span></li>
+            <li><span class="ts-n">2</span><span><strong>I reply within five days</strong>With questions, a time to talk, or an honest no if it’s not something I can do well.</span></li>
             <li><span class="ts-n">3</span><span><strong>A price in writing</strong>Before anything starts.</span></li>
             <li><span class="ts-n">4</span><span><strong>Your 10%</strong>You send the words, photos and logo.</span></li>
             <li><span class="ts-n">5</span><span><strong>Live in about 30 days</strong>Only once you’ve seen it and said yes.</span></li>
@@ -242,12 +208,6 @@ EXTRA = [
     ('Writing everything from scratch', 'If you’d rather not write a word, I’ll quote for writing it all.'),
     ('A rush', 'Need it live in less than 30 days? Ask. Sometimes the answer is yes.'),
 ]
-PAY = [
-    ('A price in writing', 'After we talk, you get one number and exactly what it covers. Nothing starts until you say yes.'),
-    ('Half to start', 'The first half is due when we begin. That books your place.'),
-    ('Half at launch', 'The rest is due when you’ve seen the site, said yes, and it goes live.'),
-]
-
 
 def ruled(items, tag='ul'):
     return f'<{tag} class="ruled" role="list">' + ''.join(f'<li data-reveal><h3>{h}</h3><p>{t}</p></li>' for h, t in items) + f'</{tag}>'
@@ -269,7 +229,7 @@ rates_html = ''.join(f'''
             <div class="rate-text"><p>{t}</p><p class="rate-who">{who}</p></div>
           </li>''' for n, price, t, who in RATES)
 
-pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. No monthly fees after. Here’s how I get to it, and where most projects land.',
+pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. Here’s where most projects land.',
                          ['A price in writing first', 'Half to start, half at launch', 'No monthly fees, ever']) + f'''
     <section class="section" aria-labelledby="rates-h">
       <div class="wrap">
@@ -296,7 +256,7 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
       </div>
     </section>
 ''' + two_col('extra-h', 'What costs extra.', 'Quoted on their own, and always before, never after.', ruled(EXTRA)) + '\n' \
-  + two_col('pay-h', 'How paying works.', 'Two payments, one invoice each.', ruled(PAY)) + f'''
+  + f'''
 {close_section('pricing-close-h', 'Want a number for yours?')}'''
 
 page('pricing.html', 'Pricing | Stray Wolf Technology',

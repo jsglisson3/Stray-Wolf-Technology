@@ -111,3 +111,15 @@ Jeremy wants fixes, single pages and refreshes offered as real work, not only wh
 - Search Console: a `SEARCH_CONSOLE` setting prints the google-site-verification meta tag on every page once filled (that needs a rebuild, so it is Claude's to do). The easier routes need no build: the HTML-file method (drop Google's google….html file into docs/ and commit) or a DNS TXT record at Cloudflare. The sitemap is at /sitemap.xml and robots.txt points at it. Until LAUNCHED is True every page is noindex, so Google indexes nothing yet; verifying and submitting the sitemap now is still fine.
 - VERSION is '14'.
 - Checks: axe 0 issues on all nine pages at 390 and 1440; no sideways scroll from 320 to 1920; hero rotation, ruler (five steps), service tabs, carousel, questions, close form, start form, fit check and phone menu all tested with no console errors.
+
+## V14.1 (Nov 9, 2026): selective about jobs
+Jeremy: "I am selective about which jobs I take because I only want to do quality work. I will reject things I don't think I can do. I'm not trying to make as much money as possible." Said in plain words in four places: a homepage question "Do you take every job?", the About page's "Is this a fit?" paragraph, the Start page's "Within 5 days" line, and step 2 on the thanks page. Copy only, so VERSION stays '14'.
+
+## V15 (Nov 9, 2026): simpler, then polished
+Jeremy: "Simplify everything on this whole site up a touch, it's very busy. If it's not important, get rid of it completely. Then go through and polish everything and make it beautiful." What went:
+- Homepage: the What I do tabs and their animated scenes (now five plain ruled lines, no script), four of the nine questions (smaller jobs, changes after launch, outside my area, social media; the pages already answer them), the little business-name form in the close (now one button), and the "Not on the list" note.
+- About: the "Is this a fit?" yes/no check (the selective paragraph now sits under the lead), the fact chips on the profile card, and the "See the four steps" link.
+- Pricing: the "How paying works" section (the pledges at the top already say half to start, half at launch).
+- Header: the "Hand-built websites / One person, start to finish" tagline. Footer: the "What I do" column and the Start a project card; it is the brand line, Pages and Reach Jeremy now.
+- Code: scenes.css is no longer part of site.css; the tab and fit-check script is gone from site.js; svc_scene, SVC_ICONS, SVC_SCENES, FACTS, FIT_QS and PAY are gone from the source.
+- VERSION is '15'.

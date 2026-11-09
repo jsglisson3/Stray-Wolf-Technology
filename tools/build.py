@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '14'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '15'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -168,79 +168,19 @@ def timeline():
         </div>'''
 
 
-# ---- What I do: four tabs, each with a small animated scene of what it means ---------------
-# The tabs move on by themselves (a timer bar shows it) until someone picks one, and pause while hovered.
+# ---- What I do: five services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler) ----
 SERVICES = [('Website design and build', 'By hand, for your business. No templates, no page builders.'),
             ('Fixes and single pages', 'Something broken on the site you have, or one new page added to it. Days, not weeks, with a price in writing first.'),
             ('Domain registration and setup', 'I register it in your name and point it at your site.'),
             ('Hosting and small updates', 'After launch the site stays up with no monthly fee. Small changes are quoted per job and done within days.'),
             ('Business email setup', 'A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.')]
-SVC_ICONS = ['layout', 'craft', 'globe', 'server', 'mail']
-SVC_SCENES = ['build', 'fix', 'domain', 'host', 'mail']   # which little scene plays for each service, in the same order
-
-
-def svc_scene(i):
-    k = SVC_SCENES[i]
-    if k == 'build':   # one design that fits every screen, made of your own things
-        return f'''<div class="sc sc-build">
-                <div class="rs-frame"><div class="rs-bar"><span class="dw-dots"><i></i><i></i><i></i></span></div>
-                  <div class="rs-page"><i class="rs-h"></i><i class="rs-l"></i><i class="rs-b"></i>
-                    <div class="rs-grid"><i></i><i></i><i></i></div></div></div>
-                <ul class="sc-ticks" role="list"><li>{icon('check')}Your words</li><li>{icon('check')}Your photos</li><li>{icon('check')}Your colors</li><li>{icon('check')}Every screen size</li></ul>
-              </div>'''
-    if k == 'fix':   # something broken, fixed; one page added
-        return f'''<div class="sc sc-fix">
-                <div class="fx-row">
-                  <div class="fx-page"><i class="fx-h"></i><i class="fx-l"></i><div class="fx-bad">Form not sending</div></div>
-                  <span class="fx-arrow">{icon('arrow')}</span>
-                  <div class="fx-page"><i class="fx-h"></i><i class="fx-l"></i><div class="fx-good">{icon('check')}Fixed</div></div>
-                </div>
-                <div class="fx-new">{icon('plus')}<span><strong>One new page</strong>Added to the site you already have</span></div>
-              </div>'''
-    if k == 'domain':   # find the name, register it to you, point it at the site
-        return f'''<div class="sc sc-domain">
-                <div class="dm-search">{icon('globe')}<span class="dm-type">yourbusiness.com</span></div>
-                <div class="dm-result"><span class="dm-name">yourbusiness.com</span><span class="dm-avail">Available</span><span class="dm-own">{icon('check')}Registered to you</span></div>
-                <div class="dm-link"><span class="dm-line"></span><span class="dm-site"><i></i><i></i><i></i></span><span class="dm-cap">Points to your new site</span></div>
-              </div>'''
-    if k == 'host':   # you ask, it's done
-        return f'''<div class="sc sc-host">
-                <div class="hs-status"><span class="hs-dot"></span>Your site is online</div>
-                <div class="hs-msg hs-you"><small>You</small>Can we add our holiday hours?</div>
-                <div class="hs-msg hs-me"><small>Jeremy</small>On it. I’ll let you know when it’s live.</div>
-                <div class="hs-done">{icon('check')}Done. Holiday hours are on your site.</div>
-              </div>'''
-    return f'''<div class="sc sc-mail">
-                <div class="ml-head"><span class="ml-av">Y</span><span><strong>you@yourbusiness.com</strong><small>Inbox</small></span></div>
-                <ul class="ml-list" role="list">
-                  <li><i></i><span><strong>New customer</strong>Question about a quote</span></li>
-                  <li><i></i><span><strong>Website form</strong>Someone wants to book</span></li>
-                  <li><i></i><span><strong>Supplier</strong>Your order has shipped</span></li>
-                </ul>
-              </div>'''
 
 
 def services():
-    tabs, panels = [], []
-    for i, (h, t) in enumerate(SERVICES):
-        sel = i == 0
-        tabs.append(f'''<button class="svc-tab" type="button" role="tab" id="svc-tab-{i}" aria-controls="svc-panel-{i}" aria-selected="{str(sel).lower()}" tabindex="{0 if sel else -1}">
-              <span class="svc-timer" aria-hidden="true"><i></i></span>
-              <span class="svc-name">{h}{ARROW}</span>
-            </button>''')
-        panels.append(f'''<div class="svc-panel{' is-active' if sel else ''}" role="tabpanel" id="svc-panel-{i}" aria-labelledby="svc-tab-{i}" tabindex="0">
-              <div class="svc-scene" aria-hidden="true">{svc_scene(i)}</div>
-              <p class="svc-cap">{t}</p>
-            </div>''')
-    return f'''        <div class="svc" data-svc data-reveal>
-          <div class="svc-tabs" role="tablist" aria-label="What I do" aria-orientation="vertical">
-            {''.join(tabs)}
-          </div>
-          <div class="svc-stage">
-            {''.join(panels)}
-          </div>
-        </div>
-        <p class="svc-note" data-reveal><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</p>'''
+    rows = ''.join(f'''
+          <li data-reveal><h3>{h}</h3><p>{t}</p></li>''' for h, t in SERVICES)
+    return f'''        <ul class="svc-list" role="list">{rows}
+        </ul>'''
 
 
 # ---- Who you'll work with: the brand story beside the promises in numbers ------------------------
@@ -348,13 +288,11 @@ def work_list(sites):
 
 # ---- Questions people ask -------------------------------------------------------------------
 FAQS = [('How much does a website cost?', f'Starter sites begin at ${STARTER_FROM} and larger ones at ${LARGER_FROM}; the <a class="link" href="pricing.html">Pricing</a> page has the details. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
-        ('Do you take on smaller jobs?', f'Yes. A fix on the site you have, one new page, or a refresh of your photos and words. Smaller jobs take days, not weeks, and start at ${FIX_FROM}. Same rule as everything else: a price in writing first.'),
+        ('Do you take every job?', 'No. I’m not trying to take on as much work as I can, or make as much money as I can. I take the jobs I know I can do well, a few at a time, and I turn down the ones I don’t think I can do right. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
         ('How long does it take?', 'About 30 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
         ('What do you need from me?', 'Three things, and they’re your 10%: a clear idea of what you want, the words for each page, and your photos and logo. The other 90% is mine. The 30 days starts when I have them. No logo or photos yet? Say so and we’ll work it out.'),
-        ('Can I make changes after it’s live?', f'Yes. Small changes and fixes are quoted per job, from ${FIX_FROM}, and done within days. There’s no monthly fee and no contract: the site is yours, and the hosting I set up costs nothing a month.'),
-        ('Do you work outside my area?', 'Yes. The whole project runs over calls, email and shared links, so where you’re based doesn’t matter.'),
-        ('Do you do social media or Google Business Profiles?', 'No. I stick to websites, domains, hosting and email, and do them well.')]
+]
 
 
 def faq_section():
@@ -382,14 +320,7 @@ def close_section(hid='close-h', line='Let’s talk about yours.'):
         <h2 id="{hid}" data-reveal>{line}</h2>
         <div class="close-side" data-reveal>
           <p>Six quick questions, about two minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
-          <form class="close-form" action="start.html" method="get">
-            <label for="{hid}-biz">Your business name</label>
-            <div class="close-row">
-              <input class="field" id="{hid}-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
-              <button class="button button-lg" type="submit">Start a project{ARROW}</button>
-            </div>
-            <p class="close-fine">{icon('clock')}Nothing is sent until you finish the form.</p>
-          </form>
+          <div class="button-row"><a class="button button-lg" href="start.html">Start a project{ARROW}</a></div>
         </div>
       </div>
     </section>'''
@@ -468,7 +399,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
             .replace('{{VERIFY}}', f'  <meta name="google-site-verification" content="{esc(SEARCH_CONSOLE)}">\n' if SEARCH_CONSOLE else '')
             .replace('{{CANONICAL}}', '' if file == '404.html' else f'  <link rel="canonical" href="{url}">\n')
             .replace('{{OG_URL}}', '' if file == '404.html' else f'  <meta property="og:url" content="{url}">\n')
-            .replace('{{FOOT_SERVICES}}', ''.join(f'<li>{icon(ic)}<span>{h}</span></li>' for (h, _), ic in zip(SERVICES, SVC_ICONS))).replace('{{YEAR}}', YEAR)
+            .replace('{{YEAR}}', YEAR)
             .replace('{{DOMAIN}}', DOMAIN).replace('{{V}}', VERSION).replace('{{LD}}', ld_json() if ld else '')
             .replace('{{BODY_CLASS}}', body_class)
             .replace('{{SPRITE}}', sprite).replace('{{BANNER}}', BANNER if banner else '')

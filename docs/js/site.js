@@ -1,4 +1,4 @@
-/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the hero sites, the service tabs, the work carousel, the fit check and the intake form.
+/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the hero sites, the work carousel and the intake form.
    Everything on the page works without it; this only adds the moving parts. */
 (() => {
   'use strict';
@@ -143,53 +143,6 @@
     update();
   });
 
-  /* ---- What I do: four tabs, each playing a short scene of the service at work ----------
-     A thin bar under the chosen tab fills while its scene plays, then the next tab takes over.
-     It rests while a pointer or keyboard is inside, or it's off screen; choosing a tab stops it for good. */
-  document.querySelectorAll('[data-svc]').forEach((svc) => {
-    const tabs = Array.from(svc.querySelectorAll('[role="tab"]'));
-    const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls')));
-    if (!tabs.length || panels.some((p) => !p)) return;
-    let at = Math.max(0, tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true'));
-    const select = (i, focus) => {
-      at = (i + tabs.length) % tabs.length;
-      tabs.forEach((t, j) => {
-        const on = j === at;
-        t.setAttribute('aria-selected', String(on));
-        t.tabIndex = on ? 0 : -1;
-        panels[j].classList.toggle('is-active', on);
-      });
-      if (focus) tabs[at].focus();
-    };
-    const stop = () => svc.classList.remove('is-auto', 'is-paused');
-    tabs.forEach((t, i) => t.addEventListener('click', () => { stop(); select(i); }));
-    svc.querySelector('[role="tablist"]').addEventListener('keydown', (e) => {
-      const go = { ArrowDown: at + 1, ArrowRight: at + 1, ArrowUp: at - 1, ArrowLeft: at - 1, Home: 0, End: tabs.length - 1 }[e.key];
-      if (go === undefined) return;
-      e.preventDefault();
-      stop();
-      select(go, true);
-    });
-
-    if (reduce.matches || !('IntersectionObserver' in window)) return;
-    let onScreen = false; let hovered = false; let focused = false; let started = false;
-    const check = () => {
-      if (onScreen && !started) { started = true; svc.classList.add('is-auto'); }
-      svc.classList.toggle('is-paused', svc.classList.contains('is-auto') && (!onScreen || hovered || focused || document.hidden));
-    };
-    // the bar under the chosen tab has filled: on to the next one
-    svc.addEventListener('animationend', (e) => {
-      if (e.animationName !== 'svc-timer' || !svc.classList.contains('is-auto')) return;
-      select(at + 1);
-    });
-    svc.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hovered = true; check(); } });
-    svc.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hovered = false; check(); } });
-    svc.addEventListener('focusin', () => { focused = true; check(); });
-    svc.addEventListener('focusout', (e) => { if (!svc.contains(e.relatedTarget)) { focused = false; check(); } });
-    document.addEventListener('visibilitychange', check);
-    new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; check(); }, { threshold: 0.35 }).observe(svc);
-  });
-
   /* ---- The work carousel: big centred slides that move on by themselves ---------------------
      The bar in the current dot fills over a few seconds, then the next site slides in (and round again).
      It rests while a pointer or keyboard is inside it, while it's off screen or the tab is hidden.
@@ -271,41 +224,6 @@
   /* ---- Questions: only one answer open at a time ------------------------------------ */
   const faqs = document.querySelectorAll('.faq');
   faqs.forEach((d) => d.addEventListener('toggle', () => { if (d.open) faqs.forEach((o) => { if (o !== d) o.open = false; }); }));
-
-  /* ---- About: is this a fit? Three yes/no questions, answered on the page, sent nowhere ---- */
-  document.querySelectorAll('[data-fitcheck]').forEach((box) => {
-    const result = box.querySelector('[data-fit-result]');
-    if (!result) return;
-    const answers = {};
-    const say = (cls, h, p, cta) => {
-      result.className = 'fit-result' + (cls ? ' ' + cls : '');
-      result.innerHTML = `<p class="fit-result-h">${h}</p><p class="fit-result-p">${p}</p>` +
-        (cta ? '<a class="button" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>' : '');
-    };
-    const update = () => {
-      const { own, one, ref } = answers;
-      if (own === undefined || one === undefined || ref === undefined) {
-        const n = Object.keys(answers).length;
-        say('', n ? `${3 - n} more to go.` : 'Answer the three questions and I’ll tell you honestly.', 'If it’s not a fit, I’ll say so up front.', false);
-      } else if (own === 'no') {
-        say('is-no', 'Probably not the right fit.', 'A franchise with a head office, a large online store or a project that needs a full team is better served by an agency. If you’re not sure, ask anyway and I’ll point you the right way.', false);
-      } else if (one === 'no') {
-        say('is-no', 'Honest answer: maybe not.', 'If you’d rather have a team and an account manager, an agency will suit you better. If you want one person who does the work and answers the phone, that’s me.', false);
-      } else if (ref === 'no') {
-        say('is-maybe', 'Could well be a fit.', 'I work mostly by referral, but tell me about your business and I’ll give you a straight answer within five days.', true);
-      } else {
-        say('is-yes', 'Sounds like a fit.', 'Six quick questions, about two minutes, and you’ll hear from me within five days with a price in writing.', true);
-      }
-    };
-    box.querySelectorAll('[data-fq]').forEach((row) => {
-      const buttons = row.querySelectorAll('[data-ans]');
-      buttons.forEach((b) => b.addEventListener('click', () => {
-        answers[row.dataset.fq] = b.dataset.ans;
-        buttons.forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
-        update();
-      }));
-    });
-  });
 
   /* ---- Privacy: mark the section you're reading in the list ---------------------------- */
   const toc = document.querySelectorAll('.toc a');
