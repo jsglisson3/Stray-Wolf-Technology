@@ -204,7 +204,7 @@ page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not 
 RATES = [
     ('A starter site', STARTER_FROM, 'Up to five pages, written with you and built by hand. Domain and email set up.', 'What most owner-run businesses need.'),
     ('A larger site', LARGER_FROM, 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.', 'More to show, or more to sell.'),
-    ('A mockup first', f'{MOCKUP_FROM}<span> to ${MOCKUP_TO}</span>', 'Your homepage, designed first so you can see it. Go ahead and it comes off the price.', 'See it before you commit.'),
+    ('A mockup first', f'{MOCKUP_FROM}<span> to ${MOCKUP_TO}</span>', 'Your homepage, designed first so you can see it.', '<strong>Credited in full.</strong> Go ahead with the site and every dollar of the mockup comes off your final price.'),
     ('A fix, a page or a refresh', FIX_FROM, f'A fix from ${FIX_FROM}, a new page from ${PAGE_FROM}, new words and photos from ${REFRESH_FROM}. Days, not weeks.', 'For a website you already have.'),
 ]
 INCLUDED = [

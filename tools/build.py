@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '19'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '19.1'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -121,7 +121,9 @@ PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
 
 def hero():
     """The words. The headline on the left; the lead, the buttons and one small picture of a recent site on the right.
-    The picture changes by itself every few seconds (site.js, "The hero"); the full showcase is on the Work page."""
+    The picture changes by itself every few seconds (site.js, "The hero"); the full showcase is on the Work page.
+    V19 (Nov 9 2026, Jeremy picked "Horizon" of three): a paper-cut desert runs along the bottom edge, daytime tones, the wolf standing
+    on the near ridge (the wolf and cactus shapes are the footer's, reused with <use>), cacti in cactus green, a thin orange sun."""
     imgs = []
     for i, s in enumerate(SITES):
         im = s['image']
@@ -143,6 +145,18 @@ def hero():
           </a>
         </div>
       </div>
+      <svg class="hero-scene" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+        <circle cx="980" cy="48" r="26" class="hs-sun-fill"/><circle cx="980" cy="48" r="26" class="hs-sun"/>
+        <path class="hs-far" d="M0 150 V92 L90 84 L180 90 L260 76 L330 80 L420 70 L520 84 L600 72 L700 80 L800 66 L900 78 L1000 70 L1100 82 L1200 74 V150Z"/>
+        <g transform="translate(250 112) scale(0.2)" class="hs-cactus-far"><use href="#cactus"/></g>
+        <path class="hs-mid" d="M0 150 V116 L120 106 L240 118 L380 102 L500 114 L620 104 L760 118 L880 108 L1020 120 L1200 110 V150Z"/>
+        <g transform="translate(760 130) scale(0.3)" class="hs-cactus"><use href="#cactus"/></g>
+        <g transform="translate(900 128) scale(0.42)" class="hs-cactus"><use href="#cactus"/></g>
+        <g transform="translate(1110 132) scale(0.26)" class="hs-cactus"><use href="#cactus"/></g>
+        <path class="hs-near" d="M0 150 V134 L160 128 L320 136 L480 126 L640 134 L800 128 L960 138 L1120 130 L1200 134 V150Z"/>
+        <g transform="translate(440 130) scale(0.42)" class="hs-wolf"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use href="#wolf-level"/></g>
+        <path d="M0 150 H1200" class="hs-line"/>
+      </svg>
     </section>'''
 
 
@@ -307,7 +321,7 @@ def work_list(sites):
 
 
 # ---- Questions people ask -------------------------------------------------------------------
-FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, larger ones from ${LARGER_FROM}. Details on the <a class="link" href="pricing.html">Pricing</a> page. Want to see something first? A mockup is ${MOCKUP_FROM} to ${MOCKUP_TO}, and it comes off the price. One price in writing, before anything starts.'),
+FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, larger ones from ${LARGER_FROM}. Details on the <a class="link" href="pricing.html">Pricing</a> page. Want to see something first? A mockup is ${MOCKUP_FROM} to ${MOCKUP_TO}, and if you go ahead, every dollar of it comes off your final price. One price in writing, before anything starts.'),
         ('Do you take every job?', 'No. I take the jobs I know I can do well, a few at a time. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
         ('How long does it take?', 'About 30 days from yes. If you have a date that matters, put it in the form.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),

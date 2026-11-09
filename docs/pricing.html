@@ -30,7 +30,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=19">
+  <link rel="stylesheet" href="css/site.css?v=19.1">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="inner">
@@ -123,7 +123,7 @@
           <li class="rate" data-reveal>
             <h3 class="rate-name">A mockup first</h3>
             <p class="rate-price"><small>From</small>$50<span> to $100</span></p>
-            <div class="rate-text"><p>Your homepage, designed first so you can see it. Go ahead and it comes off the price.</p><p class="rate-who">See it before you commit.</p></div>
+            <div class="rate-text"><p>Your homepage, designed first so you can see it.</p><p class="rate-who"><strong>Credited in full.</strong> Go ahead with the site and every dollar of the mockup comes off your final price.</p></div>
           </li>
           <li class="rate" data-reveal>
             <h3 class="rate-name">A fix, a page or a refresh</h3>
@@ -206,10 +206,15 @@
         <circle cx="700" cy="92" r="26" fill="#F4F2EE"/>
         <g transform="translate(1090 22)"><line class="shoot" x1="0" y1="0" x2="54" y2="-20" stroke="#F4F2EE" stroke-width="1.5" stroke-linecap="round"/></g>
         <ellipse cx="640" cy="202" rx="720" ry="96" fill="url(#dusk)"/>
+        <!-- far mesas: flat tops, barely there -->
+        <path fill="#302C27" d="M0 200 V168 L60 166 L90 150 L150 150 L170 164 L260 160 L300 146 L380 146 L410 158 L520 156 L560 170 L700 168 L740 152 L820 152 L850 164 L960 162 L990 150 L1060 150 L1090 162 L1200 164 V200Z"/>
         <path fill="#2B2823" d="M0 200 L110 176 L230 188 L370 164 L520 186 L640 170 L760 192 L880 174 L1010 190 L1120 168 L1200 182 L1200 200 Z"/>
+        <g fill="#F4F2EE" opacity=".22"><use href="#cactus" transform="translate(300 184) scale(0.22)"/><use href="#cactus" transform="translate(560 188) scale(0.16)"/><use href="#cactus" transform="translate(1010 186) scale(0.2)"/></g>
         <path fill="#1E1C19" d="M0 200 L80 192 L190 196 L300 186 L420 197 L560 188 L700 199 L830 190 L950 198 L1060 189 L1200 197 L1200 200 Z"/>
         <use href="#cactus" fill="#F4F2EE" transform="translate(820 200)"/>
         <use href="#cactus" fill="#F4F2EE" opacity=".7" transform="translate(1120 200) scale(0.5)"/>
+        <!-- a few rocks along the ground -->
+        <g fill="#F4F2EE" opacity=".55"><path d="M250 200 L256 193 L268 191 L276 200Z"/><path d="M604 200 L609 195 L618 196 L621 200Z"/><path d="M940 200 L947 192 L962 190 L972 200Z"/><path d="M1180 200 L1184 196 L1192 197 L1195 200Z"/></g>
         <rect x="0" y="200" width="1200" height="40" fill="#24221F"/>
         <path d="M0 200 H1200" stroke="#C94B17" stroke-width="2"/>
         <g transform="translate(480 200)">
@@ -268,6 +273,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=19" defer></script>
+  <script src="js/site.js?v=19.1" defer></script>
 </body>
 </html>
