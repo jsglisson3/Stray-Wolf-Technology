@@ -1,4 +1,4 @@
-/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the work carousel and the intake form.
+/* Stray Wolf Technology. Small, plain script: the menu, the reveals, the hero deck, the service tabs, the work carousel and the intake form.
    Everything on the page works without it; this only adds the moving parts. */
 (() => {
   'use strict';
@@ -73,27 +73,60 @@
   }
 
   /* ---- Groups reveal one after another (a short stagger) ---------------------------- */
-  document.querySelectorAll('.bento, .timeline, .numbers, .faqs, .shows, .principles, .fit, .pv-cards').forEach((group) => {
+  document.querySelectorAll('.timeline, .numbers, .faqs, .shows, .principles, .fit, .pv-cards').forEach((group) => {
     group.querySelectorAll(':scope > [data-reveal], :scope > * > [data-reveal]').forEach((el, i) => el.style.setProperty('--rd', `${Math.min(i, 6) * 80}ms`));
   });
 
-  /* ---- The hero demo: a website going from sketch to finished ------------------------ */
-  document.querySelectorAll('[data-demo]').forEach((demo) => {
-    const buttons = demo.querySelectorAll('[data-demo-set]');
-    let touched = false;
-    const set = (state) => {
-      demo.dataset.state = state;
-      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.demoSet === state)));
+  /* ---- The hero deck: the real sites, stacked like windows. The front one steps away and the next comes forward ----
+     A thin bar fills under the stack while each site is in front, then the deck turns. It rests while a pointer is
+     over it, while it's off screen or the tab is hidden. A click on the stack turns it by hand. No turning by itself
+     for reduced motion. */
+  document.querySelectorAll('[data-deck]').forEach((deck) => {
+    const stack = deck.querySelector('.deck-stack');
+    const cards = Array.from(deck.querySelectorAll('.deck-card'));
+    const names = Array.from(deck.querySelectorAll('.deck-name'));
+    const bars = Array.from(deck.querySelectorAll('.deck-bars i'));
+    if (cards.length < 2 || !stack) { deck.classList.add('is-ready'); return; }
+    let order = cards.map((_, i) => i);   // order[0] is the card in front
+    let busy = false;
+    const label = () => {
+      names.forEach((n, i) => n.classList.toggle('is-on', i === order[0]));
+      bars.forEach((b, i) => b.classList.toggle('is-on', i === order[0]));
     };
-    buttons.forEach((b) => b.addEventListener('click', () => { touched = true; set(b.dataset.demoSet); }));
-    if (reduce.matches || !('IntersectionObserver' in window)) { set('built'); return; }
-    // plays once by itself when it comes into view: the sketch, then the finished page
-    const io = new IntersectionObserver((entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      setTimeout(() => { if (!touched) set('built'); }, 1400);
-    }, { threshold: 0.4 });
-    io.observe(demo);
+    const turn = () => {
+      if (busy) return;
+      busy = true;
+      const front = cards[order[0]];
+      order = [...order.slice(1), order[0]];
+      front.dataset.pos = 'out';   // the front window steps down and fades
+      order.slice(0, -1).forEach((c, pos) => { cards[c].dataset.pos = String(pos); });
+      label();
+      setTimeout(() => {   // then it comes back in at the back of the stack
+        front.classList.add('no-tr', 'is-entering');
+        front.dataset.pos = String(cards.length - 1);
+        void front.offsetWidth;
+        front.classList.remove('no-tr');
+        front.classList.remove('is-entering');
+        busy = false;
+      }, reduce.matches ? 0 : 460);
+    };
+    stack.addEventListener('click', turn);
+    // the windows fan up into a stack once the page has settled
+    requestAnimationFrame(() => setTimeout(() => deck.classList.add('is-ready'), reduce.matches ? 0 : 500));
+
+    if (reduce.matches || !('IntersectionObserver' in window)) return;
+    deck.addEventListener('animationend', (e) => { if (e.animationName === 'deck-fill') turn(); });
+    let onScreen = true; let hovered = false; let started = false;
+    const check = () => {
+      if (!started) return;
+      deck.classList.add('is-auto');
+      deck.classList.toggle('is-paused', !onScreen || hovered || document.hidden);
+    };
+    deck.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hovered = true; check(); } });
+    deck.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hovered = false; check(); } });
+    document.addEventListener('visibilitychange', check);
+    new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; check(); }, { threshold: 0.3 }).observe(deck);
+    setTimeout(() => { started = true; check(); }, 1200);   // a moment to look before the first turn
   });
 
   /* ---- How it works: the line fills as you scroll past, each step lights up when reached ---- */
@@ -120,45 +153,129 @@
     update();
   });
 
-  /* ---- The work carousel: a scroll-snap row, with buttons, dots and a counter --------- */
+  /* ---- What I do: four tabs, each playing a short scene of the service at work ----------
+     A thin bar under the chosen tab fills while its scene plays, then the next tab takes over.
+     It rests while a pointer or keyboard is inside, or it's off screen; choosing a tab stops it for good. */
+  document.querySelectorAll('[data-svc]').forEach((svc) => {
+    const tabs = Array.from(svc.querySelectorAll('[role="tab"]'));
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls')));
+    if (!tabs.length || panels.some((p) => !p)) return;
+    let at = Math.max(0, tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true'));
+    const select = (i, focus) => {
+      at = (i + tabs.length) % tabs.length;
+      tabs.forEach((t, j) => {
+        const on = j === at;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        panels[j].classList.toggle('is-active', on);
+      });
+      if (focus) tabs[at].focus();
+    };
+    const stop = () => svc.classList.remove('is-auto', 'is-paused');
+    tabs.forEach((t, i) => t.addEventListener('click', () => { stop(); select(i); }));
+    svc.querySelector('[role="tablist"]').addEventListener('keydown', (e) => {
+      const go = { ArrowDown: at + 1, ArrowRight: at + 1, ArrowUp: at - 1, ArrowLeft: at - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (go === undefined) return;
+      e.preventDefault();
+      stop();
+      select(go, true);
+    });
+
+    if (reduce.matches || !('IntersectionObserver' in window)) return;
+    let onScreen = false; let hovered = false; let focused = false; let started = false;
+    const check = () => {
+      if (onScreen && !started) { started = true; svc.classList.add('is-auto'); }
+      svc.classList.toggle('is-paused', svc.classList.contains('is-auto') && (!onScreen || hovered || focused || document.hidden));
+    };
+    // the bar under the chosen tab has filled: on to the next one
+    svc.addEventListener('animationend', (e) => {
+      if (e.animationName !== 'svc-timer' || !svc.classList.contains('is-auto')) return;
+      select(at + 1);
+    });
+    svc.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hovered = true; check(); } });
+    svc.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hovered = false; check(); } });
+    svc.addEventListener('focusin', () => { focused = true; check(); });
+    svc.addEventListener('focusout', (e) => { if (!svc.contains(e.relatedTarget)) { focused = false; check(); } });
+    document.addEventListener('visibilitychange', check);
+    new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; check(); }, { threshold: 0.35 }).observe(svc);
+  });
+
+  /* ---- The work carousel: big centred slides that move on by themselves ---------------------
+     The bar in the current dot fills over a few seconds, then the next site slides in (and round again).
+     It rests while a pointer or keyboard is inside it, while it's off screen or the tab is hidden.
+     The pause button, or a swipe, stops it until someone presses play. No moving at all for reduced motion. */
   document.querySelectorAll('[data-carousel]').forEach((car) => {
     const track = car.querySelector('[data-track]');
     const prev = car.querySelector('[data-prev]');
     const next = car.querySelector('[data-next]');
     if (!track || !prev || !next) return;
+    const play = car.querySelector('[data-play]');
     const slides = Array.from(track.children);
     const dots = Array.from(car.querySelectorAll('[data-dot]'));
     const now = car.querySelector('[data-count-now]');
     slides.forEach((s, i) => { s.setAttribute('aria-roledescription', 'slide'); s.setAttribute('aria-label', `${i + 1} of ${slides.length}`); });
     track.setAttribute('aria-roledescription', 'carousel');
+    // the slide whose middle is nearest the middle of the row
     const current = () => {
-      const left = track.getBoundingClientRect().left;
+      const r = track.getBoundingClientRect();
+      const mid = r.left + r.width / 2;
       let best = 0; let dist = Infinity;
-      slides.forEach((s, i) => { const d = Math.abs(s.getBoundingClientRect().left - left); if (d < dist) { dist = d; best = i; } });
-      const max = track.scrollWidth - track.clientWidth - 2;
-      return track.scrollLeft >= max ? slides.length - 1 : best;
+      slides.forEach((s, i) => { const b = s.getBoundingClientRect(); const d = Math.abs(b.left + b.width / 2 - mid); if (d < dist) { dist = d; best = i; } });
+      return best;
     };
+    let shown = -1;
     const update = () => {
-      const max = track.scrollWidth - track.clientWidth - 2;
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= max;
       const i = current();
+      if (i === shown) return;
+      shown = i;
       slides.forEach((s, j) => s.classList.toggle('is-active', j === i));
       dots.forEach((d, j) => d.setAttribute('aria-current', String(j === i)));
       if (now) now.textContent = String(i + 1).padStart(2, '0');
     };
     const goTo = (i) => {
-      const s = slides[Math.max(0, Math.min(slides.length - 1, i))];
-      track.scrollTo({ left: s.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft || 0), behavior: reduce.matches ? 'auto' : 'smooth' });
+      const n = slides.length;
+      const s = slides[((i % n) + n) % n];
+      const r = track.getBoundingClientRect();
+      const b = s.getBoundingClientRect();
+      track.scrollTo({ left: track.scrollLeft + (b.left + b.width / 2) - (r.left + r.width / 2), behavior: reduce.matches ? 'auto' : 'smooth' });
     };
     prev.addEventListener('click', () => goTo(current() - 1));
     next.addEventListener('click', () => goTo(current() + 1));
     dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
-    let t;
-    track.addEventListener('scroll', () => { cancelAnimationFrame(t); t = requestAnimationFrame(update); }, { passive: true });
-    track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current() + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current() - 1); } });
-    window.addEventListener('resize', update);
+    let raf = 0;
+    track.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current() + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current() - 1); }
+    });
+    addEventListener('resize', () => { shown = -1; update(); });
     update();
+
+    const delay = parseInt(car.dataset.autoplay, 10);
+    if (!delay || reduce.matches || !('IntersectionObserver' in window)) { car.classList.add('no-autoplay'); return; }
+    car.style.setProperty('--auto', `${delay}ms`);
+    let stopped = false; let onScreen = false; let hovered = false; let focused = false;
+    const check = () => {
+      car.classList.toggle('is-auto', !stopped);
+      car.classList.toggle('is-stopped', stopped);
+      car.classList.toggle('is-paused', !stopped && (!onScreen || hovered || focused || document.hidden));
+      if (play) play.setAttribute('aria-label', stopped ? 'Play the slideshow' : 'Pause the slideshow');
+    };
+    // the bar in the current dot has filled: on to the next site
+    car.addEventListener('animationend', (e) => {
+      if (e.animationName !== 'dot-fill' || stopped) return;
+      goTo(current() + 1);
+    });
+    if (play) play.addEventListener('click', () => { stopped = !stopped; check(); });
+    // a swipe means someone is looking for themselves
+    track.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' && !stopped) { stopped = true; check(); } });
+    car.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hovered = true; check(); } });
+    car.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hovered = false; check(); } });
+    car.addEventListener('focusin', () => { focused = true; check(); });
+    car.addEventListener('focusout', (e) => { if (!car.contains(e.relatedTarget)) { focused = false; check(); } });
+    document.addEventListener('visibilitychange', check);
+    new IntersectionObserver((entries) => { onScreen = entries[entries.length - 1].isIntersecting; check(); }, { threshold: 0.35 }).observe(car);
+    check();
   });
 
   /* ---- Questions: only one answer open at a time ------------------------------------ */

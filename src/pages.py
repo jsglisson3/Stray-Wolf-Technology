@@ -4,7 +4,7 @@
    SITES, work_list(sites)   the Work showcase (src/sites.py)
    services()                the "What I do" tiles
    close_section(hid, line)  the closing card with the business-name box
-   numbers_html()            the four numbers (1 person, 14 questions, 5 days, about 45 days)
+   numbers_html()            the four numbers (1 person, 14 questions, 5 days, about 30 days)
    icon(name), ARROW         an icon from src/partials/sprite.html
    photo_or_mark(dark), HEADSHOT, STORY
    read(name)                a partial from src/partials
@@ -50,7 +50,7 @@ page('work.html', 'Work | Stray Wolf Technology',
 
 about_side = f'''<div class="about-panel{' has-photo' if HEADSHOT else ''}">
           <div class="hero-grid-lines" aria-hidden="true"></div>
-          {photo_or_mark(dark=True)}
+          {photo_or_mark(dark=False)}
         </div>'''
 
 FIT_YES = ['Owner-run businesses, anywhere in the US', 'The shop, the trade, the practice, the one-truck outfit', 'People referred by someone I’ve already built a site for']
@@ -173,7 +173,7 @@ start_main = page_head('Start a project', 'Tell me about your business.', 'Fourt
             <ol class="next-steps" role="list">
               <li><span class="ns-ic">{icon('mail')}</span><span><strong>Within 5 days</strong>I read your answers and reply.</span></li>
               <li><span class="ns-ic">{icon('doc')}</span><span><strong>Before anything starts</strong>You get a price in writing.</span></li>
-              <li><span class="ns-ic">{icon('rocket')}</span><span><strong>About 45 days</strong>Your site goes live.</span></li>
+              <li><span class="ns-ic">{icon('rocket')}</span><span><strong>About 30 days</strong>Your site goes live.</span></li>
             </ol>
           </div>
           {talk}
@@ -216,7 +216,7 @@ thanks_main = end_page('Got it. Thanks.', 'Your answers are in. Here’s what ha
             <li class="is-done"><span class="ts-n">{icon('check')}</span><span><strong>Your answers are in</strong>Nothing else to do right now.</span></li>
             <li><span class="ts-n">2</span><span><strong>I reply within five days</strong>With questions, or a time to talk.</span></li>
             <li><span class="ts-n">3</span><span><strong>A price in writing</strong>Before anything starts.</span></li>
-            <li><span class="ts-n">4</span><span><strong>Live in about 45 days</strong>Only once you’ve seen it and said yes.</span></li>
+            <li><span class="ts-n">4</span><span><strong>Live in about 30 days</strong>Only once you’ve seen it and said yes.</span></li>
           </ol>
 ''' + go_cards([('index.html', 'arrow-left', 'Back to the homepage', 'Where you started'), ('work.html', 'layout', 'See the work', 'Sites I’ve built')], 'Where to next'),
     f'<span class="end-badge end-badge-ok">{icon("check")}Sent</span>', WOLF)

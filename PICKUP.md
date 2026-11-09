@@ -1,20 +1,20 @@
 # Pick up here (Stray Wolf Technology)
 
-Last updated November 9, 2026, after the clean rebuild. This repository (`jsglisson3/Stray-Wolf-Technology`) replaces `jsglisson3/Firemark` for the new brand.
+Last updated November 9, 2026, after the v7 hero and type round. This repository (`jsglisson3/Stray-Wolf-Technology`) replaces `jsglisson3/Firemark` for the new brand.
 
 ## Where things stand
 
-The site is rebuilt as **Stray Wolf Technology** (the rebrand of Firemark), in a clean, plain style: paper, charcoal, one orange, the Zilla Slab logo face for headings. No illustration. Still a hidden **draft** (yellow banner, noindex) until launch.
+The site is rebuilt as **Stray Wolf Technology** (the rebrand of Firemark), in a clean, plain style: paper and stone, charcoal type, one orange. Headings are Instrument Serif (the orange accent in italic); text is Bricolage Grotesque; Zilla Slab lives in the logo only (changed from Zilla headings Nov 9, v7). No illustration. Still a hidden **draft** (yellow banner, noindex) until launch.
 
 Pages: Home, Work, About, Start a project (the fourteen questions), thanks, privacy, 404. `contact.html` and `brand.html` (old Firemark addresses) redirect.
 
-Homepage (v5), top to bottom: the hero (words on paper, and a charcoal panel where a small example website goes from sketch to finished), 01 The difference (the usual way vs. Stray Wolf), 02 How it works (four steps on a line that fills as you scroll), 03 What I do (four service tiles), 04 Who you'll work with (the story and four numbers), 05 Recent work (carousel in browser frames, TVIS first), 06 Questions (accordion), the closing card (type a business name, it carries into the form), the footer. The design system (colours, type, spacing, shadows, buttons, fields) is the `:root` block and the sections of `docs/css/site.css`; icons are in `src/partials/sprite.html`.
+Homepage (v7), top to bottom: the hero (a serif headline with "your needs." in italic orange; three promises: hand-built, yours to keep, about 30 days; and a light stone panel where the real client sites sit stacked like windows and turn every few seconds, with the name underneath), 01 How it works (four steps on a line that fills as you scroll), 02 What I do (four tabs; each plays a short scene of that service, and the tabs move on by themselves until someone picks one), 03 Recent work (big centred slides that rotate by themselves, with pause, arrows and dots; TVIS first), 04 Questions (accordion), the closing card (type a business name, it carries into the form), the footer. Removed in v6 at Jeremy's request: the comparison section and "Who you'll work with" (the story and numbers still live on About). The design system (colours, type, spacing, shadows, buttons, fields) is the `:root` block and the sections of `docs/css/site.css`; icons are in `src/partials/sprite.html`.
 
 Checks on this build:
 - Accessibility scan (axe): 0 issues on all seven pages at phone and desktop widths.
 - No `[PLACEHOLDER]` or `[CONFIRM]` tags anywhere. The build stops if one would reach a page.
 
-Preview of the current build: https://claude.ai/artifact/SNZHsAUkCtkusqKsvuurt5
+Preview of the current build: https://claude.ai/artifact/4Ra3dXbmWZopH7tLtSyNQQ
 
 ## Decisions (Nov 8 and 9, 2026)
 
@@ -24,8 +24,8 @@ Preview of the current build: https://claude.ai/artifact/SNZHsAUkCtkusqKsvuurt5
 - Services (What I do): website design and build; domain registration and setup; hosting and small updates; email at your own domain (setup). **Not** Google Business Profile or social media.
 - Client sites: a simple list, one clean image and a link each, never case studies. On the homepage they sit near the end, in a carousel.
 - No Texas or personal-background copy on the site. Jeremy by first name only. Pricing stays "a price in writing", no numbers.
-- Promises: reply within five days; a price in writing before anything starts; live in about 45 days.
-- Hero: the B layout (paper words, charcoal panel). The panel shows the sketch-to-site demo until `HEADSHOT = True`, then your photo.
+- Promises: reply within five days; a price in writing before anything starts; live in about 30 days (changed from 45 by Jeremy, Nov 9).
+- Hero: the B layout (paper words, a light stone panel; charcoal panels were lightened Nov 9 because Jeremy found them a bit dark and bold). The panel shows the stacked real sites (v7; the sketch-to-site demo was dropped Nov 9) until `HEADSHOT = True`, then your photo. No "by referral" pill above the headline, and "price in writing" is no longer a hero promise (both Jeremy, Nov 9).
 
 ## Settings block (top of `tools/build.py`)
 

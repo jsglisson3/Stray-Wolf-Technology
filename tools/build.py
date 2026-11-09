@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '5'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '7'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -74,7 +74,7 @@ def photo_or_mark(dark=True):
     """Jeremy's photo once HEADSHOT is True; the logo until then. Never a grey box."""
     if HEADSHOT:
         return '<img src="images/jeremy.webp" width="1200" height="900" loading="lazy" decoding="async" alt="Jeremy, who runs Stray Wolf Technology.">'
-    name = 'stray-wolf-logo-stacked-reverse.svg' if dark else 'stray-wolf-symbol-color.svg'
+    name = 'stray-wolf-logo-stacked-reverse.svg' if dark else 'stray-wolf-logo-stacked-color.svg'
     return f'<img src="images/brand/{name}" width="200" height="190" loading="lazy" decoding="async" alt="">'
 
 
@@ -87,48 +87,55 @@ ARROW = icon('arrow')
 
 
 # ---- Hero: paper on the left, a charcoal panel on the right ------------------------------
-# The panel shows a website going from sketch to finished: the idea behind "built around your needs".
-# It's a drawing made of plain HTML boxes (no client's site, no stock photo). The two buttons under it
-# switch between the sketch and the finished page; it plays once on its own when it comes into view.
-H1 = 'A website built around your needs.'
-LEAD = 'Bespoke, hand-built websites. I work on my own, by referral, so you deal with one person from the first call to launch day.'
+# The panel shows a small example website going from sketch to finished: "built around your needs".
+# It's made of plain HTML boxes (no client's site, no stock photo). Visitors can flip between the sketch
+# and the finished page, and between three kinds of business, each with its own colours, layout and button.
+H1_A = 'A website built around'
+H1_B = 'your needs.'
+H1 = f'{H1_A} {H1_B}'
+LEAD = 'Hand-built websites, designed around your business. I work on my own, so you deal with one person from the first call to launch day.'
 PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
-            ('doc', 'Price in writing', 'Before anything starts'),
-            ('calendar', 'About 45 days', 'From answers to launch')]
+            ('key', 'Yours to keep', 'Your domain, your site'),
+            ('calendar', 'About 30 days', 'From answers to launch')]
 
 
-def build_demo():
-    pins = [('story', 'Your story'), ('call', 'Your call button'), ('services', 'Your services')]
-    pin_html = ''.join(f'<span class="pin pin-{k}"><i></i>{t}</span>' for k, t in pins)
-    return f'''<div class="demo" data-demo data-state="sketch">
-            <div class="demo-window" aria-hidden="true">
-              <div class="dw-bar"><span class="dw-dots"><i></i><i></i><i></i></span><span class="dw-url">{icon('lock')}yourbusiness.com</span><span class="dw-spacer"></span></div>
-              <div class="dw-page">
-                <div class="dp-nav"><span class="dp-logo"></span><span class="dp-links"><i></i><i></i><i></i></span><span class="dp-btn"></span></div>
-                <div class="dp-hero">
-                  <div class="dp-copy"><span class="dp-kick"></span><span class="dp-h"></span><span class="dp-h dp-h2"></span><span class="dp-p"></span><span class="dp-p dp-p2"></span><span class="dp-cta">Call today</span></div>
-                  <div class="dp-img"><span class="dp-sun"></span><span class="dp-hill dp-hill1"></span><span class="dp-hill dp-hill2"></span></div>
-                </div>
-                <div class="dp-cards"><span><i></i><b></b><b></b></span><span><i></i><b></b><b></b></span><span><i></i><b></b><b></b></span></div>
-              </div>
-              {pin_html}
+def build_deck(sites):
+    """The hero panel: the real sites, stacked like windows on a desk. The front one steps away every few
+    seconds and the next comes forward, with its name underneath. Click the stack to move it on yourself."""
+    cards, names, bars = [], [], []
+    for i, s in enumerate(sites):
+        img = s['image']
+        first = i == 0
+        load = 'fetchpriority="high"' if first else 'loading="lazy"'
+        url = esc(s['link'].split('//', 1)[-1].rstrip('/'))
+        cards.append(f'''<figure class="deck-card" data-pos="{i}">
+                <div class="frame-bar"><span class="dw-dots"><i></i><i></i><i></i></span><span class="frame-url">{url}</span></div>
+                <img src="images/work/{img}-desktop-960.webp" srcset="{srcset(img)}" sizes="(min-width: 64rem) 36rem, 88vw" width="1440" height="900" {load} decoding="async" alt="">
+              </figure>''')
+        line = esc(s['tag']) if s.get('tag') else esc(s['about'])
+        names.append(f'<p class="deck-name{" is-on" if first else ""}"><strong>{esc(s["name"])}</strong><span>{line}</span></p>')
+        bars.append('<i class="is-on"></i>' if first else '<i></i>')
+    listed = ', '.join(esc(s['name']) for s in sites)
+    return f'''<div class="deck" data-deck>
+            <p class="visually-hidden">Recent sites: {listed}.</p>
+            <div class="deck-stack" aria-hidden="true">
+              {''.join(cards)}
             </div>
-            <div class="demo-switch" role="group" aria-label="Show the example website as">
-              <button type="button" data-demo-set="sketch" aria-pressed="true">Sketch</button>
-              <button type="button" data-demo-set="built" aria-pressed="false">Finished</button>
-              <span class="demo-thumb" aria-hidden="true"></span>
+            <div class="deck-bars" aria-hidden="true">{''.join(bars)}</div>
+            <div class="deck-foot">
+              <div class="deck-names" aria-hidden="true">{''.join(names)}</div>
+              <a class="deck-link" href="#work">See the work{ARROW}</a>
             </div>
           </div>'''
 
 
 def hero():
     promises = ''.join(f'<li><span class="p-ic">{icon(i)}</span><span><strong>{h}</strong><small>{t}</small></span></li>' for i, h, t in PROMISES)
-    side = (f'<div class="hero-photo">{photo_or_mark(dark=True)}</div>' if HEADSHOT else build_demo())
+    side = (f'<div class="hero-photo">{photo_or_mark(dark=True)}</div>' if HEADSHOT else build_deck(SITES))
     return f'''    <section class="hero" aria-labelledby="hero-h">
       <div class="hero-grid">
         <div class="hero-text">
-          <p class="eyebrow eyebrow-plain hero-kick"><span class="dot" aria-hidden="true"></span>Bespoke websites, by referral, anywhere in the US</p>
-          <h1 id="hero-h" class="display">{H1}</h1>
+          <h1 id="hero-h" class="hero-h1">{H1_A} <em>{H1_B}</em></h1>
           <p class="lead hero-lead">{LEAD}</p>
           <div class="button-row">
             <a class="button button-lg" href="start.html">Start a project{ARROW}</a>
@@ -139,35 +146,17 @@ def hero():
         <div class="hero-panel">
           <div class="hero-grid-lines" aria-hidden="true"></div>
           {side}
-          <p class="hero-sign"><img src="images/brand/stray-wolf-symbol-reverse.svg" width="28" height="28" alt="">Designed and built by hand, for one business at a time.</p>
+          <p class="hero-sign"><img src="images/brand/stray-wolf-symbol-color.svg" width="28" height="28" alt="">Designed and built by hand, for one business at a time.</p>
         </div>
       </div>
     </section>'''
-
-
-# ---- The difference: the usual way vs. Stray Wolf -----------------------------------
-COMPARE = [('Design', 'A template shared by thousands of sites', 'Designed from scratch for your business'),
-           ('Who you talk to', 'Support tickets or an account manager', 'Me, from the first call to launch day'),
-           ('Price', 'Plans, tiers and add-ons', 'One price, in writing, before anything starts'),
-           ('Ownership', 'Tied to someone else’s platform', 'Your domain, content and site are yours'),
-           ('Attention', 'As many clients as they can sign', 'A few clients at a time, by referral')]
-
-
-def compare_rows(which):
-    out = []
-    for topic, them, us in COMPARE:
-        if which == 'them':
-            out.append(f'              <li><span class="c-ic c-no">{icon("x")}</span><span><small>{topic}</small>{them}</span></li>')
-        else:
-            out.append(f'              <li><span class="c-ic c-yes">{icon("check")}</span><span><small>{topic}</small>{us}</span></li>')
-    return '\n'.join(out)
 
 
 # ---- How it works: four steps on a line ------------------------------------------------
 STEPS = [('list', 'Day 1', 'You answer fourteen questions', 'About five minutes on the Start a project page.'),
          ('chat', 'Within 5 days', 'We talk', 'I learn what you want from your website, then send a price in writing.'),
          ('craft', 'The build', 'I design and build it by hand', 'You see it before anyone else and we shape it together.'),
-         ('rocket', 'About day 45', 'You say yes. It goes live.', 'Nothing launches until you’ve seen it and approved it.')]
+         ('rocket', 'About day 30', 'You say yes. It goes live.', 'Nothing launches until you’ve seen it and approved it.')]
 
 
 def timeline():
@@ -183,39 +172,68 @@ def timeline():
         </ol>'''
 
 
-# ---- What I do: a bento of four tiles, each with a small picture of what it means ----------
+# ---- What I do: four tabs, each with a small animated scene of what it means ---------------
+# The tabs move on by themselves (a timer bar shows it) until someone picks one, and pause while hovered.
 SERVICES = [('Website design and build', 'By hand, for your business. No templates, no page builders.'),
             ('Domain registration and setup', 'I register it in your name and point it at your site.'),
             ('Hosting and small updates', 'After launch I keep the site up and make the small changes as they come.'),
             ('Email at your own domain', 'An address like you@yourbusiness.com, set up and handed over to you.')]
+SVC_ICONS = ['layout', 'globe', 'server', 'mail']
+
+
+def svc_scene(i):
+    if i == 0:   # one design that fits every screen, made of your own things
+        return f'''<div class="sc sc-build">
+                <div class="rs-frame"><div class="rs-bar"><span class="dw-dots"><i></i><i></i><i></i></span></div>
+                  <div class="rs-page"><i class="rs-h"></i><i class="rs-l"></i><i class="rs-b"></i>
+                    <div class="rs-grid"><i></i><i></i><i></i></div></div></div>
+                <ul class="sc-ticks" role="list"><li>{icon('check')}Your words</li><li>{icon('check')}Your photos</li><li>{icon('check')}Your colours</li><li>{icon('check')}Every screen size</li></ul>
+              </div>'''
+    if i == 1:   # find the name, register it to you, point it at the site
+        return f'''<div class="sc sc-domain">
+                <div class="dm-search">{icon('globe')}<span class="dm-type">yourbusiness.com</span></div>
+                <div class="dm-result"><span class="dm-name">yourbusiness.com</span><span class="dm-avail">Available</span><span class="dm-own">{icon('check')}Registered to you</span></div>
+                <div class="dm-link"><span class="dm-line"></span><span class="dm-site"><i></i><i></i><i></i></span><span class="dm-cap">Points to your new site</span></div>
+              </div>'''
+    if i == 2:   # you ask, it's done
+        return f'''<div class="sc sc-host">
+                <div class="hs-status"><span class="hs-dot"></span>Your site is online</div>
+                <div class="hs-msg hs-you"><small>You</small>Can we add our holiday hours?</div>
+                <div class="hs-msg hs-me"><small>Jeremy</small>On it. I’ll let you know when it’s live.</div>
+                <div class="hs-done">{icon('check')}Done. Holiday hours are on your site.</div>
+              </div>'''
+    return f'''<div class="sc sc-mail">
+                <div class="ml-head"><span class="ml-av">Y</span><span><strong>you@yourbusiness.com</strong><small>Inbox</small></span></div>
+                <ul class="ml-list" role="list">
+                  <li><i></i><span><strong>New customer</strong>Question about a quote</span></li>
+                  <li><i></i><span><strong>Website form</strong>Someone wants to book</span></li>
+                  <li><i></i><span><strong>Supplier</strong>Your order has shipped</span></li>
+                </ul>
+              </div>'''
 
 
 def services():
-    (h1, t1), (h2, t2), (h3, t3), (h4, t4) = SERVICES
-    return f'''        <div class="bento">
-          <article class="tile tile-build" data-reveal>
-            <div class="tile-text"><span class="tile-ic">{icon('layout')}</span><h3>{h1}</h3><p>{t1}</p></div>
-            <div class="tile-art art-devices" aria-hidden="true">
-              <div class="ad-desk"><i class="ad-bar"></i><i class="ad-h"></i><i class="ad-l"></i><i class="ad-l ad-s"></i><i class="ad-b"></i><span class="ad-grid"><i></i><i></i><i></i></span></div>
-              <div class="ad-phone"><i class="ad-bar"></i><i class="ad-h"></i><i class="ad-l"></i><i class="ad-b"></i><i class="ad-card"></i><i class="ad-card"></i><i class="ad-card"></i></div>
-            </div>
-          </article>
-          <article class="tile tile-domain" data-reveal>
-            <div class="tile-text"><span class="tile-ic">{icon('globe')}</span><h3>{h2}</h3><p>{t2}</p></div>
-            <div class="tile-art art-url" aria-hidden="true"><span class="au-bar">{icon('lock')}<span class="au-type">yourbusiness.com</span></span><span class="au-tag">{icon('check')}In your name</span></div>
-          </article>
-          <article class="tile tile-mail" data-reveal>
-            <div class="tile-text"><span class="tile-ic">{icon('mail')}</span><h3>{h4}</h3><p>{t4}</p></div>
-            <div class="tile-art art-mail" aria-hidden="true"><span class="am-chip"><i>Y</i>you@yourbusiness.com</span></div>
-          </article>
-          <article class="tile tile-host" data-reveal>
-            <div class="tile-text"><span class="tile-ic">{icon('server')}</span><h3>{h3}</h3><p>{t3}</p></div>
-            <div class="tile-art art-req" aria-hidden="true"><span class="ar-row"><b>New hours for the holidays</b><em class="ar-done">{icon('check')}Done</em></span><span class="ar-row"><b>Swap the photo on the home page</b><em class="ar-done">{icon('check')}Done</em></span></div>
-          </article>
-          <div class="tile tile-note" data-reveal>
-            <p><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</p>
+    tabs, panels = [], []
+    for i, ((h, t), ic) in enumerate(zip(SERVICES, SVC_ICONS)):
+        sel = i == 0
+        tabs.append(f'''<button class="svc-tab" type="button" role="tab" id="svc-tab-{i}" aria-controls="svc-panel-{i}" aria-selected="{str(sel).lower()}" tabindex="{0 if sel else -1}">
+              <span class="svc-ic">{icon(ic)}</span><span class="svc-t"><strong>{h}</strong><small>{t}</small></span>
+              <span class="svc-timer" aria-hidden="true"><i></i></span>
+            </button>''')
+        panels.append(f'''<div class="svc-panel{' is-active' if sel else ''}" role="tabpanel" id="svc-panel-{i}" aria-labelledby="svc-tab-{i}" tabindex="0">
+              <p class="visually-hidden">{h}: {t}</p>
+              <div aria-hidden="true">{svc_scene(i)}</div>
+            </div>''')
+    return f'''        <div class="svc" data-svc data-reveal>
+          <div class="svc-tabs" role="tablist" aria-label="What I do">
+            {''.join(tabs)}
           </div>
-        </div>'''
+          <div class="svc-stage">
+            <div class="hero-grid-lines" aria-hidden="true"></div>
+            {''.join(panels)}
+          </div>
+        </div>
+        <p class="svc-note" data-reveal>{icon('x')}<span><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</span></p>'''
 
 
 # ---- Who you'll work with: the brand story beside the promises in numbers ------------------------
@@ -223,26 +241,11 @@ STORY = 'A stray wolf doesn’t run with a pack, and neither do I. I build websi
 NUMBERS = [('1', 'person, from the first call to launch day'),
            ('14', 'questions to get started'),
            ('5', 'days, at most, to hear back'),
-           ('~45', 'days from yes to launch')]
+           ('~30', 'days from yes to launch')]
 
 
 def numbers_html():
     return '<dl class="numbers">' + ''.join(f'<div data-reveal><dt>{n}</dt><dd>{t}</dd></div>' for n, t in NUMBERS) + '</dl>'
-
-
-def who_section():
-    return f'''    <section class="section who on-ink" aria-labelledby="who-h">
-      <img class="who-mark" src="images/brand/stray-wolf-symbol-mono-white.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
-      <div class="wrap who-grid">
-        <div class="who-text">
-          <p class="eyebrow" data-reveal><span>04</span>Who you’ll work with</p>
-          <h2 id="who-h" class="quote" data-reveal>{STORY}</h2>
-          <p class="who-sub" data-reveal>I only take work by referral, and only a few clients at a time, so every site gets my full attention.</p>
-          <p data-reveal><a class="button button-light" href="about.html">More about Jeremy{ARROW}</a></p>
-        </div>
-        {numbers_html()}
-      </div>
-    </section>'''
 
 
 # ---- The work: one clean picture of each site, in a browser frame -------------------------
@@ -274,28 +277,33 @@ def site_card(s, cls, h='h3', sizes='(min-width: 64rem) 54rem, 86vw'):
 
 
 def carousel(sites):
-    slides = '\n'.join(site_card(s, 'slide') for s in sites)
-    dots = ''.join(f'<button type="button" class="car-dot" data-dot="{i}" aria-label="Show site {i + 1}: {esc(s["name"])}"></button>' for i, s in enumerate(sites))
-    return f'''        <div class="carousel" data-carousel>
+    """The homepage work: big slides that move on by themselves every few seconds, with a pause button.
+    They stop for good once someone uses the arrows, the dots or swipes, and never move for reduced motion."""
+    slides = '\n'.join(site_card(s, 'slide', sizes='(min-width: 80rem) 68rem, 88vw') for s in sites)
+    dots = ''.join(f'<button type="button" class="car-dot" data-dot="{i}" aria-label="Show site {i + 1}: {esc(s["name"])}"><i></i></button>' for i, s in enumerate(sites))
+    return f'''      <div class="carousel" data-carousel data-autoplay="6000">
+        <div class="wrap">
           <header class="sec-head sec-head-split car-head">
             <div>
-              <p class="eyebrow" data-reveal><span>05</span>Recent work</p>
+              <p class="eyebrow" data-reveal><span>03</span>Recent work</p>
               <h2 id="work-h" class="h2" data-reveal>Sites I’ve built.</h2>
             </div>
             <div class="car-nav" data-reveal>
               <p class="car-count" aria-hidden="true"><span data-count-now>01</span> / {len(sites):02d}</p>
+              <button class="car-btn car-play" type="button" data-play aria-label="Pause the slideshow"><svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
               <button class="car-btn" type="button" data-prev aria-label="Previous site">{icon('arrow-left')}</button>
               <button class="car-btn" type="button" data-next aria-label="Next site">{icon('arrow')}</button>
             </div>
           </header>
-          <ul class="track" role="list" data-track aria-label="Websites" tabindex="0">
+        </div>
+        <ul class="track" role="list" data-track aria-label="Websites" tabindex="0">
 {slides}
-          </ul>
-          <div class="car-foot">
-            <div class="car-dots" role="group" aria-label="Choose a site">{dots}</div>
-            <a class="link link-arrow" href="work.html">See all the work{ARROW}</a>
-          </div>
-        </div>'''
+        </ul>
+        <div class="wrap car-foot">
+          <div class="car-dots" role="group" aria-label="Choose a site">{dots}</div>
+          <a class="link link-arrow" href="work.html">See all the work{ARROW}</a>
+        </div>
+      </div>'''
 
 
 def work_list(sites):
@@ -321,7 +329,7 @@ def work_list(sites):
 
 # ---- Questions people ask -------------------------------------------------------------------
 FAQS = [('How much does a website cost?', 'Let’s talk. Every site is different, so after we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
-        ('How long does it take?', 'About 45 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
+        ('How long does it take?', 'About 30 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
         ('What do you need from me?', 'Answers to the fourteen questions, then a conversation. A logo and photos of your work help if you have them. If you don’t, we’ll work it out.'),
         ('Can I make changes after it’s live?', 'Yes. I can host the site and make the small changes as they come, or you can make them yourself. You choose in the form.'),
@@ -329,7 +337,7 @@ FAQS = [('How much does a website cost?', 'Let’s talk. Every site is different
         ('Do you do social media or Google Business Profiles?', 'No. I stick to websites, domains, hosting and email, and do them well.')]
 
 
-def faq_section(num='06'):
+def faq_section(num='04'):
     items = ''.join(f'''
             <details class="faq" data-reveal>
               <summary><span>{q}</span><span class="faq-ic" aria-hidden="true">{icon('plus')}</span></summary>
@@ -353,7 +361,7 @@ def close_section(hid='close-h', line='Let’s talk about yours.'):
     return f'''    <section class="close-wrap" aria-labelledby="{hid}">
       <div class="wrap">
         <div class="close" data-reveal>
-          <img class="close-mark" src="images/brand/stray-wolf-symbol-mono-white.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <img class="close-mark" src="images/brand/stray-wolf-symbol-mono-dark.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <div class="close-text">
             <h2 id="{hid}">{line}</h2>
             <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
@@ -361,7 +369,7 @@ def close_section(hid='close-h', line='Let’s talk about yours.'):
           <form class="close-form" action="start.html" method="get">
             <label for="{hid}-biz">Your business name</label>
             <div class="close-row">
-              <input class="field field-dark" id="{hid}-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
+              <input class="field" id="{hid}-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
               <button class="button button-lg" type="submit">Start a project{ARROW}</button>
             </div>
             <p class="close-fine">{icon('clock')}About five minutes. Nothing is sent until you finish the form.</p>
@@ -443,7 +451,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
             .replace('{{ROBOTS}}', ROBOTS_META)
             .replace('{{CANONICAL}}', '' if file == '404.html' else f'  <link rel="canonical" href="{url}">\n')
             .replace('{{OG_URL}}', '' if file == '404.html' else f'  <meta property="og:url" content="{url}">\n')
-            .replace('{{FOOT_SERVICES}}', ''.join(f'<li>{h}</li>' for h, _ in SERVICES)).replace('{{YEAR}}', YEAR)
+            .replace('{{FOOT_SERVICES}}', ''.join(f'<li>{icon(ic)}<span>{h}</span></li>' for (h, _), ic in zip(SERVICES, SVC_ICONS))).replace('{{YEAR}}', YEAR)
             .replace('{{DOMAIN}}', DOMAIN).replace('{{V}}', VERSION).replace('{{LD}}', ld_json() if ld else '')
             .replace('{{BODY_CLASS}}', body_class)
             .replace('{{SPRITE}}', sprite).replace('{{BANNER}}', BANNER if banner else '')
@@ -458,8 +466,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
 # 1) Homepage
 home = (SRC / 'home.html').read_text(encoding='utf-8')
 home = (home.replace('{{HERO}}', hero()).replace('{{SERVICES}}', services()).replace('{{CAROUSEL}}', carousel(SITES))
-        .replace('{{COMPARE_THEM}}', compare_rows('them')).replace('{{COMPARE_US}}', compare_rows('us'))
-        .replace('{{TIMELINE}}', timeline()).replace('{{WHO}}', who_section()).replace('{{FAQ}}', faq_section())
+        .replace('{{TIMELINE}}', timeline()).replace('{{FAQ}}', faq_section())
         .replace('{{CLOSE}}', close_section()))
 page('index.html', 'Stray Wolf Technology | Bespoke, hand-built websites', HOME_DESC, home, current='index.html', body_class='home', ld=True)
 
@@ -471,7 +478,7 @@ mod.SITES = SITES
 mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
-for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'timeline', 'compare_rows', 'browser', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark'):
+for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'timeline', 'browser', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark'):
     setattr(mod, _n, globals()[_n])
 mod.read = read
 mod.WAYS = WAYS

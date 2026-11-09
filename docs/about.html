@@ -27,9 +27,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <link rel="preload" href="fonts/zilla-slab-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/instrument-serif-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=5">
+  <link rel="stylesheet" href="css/site.css?v=7">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="inner">
@@ -67,23 +68,27 @@
     <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4 18-7z"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
     <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5 5-2z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="3.6" height="14" rx="1.2"/><rect x="13.9" y="5" width="3.6" height="14" rx="1.2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z"/></symbol>
   </svg>
 
   <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>
 
   <header class="site-header" data-header>
-    <div class="wrap header-row">
-      <a class="brand" href="index.html"><img src="images/brand/stray-wolf-logo-color.svg" width="642" height="150" alt="Stray Wolf Technology, home"></a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="menu-bars" aria-hidden="true"><span></span><span></span></span><span data-menu-label>Menu</span></button>
-      <nav class="site-nav" id="site-nav" aria-label="Main">
-        <ul class="nav-list" role="list">
-          <li class="nav-home"><a href="index.html">Home</a></li>
-          <li><a href="work.html">Work</a></li>
-          <li><a href="about.html" aria-current="page">About</a></li>
-          <li class="nav-act"><a class="button button-sm" href="start.html">Start a project</a></li>
-        </ul>
-        <p class="nav-note">Bespoke, hand-built websites. By referral, for businesses anywhere in the US.</p>
-      </nav>
+    <div class="wrap header-wrap">
+      <div class="header-row">
+        <a class="brand" href="index.html"><img src="images/brand/stray-wolf-logo-color.svg" width="642" height="150" alt="Stray Wolf Technology, home"></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="menu-bars" aria-hidden="true"><span></span><span></span></span><span data-menu-label>Menu</span></button>
+        <nav class="site-nav" id="site-nav" aria-label="Main">
+          <ul class="nav-list" role="list">
+            <li class="nav-home"><a href="index.html"><span>Home</span></a></li>
+            <li><a href="work.html"><span>Work</span></a></li>
+            <li><a href="about.html" aria-current="page"><span>About</span></a></li>
+            <li class="nav-act"><a class="button button-sm" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          </ul>
+          <p class="nav-note"><span class="dot" aria-hidden="true"></span>Bespoke, hand-built websites. By referral, for businesses anywhere in the US.</p>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -98,13 +103,13 @@
         </div>
         <div class="about-panel">
           <div class="hero-grid-lines" aria-hidden="true"></div>
-          <img src="images/brand/stray-wolf-logo-stacked-reverse.svg" width="200" height="190" loading="lazy" decoding="async" alt="">
+          <img src="images/brand/stray-wolf-logo-stacked-color.svg" width="200" height="190" loading="lazy" decoding="async" alt="">
         </div>
       </div>
     </section>
 
     <section class="numbers-band" aria-label="In numbers">
-      <div class="wrap"><dl class="numbers"><div data-reveal><dt>1</dt><dd>person, from the first call to launch day</dd></div><div data-reveal><dt>14</dt><dd>questions to get started</dd></div><div data-reveal><dt>5</dt><dd>days, at most, to hear back</dd></div><div data-reveal><dt>~45</dt><dd>days from yes to launch</dd></div></dl></div>
+      <div class="wrap"><dl class="numbers"><div data-reveal><dt>1</dt><dd>person, from the first call to launch day</dd></div><div data-reveal><dt>14</dt><dd>questions to get started</dd></div><div data-reveal><dt>5</dt><dd>days, at most, to hear back</dd></div><div data-reveal><dt>~30</dt><dd>days from yes to launch</dd></div></dl></div>
     </section>
 
     <section class="section" aria-labelledby="fit-h">
@@ -150,30 +155,61 @@
           <div><p class="eyebrow" data-reveal>What I do</p><h2 id="offer-h" class="h2" data-reveal>Everything your site needs, handled.</h2></div>
           <p class="lead" data-reveal>The website, the address it lives at, the email that goes with it, and the small changes after launch.</p>
         </header>
-        <div class="bento">
-          <article class="tile tile-build" data-reveal>
-            <div class="tile-text"><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg></span><h3>Website design and build</h3><p>By hand, for your business. No templates, no page builders.</p></div>
-            <div class="tile-art art-devices" aria-hidden="true">
-              <div class="ad-desk"><i class="ad-bar"></i><i class="ad-h"></i><i class="ad-l"></i><i class="ad-l ad-s"></i><i class="ad-b"></i><span class="ad-grid"><i></i><i></i><i></i></span></div>
-              <div class="ad-phone"><i class="ad-bar"></i><i class="ad-h"></i><i class="ad-l"></i><i class="ad-b"></i><i class="ad-card"></i><i class="ad-card"></i><i class="ad-card"></i></div>
+        <div class="svc" data-svc data-reveal>
+          <div class="svc-tabs" role="tablist" aria-label="What I do">
+            <button class="svc-tab" type="button" role="tab" id="svc-tab-0" aria-controls="svc-panel-0" aria-selected="true" tabindex="0">
+              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg></span><span class="svc-t"><strong>Website design and build</strong><small>By hand, for your business. No templates, no page builders.</small></span>
+              <span class="svc-timer" aria-hidden="true"><i></i></span>
+            </button><button class="svc-tab" type="button" role="tab" id="svc-tab-1" aria-controls="svc-panel-1" aria-selected="false" tabindex="-1">
+              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg></span><span class="svc-t"><strong>Domain registration and setup</strong><small>I register it in your name and point it at your site.</small></span>
+              <span class="svc-timer" aria-hidden="true"><i></i></span>
+            </button><button class="svc-tab" type="button" role="tab" id="svc-tab-2" aria-controls="svc-panel-2" aria-selected="false" tabindex="-1">
+              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg></span><span class="svc-t"><strong>Hosting and small updates</strong><small>After launch I keep the site up and make the small changes as they come.</small></span>
+              <span class="svc-timer" aria-hidden="true"><i></i></span>
+            </button><button class="svc-tab" type="button" role="tab" id="svc-tab-3" aria-controls="svc-panel-3" aria-selected="false" tabindex="-1">
+              <span class="svc-ic"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span><span class="svc-t"><strong>Email at your own domain</strong><small>An address like you@yourbusiness.com, set up and handed over to you.</small></span>
+              <span class="svc-timer" aria-hidden="true"><i></i></span>
+            </button>
+          </div>
+          <div class="svc-stage">
+            <div class="hero-grid-lines" aria-hidden="true"></div>
+            <div class="svc-panel is-active" role="tabpanel" id="svc-panel-0" aria-labelledby="svc-tab-0" tabindex="0">
+              <p class="visually-hidden">Website design and build: By hand, for your business. No templates, no page builders.</p>
+              <div aria-hidden="true"><div class="sc sc-build">
+                <div class="rs-frame"><div class="rs-bar"><span class="dw-dots"><i></i><i></i><i></i></span></div>
+                  <div class="rs-page"><i class="rs-h"></i><i class="rs-l"></i><i class="rs-b"></i>
+                    <div class="rs-grid"><i></i><i></i><i></i></div></div></div>
+                <ul class="sc-ticks" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your words</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your photos</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your colours</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Every screen size</li></ul>
+              </div></div>
+            </div><div class="svc-panel" role="tabpanel" id="svc-panel-1" aria-labelledby="svc-tab-1" tabindex="0">
+              <p class="visually-hidden">Domain registration and setup: I register it in your name and point it at your site.</p>
+              <div aria-hidden="true"><div class="sc sc-domain">
+                <div class="dm-search"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="dm-type">yourbusiness.com</span></div>
+                <div class="dm-result"><span class="dm-name">yourbusiness.com</span><span class="dm-avail">Available</span><span class="dm-own"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Registered to you</span></div>
+                <div class="dm-link"><span class="dm-line"></span><span class="dm-site"><i></i><i></i><i></i></span><span class="dm-cap">Points to your new site</span></div>
+              </div></div>
+            </div><div class="svc-panel" role="tabpanel" id="svc-panel-2" aria-labelledby="svc-tab-2" tabindex="0">
+              <p class="visually-hidden">Hosting and small updates: After launch I keep the site up and make the small changes as they come.</p>
+              <div aria-hidden="true"><div class="sc sc-host">
+                <div class="hs-status"><span class="hs-dot"></span>Your site is online</div>
+                <div class="hs-msg hs-you"><small>You</small>Can we add our holiday hours?</div>
+                <div class="hs-msg hs-me"><small>Jeremy</small>On it. I’ll let you know when it’s live.</div>
+                <div class="hs-done"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Done. Holiday hours are on your site.</div>
+              </div></div>
+            </div><div class="svc-panel" role="tabpanel" id="svc-panel-3" aria-labelledby="svc-tab-3" tabindex="0">
+              <p class="visually-hidden">Email at your own domain: An address like you@yourbusiness.com, set up and handed over to you.</p>
+              <div aria-hidden="true"><div class="sc sc-mail">
+                <div class="ml-head"><span class="ml-av">Y</span><span><strong>you@yourbusiness.com</strong><small>Inbox</small></span></div>
+                <ul class="ml-list" role="list">
+                  <li><i></i><span><strong>New customer</strong>Question about a quote</span></li>
+                  <li><i></i><span><strong>Website form</strong>Someone wants to book</span></li>
+                  <li><i></i><span><strong>Supplier</strong>Your order has shipped</span></li>
+                </ul>
+              </div></div>
             </div>
-          </article>
-          <article class="tile tile-domain" data-reveal>
-            <div class="tile-text"><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg></span><h3>Domain registration and setup</h3><p>I register it in your name and point it at your site.</p></div>
-            <div class="tile-art art-url" aria-hidden="true"><span class="au-bar"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg><span class="au-type">yourbusiness.com</span></span><span class="au-tag"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>In your name</span></div>
-          </article>
-          <article class="tile tile-mail" data-reveal>
-            <div class="tile-text"><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span><h3>Email at your own domain</h3><p>An address like you@yourbusiness.com, set up and handed over to you.</p></div>
-            <div class="tile-art art-mail" aria-hidden="true"><span class="am-chip"><i>Y</i>you@yourbusiness.com</span></div>
-          </article>
-          <article class="tile tile-host" data-reveal>
-            <div class="tile-text"><span class="tile-ic"><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg></span><h3>Hosting and small updates</h3><p>After launch I keep the site up and make the small changes as they come.</p></div>
-            <div class="tile-art art-req" aria-hidden="true"><span class="ar-row"><b>New hours for the holidays</b><em class="ar-done"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Done</em></span><span class="ar-row"><b>Swap the photo on the home page</b><em class="ar-done"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Done</em></span></div>
-          </article>
-          <div class="tile tile-note" data-reveal>
-            <p><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</p>
           </div>
         </div>
+        <p class="svc-note" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span><strong>Not on the list:</strong> Google Business Profile and social media. I stick to what I’m good at.</span></p>
       </div>
     </section>
 
@@ -192,7 +228,7 @@
     <section class="close-wrap" aria-labelledby="about-close-h">
       <div class="wrap">
         <div class="close" data-reveal>
-          <img class="close-mark" src="images/brand/stray-wolf-symbol-mono-white.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <img class="close-mark" src="images/brand/stray-wolf-symbol-mono-dark.svg" width="200" height="200" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <div class="close-text">
             <h2 id="about-close-h">Let’s talk about yours.</h2>
             <p>Fourteen questions, about five minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
@@ -200,7 +236,7 @@
           <form class="close-form" action="start.html" method="get">
             <label for="about-close-h-biz">Your business name</label>
             <div class="close-row">
-              <input class="field field-dark" id="about-close-h-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
+              <input class="field" id="about-close-h-biz" name="business" type="text" autocomplete="organization" maxlength="80" placeholder="e.g. Lakeside Plumbing">
               <button class="button button-lg" type="submit">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
             </div>
             <p class="close-fine"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>About five minutes. Nothing is sent until you finish the form.</p>
@@ -215,6 +251,7 @@
       <div class="foot-about">
         <a class="foot-brand" href="index.html"><img src="images/brand/stray-wolf-logo-color.svg" width="642" height="150" alt="Stray Wolf Technology, home" loading="lazy" decoding="async"></a>
         <p class="foot-tag">Bespoke, hand-built websites. By referral, for businesses anywhere in the US.</p>
+        <a class="foot-start" href="start.html"><span class="foot-start-ic"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></span><span><strong>Start a project</strong><small>Fourteen questions, about five minutes</small></span><svg class="icon foot-start-arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <nav class="foot-col" aria-labelledby="foot-pages-h">
         <h2 class="foot-h" id="foot-pages-h">Pages</h2>
@@ -223,11 +260,12 @@
           <li><a href="work.html">Work</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="start.html">Start a project</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
         </ul>
       </nav>
       <div class="foot-col">
         <h2 class="foot-h">What I do</h2>
-        <ul class="foot-list" role="list"><li>Website design and build</li><li>Domain registration and setup</li><li>Hosting and small updates</li><li>Email at your own domain</li></ul>
+        <ul class="foot-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Website design and build</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Domain registration and setup</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-server"/></svg><span>Hosting and small updates</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span>Email at your own domain</span></li></ul>
       </div>
       <div class="foot-col foot-reach">
         <h2 class="foot-h">Reach Jeremy</h2>
@@ -235,14 +273,11 @@
       </div>
     </div>
     <div class="wrap foot-legal">
-      <p>© 2026 Stray Wolf Technology</p>
-      <ul class="foot-legal-links" role="list">
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a class="to-top" href="#top">Back to top<svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></a></li>
-      </ul>
+      <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-color.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© 2026 Stray Wolf Technology. Designed and built by hand.</p>
+      <a class="to-top" href="#top"><span>Back to top</span><span class="to-top-ic"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></span></a>
     </div>
   </footer>
 
-  <script src="js/site.js?v=5" defer></script>
+  <script src="js/site.js?v=7" defer></script>
 </body>
 </html>

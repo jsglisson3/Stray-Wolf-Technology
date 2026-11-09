@@ -13,7 +13,7 @@ const fs = require('fs');
       const p = await b.newPage({ viewport: { width: w, height: h } });
       await p.goto(`${base}/${pg}`, { waitUntil: 'networkidle' });
       await p.waitForTimeout(2500);   // let the hero finish so nothing is mid-fade
-      if (w < 600 && pg === 'index.html') await p.click('[data-menu-toggle]');   // check the open phone menu too
+      if (w < 600 && pg === 'index.html') { await p.click('[data-menu-toggle]'); await p.waitForTimeout(900); }   // check the open phone menu too, once its links have settled
       await p.addScriptTag({ content: fs.readFileSync(axePath, 'utf8') });
       const res = await p.evaluate(async () => await axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] } }));
       const v = res.violations;
