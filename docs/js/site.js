@@ -8,23 +8,27 @@
   const header = document.querySelector('[data-header]');
   const menuIsOpen = () => document.documentElement.classList.contains('menu-open');
   if (header) {
-    let lastY = scrollY;
-    let ticking = false;
+    // Fixed numbers with some slack, so nothing flips back and forth near a threshold: the rule darkens once the
+    // page has moved; the bar tucks away after a clear scroll down past the top, and comes back after a clear
+    // scroll up, or near the top. The bar never changes height, so the page under it never jumps.
+    const SLACK = 28, TOP = 180;
+    let lastY = Math.max(0, scrollY), turnY = lastY, dir = 0, hidden = false, ticking = false;
     const onScroll = () => {
       const y = Math.max(0, scrollY);
-      const start = header.offsetHeight * 2;
-      header.classList.toggle('is-scrolled', y > 8);
+      if (y > 24) header.classList.add('is-scrolled'); else if (y < 4) header.classList.remove('is-scrolled');
       if (!menuIsOpen()) {
-        if (y > lastY + 6 && y > start) header.classList.add('is-hidden');
-        else if (y < lastY - 6 || y <= start) header.classList.remove('is-hidden');
+        const d = y > lastY ? 1 : y < lastY ? -1 : 0;
+        if (d && d !== dir) { dir = d; turnY = lastY; }
+        const moved = y - turnY;
+        if (!hidden && moved > SLACK && y > TOP) { hidden = true; header.classList.add('is-hidden'); }
+        else if (hidden && (moved < -SLACK || y < TOP / 2)) { hidden = false; header.classList.remove('is-hidden'); }
       }
-      if (Math.abs(y - lastY) > 6) lastY = y;
-      ticking = false;
+      lastY = y; ticking = false;
     };
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
     onScroll();
     // following a link to a spot further down the same page shouldn't flash the header away and back
-    header.addEventListener('focusin', () => header.classList.remove('is-hidden'));
+    header.addEventListener('focusin', () => { hidden = false; header.classList.remove('is-hidden'); });
   }
 
   /* ---- The phone menu: a full sheet under the header ---------------------------------- */
@@ -72,8 +76,50 @@
     }
   }
 
+  /* ---- The Start form: a question's number turns from sage to ink once it has an answer ---- */
+  document.querySelectorAll('#qs-project .q').forEach((q) => {
+    const mark = () => q.classList.toggle('is-filled', [...q.querySelectorAll('input, textarea')].some((f) => f.type === 'checkbox' || f.type === 'radio' ? f.checked : f.value.trim() !== ''));
+    q.addEventListener('input', mark); q.addEventListener('change', mark); mark();
+  });
+
+  /* ---- The stone facets drift a little with the scroll, so the big bands have some depth ---- */
+  const facetBands = [...document.querySelectorAll('.has-facets')];
+  if (facetBands.length && !reduce.matches) {
+    let ticking = false;
+    const drift = () => {
+      ticking = false;
+      const vh = innerHeight;
+      for (const el of facetBands) {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) continue;
+        el.style.setProperty('--py', `${((r.top + r.height / 2 - vh / 2) * 0.08).toFixed(1)}px`);
+      }
+    };
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(drift); } }, { passive: true });
+    drift();
+  }
+
+  /* ---- The numbers band: each figure counts up from zero the first time it is seen ---- */
+  const counters = document.querySelectorAll('.num-n[data-count]');
+  if (counters.length && !reduce.matches && 'IntersectionObserver' in window) {
+    const cio = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        cio.unobserve(entry.target);
+        const el = entry.target, end = Number(el.dataset.count) || 0, prefix = el.dataset.prefix || '', t0 = performance.now(), dur = 900;
+        const step = (now) => {
+          const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          el.textContent = prefix + Math.round(end * e);
+          if (p < 1) requestAnimationFrame(step); else el.textContent = prefix + end;
+        };
+        requestAnimationFrame(step);
+      }
+    }, { threshold: 0.5 });
+    counters.forEach((el) => cio.observe(el));
+  }
+
   /* ---- Groups reveal one after another (a short stagger) ---------------------------- */
-  document.querySelectorAll('.phases, .faqs, .shows, .pledges, .pv-cards').forEach((group) => {
+  document.querySelectorAll('.phases, .faqs, .shows, .pledges, .pv-cards, .svc-list, .rates').forEach((group) => {
     group.querySelectorAll(':scope > [data-reveal], :scope > * > [data-reveal]').forEach((el, i) => el.style.setProperty('--rd', `${Math.min(i, 6) * 80}ms`));
   });
 
@@ -224,14 +270,14 @@
     const fallback = intake.dataset.fallbackEmail || '';
     const labelFor = (el) => {
       const l = intake.querySelector(`label[for="${el.id}"]`);
-      return l ? l.textContent.replace(/\s*\((required|optional)\)\s*/i, '').trim() : el.name;
+      return l ? l.textContent.replace(/^\s*0?\d\s*/, '').replace(/\s*\((required|optional)\)\s*/i, '').trim() : el.name;
     };
     const check = () => {
       const bad = [];
       intake.querySelectorAll('[required]').forEach((el) => {
         el.removeAttribute('aria-invalid');
-        const v = el.value.trim();
-        if (!v) bad.push([el, `${labelFor(el)} is missing.`]);
+        const v = el.type === 'checkbox' ? (el.checked ? 'yes' : '') : el.value.trim();
+        if (!v) bad.push([el, el.dataset.msg || `${labelFor(el)} is missing.`]);
         else if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) bad.push([el, 'That email address doesn’t look right.']);
       });
       if (summary) {
@@ -258,7 +304,7 @@
       intake.querySelectorAll('input, textarea').forEach((el) => {
         if (el.type === 'hidden' || el.type === 'checkbox' && !el.checked || el.type === 'radio' && !el.checked || el.name === 'sw_trap_field' || el.name === 'botcheck') return;
         if (!el.value.trim()) return;
-        const lab = el.type === 'checkbox' || el.type === 'radio' ? (el.closest('fieldset')?.querySelector('legend')?.textContent.replace(/\s*\(pick any\)\s*/i, '').trim() || el.name) : labelFor(el);
+        const lab = el.type === 'checkbox' || el.type === 'radio' ? (el.closest('fieldset')?.querySelector('legend')?.textContent.replace(/^\s*0?\d\s*/, '').replace(/\s*\(pick any\)\s*/i, '').trim() || el.name) : labelFor(el);
         lines.push(`${lab}: ${el.value.trim()}`);
       });
       const subject = encodeURIComponent(`New project: ${business ? business.value.trim() : ''}`.trim());

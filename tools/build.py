@@ -16,8 +16,8 @@ import pathlib, re, subprocess, sys, importlib.util, datetime, html as htmlesc
 DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same thing
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
-PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html']   # listed in sitemap.xml
-VERSION = '16'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
+VERSION = '18'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -47,7 +47,7 @@ REVIEWS = [
 # ---- Google Search Console: paste the content value from the "HTML tag" method here, then rebuild ----
 SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site-verification" content="...">
 
-TAGLINE = 'Bespoke, hand-built websites. One designer, working by referral, for owner-run businesses.'
+TAGLINE = 'Bespoke, hand-built websites, by referral, for owner-run businesses. Bold, different and built around yours.'
 HOME_DESC = 'Bespoke, hand-built websites for owner-run businesses. One designer, by referral, with a price in writing before anything starts.'   # the homepage's line in search results
 YEAR = str(datetime.date.today().year)
 ROBOTS_META = '  <meta name="robots" content="noindex, nofollow">\n'
@@ -104,6 +104,11 @@ def icon(name, cls='icon'):
 ARROW = icon('arrow')
 
 
+def words(s, start=0):
+    """Each word in its own span, so the headline can rise a word at a time (motion.css)."""
+    return ' '.join(f'<span class="w" style="--i:{start + i}">{w}</span>' for i, w in enumerate(s.split()))
+
+
 # ---- Hero: paper on the left, a charcoal panel on the right ------------------------------
 # The panel shows a small example website going from sketch to finished: "built around your needs".
 # It's made of plain HTML boxes (no client's site, no stock photo). Visitors can flip between the sketch
@@ -111,7 +116,7 @@ ARROW = icon('arrow')
 H1_A = 'A website built around'
 H1_B = 'your needs.'
 H1 = f'{H1_A} {H1_B}'
-LEAD = 'Hand-built websites, designed around your business. I work on my own, so you deal with one person from the first call to launch day.'
+LEAD = 'Hand-built websites that don’t look like everyone else’s.'
 PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
             ('key', 'Yours to keep', 'Your domain, your site'),
             ('calendar', 'About 30 days', 'From answers to launch')]
@@ -125,9 +130,9 @@ def hero():
         im = s['image']
         imgs.append(f'<img src="images/work/{im}-desktop-480.webp" srcset="images/work/{im}-desktop-480.webp 480w, images/work/{im}-desktop-640.webp 640w" sizes="88px" width="480" height="300" alt="{esc(s["name"])}: the homepage" class="{"is-on" if i == 0 else ""}" data-site-img data-name="{esc(s["name"])}" data-link="{esc(s["link"])}" data-domain="{esc(host(s["link"]))}"{"" if i == 0 else " loading=\"lazy\""} decoding="async">')
     first = SITES[0]
-    return f'''    <section class="hero" aria-labelledby="hero-h">
+    return f'''    <section class="hero has-facets" aria-labelledby="hero-h">
       <div class="wrap hero-grid">
-        <h1 id="hero-h" class="hero-h1">{H1_A} <em>{H1_B}</em></h1>
+        <h1 id="hero-h" class="hero-h1">{words(H1_A)} <em>{words(H1_B, len(H1_A.split()))}</em></h1>
         <div class="hero-text">
           <p class="hero-lead">{LEAD}</p>
           <div class="button-row">
@@ -148,19 +153,16 @@ def hero():
 # Each step lights up when the orange line along the ruler reaches its day (DAY is where that is, out of 30).
 # How it works (V16, Nov 9 2026): three columns. Everything up front is the client's, then Jeremy takes over, then one checkpoint.
 PHASES = [
-    ('First', 'You.', 'Everything up front, before I start.', [
-        'The six answers on the Start a project page',
-        'What you want out of the site',
+    ('First', 'You.', 'Everything up front.', [
+        'What you want from the site',
         'The words for each page',
-        'Your logo',
-        'Your photos and images']),
-    ('Then', 'Me.', 'I take over from here.', [
+        'Your logo and your photos']),
+    ('Then', 'Me.', 'I take over.', [
         'A price in writing, within five days',
         'The design and the build, by hand',
-        'Domain, hosting and email set up',
-        'About 30 days, start to finish']),
+        'Domain, hosting and email set up']),
     ('Before launch', 'Us.', 'One checkpoint.', [
-        'You see the finished site before anyone else',
+        'You see it before anyone else',
         'You say yes, or tell me what to change',
         'Then it goes live'])]
 
@@ -181,30 +183,37 @@ def phases():
 
 
 # ---- What I do: five services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler) ----
-SERVICES = [('Website design and build', 'By hand, for your business. No templates, no page builders.'),
-            ('Fixes and single pages', 'Something broken on the site you have, or one new page added to it. Days, not weeks, with a price in writing first.'),
-            ('Domain registration and setup', 'I register it in your name and point it at your site.'),
-            ('Hosting and small updates', 'After launch the site stays up with no monthly fee. Small changes are quoted per job and done within days.'),
-            ('Business email setup', 'A professional address like you@yourbusiness.com instead of a Gmail, set up and handed over to you.')]
+SERVICES = [('layout', 'Website design and build', 'By hand, for your business. No templates.'),
+            ('wrench', 'Fixes and single pages', 'Something broken, or one new page. Days, not weeks.'),
+            ('globe', 'Domain registration and setup', 'In your name, pointed at your site.'),
+            ('server', 'Hosting and small updates', 'No monthly fee. Changes quoted per job.'),
+            ('mail', 'Business email setup', 'you@yourbusiness.com, set up and handed over.')]
 
 
 def services():
+    """Five plates, each with a big line icon (the sprite), a name and one line."""
     rows = ''.join(f'''
-          <li data-reveal><h3>{h}</h3><p>{t}</p></li>''' for h, t in SERVICES)
+          <li class="svc" data-reveal><span class="plate-ic" aria-hidden="true">{icon(ic)}</span><h3>{h}</h3><p>{t}</p></li>''' for ic, h, t in SERVICES)
     return f'''        <ul class="svc-list" role="list">{rows}
         </ul>'''
 
 
 # ---- Who you'll work with: the brand story beside the promises in numbers ------------------------
-STORY = 'A stray wolf doesn’t run with a pack, and neither do I. I build websites on my own, for businesses that want to stand out.'
-NUMBERS = [('1', 'person, from the first call to launch day'),
-           ('14', 'questions to get started'),
-           ('5', 'days, at most, to hear back'),
-           ('~30', 'days from yes to launch')]
+STORY = 'A stray wolf doesn’t run with the pack. Neither should your website. I build sites that are bold, different and made around your business.'
+# The promises as four big figures, in a band under the hero (V18: the graphic that replaced a paragraph).
+NUMBERS = [('5', 'days', 'to a price in writing'),
+           ('1', 'price', 'for the whole site'),
+           ('30', 'days', 'from yes to launch'),
+           ('$0', 'a month', 'after launch')]
 
 
 def numbers_html():
-    return '<dl class="numbers">' + ''.join(f'<div data-reveal><dt>{n}</dt><dd>{t}</dd></div>' for n, t in NUMBERS) + '</dl>'
+    items = ''.join(f'''
+        <div class="num" data-reveal><dt><span class="num-n" data-count="{n.lstrip('$')}" data-prefix="{'$' if n.startswith('$') else ''}">{n}</span><span class="num-u">{u}</span></dt><dd>{t}</dd></div>''' for n, u, t in NUMBERS)
+    return f'''    <section class="numbers-band" aria-label="The promises, in numbers">
+      <dl class="wrap numbers">{items}
+      </dl>
+    </section>'''
 
 
 # ---- The work: one clean picture of each site, in a browser frame -------------------------
@@ -221,6 +230,14 @@ def phone_of(img):
     if (DOCS / 'images' / 'work' / f'{img}-phone-300.webp').exists():
         return f'<div class="mount-phone" aria-hidden="true"><img src="images/work/{img}-phone-300.webp" srcset="images/work/{img}-phone-300.webp 300w, images/work/{img}-phone-600.webp 600w" sizes="10rem" width="300" height="650" loading="lazy" decoding="async" alt=""></div>'
     return ''
+
+
+def logo_of(s):
+    """The business's own logo above its name, when sites.py names one (docs/images/work/<file>)."""
+    logo = s.get('logo')
+    if not logo or not (DOCS / 'images' / 'work' / logo[0]).exists():
+        return ''
+    return f'<img class="site-logo" src="images/work/{logo[0]}" width="{logo[1]}" height="{logo[2]}" alt="" loading="lazy" decoding="async">'
 
 
 def mount(s, sizes, phone=True):
@@ -244,10 +261,10 @@ def carousel(sites):
         slides.append(f'''          <li class="slide">
             {mount(s, '(min-width: 64rem) 60vw, 100vw')}
             <div class="slide-text">
+              {logo_of(s)}
               <h3 class="slide-name">{esc(s['name'])}</h3>
               <p class="slide-about">{esc(s['about'])}</p>
               {tag}
-              <p class="slide-host">{esc(host(s['link']))}</p>
               {visit(s, 'button button-quiet slide-link')}
             </div>
           </li>''')
@@ -273,24 +290,20 @@ def carousel(sites):
 
 
 def work_list(sites):
-    """The Work page: each site big on its mount, with a second page of it beside when there is one, and the words under a rule."""
+    """The Work page (Jeremy, Nov 9: "no need to give a deep analysis on their site"): each site big on its mount,
+    and beside it only the logo, the name, one line and the link."""
     rows = []
     for i, s in enumerate(sites):
-        name, img = esc(s['name']), s['image']
+        name = esc(s['name'])
         tag = f'<span class="tag">{esc(s["tag"])}</span>' if s.get('tag') else ''
-        extra = s.get('extra')
-        side = ''
-        if extra and (DOCS / 'images' / 'work' / f'{extra[0]}-800.webp').exists():
-            side = f'''<figure class="show-extra"><div class="mount-pic"><img src="images/work/{extra[0]}-800.webp" srcset="images/work/{extra[0]}-800.webp 800w, images/work/{extra[0]}-1200.webp 1200w" sizes="(min-width: 64rem) 30vw, 92vw" width="800" height="{extra[2]}" loading="lazy" decoding="async" alt="{esc(name)}: {esc(extra[1].lower())}."></div><figcaption>{esc(extra[1])}</figcaption></figure>'''
         rows.append(f'''          <li class="show{' show-flip' if i % 2 else ''}">
             <div class="show-art" data-reveal>{mount(s, '(min-width: 64rem) 62vw, 100vw')}</div>
             <div class="show-side" data-reveal>
-              {side}
               <div class="show-text">
+                {logo_of(s)}
                 <h2 class="show-name">{name}</h2>
                 <p>{esc(s['about'])}</p>
                 {tag}
-                <p class="show-host">{esc(host(s['link']))}</p>
                 {visit(s)}
               </div>
             </div>
@@ -299,11 +312,11 @@ def work_list(sites):
 
 
 # ---- Questions people ask -------------------------------------------------------------------
-FAQS = [('How much does a website cost?', f'Starter sites begin at ${STARTER_FROM} and larger ones at ${LARGER_FROM}; the <a class="link" href="pricing.html">Pricing</a> page has the details. Want to see something first? A mockup is ${MOCKUP_FROM} to ${MOCKUP_TO}, and it comes off the price if we go ahead. After we talk you get one price in writing, before anything starts. No tiers, no surprise add-ons.'),
-        ('Do you take every job?', 'No. I’m not trying to take on as much work as I can, or make as much money as I can. I take the jobs I know I can do well, a few at a time, and I turn down the ones I don’t think I can do right. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
-        ('How long does it take?', 'About 30 days from the time we agree to start. If you have a date that matters, put it in the form and I’ll tell you up front whether it works.'),
+FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, larger ones from ${LARGER_FROM}. Details on the <a class="link" href="pricing.html">Pricing</a> page. Want to see something first? A mockup is ${MOCKUP_FROM} to ${MOCKUP_TO}, and it comes off the price. One price in writing, before anything starts.'),
+        ('Do you take every job?', 'No. I take the jobs I know I can do well, a few at a time. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
+        ('How long does it take?', 'About 30 days from yes. If you have a date that matters, put it in the form.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
-        ('What do you need from me?', 'Three things, and they’re your 10%: a clear idea of what you want, the words for each page, and your photos and logo. The other 90% is mine. The 30 days starts when I have them. No logo or photos yet? Say so and we’ll work it out.'),
+        ('What do you need from me?', 'Three things, your 10%: what you want, the words for each page, and your logo and photos. The 30 days starts when I have them. Nothing yet? Say so and we’ll work it out.'),
 ]
 
 
@@ -317,7 +330,6 @@ def faq_section():
       <div class="wrap faq-grid">
         <header class="faq-head">
           <h2 id="faq-h" class="h2" data-reveal>Good to know before we start.</h2>
-          <p data-reveal>Something else on your mind? The last box on the <a class="link" href="start.html">Start a project</a> page is for exactly that.</p>
         </header>
         <div class="faqs">{items}
         </div>
@@ -327,11 +339,11 @@ def faq_section():
 
 # ---- The close: stone, one big line, and the first question right here -----------------------
 def close_section(hid='close-h', line='Let’s talk about yours.'):
-    return f'''    <section class="close-wrap" aria-labelledby="{hid}">
+    return f'''    <section class="close-wrap has-facets facets-left" aria-labelledby="{hid}">
       <div class="wrap close">
         <h2 id="{hid}" data-reveal>{line}</h2>
         <div class="close-side" data-reveal>
-          <p>Six quick questions, about two minutes. You’ll hear from me within five days, with a price in writing before anything starts.</p>
+          <p>Six quick questions. A reply within five days, with a price in writing.</p>
           <div class="button-row"><a class="button button-lg" href="start.html">Start a project{ARROW}</a></div>
         </div>
       </div>
@@ -426,7 +438,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
 
 # 1) Homepage
 home = (SRC / 'home.html').read_text(encoding='utf-8')
-home = (home.replace('{{HERO}}', hero()).replace('{{SERVICES}}', services()).replace('{{CAROUSEL}}', carousel(SITES))
+home = (home.replace('{{HERO}}', hero()).replace('{{NUMBERS}}', numbers_html()).replace('{{SERVICES}}', services()).replace('{{CAROUSEL}}', carousel(SITES))
         .replace('{{TIMELINE}}', phases()).replace('{{FAQ}}', faq_section())
         .replace('{{CLOSE}}', close_section()))
 page('index.html', 'Stray Wolf Technology | Bespoke, hand-built websites', HOME_DESC, home, current='index.html', body_class='home', ld=True)

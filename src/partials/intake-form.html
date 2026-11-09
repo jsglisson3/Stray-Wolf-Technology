@@ -13,22 +13,22 @@
           <fieldset class="qs" id="qs-project" data-qs>
             <legend class="qs-h">Your project</legend>
             <fieldset class="q">
-              <legend>What do you need?</legend>
+              <legend><span class="qn" aria-hidden="true">01</span>What do you need?</legend>
               <div class="picks">
                 <label class="pick"><input type="radio" name="project_kind" value="A new website"><span>A new website</span></label>
                 <label class="pick"><input type="radio" name="project_kind" value="Changes to the website I have"><span>Changes to the website I have</span></label>
               </div>
             </fieldset>
             <div class="q">
-              <label for="q-business">Business name <span class="req">(required)</span></label>
+              <label for="q-business"><span class="qn" aria-hidden="true">02</span>Business name <span class="req">(required)</span></label>
               <input class="field" id="q-business" name="business_name" type="text" autocomplete="organization" required>
             </div>
             <div class="q">
-              <label for="q-what">What do you do, and who are your customers? <span class="req">(required)</span></label>
+              <label for="q-what"><span class="qn" aria-hidden="true">03</span>What do you do, and who are your customers? <span class="req">(required)</span></label>
               <textarea class="field" id="q-what" name="what_you_do" rows="3" maxlength="800" required></textarea>
             </div>
             <fieldset class="q">
-              <legend>What should the website do for you? <span class="opt">(pick any)</span></legend>
+              <legend><span class="qn" aria-hidden="true">04</span>What should the website do for you? <span class="opt">(pick any)</span></legend>
               <div class="picks">
                 <label class="pick"><input type="checkbox" name="goal_new_customers" value="Yes"><span>Bring in new customers</span></label>
                 <label class="pick"><input type="checkbox" name="goal_show_work" value="Yes"><span>Show off my work</span></label>
@@ -38,11 +38,11 @@
               </div>
             </fieldset>
             <div class="q">
-              <label for="q-site">Do you have a website now? <span class="opt">(paste the link)</span></label>
+              <label for="q-site"><span class="qn" aria-hidden="true">05</span>Do you have a website now? <span class="opt">(paste the link)</span></label>
               <input class="field" id="q-site" name="current_site" type="text" inputmode="url" autocomplete="url">
             </div>
             <div class="q">
-              <label for="q-else">Anything else? <span class="opt">(websites you like, a deadline, a question)</span></label>
+              <label for="q-else"><span class="qn" aria-hidden="true">06</span>Anything else? <span class="opt">(websites you like, a deadline, a question)</span></label>
               <textarea class="field" id="q-else" name="anything_else" rows="3" maxlength="1000"></textarea>
             </div>
           </fieldset>
@@ -67,11 +67,14 @@
               <label for="q-trap">Leave this field empty</label>
               <input id="q-trap" name="sw_trap_field" type="text" tabindex="-1" autocomplete="off">
             </div>
+            <div class="q consent">
+              <label class="consent-check" for="q-consent"><input id="q-consent" name="consent" type="checkbox" value="Agreed to the Terms of use and Privacy policy (version November 9, 2026)" required data-msg="Please tick the box to agree to the terms and privacy policy."><span>I agree to the <a href="terms.html">terms of use</a> and <a href="privacy.html">privacy policy</a>, and it’s OK to contact me about my project. <span class="req">(required)</span></span></label>
+            </div>
           </fieldset>
 
           <div class="form-actions">
             <button class="button button-lg button-big" type="submit">Send my answers<svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></button>
-            <p class="form-fine">Your answers go straight to Jeremy and are only used for your project (<a href="privacy.html">privacy</a>). You'll hear back within five days. The rest we work out on a call.</p>
+            <p class="form-fine"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Your answers go straight to Jeremy and are only used for your project. Please don’t include passwords or payment details. You'll hear back within five days. The rest we work out on a call.</p>
             <p class="form-status" role="status" aria-live="polite" tabindex="-1" data-form-status></p>
           </div>
         </form>

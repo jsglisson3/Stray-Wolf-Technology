@@ -15,7 +15,7 @@ Voice: first person, plain and short. Jeremy by first name only. Nothing unconfi
 def page_head(h1, lead, notes=None, cls=''):
     """The top of an inner page: a big title, one line beside it, and a few plain notes under a rule."""
     side = f'<p class="lead">{lead}</p>' + (notes_list(notes) if notes else '')
-    return f'''    <section class="page-head{cls}">
+    return f'''    <section class="page-head has-facets{cls}">
       <div class="wrap page-head-grid">
         <h1 class="h1">{h1}</h1>
         <div class="page-head-side">{side}</div>
@@ -29,7 +29,7 @@ def notes_list(items):
 
 # ---------------------------------------------------------------- Work
 
-work_main = page_head('Sites I’ve designed and built <em>by hand.</em>', 'Each one made for one business, from a blank page. Tap any of them to see it live.',
+work_main = page_head('Sites I’ve designed and built <em>by hand.</em>', 'Each one made for one business. Tap any of them to see it live.',
                       [f'{len(SITES)} sites so far', 'Built by hand, no templates', 'Made for phones too']) + f'''
     <section class="section work-section" aria-label="Websites">
       <div class="wrap">
@@ -44,15 +44,21 @@ page('work.html', 'Work | Stray Wolf Technology',
 
 
 # ---------------------------------------------------------------- About
-# One person, start to finish: a profile card, six pledges, and the story behind the name. No case studies, no personal background.
+# A profile card, six pledges, and the story behind the name. No case studies, no personal background, nothing about working alone (Jeremy may hire).
 
 
-PLEDGES = [('craft', 'Hand-built', 'Designed and written for your business. No templates, no page builders.'),
-           ('chat', 'You first, then the design', 'I get to know you and what you want from a website before I design anything. Everything in plain English.'),
-           ('doc', 'A price in writing', 'Before anything starts. No tiers and no surprise add-ons.'),
-           ('eye', 'Nothing goes live without you', 'You see the site before anyone else, and it launches when you say yes.'),
-           ('key', 'Yours to keep', 'Your domain, your content and your site belong to you.'),
-           ('person', 'One person to call', 'Me, before and after launch. No account manager in between.')]
+PLEDGES = [('craft', 'Hand-built', 'For your business. No templates, no page builders.'),
+           ('chat', 'You first, then the design', 'I learn what you want before I design anything.'),
+           ('doc', 'A price in writing', 'Before anything starts. No tiers, no add-ons.'),
+           ('eye', 'Nothing goes live without you', 'You see it first. It launches when you say yes.'),
+           ('key', 'Yours to keep', 'Your domain, your content and your site.'),
+           ('person', 'Straight to me', 'Before and after launch. No account manager in between.')]
+
+
+def pledge_list(items):
+    """Plates with a big line icon, a name and one line (About and Pricing)."""
+    return '<ul class="pledges" role="list">' + ''.join(f'''
+          <li class="pledge" data-reveal><span class="plate-ic" aria-hidden="true">{icon(ic)}</span><h3>{h}</h3><p>{t}</p></li>''' for ic, h, t in items) + '\n        </ul>'
 
 profile_card = f'''<figure class="profile{' has-photo' if HEADSHOT else ''}" data-reveal>
           <div class="profile-pic">{photo_or_mark(dark=False)}</div>
@@ -65,8 +71,8 @@ profile_card = f'''<figure class="profile{' has-photo' if HEADSHOT else ''}" dat
 about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
       <div class="wrap about-hero-grid">
         <div class="about-text">
-          <h1 id="about-h" class="h1">One person, <em>start to finish.</em></h1>
-          <p class="lead about-lead">Hi, I’m Jeremy. I design and build websites on my own, for owner-run businesses. No account manager and no hand-offs: the person you talk to is the person doing the work.</p>
+          <h1 id="about-h" class="h1">Different, <em>on purpose.</em></h1>
+          <p class="lead about-lead">Hi, I’m Jeremy. I design and build websites made around one business: yours. No templates, no page builders, and nothing you’ve seen a hundred times before.</p>
           <p class="about-more" data-reveal>I’m not trying to make as much money as I can. I want to do quality work. So I take a few clients at a time, only the jobs I know I can do well, and I’ll turn down one I don’t think I can do right.</p>
           <div class="button-row"><a class="button button-lg" href="start.html">Start a project{ARROW}</a><a class="button button-quiet button-lg" href="work.html">See the work</a></div>
         </div>
@@ -82,20 +88,18 @@ about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
             <p class="lead">The same promises on every project, written down so you can hold me to them.</p>
           </div>
         </header>
-        <ul class="pledges" role="list">{''.join(f"""
-          <li class="pledge" data-reveal><h3>{h}</h3><p>{t}</p></li>""" for _, h, t in PLEDGES)}
-        </ul>
+        {pledge_list(PLEDGES)}
       </div>
     </section>
 
     <section class="section story" aria-labelledby="story-h">
       <div class="wrap story-grid">
         <div class="story-art" aria-hidden="true">
-          <img src="images/brand/stray-wolf-symbol-color.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
+          <img src="images/brand/stray-wolf-facets.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
         </div>
         <div class="story-text">
-          <h2 id="story-h" class="h2" data-reveal>No pack. <em>One person.</em></h2>
-          <p class="lead" data-reveal>A stray wolf doesn’t run with a pack. That’s how I work. I don’t start from a template, and I don’t farm the work out. Every site I put my name on, I designed and built myself.</p>
+          <h2 id="story-h" class="h2" data-reveal>Stray from <em>the pack.</em></h2>
+          <p class="lead" data-reveal>A stray wolf doesn’t run with the pack. That’s the idea behind the name. Your website shouldn’t look like everyone else’s either: it should be bold, different and built around what your business needs.</p>
         </div>
       </div>
     </section>
@@ -103,7 +107,7 @@ about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
 {close_section('about-close-h')}'''
 
 page('about.html', 'About | Stray Wolf Technology',
-     'Stray Wolf Technology is Jeremy: one designer building hand-built websites for owner-run businesses, start to finish.',
+     'About Stray Wolf Technology and Jeremy: bold, hand-built websites made around your business, not a template.',
      about_main, current='about.html')
 
 
@@ -129,6 +133,14 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Six quick quest
               <li><strong>Your 10%</strong>You send the words, photos and logo.</li>
               <li><strong>About 30 days</strong>Your site goes live.</li>
             </ol>
+          </div>
+          <div class="aside-block aside-safe">
+            <h2 class="aside-h">{icon('lock')}Private and secure</h2>
+            <ul class="safe-list" role="list">
+              <li>Your answers go to me and no one else. Never sold, never shared for marketing.</li>
+              <li>Sent over a secure connection. No cookies, no tracking on this site.</li>
+              <li>Deleted when you ask. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>, in plain English.</li>
+            </ul>
           </div>
           {talk}
         </div>
@@ -179,10 +191,10 @@ page('thanks.html', 'Thanks | Stray Wolf Technology', 'Your answers are in.', th
 
 lost_main = end_page('That page isn’t here.', 'The link may be old, or the address may have a typo. One of these should get you where you were going.',
                      go_cards([('index.html', 'compass', 'Home', 'Start from the top'), ('work.html', 'layout', 'Work', 'Sites I’ve built'),
-                               ('about.html', 'person', 'About', 'One person, start to finish'), ('start.html', 'send', 'Start a project', 'About two minutes')], 'Pages on this site'),
-                     '', '<p class="end-404">404</p>' + WOLF)
+                               ('about.html', 'person', 'About', 'Different, on purpose'), ('start.html', 'send', 'Start a project', 'About two minutes')], 'Pages on this site'),
+                     '', '<p class="end-404">404</p><img src="images/brand/stray-wolf-facets.svg" width="200" height="200" alt="">')
 
-page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not be found.', lost_main)
+page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not be found.', lost_main, body_class='inner lost')
 
 
 # ---------------------------------------------------------------- Pricing (FIRST DRAFT, Nov 9 2026)
@@ -190,24 +202,24 @@ page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not 
 # Jeremy's to confirm or change before launch.
 
 RATES = [
-    ('A starter site', STARTER_FROM, 'Up to five pages: home, about, what you do, your work, contact. Written with you, designed and built by hand, made for phones. Domain and business email set up.', 'What most owner-run businesses need.'),
-    ('A larger site', LARGER_FROM, 'More pages, or a site that does more: online booking, a menu or price list you change yourself, a gallery that grows, a small shop.', 'For a business with more to show, or more to sell.'),
-    ('A mockup first', f'{MOCKUP_FROM}<span> to ${MOCKUP_TO}</span>', f'Want to see it before you decide? I mock up your homepage for ${MOCKUP_FROM} to ${MOCKUP_TO}, depending on what goes in it. Go ahead with the full site and it comes off the price.', 'For anyone who wants to see before they commit.'),
-    ('A fix, a page or a refresh', FIX_FROM, f'Something broken, fixed, from ${FIX_FROM}. One new page added to your site, from ${PAGE_FROM}. New photos and words across the pages you have, from ${REFRESH_FROM}. Days, not weeks.', 'For a website you already have.'),
+    ('A starter site', STARTER_FROM, 'Up to five pages, written with you and built by hand. Domain and email set up.', 'What most owner-run businesses need.'),
+    ('A larger site', LARGER_FROM, 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.', 'More to show, or more to sell.'),
+    ('A mockup first', f'{MOCKUP_FROM}<span> to ${MOCKUP_TO}</span>', 'Your homepage, designed first so you can see it. Go ahead and it comes off the price.', 'See it before you commit.'),
+    ('A fix, a page or a refresh', FIX_FROM, f'A fix from ${FIX_FROM}, a new page from ${PAGE_FROM}, new words and photos from ${REFRESH_FROM}. Days, not weeks.', 'For a website you already have.'),
 ]
 INCLUDED = [
-    ('Help with the words', 'You know your business. I help turn that into clear pages people actually read.'),
-    ('Made for phones', 'Most visitors will be on one. Every page is built for small screens first.'),
-    ('Domain and email set up', 'Your web address registered in your name, with a matching business email. The yearly domain fee goes to the registrar, about $15.'),
-    ('Set up so Google can read it', 'Page titles, descriptions and a fast site. The basics done right, with no promises about rankings.'),
-    ('Yours to keep', 'Your domain, your content and your site belong to you. Every account is in your name.'),
-    ('Thirty days of fixes', 'Anything that isn’t right in the first month after launch, I fix at no charge.'),
+    ('words', 'Help with the words', 'Clear pages people actually read.'),
+    ('phone', 'Made for phones', 'Built for small screens first.'),
+    ('globe', 'Domain and email set up', 'In your name. The registrar’s yearly fee is about $15.'),
+    ('search', 'Set up so Google can read it', 'Titles, descriptions, a fast site. No ranking promises.'),
+    ('key', 'Yours to keep', 'Domain, content and site, once it’s paid for.'),
+    ('calendar', 'Thirty days of fixes', 'Anything not right in the first month, fixed free.'),
 ]
 EXTRA = [
-    ('Photography', 'Good photos make the site. I’ll tell you what to shoot on your phone, or point you to a photographer near you.'),
-    ('A shop or online payments', 'Setting up Stripe, Square or similar is quoted on its own, once I know what you sell.'),
-    ('Writing everything from scratch', 'If you’d rather not write a word, I’ll quote for writing it all.'),
-    ('A rush', 'Need it live in less than 30 days? Ask. Sometimes the answer is yes.'),
+    ('Photography', 'Shoot it on your phone with my notes, or I’ll point you to a photographer.'),
+    ('A shop or online payments', 'Stripe, Square or similar, quoted once I know what you sell.'),
+    ('Writing everything from scratch', 'Rather not write a word? I’ll quote for all of it.'),
+    ('A rush', 'Live in under 30 days? Ask. Sometimes the answer is yes.'),
 ]
 
 def ruled(items, tag='ul'):
@@ -239,10 +251,10 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
           <p class="lead" data-reveal>Every site is priced on its own. These are the starting points, so you know before we talk.</p>
         </header>
         <ul class="rates" role="list">{rates_html}
-          <li class="rate" data-reveal>
+          <li class="rate rate-after" data-reveal>
             <h3 class="rate-name">After launch</h3>
             <p class="rate-price"><small>Monthly</small>$0</p>
-            <div class="rate-text"><p>No monthly fee, no contract. The site is yours, the hosting I set up costs nothing a month, and any change later is quoted on its own.</p></div>
+            <div class="rate-text"><p>No monthly fee, no contract. The hosting I set up costs nothing a month.</p><p><strong>Thirty days to make it right.</strong> Anything that isn’t right in the first 30 days, I fix at no charge. After that, changes are quoted per job.</p></div>
           </li>
         </ul>
       </div>
@@ -253,7 +265,7 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
           <h2 id="incl-h" class="h2" data-reveal>In every price.</h2>
           <p class="lead" data-reveal>Whatever the size of the site, these come with it.</p>
         </header>
-        <ul class="pledges" role="list">{''.join(f'<li class="pledge" data-reveal><h3>{h}</h3><p>{t}</p></li>' for h, t in INCLUDED)}</ul>
+        {pledge_list(INCLUDED)}
       </div>
     </section>
 ''' + two_col('extra-h', 'What costs extra.', 'Quoted on their own, and always before, never after.', ruled(EXTRA)) + '\n' \
@@ -295,25 +307,21 @@ else:
 page('reviews.html', 'Reviews | Stray Wolf Technology', reviews_desc, reviews_main, current='reviews.html')
 
 
-# ---------------------------------------------------------------- Privacy
+# ---------------------------------------------------------------- Privacy and Terms (legal pass, Nov 9 2026)
+# Conservative on purpose: plain first-person copy, but every protective point a Texas web business should cover.
+# A template, not legal advice. Update LEGAL_UPDATED whenever either page changes in substance.
 
-delete_how = (f'Email {CONTACT["email"]} and ask' if CONTACT['email'] else 'Reply to any email from Jeremy and ask')
-sections = [
-    ('collects', 'What this site collects', '<p>Only what you send. When you answer the questions on the Start a project page, that’s your name, your business name, your email and anything else you choose to add, like a phone number, a link or a note.</p>'),
-    ('used', 'How it’s used', '<p>To reply to you and plan your project. That’s it. Your details aren’t sold or shared for marketing, and you won’t be added to a mailing list.</p>'),
-    ('kept', 'Where it’s kept', '<p>The form is delivered by Web3Forms, a form service, which passes your answers on to Jeremy’s email. What Web3Forms itself keeps is covered by the privacy policy on <a href="https://web3forms.com/">web3forms.com</a>. If the form opens your email app instead, your answers go straight from your email to Jeremy.</p>'),
-    ('hosting', 'Hosting', '<p>The site is hosted on GitHub Pages. Like most web hosts, GitHub keeps basic technical logs, such as IP addresses, to keep the service secure. This site uses no cookies, ads or tracking.</p>'),
-    ('delete', 'Deleting your details', f'<p>{delete_how}. Anything Stray Wolf Technology has from you will be deleted.</p>'),
-    ('changes', 'Changes', '<p>If this page changes, the date below changes too. Last updated November 9, 2026.</p>'),
-]
-SUMMARY = [('cookie', 'No cookies, ads or tracking', 'Nothing follows you around after you leave.'),
-           ('send', 'Only what you send', 'The form answers, used to reply and plan your project.'),
-           ('trash', 'Deleted when you ask', 'Ask once and anything I have from you is gone.')]
+LEGAL_UPDATED = 'November 9, 2026'
+mail_me = (f'email {CONTACT["email"]}' if CONTACT['email'] else 'reply to any email from me')
+Mail_me = mail_me[0].upper() + mail_me[1:]
 
-privacy_main = page_head('Privacy, in <em>plain English.</em>', 'The short version: this site only collects what you send, and only uses it to reply to you and plan your project.', cls=' page-head-privacy') + f'''
-    <section class="section section-tight" aria-label="Privacy details">
+
+def legal_page(sections, summary, label):
+    """Summary cards, a sticky contents list and the full text: the layout Privacy and Terms share."""
+    return f'''
+    <section class="section section-tight" aria-label="{label}">
       <div class="wrap">
-        <ul class="pv-cards" role="list">{''.join(f'<li data-reveal><h2 class="pv-h">{h}</h2><p>{t}</p></li>' for i, h, t in SUMMARY)}</ul>
+        <ul class="pv-cards" role="list">{''.join(f'<li data-reveal><span class="plate-ic" aria-hidden="true">{icon(ic)}</span><h2 class="pv-h">{h}</h2><p>{t}</p></li>' for ic, h, t in summary)}</ul>
         <div class="pv-grid">
           <nav class="toc" aria-label="On this page">
             <p class="toc-h">On this page</p>
@@ -326,4 +334,51 @@ privacy_main = page_head('Privacy, in <em>plain English.</em>', 'The short versi
       </div>
     </section>'''
 
-page('privacy.html', 'Privacy | Stray Wolf Technology', 'What this website collects, how it’s used and how to have your details deleted. No cookies, ads or tracking.', privacy_main)
+
+# ---- Privacy
+
+PRIVACY = [
+    ('who', 'Who I am', f'<p>This site belongs to Stray Wolf Technology, a web design business based in Texas. On this page, “I” and “me” mean Stray Wolf Technology. Questions about your privacy? {Mail_me}.</p>'),
+    ('collects', 'What this site collects', '<p>Only what you choose to send. On the Start a project page, that’s your name, business name and email, plus anything else you add, like a phone number, a link or a note. If you email me, I get what’s in your email.</p><p>This site sets no cookies and runs no analytics, ads or tracking. Its fonts load from this site, not from Google or anyone else.</p>'),
+    ('used', 'How I use it', '<p>To reply to you, understand your project and send you a price. If you become a client, also to run the project, send invoices and keep the records the law asks a business to keep.</p><p>I don’t sell your details. I don’t share them for anyone’s marketing, and I won’t add you to a mailing list.</p>'),
+    ('shared', 'Who else handles it', '<p>A few services keep this site and my email running. Each one only gets what it needs to do its job:</p><ul><li><strong>Web3Forms</strong> delivers the form to my inbox.</li><li><strong>Cloudflare</strong> runs the domain and forwards email.</li><li><strong>Google</strong> stores my email in Gmail.</li><li><strong>GitHub</strong> hosts the site. Like most hosts, it keeps short technical logs, such as IP addresses, to keep the service secure.</li></ul><p>Each of these companies has its own privacy policy. If a team member or contractor helps on your project, they see only what the project needs and must keep it private. I’ll also share information if the law requires it, or to protect my rights or someone’s safety.</p>'),
+    ('kept', 'How long I keep it', '<p>If your project doesn’t go ahead, I delete your form answers within 12 months. If you become a client, I keep project emails and invoices as long as tax and business records require, usually up to seven years. Anything I don’t need to keep, I’ll delete when you ask.</p>'),
+    ('safe', 'Keeping it safe', '<p>My accounts use strong passwords and two-step login, and this whole site runs over a secure connection (HTTPS). Even so, no website, form or email is ever completely secure, and I can’t promise it will be.</p><p class="pv-warn"><strong>Please don’t send passwords, card or bank numbers, Social Security numbers or health information through the form or by email.</strong> If your project needs a login, I’ll set up a safer way to share it.</p>'),
+    ('choices', 'Your choices', f'<p>You can ask to see what I have about you, correct it or delete it. {Mail_me}. I’ll answer within 30 days, and asking won’t change how I treat you.</p>'),
+    ('kids', 'Children', '<p>This site is for business owners. It isn’t meant for anyone under 18, and I don’t knowingly collect anything from children under 13. If you think a child has sent me something, tell me and I’ll delete it.</p>'),
+    ('links', 'Other websites', '<p>The Work page links to sites I’ve built for clients, and some pages link to other services. Those sites belong to someone else and have their own privacy policies. This page covers straywolftech.com only. It doesn’t cover the sites I build for clients; each client is responsible for their own site’s privacy policy.</p>'),
+    ('changes', 'Changes', f'<p>If this page changes, the date below changes too. Last updated {LEGAL_UPDATED}.</p>'),
+]
+PRIVACY_SUMMARY = [('cookie', 'No cookies, ads or tracking', 'Nothing follows you around after you leave.'),
+                   ('lock', 'Only what you send', 'Used to reply and plan your project. Never sold.'),
+                   ('trash', 'Deleted when you ask', 'Ask once and anything I don’t have to keep is gone.')]
+
+privacy_main = page_head('Privacy, in <em>plain English.</em>', 'The short version: this site only collects what you send, and only uses it to reply to you and plan your project.', cls=' page-head-privacy') \
+    + legal_page(PRIVACY, PRIVACY_SUMMARY, 'Privacy details')
+
+page('privacy.html', 'Privacy | Stray Wolf Technology', 'What this website collects, who handles it, how long it’s kept and how to have it deleted. No cookies, ads or tracking.', privacy_main)
+
+
+# ---- Terms
+
+TERMS = [
+    ('using', 'Using this site', '<p>By using straywolftech.com, you agree to these terms and to the <a href="privacy.html">privacy policy</a>. If you don’t agree, please don’t use the site. On this page, “I” and “me” mean Stray Wolf Technology and anyone who works with it.</p>'),
+    ('offer', 'Nothing here is a contract', '<p>Prices, timelines and descriptions on this site are general information and starting points. They aren’t an offer or a promise. Every project gets its own written price and project agreement before any work starts. If anything on this site differs from a signed agreement, the agreement wins.</p>'),
+    ('send', 'What you send me', '<p>Sending the form or an email doesn’t make you a client or commit either of us to anything. I may say no to any project, for any reason.</p><p>Please only send information that’s accurate and that you have the right to share. Don’t send passwords, payment details or anything confidential. You keep owning anything you send. You let me use it to reply to you and price your project.</p>'),
+    ('own', 'Who owns this site', '<p>The design, words, code, logo and wolf on this site belong to Stray Wolf Technology. You’re welcome to look around and share links. Please don’t copy the site, its words or its logo.</p><p>The client sites on the Work page belong to their owners and are shown with their permission. Their names and logos are theirs.</p>'),
+    ('accuracy', 'Accuracy and changes', '<p>I work to keep this site accurate and running. I can’t promise it’s always complete, current, error-free or available. I may change or remove anything on it at any time.</p>'),
+    ('links', 'Links to other sites', '<p>Links to client sites and other services are there for convenience. I don’t control those sites and I’m not responsible for their content, privacy or security.</p>'),
+    ('warranty', 'No warranties', '<p><strong>THIS SITE IS PROVIDED “AS IS” AND “AS AVAILABLE,” WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, TO THE FULLEST EXTENT THE LAW ALLOWS.</strong></p>'),
+    ('liability', 'Limits on liability', '<p><strong>TO THE FULLEST EXTENT THE LAW ALLOWS, STRAY WOLF TECHNOLOGY, ITS OWNER, TEAM MEMBERS AND CONTRACTORS ARE NOT LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES, OR FOR ANY LOSS OF DATA, PROFITS OR BUSINESS, ARISING FROM YOUR USE OF THIS SITE OR ANY SITE IT LINKS TO.</strong></p><p>If you misuse this site or break these terms, you agree to cover any claim against me that results.</p>'),
+    ('law', 'Texas law', '<p>These terms are governed by the laws of Texas. Any dispute about this site will be handled in the state courts of Texas. If a court finds part of these terms unenforceable, the rest still applies.</p>'),
+    ('changes', 'Changes', f'<p>If these terms change, the date below changes too. Using the site after a change means you accept it. Last updated {LEGAL_UPDATED}.</p>'),
+    ('questions', 'Questions', f'<p>{Mail_me}. I’m happy to explain anything on this page.</p>'),
+]
+TERMS_SUMMARY = [('doc', 'No deal until it’s signed', 'Prices here are starting points. Every project gets a written price and agreement first.'),
+                 ('shield', 'Send only what’s yours', 'Accurate details you have the right to share. Never passwords or payment details.'),
+                 ('layout', 'The work shown is theirs', 'Client sites belong to their owners and appear with their OK.')]
+
+terms_main = page_head('Terms, in <em>plain English.</em>', 'The rules for using this site. It’s here to show my work and start a conversation. Nothing on it is a contract until you and I both sign one.', cls=' page-head-privacy') \
+    + legal_page(TERMS, TERMS_SUMMARY, 'Terms of use')
+
+page('terms.html', 'Terms of use | Stray Wolf Technology', 'The terms for using straywolftech.com: nothing here is a contract until it’s signed, who owns what, and the limits on liability.', terms_main)
