@@ -40,7 +40,7 @@ SITES = [
     {
         "name": "Friends of The Colony Public Library",
         "about": "A redesign concept for the library’s nonprofit friends group in The Colony, Texas, built as a volunteer.",
-        "link": "https://fotcpl.org/",
+        "link": "https://jsglisson3.github.io/FOTCL/",
         "image": "fotcpl",
         "tag": "Volunteer concept, not the official site",
         "logo": ("fotcpl-logo.webp", 640, 223),

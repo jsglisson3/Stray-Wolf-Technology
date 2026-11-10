@@ -348,15 +348,15 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 .phase::before { content: ""; position: absolute; left: 0; right: calc(var(--s5) * -1); top: 4px; height: 2px; background: linear-gradient(90deg, var(--phase) 0 60%, var(--next)); transform: scaleX(0); transform-origin: left; transition: transform 600ms linear calc(var(--td) + 250ms); }
 .phase-3::before { right: 0; transition-duration: 900ms; transition-timing-function: var(--ease-out); }
 .phase::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--phase); box-shadow: 0 0 0 4px var(--stone); transform: scale(0); transition: transform 450ms cubic-bezier(0.3, 1.5, 0.5, 1) calc(var(--td) + 150ms); }
-html:not(.js) .phase::before, .phase.is-in::before, html:not(.js) .phase::after, .phase.is-in::after { transform: none; }
-.phase-1 { --phase: var(--sage); --next: var(--accent); }
-.phase-2 { --phase: var(--accent); --next: var(--dusk); --td: 600ms; }
-.phase-3 { --phase: var(--dusk); --td: 1200ms; }
+html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase::after, .phases.is-in .phase::after { transform: none; }
+.phase-1 { --phase: var(--dusk); --next: var(--accent); }
+.phase-2 { --phase: var(--accent); --next: var(--sage); --td: 600ms; }
+.phase-3 { --phase: var(--sage); --td: 1200ms; }
 .phase-k, .phase-h, .phase-list .icon { color: var(--phase); }
 .phase-k { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 650; font-size: var(--t-small); }
 .phase-k .icon { width: 1rem; height: 1rem; }
 /* the small labels sit on sand: the deeper green and orange keep them above 4.5:1 */
-.phase-1 .phase-k { color: var(--sage-ink); }
+.phase-3 .phase-k { color: var(--sage-ink); }
 .phase-2 .phase-k { color: var(--accent-dark); }
 .phase-h { font-size: clamp(2.75rem, 1.4rem + 4vw, 5.5rem); line-height: 0.95; letter-spacing: -0.04em; font-weight: 600; }
 .phase-lead { font-size: var(--t-lead); line-height: 1.4; font-weight: 500; max-width: 24ch; }
@@ -373,6 +373,148 @@ html:not(.js) .phase::before, .phase.is-in::before, html:not(.js) .phase::after,
   .phase::after { top: 0.3rem; }
 }
 /* what happens once the job is on: one quiet line under the three steps */
+/* how-scenes:start  (V33, generated together with src/partials/how-scenes.html)
+   Three small scenes above You / Me / Us, on one 16s clock that starts when the list scrolls in (.phases.is-in):
+   what you send, the site being built, the checkpoint and launch, a rest, then a soft reset. The resting style of every piece
+   is its final state, so reduced motion and no-JS show three finished pictures. The footer's pause button stops them too. */
+.phase-scene { aspect-ratio: 400 / 240; margin-bottom: var(--s3); background: var(--paper-2); border: 1px solid var(--line-2); box-shadow: 0 22px 34px -28px rgb(36 34 31 / 0.5); overflow: hidden; }
+.hw { display: block; width: 100%; height: 100%; }
+.hw-f-ink { fill: var(--ink); } .hw-f-ink-3 { fill: var(--ink-3); } .hw-f-paper { fill: var(--paper-2); } .hw-f-white { fill: #fff; } .hw-f-stone { fill: var(--stone); } .hw-f-stone-2 { fill: var(--stone-2); }
+.hw-f-line { fill: var(--line); } .hw-f-line-2 { fill: var(--line-2); } .hw-f-sage { fill: var(--sage); } .hw-f-sage-ink { fill: var(--sage-ink); } .hw-f-sage-tint { fill: var(--sage-tint); }
+.hw-f-accent { fill: var(--accent); } .hw-f-accent-tint { fill: var(--accent-tint); } .hw-f-flame { fill: var(--flame); } .hw-f-dusk { fill: var(--dusk); } .hw-f-haze { fill: var(--haze); } .hw-f-good { fill: var(--good); }
+.hw-f-shadow { fill: var(--ink); opacity: 0.1; }
+.hw-ghost { fill: var(--stone); opacity: 0.55; }
+.hw-s-ink { stroke: var(--ink); stroke-width: 1.2; } .hw-s-line { stroke: var(--line-2); stroke-width: 1; } .hw-s-dusk { stroke: var(--dusk); stroke-width: 1.2; }
+.hw-s-ink2 { fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; }
+.hw-s-white { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hw-s-white1 { stroke: #fff; stroke-width: 1.1; stroke-linejoin: round; } .hw-s-white2 { stroke: #fff; stroke-width: 2; }
+.hw-s-paper { fill: none; stroke: var(--paper-2); stroke-width: 1.4; } .hw-s-flame { fill: none; stroke: var(--flame); stroke-width: 2; }
+.hw-t { font: 550 11px var(--text); fill: var(--muted); }
+.hw-q { font: 600 34px var(--display); fill: var(--accent); }
+.hw-url { font: 500 9.5px var(--text); fill: var(--ink-3); }
+.hw-tag { font: 650 10.5px var(--text); fill: var(--paper-2); }
+.hw-btn { font: 650 11.5px var(--text); fill: var(--paper-2); }
+.hw-say { font: 600 11px var(--text); fill: var(--paper-2); }
+.hw-s-sage { stroke: var(--sage); stroke-width: 1.2; }
+.hw-wolf { fill: var(--ink); --eye: var(--paper-2); --glint: 0; --eye-scale: 1.6; }
+.hw-a { transform-box: fill-box; transform-origin: 50% 50%; }
+.hw-l { transform-origin: 0 50%; }
+.hw2-type { transform: translateX(104px); }
+.hw2-caret { opacity: 0; }
+.hw3-tag-p { opacity: 0; }
+.hw3-pin { opacity: 0; }
+.hw3-note { opacity: 0; }
+.hw3-pin-ok { opacity: 0; }
+.hw3-cur { opacity: 0; }
+.hw3-ripple { opacity: 0; }
+.hw3-ring { opacity: 0; }
+.hw3-wl { opacity: 0; }
+.phases.is-in :is(.hw1-q1, .hw1-a1, .hw1-a1-b1, .hw1-q2, .hw1-a2, .hw1-a2-b1, .hw1-a2-b2, .hw1-q3, .hw1-ok, .hw2-type, .hw2-caret, .hw2-dot, .hw2-logo, .hw2-nav, .hw2-h1, .hw2-h2, .hw2-para, .hw2-btn, .hw2-hero, .hw2-t1, .hw2-t2, .hw2-t3, .hw2-seo, .hw2-seo-ok, .hw3-site, .hw3-tag-p, .hw3-yes, .hw3-pin, .hw3-note, .hw3-swap, .hw3-pin-ok, .hw3-cur, .hw3-press, .hw3-ripple, .hw3-tag-l, .hw3-ring, .hw3-moon, .hw3-wolf, .hw3-wl, .hw3-wh, .hw-stage) { animation: 16s linear infinite both; }
+.phases.is-in .hw1-q1 { animation-name: hw1-q1; }
+.phases.is-in .hw1-a1 { animation-name: hw1-a1; }
+.phases.is-in .hw1-a1-b1 { animation-name: hw1-a1-b1; }
+.phases.is-in .hw1-q2 { animation-name: hw1-q2; }
+.phases.is-in .hw1-a2 { animation-name: hw1-a2; }
+.phases.is-in .hw1-a2-b1 { animation-name: hw1-a2-b1; }
+.phases.is-in .hw1-a2-b2 { animation-name: hw1-a2-b2; }
+.phases.is-in .hw1-q3 { animation-name: hw1-q3; }
+.phases.is-in .hw1-ok { animation-name: hw1-ok; }
+.phases.is-in .hw2-type { animation-name: hw2-type; }
+.phases.is-in .hw2-caret { animation-name: hw2-caret; }
+.phases.is-in .hw2-dot { animation-name: hw2-dot; }
+.phases.is-in .hw2-logo { animation-name: hw2-logo; }
+.phases.is-in .hw2-nav { animation-name: hw2-nav; }
+.phases.is-in .hw2-h1 { animation-name: hw2-h1; }
+.phases.is-in .hw2-h2 { animation-name: hw2-h2; }
+.phases.is-in .hw2-para { animation-name: hw2-para; }
+.phases.is-in .hw2-btn { animation-name: hw2-btn; }
+.phases.is-in .hw2-hero { animation-name: hw2-hero; }
+.phases.is-in .hw2-t1 { animation-name: hw2-t1; }
+.phases.is-in .hw2-t2 { animation-name: hw2-t2; }
+.phases.is-in .hw2-t3 { animation-name: hw2-t3; }
+.phases.is-in .hw2-seo { animation-name: hw2-seo; }
+.phases.is-in .hw2-seo-ok { animation-name: hw2-seo-ok; }
+.phases.is-in .hw3-site { animation-name: hw3-site; }
+.phases.is-in .hw3-tag-p { animation-name: hw3-tag-p; }
+.phases.is-in .hw3-yes { animation-name: hw3-yes; }
+.phases.is-in .hw3-pin { animation-name: hw3-pin; }
+.phases.is-in .hw3-note { animation-name: hw3-note; }
+.phases.is-in .hw3-swap { animation-name: hw3-swap; }
+.phases.is-in .hw3-pin-ok { animation-name: hw3-pin-ok; }
+.phases.is-in .hw3-cur { animation-name: hw3-cur; }
+.phases.is-in .hw3-press { animation-name: hw3-press; }
+.phases.is-in .hw3-ripple { animation-name: hw3-ripple; }
+.phases.is-in .hw3-tag-l { animation-name: hw3-tag-l; }
+.phases.is-in .hw3-ring { animation-name: hw3-ring; }
+.phases.is-in .hw3-moon { animation-name: hw3-moon; }
+.phases.is-in .hw3-wolf { animation-name: hw3-wolf; }
+.phases.is-in .hw3-wl { animation-name: hw3-wl; }
+.phases.is-in .hw3-wh { animation-name: hw3-wh; }
+.phases.is-in .hw-stage { animation-name: hw-stage; }
+@keyframes hw1-q1 { 0%, 2.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a1 { 0%, 6.25% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 8.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a1-b1 { 0%, 7.5% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 9.69%, 100% { transform: none; } }
+@keyframes hw1-q2 { 0%, 10% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 12.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a2 { 0%, 13.12% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 15.62%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a2-b1 { 0%, 14.37% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 16.56%, 100% { transform: none; } }
+@keyframes hw1-a2-b2 { 0%, 15.31% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 17.5%, 100% { transform: none; } }
+@keyframes hw1-q3 { 0%, 17.19% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 19.69%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-ok { 0%, 19.69% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 22.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-type { 0%, 23.12% { transform: translateX(0); animation-timing-function: steps(16, end); } 30.63%, 100% { transform: translateX(104px); } }
+@keyframes hw2-caret { 0%, 30.94% { opacity: 1; } 31.56%, 100% { opacity: 0; } }
+@keyframes hw2-dot { 0%, 30.94% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 33.12%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-logo { 0%, 31.87% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 34.38%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-nav { 0%, 32.5% { opacity: 0; animation-timing-function: ease; } 35%, 100% { opacity: 1; } }
+@keyframes hw2-h1 { 0%, 34.38% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 37.19%, 100% { transform: none; } }
+@keyframes hw2-h2 { 0%, 35.62% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 38.44%, 100% { transform: none; } }
+@keyframes hw2-para { 0%, 37.5% { opacity: 0; animation-timing-function: ease; } 40%, 100% { opacity: 1; } }
+@keyframes hw2-btn { 0%, 38.75% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 41.25%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-hero { 0%, 40% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 43.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-t1 { 0%, 43.12% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 45.94%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-t2 { 0%, 44.06% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 46.88%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-t3 { 0%, 45% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 47.81%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-seo { 0%, 47.5% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 50.62%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-seo-ok { 0%, 50% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 52.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-site { 0%, 54.37% { opacity: 0; animation-timing-function: ease; } 58.12%, 100% { opacity: 1; } }
+@keyframes hw3-tag-p { 0%, 55.62% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 58.13%, 71.25% { opacity: 1; transform: none; } 72.5%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-yes { 0%, 56.88% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 59.38%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-pin { 0%, 59.38% { opacity: 0; transform: translateY(-14px); animation-timing-function: var(--ease-spring); } 61.88%, 65% { opacity: 1; transform: none; } 65.94%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-note { 0%, 60.94% { opacity: 0; transform: scale(0.6); animation-timing-function: var(--ease-spring); } 63.12%, 65.62% { opacity: 1; transform: none; } 67.19%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-swap { 0%, 64.38% { opacity: 0; animation-timing-function: ease; } 67.19%, 100% { opacity: 1; } }
+@keyframes hw3-pin-ok { 0%, 65% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 67.19%, 70% { opacity: 1; transform: none; } 71.56%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-cur { 0%, 66.88% { opacity: 0; transform: translate(-70px, 46px); } 67.5% { opacity: 1; transform: translate(-70px, 46px); animation-timing-function: var(--ease-out); } 70.94%, 75.62% { opacity: 1; transform: none; } 77.5%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-press { 0%, 71.25% { transform: none; } 71.88% { transform: scale(0.93); } 73.12%, 100% { transform: none; } }
+@keyframes hw3-ripple { 0%, 71.38% { opacity: 0; transform: scale(0.5); } 71.88% { opacity: 0.9; transform: scale(0.7); animation-timing-function: ease-out; } 75.31%, 100% { opacity: 0; transform: scale(2.6); } }
+@keyframes hw3-tag-l { 0%, 72.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-ring { 0%, 74.38% { opacity: 0; transform: none; } 74.69% { opacity: 0.9; animation-timing-function: ease-out; } 79.38% { opacity: 0; transform: scale(3.2); } 79.69% { opacity: 0; transform: none; } 80% { opacity: 0.9; animation-timing-function: ease-out; } 84.69%, 100% { opacity: 0; transform: scale(3.2); } }
+@keyframes hw3-moon { 0%, 73.75% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 78.12%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-wolf { 0%, 73.75% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 76.88%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-wl { 0%, 78.12% { opacity: 1; } 79.69%, 100% { opacity: 0; } }
+@keyframes hw3-wh { 0%, 78.12% { opacity: 0; animation-timing-function: ease; } 79.69%, 100% { opacity: 1; } }
+@keyframes hw-stage { 0% { opacity: 0; } 2.5%, 94% { opacity: 1; } 97%, 100% { opacity: 0; } }
+.phase-pulse { position: absolute; left: 0; top: 0; width: calc(100% + var(--s5)); height: 10px; pointer-events: none; }
+.phase-3 .phase-pulse { width: 100%; }
+.phase-pulse::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--next); box-shadow: 0 0 0 5px color-mix(in srgb, var(--next) 28%, transparent); opacity: 0; }
+.phase-3 .phase-pulse::after { background: var(--phase); box-shadow: 0 0 0 5px color-mix(in srgb, var(--phase) 28%, transparent); }
+.phases.is-in .phase-1 .phase-pulse::after { animation: hw-run-1 16s linear infinite both; }
+@keyframes hw-run-1 { 0%, 19.06% { left: 0; opacity: 0; } 19.56% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 23.44% { left: calc(100% - 10px); opacity: 1; } 25.31%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-1 { 0%, 19.06% { top: 0; opacity: 0; } 19.56% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 23.44% { top: calc(100% - 10px); opacity: 1; } 25.31%, 100% { top: calc(100% - 10px); opacity: 0; } }
+.phases.is-in .phase-2 .phase-pulse::after { animation: hw-run-2 16s linear infinite both; }
+@keyframes hw-run-2 { 0%, 50% { left: 0; opacity: 0; } 50.5% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 54.37% { left: calc(100% - 10px); opacity: 1; } 56.25%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-2 { 0%, 50% { top: 0; opacity: 0; } 50.5% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 54.37% { top: calc(100% - 10px); opacity: 1; } 56.25%, 100% { top: calc(100% - 10px); opacity: 0; } }
+.phases.is-in .phase-3 .phase-pulse::after { animation: hw-run-3 16s linear infinite both; }
+@keyframes hw-run-3 { 0%, 72.5% { left: 0; opacity: 0; } 73% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 76.88% { left: calc(100% - 10px); opacity: 1; } 78.75%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-3 { 0%, 72.5% { top: 0; opacity: 0; } 73% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 76.88% { top: calc(100% - 10px); opacity: 1; } 78.75%, 100% { top: calc(100% - 10px); opacity: 0; } }
+@media (max-width: 63.99em) {
+  .phase-scene { max-width: 27rem; }
+  .phase-pulse { top: 0.3rem; width: 10px; height: calc(100% + var(--s6)); }
+  .phase-3 .phase-pulse { width: 10px; height: calc(100% - 0.3rem); }
+  .phases.is-in .phase-1 .phase-pulse::after { animation-name: hw-fall-1; }
+  .phases.is-in .phase-2 .phase-pulse::after { animation-name: hw-fall-2; }
+  .phases.is-in .phase-3 .phase-pulse::after { animation-name: hw-fall-3; }
+}
+.scene-paused .phase-scene *, .scene-paused .phase-pulse::after { animation-play-state: paused !important; }
+/* how-scenes:end */
 .phases-note { display: flex; gap: 0.75rem; align-items: flex-start; margin-top: var(--s7); padding-top: var(--s4); border-top: var(--rule-soft); max-width: 62rem; line-height: 1.5; }
 .phases-note .icon { flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; color: var(--sage-ink); }
 .phases-note span { max-width: 78ch; }

@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '31'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '33'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -173,11 +173,14 @@ def hero():
 # V29 (Nov 10 2026, Jeremy on how he really works): it starts with a conversation. From the client he needs the logo, as many photos
 # as they can send and the few words that matter most (a main headline or slogan); he writes the rest. He helps find a domain
 # name that is available, not just register it. Once he takes the job he sends a short list of what to send and how (PHASE_NOTE).
+# V33 (Nov 10 2026, Jeremy: "the first step should only be about do they have a website? what's their situation and what are they
+# wanting to do? what's the goal of this website?"): step one is only that conversation. The logo, photos and wording lines moved
+# out of the You list into PHASE_NOTE ("this should go into the 'once i take the job' area").
 PHASES = [
     ('First', 'You.', 'Tell me what you want.', [
-        'A conversation about your business and your goals',
-        'Your logo, and as many photos as you can',
-        'Your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest.']),
+        'Whether you have a website now',
+        'Your situation, and what you want to do',
+        'The goal of the website']),
     ('Then', 'Me.', 'I take over.', [
         'A price in writing, within five days',
         'Help finding a domain name that’s available',
@@ -188,21 +191,26 @@ PHASES = [
         'You see it before anyone else',
         'You say yes, or tell me what to change',
         'Then it goes live'])]
-PHASE_NOTE = 'Once I take the job, I’ll send a short list of what I need and how to send it: your photos, your logo, the key words, and your current site if you have one.'
+PHASE_NOTE = 'Once I take the job, I’ll send a short list of what I need and how to send it: your logo, as many photos as you can, and your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest.'
 
 
 def phases():
+    """V33: each step has a small animated scene above it (src/partials/how-scenes.html, generated) and a dot that runs along
+    the trail when one step hands over to the next. The whole list is revealed as one block, so all three scenes share a clock."""
+    scenes = [s.strip() for s in read('how-scenes.html').split('-->', 1)[1].split('<!-- next -->')]
     cols = []
     for i, (k, h, lead, items) in enumerate(PHASES):
         rows = ''.join(f'<li>{icon("check")}<span>{t}</span></li>' for t in items)
         cols.append(f'''
-          <li class="phase phase-{i + 1}" data-reveal>
+          <li class="phase phase-{i + 1}">
+            <i class="phase-pulse" aria-hidden="true"></i>
+            <div class="phase-scene" aria-hidden="true">{scenes[i]}</div>
             <p class="phase-k">{ARROW if i else ''}{k}</p>
             <h3 class="phase-h">{h}</h3>
             <p class="phase-lead">{lead}</p>
             <ul class="phase-list" role="list">{rows}</ul>
           </li>''')
-    return f'''        <ol class="phases" role="list">{''.join(cols)}
+    return f'''        <ol class="phases" role="list" data-reveal>{''.join(cols)}
         </ol>
         <p class="phases-note" data-reveal>{icon('list')}<span>{PHASE_NOTE}</span></p>'''
 
@@ -330,7 +338,7 @@ FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, 
         ('How long does it take?', 'About 30 days from yes. If you have a date that matters, put it in the form.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
         ('Will my site show up on Google?', 'It’s built to. Every site gets the SEO basics: clear titles and descriptions, your business details in the format search engines read, a sitemap and fast pages. Then I submit it to Google and Bing. DuckDuckGo and Yahoo draw on Bing, so that covers them too. Nobody can honestly promise a ranking, so I don’t.'),
-        ('What do you need from me?', 'Your logo, as many photos as you can, and the words that matter most: your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest. Once I take the job, I’ll send a short list of how to send it all. The 30 days starts when I have it.'),
+        ('What do you need from me?', 'To start, just a conversation. Once I take the job, I’ll need your logo, as many photos as you can, and the words that matter most: your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest. I’ll send a short list of how to send it all. The 30 days starts when I have it.'),
 ]
 
 
