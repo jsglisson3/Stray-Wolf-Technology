@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo=' https://*.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
   <title>Stray Wolf Technology | Bespoke websites for owner-run businesses</title>
   <meta name="description" content="Bespoke websites for owner-run businesses, by referral. Design, domain, hosting and email, with one price in writing before anything starts.">
-  <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://straywolftech.com/">
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#24221F">
@@ -30,40 +29,141 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=26">
+  <link rel="stylesheet" href="css/site.css?v=27">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://straywolftech.com/#website",
-        "name": "Stray Wolf Technology",
-        "alternateName": ["Stray Wolf", "straywolftech.com"],
-        "url": "https://straywolftech.com/",
-        "inLanguage": "en-US",
-        "publisher": {"@id": "https://straywolftech.com/#business"}
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://straywolftech.com/#business",
-        "name": "Stray Wolf Technology",
-        "alternateName": "Stray Wolf",
-        "description": "Bespoke websites, by referral, for owner-run businesses. Bold, different and built around yours.",
-        "url": "https://straywolftech.com/",
-        "logo": {"@type": "ImageObject", "url": "https://straywolftech.com/images/stray-wolf-logo-512.png", "width": 512, "height": 512},
-        "image": "https://straywolftech.com/images/og-card.jpg",
-        "founder": {"@type": "Person", "name": "Jeremy"},
-        "areaServed": {"@type": "Country", "name": "United States"},
-        "knowsAbout": ["Website design", "Web development", "Domain registration", "Website hosting", "Business email setup"],
-        "email": "info@straywolftech.com"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://straywolftech.com/#website",
+      "name": "Stray Wolf Technology",
+      "alternateName": [
+        "Stray Wolf",
+        "straywolftech.com"
+      ],
+      "url": "https://straywolftech.com/",
+      "inLanguage": "en-US",
+      "publisher": {
+        "@id": "https://straywolftech.com/#business"
       }
-    ]
-  }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://straywolftech.com/#business",
+      "name": "Stray Wolf Technology",
+      "alternateName": "Stray Wolf",
+      "description": "Bespoke websites, by referral, for owner-run businesses. Bold, different and built around yours.",
+      "url": "https://straywolftech.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://straywolftech.com/images/stray-wolf-logo-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://straywolftech.com/images/og-card.jpg",
+      "founder": {
+        "@type": "Person",
+        "name": "Jeremy"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "knowsAbout": [
+        "Website design",
+        "Web development",
+        "Domain registration",
+        "Website hosting",
+        "Business email setup"
+      ],
+      "email": "info@straywolftech.com",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "info@straywolftech.com",
+        "url": "https://straywolftech.com/start.html",
+        "availableLanguage": "English"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://straywolftech.com/#webpage",
+      "url": "https://straywolftech.com/",
+      "name": "Stray Wolf Technology",
+      "description": "Bespoke websites for owner-run businesses, by referral. Design, domain, hosting and email, with one price in writing before anything starts.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://straywolftech.com/#website"
+      },
+      "about": {
+        "@id": "https://straywolftech.com/#business"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://straywolftech.com/images/og-card.jpg"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://straywolftech.com/#faq",
+      "isPartOf": {
+        "@id": "https://straywolftech.com/#webpage"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does a website cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Starter sites from $1,500, larger ones from $3,000. Details on the Pricing page. Want to see something first? A mockup is $50 to $100, and if you go ahead, every dollar of it comes off your final price. One price in writing, before anything starts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you take every job?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. I take the jobs I know I can do well, a few at a time. If yours isn’t a fit, I’ll say so up front and point you somewhere better."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "About 30 days from yes. If you have a date that matters, put it in the form."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I own the website?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Your domain, your content and your site are yours to keep."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do you need from me?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Three things: what you want, the words for each page, and your logo and photos. The 30 days starts when I have them. Nothing yet? Say so and we’ll work it out."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
-<body class="home">
+<body class="home" id="top">
   <a class="skip-link" href="#main">Skip to main content</a>
   <svg hidden aria-hidden="true" focusable="false" style="display:none">
     <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
@@ -102,7 +202,6 @@
     <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z"/></symbol>
   </svg>
 
-  <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>
 
   <header class="site-header" data-header>
     <!-- the night sky behind the bar: stars along the edges, stars in the open sky (kept clear of the logo and the links), a rare shooting star, and the moon at the top right -->
@@ -247,7 +346,7 @@
             <div class="slide-text">
               <img class="site-logo" src="images/work/fotcpl-logo.webp" width="640" height="223" alt="" loading="lazy" decoding="async">
               <h3 class="slide-name">Friends of The Colony Public Library</h3>
-              <p class="slide-about">A redesign concept for the library&#x27;s nonprofit friends group in The Colony, Texas, built as a volunteer.</p>
+              <p class="slide-about">A redesign concept for the library’s nonprofit friends group in The Colony, Texas, built as a volunteer.</p>
               <span class="tag">Volunteer concept, not the official site</span>
               <a class="button button-quiet slide-link" href="https://fotcpl.org/" target="_blank" rel="noopener">Visit the site<svg class="icon" aria-hidden="true"><use href="#i-arrow-out"/></svg><span class="visually-hidden">: Friends of The Colony Public Library (opens in a new tab)</span></a>
             </div>
@@ -407,11 +506,12 @@
     </div>
     <div class="wrap foot-legal">
       <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-reverse.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© 2026 Stray Wolf Technology. Built with love, one site at a time.</p>
-      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No cookies, no tracking. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
+      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No ads, and your details are never sold. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
       <a class="to-top" href="#top"><span>Back to top</span><span class="to-top-ic"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></span></a>
     </div>
   </footer>
 
-  <script src="js/site.js?v=26" defer></script>
+  <script src="js/analytics.js?v=27" data-ga="G-K661V9VYG2" async></script>
+  <script src="js/site.js?v=27" defer></script>
 </body>
 </html>

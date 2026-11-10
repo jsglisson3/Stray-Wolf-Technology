@@ -14,10 +14,10 @@ import pathlib, re, subprocess, sys, importlib.util, datetime, html as htmlesc
 
 # ---- Launch settings ------------------------------------------------------------
 DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same thing
-LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
+LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '26'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '27'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -44,8 +44,17 @@ REVIEWS = [
     # ('The words the client wrote, as written.', 'First Last', 'Business name', 'https://their-site.com'),   # url can be ''
 ]
 
+# ---- Google Analytics 4 (Jeremy, Nov 10 2026: on, no cookie banner; the privacy page says so). Empty = no analytics at all,
+# and then also put the "no cookies, no tracking" lines back in src/layout.html, src/pages.py (Start and Privacy). ----
+GA4_ID = 'G-K661V9VYG2'       # the Measurement ID from GA4 > Admin > Data streams (not the GTM-... container ID, which isn't used)
+
 # ---- Google Search Console: paste the content value from the "HTML tag" method here, then rebuild ----
-SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site-verification" content="...">
+SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site-verification" content="...">  (not needed if verified by DNS in Cloudflare)
+BING_VERIFY = ''              # optional: the content value of Bing Webmaster Tools' <meta name="msvalidate.01" ...> tag (or just import from Search Console)
+# ---- Profiles that are really yours (Google Business Profile share link, LinkedIn, Facebook...). Tells Google they're the same business. ----
+SAME_AS = [
+    # 'https://g.page/r/...',
+]
 
 TAGLINE = 'Bespoke websites, by referral, for owner-run businesses. Bold, different and built around yours.'
 HOME_DESC = 'Bespoke websites for owner-run businesses, by referral. Design, domain, hosting and email, with one price in writing before anything starts.'   # the homepage's line in search results
@@ -354,9 +363,15 @@ layout = (SRC / 'layout.html').read_text(encoding='utf-8')
 import hashlib, base64
 _hashes = ' '.join("'sha256-" + base64.b64encode(hashlib.sha256(m.encode('utf-8')).digest()).decode() + "'"
                    for m in re.findall(r'<script>(.*?)</script>', layout, re.S))
-CSP = ("default-src 'self'; script-src 'self' " + _hashes + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
-       "font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests")
-layout = layout.replace('{{CSP}}', f'  <meta http-equiv="Content-Security-Policy" content="{CSP}">\n')
+# With GA4_ID set, Google's own list of what GA4 needs is added (googletagmanager.com for the script, google-analytics.com to send).
+_ga_script = ' https://*.googletagmanager.com' if GA4_ID else ''
+# (*.g.doubleclick.net and *.google.com are only used if Google signals is turned on in GA4; listed so it can't throw console errors)
+_ga_send = ' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com' if GA4_ID else ''
+_ga_img = ' https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com' if GA4_ID else ''
+CSP = ("default-src 'self'; script-src 'self' " + _hashes + _ga_script + "; style-src 'self' 'unsafe-inline'; img-src 'self' data:" + _ga_img + "; "
+       "font-src 'self'; connect-src 'self'" + _ga_send + "; object-src 'none'; base-uri 'self'; upgrade-insecure-requests")
+layout = (layout.replace('{{CSP}}', f'  <meta http-equiv="Content-Security-Policy" content="{CSP}">\n')
+          .replace('{{ANALYTICS}}', f'  <script src="js/analytics.js?v={{{{V}}}}" data-ga="{esc(GA4_ID)}" async></script>\n' if GA4_ID else ''))
 LOGO_W, LOGO_H = viewbox((DOCS / 'images' / 'brand' / 'stray-wolf-logo-color.svg').read_text(encoding='utf-8'))
 
 
@@ -381,54 +396,81 @@ def finish(file, html):
     return html
 
 
-def ld_json():
-    """Tells search engines the business's name, logo and what the site is called (the name shown above results)."""
-    extra = ''
+def ld_json(file, title, desc):
+    """Structured data for search engines: the business, the site, this page and where it sits, plus prices and FAQs where they're shown."""
+    import json
+    base = f'https://{DOMAIN}/'
+    url = base + ('' if file == 'index.html' else file)
+    business = {
+        '@type': 'Organization', '@id': base + '#business',
+        'name': 'Stray Wolf Technology', 'alternateName': 'Stray Wolf',
+        'description': TAGLINE, 'url': base,
+        'logo': {'@type': 'ImageObject', 'url': base + 'images/stray-wolf-logo-512.png', 'width': 512, 'height': 512},
+        'image': base + 'images/og-card.jpg',
+        'founder': {'@type': 'Person', 'name': 'Jeremy'},
+        'address': {'@type': 'PostalAddress', 'addressRegion': 'TX', 'addressCountry': 'US'},   # "based in Texas" (privacy page); no street address on purpose
+        'areaServed': {'@type': 'Country', 'name': 'United States'},
+        'knowsAbout': ['Website design', 'Web development', 'Domain registration', 'Website hosting', 'Business email setup'],
+    }
     if EMAIL:
-        extra += f',\n        "email": "{EMAIL}"'
+        business['email'] = EMAIL
+        business['contactPoint'] = {'@type': 'ContactPoint', 'contactType': 'sales', 'email': EMAIL, 'url': base + 'start.html', 'availableLanguage': 'English'}
     if PHONE:
-        extra += f',\n        "telephone": "{tel}"'
-    return f'''  <script type="application/ld+json">
-  {{
-    "@context": "https://schema.org",
-    "@graph": [
-      {{
-        "@type": "WebSite",
-        "@id": "https://{DOMAIN}/#website",
-        "name": "Stray Wolf Technology",
-        "alternateName": ["Stray Wolf", "{DOMAIN}"],
-        "url": "https://{DOMAIN}/",
-        "inLanguage": "en-US",
-        "publisher": {{"@id": "https://{DOMAIN}/#business"}}
-      }},
-      {{
-        "@type": "Organization",
-        "@id": "https://{DOMAIN}/#business",
-        "name": "Stray Wolf Technology",
-        "alternateName": "Stray Wolf",
-        "description": "{TAGLINE}",
-        "url": "https://{DOMAIN}/",
-        "logo": {{"@type": "ImageObject", "url": "https://{DOMAIN}/images/stray-wolf-logo-512.png", "width": 512, "height": 512}},
-        "image": "https://{DOMAIN}/images/og-card.jpg",
-        "founder": {{"@type": "Person", "name": "Jeremy"}},
-        "areaServed": {{"@type": "Country", "name": "United States"}},
-        "knowsAbout": ["Website design", "Web development", "Domain registration", "Website hosting", "Business email setup"]{extra}
-      }}
+        business['telephone'] = tel
+        business['contactPoint']['telephone'] = tel
+    if SAME_AS:
+        business['sameAs'] = SAME_AS
+    graph = [
+        {'@type': 'WebSite', '@id': base + '#website', 'name': 'Stray Wolf Technology',
+         'alternateName': ['Stray Wolf', DOMAIN], 'url': base, 'inLanguage': 'en-US', 'publisher': {'@id': base + '#business'}},
+        business,
     ]
-  }}
-  </script>
-'''
+    name = title.split(' | ')[0]
+    webpage = {'@type': 'AboutPage' if file == 'about.html' else 'ContactPage' if file == 'start.html' else 'WebPage',
+               '@id': url + '#webpage', 'url': url, 'name': name, 'description': desc, 'inLanguage': 'en-US',
+               'isPartOf': {'@id': base + '#website'}, 'about': {'@id': base + '#business'},
+               'primaryImageOfPage': {'@type': 'ImageObject', 'url': base + 'images/og-card.jpg'}}
+    if file != 'index.html':
+        webpage['breadcrumb'] = {'@id': url + '#breadcrumb'}
+        graph.append({'@type': 'BreadcrumbList', '@id': url + '#breadcrumb', 'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': base},
+            {'@type': 'ListItem', 'position': 2, 'name': name.split(':')[0]}]})
+    graph.insert(2, webpage)
+    plain = lambda h: re.sub(r'\s+', ' ', htmlesc.unescape(re.sub(r'<[^>]+>', '', h))).strip()
+    if file == 'index.html':
+        graph.append({'@type': 'FAQPage', '@id': url + '#faq', 'isPartOf': {'@id': url + '#webpage'}, 'mainEntity': [
+            {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': plain(a)}} for q, a in FAQS]})
+    if file == 'pricing.html':
+        def offer(n, low, text):
+            return {'@type': 'Offer', 'name': n, 'description': text, 'url': url,
+                    'priceSpecification': {'@type': 'PriceSpecification', 'minPrice': int(low.replace(',', '')), 'priceCurrency': 'USD'},
+                    'itemOffered': {'@type': 'Service', 'name': n, 'provider': {'@id': base + '#business'}}}
+        graph.append({'@type': 'Service', '@id': url + '#service', 'name': 'Website design and build', 'serviceType': 'Website design',
+                      'provider': {'@id': base + '#business'}, 'areaServed': business['areaServed'], 'url': url,
+                      'hasOfferCatalog': {'@type': 'OfferCatalog', 'name': 'Website projects', 'itemListElement': [
+                          offer('Starter website', STARTER_FROM, 'Up to five pages, written with you and built around your business. Domain and email set up.'),
+                          offer('Larger website', LARGER_FROM, 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.'),
+                          offer('Homepage mockup', MOCKUP_FROM, f'Your homepage designed first. ${MOCKUP_FROM} to ${MOCKUP_TO}, credited in full if the site goes ahead.'),
+                          offer('Fix to an existing website', FIX_FROM, 'A fix to a website you already have.'),
+                          offer('New page on an existing website', PAGE_FROM, 'One new page on a website you already have.'),
+                          offer('Website refresh', REFRESH_FROM, 'New words and photos across the pages you have.')]}})
+    body = json.dumps({'@context': 'https://schema.org', '@graph': graph}, indent=2, ensure_ascii=False).replace('</', '<\\/')
+    return '  <script type="application/ld+json">\n' + body + '\n  </script>\n'
+
+
+CHANGED = set()   # pages whose content changed in this build, for the sitemap's <lastmod> dates
 
 
 def page(file, title, desc, main, current=None, body_class='inner', banner=True, ld=False):
     url = f'https://{DOMAIN}/{"" if file == "index.html" else file}'
     html = (layout.replace('{{TITLE}}', esc(title)).replace('{{DESC}}', esc(desc))
             .replace('{{ROBOTS}}', ROBOTS_META)
-            .replace('{{VERIFY}}', f'  <meta name="google-site-verification" content="{esc(SEARCH_CONSOLE)}">\n' if SEARCH_CONSOLE else '')
+            .replace('{{VERIFY}}', (f'  <meta name="google-site-verification" content="{esc(SEARCH_CONSOLE)}">\n' if SEARCH_CONSOLE else '')
+                                   + (f'  <meta name="msvalidate.01" content="{esc(BING_VERIFY)}">\n' if BING_VERIFY else ''))
             .replace('{{CANONICAL}}', '' if file in HIDDEN else f'  <link rel="canonical" href="{url}">\n')
             .replace('{{OG_URL}}', '' if file in HIDDEN else f'  <meta property="og:url" content="{url}">\n')
             .replace('{{YEAR}}', YEAR)
-            .replace('{{DOMAIN}}', DOMAIN).replace('{{V}}', VERSION).replace('{{LD}}', ld_json() if ld else '')
+            .replace('{{DOMAIN}}', DOMAIN).replace('{{V}}', VERSION).replace('{{LD}}', '' if file in HIDDEN else ld_json(file, title, desc))
             .replace('{{BODY_CLASS}}', body_class)
             .replace('{{SPRITE}}', sprite).replace('{{BANNER}}', BANNER if banner else '')
             .replace('{{LOGO_W}}', LOGO_W).replace('{{LOGO_H}}', LOGO_H)
@@ -436,7 +478,12 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
     for key, f in (('{{CUR_HOME}}', 'index.html'), ('{{CUR_WORK}}', 'work.html'), ('{{CUR_PRICING}}', 'pricing.html'),
                    ('{{CUR_REVIEWS}}', 'reviews.html'), ('{{CUR_ABOUT}}', 'about.html'), ('{{CUR_START}}', 'start.html')):
         html = html.replace(key, ' aria-current="page"' if current == f else '')
-    (DOCS / file).write_text(finish(file, html), encoding='utf-8')
+    html = finish(file, html)
+    out = DOCS / file
+    same = lambda t: re.sub(r'\?v=\d+', '', t)    # a version bump alone isn't a content change
+    if not out.exists() or same(out.read_text(encoding='utf-8')) != same(html):
+        CHANGED.add(file)
+    out.write_text(html, encoding='utf-8')
     print('built', file)
 
 
@@ -482,8 +529,14 @@ for old, new in (('contact.html', 'start.html'), ('brand.html', 'index.html'), (
     print('redirect', old, '->', new)
 
 # 5) Sitemap, robots.txt and the web manifest, so the domain setting flows through
-(DOCS / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
-    f'  <url><loc>https://{DOMAIN}/{"" if p == "index.html" else p}</loc></url>\n' for p in PUBLIC) + '</urlset>\n', encoding='utf-8')
+_sm = DOCS / 'sitemap.xml'
+_prev = dict(re.findall(r'<loc>https://[^/]+/([^<]*)</loc><lastmod>([^<]+)</lastmod>', _sm.read_text(encoding='utf-8'))) if _sm.exists() else {}
+_today = datetime.date.today().isoformat()
+def _lastmod(p):
+    loc = '' if p == 'index.html' else p
+    return _today if p in CHANGED or loc not in _prev else _prev[loc]
+_sm.write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(
+    f'  <url><loc>https://{DOMAIN}/{"" if p == "index.html" else p}</loc><lastmod>{_lastmod(p)}</lastmod></url>\n' for p in PUBLIC) + '</urlset>\n', encoding='utf-8')
 (DOCS / 'robots.txt').write_text(
     ('# Draft: every page also carries a noindex tag until launch (LAUNCHED in tools/build.py).\n' if not LAUNCHED else '') +
     f'User-agent: *\nAllow: /\n\nSitemap: https://{DOMAIN}/sitemap.xml\n', encoding='utf-8')
@@ -499,7 +552,7 @@ for old, new in (('contact.html', 'start.html'), ('brand.html', 'index.html'), (
     {{ "src": "images/favicon-512.png", "sizes": "512x512", "type": "image/png" }},
     {{ "src": "images/favicon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }}
   ],
-  "theme_color": "#F7F5F1",
+  "theme_color": "#24221F",
   "background_color": "#F7F5F1",
   "display": "browser"
 }}

@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="css/site.css?v={{V}}">
   <script>document.documentElement.classList.add('js')</script>
 {{LD}}</head>
-<body class="{{BODY_CLASS}}">
+<body class="{{BODY_CLASS}}" id="top">
   <a class="skip-link" href="#main">Skip to main content</a>
   {{SPRITE}}
 {{BANNER}}
@@ -161,11 +161,11 @@
     </div>
     <div class="wrap foot-legal">
       <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-reverse.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© {{YEAR}} Stray Wolf Technology. Built with love, one site at a time.</p>
-      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No cookies, no tracking. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
+      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No ads, and your details are never sold. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
       <a class="to-top" href="#top"><span>Back to top</span><span class="to-top-ic"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></span></a>
     </div>
   </footer>
 
-  <script src="js/site.js?v={{V}}" defer></script>
+{{ANALYTICS}}  <script src="js/site.js?v={{V}}" defer></script>
 </body>
 </html>

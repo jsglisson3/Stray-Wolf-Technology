@@ -12,6 +12,7 @@ Start with **PICKUP.md**. It has where things stand, the before-launch list and 
 | `docs/` | **The website itself.** Everything GitHub Pages publishes. Open `docs/index.html` to see it. |
 | `docs/css/site.css` | All the styles. Edit this file directly. |
 | `docs/js/site.js` | The header and phone menu, the hero's rotating thumbnail, the 30-day ruler, the service tabs, the work carousel, the fit check and the Start a project form. Edit directly. |
+| `docs/js/analytics.js` | Google Analytics 4 and the few events it sends (leads, Start a project clicks, email clicks). Turned on and off by `GA4_ID` in `tools/build.py`. |
 | `docs/images/brand/` | Logo files (SVG): full logo, stacked logo, symbol and wordmark, in colour, reverse and one-colour versions. |
 | `docs/fonts/` | Zilla Slab (headings) and Bricolage Grotesque (text), self-hosted. |
 | `src/` | The page sources. **Edit these, not the `.html` files in `docs/`,** then run the build. |

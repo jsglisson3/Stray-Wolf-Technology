@@ -1,4 +1,3 @@
-# Draft: every page also carries a noindex tag until launch (LAUNCHED in tools/build.py).
 User-agent: *
 Allow: /
 

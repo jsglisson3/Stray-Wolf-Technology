@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo=' https://*.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
   <title>Thanks | Stray Wolf Technology</title>
   <meta name="description" content="Your answers are in.">
   <meta name="robots" content="noindex, nofollow">
@@ -28,10 +28,10 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=26">
+  <link rel="stylesheet" href="css/site.css?v=27">
   <script>document.documentElement.classList.add('js')</script>
 </head>
-<body class="inner">
+<body class="inner" id="top">
   <a class="skip-link" href="#main">Skip to main content</a>
   <svg hidden aria-hidden="true" focusable="false" style="display:none">
     <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
@@ -70,7 +70,6 @@
     <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z"/></symbol>
   </svg>
 
-  <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>
 
   <header class="site-header" data-header>
     <!-- the night sky behind the bar: stars along the edges, stars in the open sky (kept clear of the logo and the links), a rare shooting star, and the moon at the top right -->
@@ -218,11 +217,12 @@
     </div>
     <div class="wrap foot-legal">
       <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-reverse.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© 2026 Stray Wolf Technology. Built with love, one site at a time.</p>
-      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No cookies, no tracking. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
+      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No ads, and your details are never sold. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
       <a class="to-top" href="#top"><span>Back to top</span><span class="to-top-ic"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></span></a>
     </div>
   </footer>
 
-  <script src="js/site.js?v=26" defer></script>
+  <script src="js/analytics.js?v=27" data-ga="G-K661V9VYG2" async></script>
+  <script src="js/site.js?v=27" defer></script>
 </body>
 </html>

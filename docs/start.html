@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo=' https://*.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com; font-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
   <title>Start a website project | Stray Wolf Technology</title>
   <meta name="description" content="Six quick questions about your business and your website, about two minutes. Answer them and Jeremy replies within five days.">
-  <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://straywolftech.com/start.html">
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#24221F">
@@ -30,10 +29,112 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=26">
+  <link rel="stylesheet" href="css/site.css?v=27">
   <script>document.documentElement.classList.add('js')</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://straywolftech.com/#website",
+      "name": "Stray Wolf Technology",
+      "alternateName": [
+        "Stray Wolf",
+        "straywolftech.com"
+      ],
+      "url": "https://straywolftech.com/",
+      "inLanguage": "en-US",
+      "publisher": {
+        "@id": "https://straywolftech.com/#business"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://straywolftech.com/#business",
+      "name": "Stray Wolf Technology",
+      "alternateName": "Stray Wolf",
+      "description": "Bespoke websites, by referral, for owner-run businesses. Bold, different and built around yours.",
+      "url": "https://straywolftech.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://straywolftech.com/images/stray-wolf-logo-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://straywolftech.com/images/og-card.jpg",
+      "founder": {
+        "@type": "Person",
+        "name": "Jeremy"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "knowsAbout": [
+        "Website design",
+        "Web development",
+        "Domain registration",
+        "Website hosting",
+        "Business email setup"
+      ],
+      "email": "info@straywolftech.com",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "info@straywolftech.com",
+        "url": "https://straywolftech.com/start.html",
+        "availableLanguage": "English"
+      }
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://straywolftech.com/start.html#webpage",
+      "url": "https://straywolftech.com/start.html",
+      "name": "Start a website project",
+      "description": "Six quick questions about your business and your website, about two minutes. Answer them and Jeremy replies within five days.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://straywolftech.com/#website"
+      },
+      "about": {
+        "@id": "https://straywolftech.com/#business"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://straywolftech.com/images/og-card.jpg"
+      },
+      "breadcrumb": {
+        "@id": "https://straywolftech.com/start.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://straywolftech.com/start.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://straywolftech.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Start a website project"
+        }
+      ]
+    }
+  ]
+}
+  </script>
 </head>
-<body class="inner page-start">
+<body class="inner page-start" id="top">
   <a class="skip-link" href="#main">Skip to main content</a>
   <svg hidden aria-hidden="true" focusable="false" style="display:none">
     <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
@@ -72,7 +173,6 @@
     <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z"/></symbol>
   </svg>
 
-  <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>
 
   <header class="site-header" data-header>
     <!-- the night sky behind the bar: stars along the edges, stars in the open sky (kept clear of the logo and the links), a rare shooting star, and the moon at the top right -->
@@ -135,7 +235,7 @@
             </div>
             <div class="q">
               <label for="q-what"><span class="qn" aria-hidden="true">03</span>What do you do, and who are your customers? <span class="req">(required)</span></label>
-              <textarea class="field" id="q-what" name="what_you_do" rows="3" maxlength="800" required></textarea>
+              <textarea class="field" id="q-what" name="what_you_do" rows="3" maxlength="800" required data-msg="Tell me what you do and who your customers are."></textarea>
             </div>
             <fieldset class="q">
               <legend><span class="qn" aria-hidden="true">04</span>What should the website do for you? <span class="opt">(pick any)</span></legend>
@@ -178,7 +278,7 @@
               <input id="q-trap" name="sw_trap_field" type="text" tabindex="-1" autocomplete="off">
             </div>
             <div class="q consent">
-              <label class="consent-check" for="q-consent"><input id="q-consent" name="consent" type="checkbox" value="Agreed to the Terms of use and Privacy policy (version November 9, 2026)" required data-msg="Please tick the box to agree to the terms and privacy policy."><span>I agree to the <a href="terms.html">terms of use</a> and <a href="privacy.html">privacy policy</a>, and it’s OK to contact me about my project. <span class="req">(required)</span></span></label>
+              <label class="consent-check" for="q-consent"><input id="q-consent" name="consent" type="checkbox" value="Agreed to the Terms of use and Privacy policy (version November 10, 2026)" required data-msg="Please tick the box to agree to the terms and privacy policy."><span>I agree to the <a href="terms.html">terms of use</a> and <a href="privacy.html">privacy policy</a>, and it’s OK to contact me about my project. <span class="req">(required)</span></span></label>
             </div>
           </fieldset>
 
@@ -203,7 +303,7 @@
             <h2 class="aside-h"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Private and secure</h2>
             <ul class="safe-list" role="list">
               <li>Your answers go to me and no one else. Never sold, never shared for marketing.</li>
-              <li>Sent over a secure connection. No cookies, no tracking on this site.</li>
+              <li>Sent over a secure connection. Never added to a mailing list.</li>
               <li>Deleted when you ask. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>, in plain English.</li>
             </ul>
           </div>
@@ -314,11 +414,12 @@
     </div>
     <div class="wrap foot-legal">
       <p class="foot-copy"><img src="images/brand/stray-wolf-symbol-reverse.svg" width="20" height="20" alt="" loading="lazy" decoding="async">© 2026 Stray Wolf Technology. Built with love, one site at a time.</p>
-      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No cookies, no tracking. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
+      <p class="foot-safe"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>No ads, and your details are never sold. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>.</span></p>
       <a class="to-top" href="#top"><span>Back to top</span><span class="to-top-ic"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg></span></a>
     </div>
   </footer>
 
-  <script src="js/site.js?v=26" defer></script>
+  <script src="js/analytics.js?v=27" data-ga="G-K661V9VYG2" async></script>
+  <script src="js/site.js?v=27" defer></script>
 </body>
 </html>

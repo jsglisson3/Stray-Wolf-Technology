@@ -137,7 +137,7 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Six quick quest
             <h2 class="aside-h">{icon('lock')}Private and secure</h2>
             <ul class="safe-list" role="list">
               <li>Your answers go to me and no one else. Never sold, never shared for marketing.</li>
-              <li>Sent over a secure connection. No cookies, no tracking on this site.</li>
+              <li>Sent over a secure connection. Never added to a mailing list.</li>
               <li>Deleted when you ask. <a href="privacy.html">Privacy</a> and <a href="terms.html">terms</a>, in plain English.</li>
             </ul>
           </div>
@@ -338,9 +338,9 @@ def legal_page(sections, summary, label):
 
 PRIVACY = [
     ('who', 'Who I am', f'<p>This site belongs to Stray Wolf Technology, a web design business based in Texas. On this page, “I” and “me” mean Stray Wolf Technology. Questions about your privacy? {Mail_me}.</p>'),
-    ('collects', 'What this site collects', '<p>Only what you choose to send. On the Start a project page, that’s your name, business name and email, plus anything else you add, like a phone number, a link or a note. If you email me, I get what’s in your email.</p><p>This site sets no cookies and runs no analytics, ads or tracking. Its fonts load from this site, not from Google or anyone else.</p>'),
+    ('collects', 'What this site collects', '<p>First, what you choose to send. On the Start a project page, that’s your name, business name and email, plus anything else you add, like a phone number, a link or a note. If you email me, I get what’s in your email.</p><p>This site uses Google Analytics to count visits and see which pages people find useful. It sets a few cookies (their names start with _ga) and records things like the pages you view, the links you click, roughly where you are (city or region), your device and browser, and how you found the site. It never sees what you type into the form. I use it only to improve this site, never for ads.</p><p>Don’t want to be counted? Block cookies for this site in your browser, use a content blocker, or install Google’s <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">opt-out add-on<span class="visually-hidden"> (opens in a new tab)</span></a>. The site works the same either way.</p>'),
     ('used', 'How I use it', '<p>To reply to you, understand your project and send you a price. If you become a client, also to run the project, send invoices and keep the records the law asks a business to keep.</p><p>I don’t sell your details. I don’t share them for anyone’s marketing, and I won’t add you to a mailing list.</p>'),
-    ('shared', 'Who else handles it', '<p>A few services keep this site and my email running. Each one only gets what it needs to do its job:</p><ul><li><strong>Web3Forms</strong> delivers the form to my inbox.</li><li><strong>Cloudflare</strong> runs the domain.</li><li><strong>Google Workspace</strong> handles my email.</li><li><strong>GitHub</strong> hosts the site. Like most hosts, it keeps short technical logs, such as IP addresses, to keep the service secure.</li></ul><p>Each of these companies has its own privacy policy. If a team member or contractor helps on your project, they see only what the project needs and must keep it private. I’ll also share information if the law requires it, or to protect my rights or someone’s safety.</p>'),
+    ('shared', 'Who else handles it', '<p>A few services keep this site and my email running. Each one only gets what it needs to do its job:</p><ul><li><strong>Web3Forms</strong> delivers the form to my inbox.</li><li><strong>Cloudflare</strong> runs the domain.</li><li><strong>Google Workspace</strong> handles my email.</li><li><strong>Google Analytics</strong> counts visits to this site, as described above.</li><li><strong>GitHub</strong> hosts the site. Like most hosts, it keeps short technical logs, such as IP addresses, to keep the service secure.</li></ul><p>Each of these companies has its own privacy policy. If a team member or contractor helps on your project, they see only what the project needs and must keep it private. I’ll also share information if the law requires it, or to protect my rights or someone’s safety.</p>'),
     ('kept', 'How long I keep it', '<p>If your project doesn’t go ahead, I delete your form answers within 12 months. If you become a client, I keep project emails and invoices as long as tax and business records require, usually up to seven years. Anything I don’t need to keep, I’ll delete when you ask.</p>'),
     ('safe', 'Keeping it safe', '<p>My accounts use strong passwords and two-step login, and this whole site runs over a secure connection (HTTPS). Even so, no website, form or email is ever completely secure, and I can’t promise it will be.</p><p class="pv-warn"><strong>Please don’t send passwords, card or bank numbers, Social Security numbers or health information through the form or by email.</strong> If your project needs a login, I’ll set up a safer way to share it.</p>'),
     ('choices', 'Your choices', f'<p>You can ask to see what I have about you, correct it or delete it. {Mail_me}. I’ll answer within 30 days, and asking won’t change how I treat you.</p>'),
@@ -348,14 +348,14 @@ PRIVACY = [
     ('links', 'Other websites', '<p>The Work page links to sites I’ve built for clients, and some pages link to other services. Those sites belong to someone else and have their own privacy policies. This page covers straywolftech.com only. It doesn’t cover the sites I build for clients; each client is responsible for their own site’s privacy policy.</p>'),
     ('changes', 'Changes', f'<p>If this page changes, the date below changes too. Last updated {LEGAL_UPDATED}.</p>'),
 ]
-PRIVACY_SUMMARY = [('cookie', 'No cookies, ads or tracking', 'Nothing follows you around after you leave.'),
-                   ('lock', 'Only what you send', 'Used to reply and plan your project. Never sold.'),
+PRIVACY_SUMMARY = [('cookie', 'No ads, nothing sold', 'Google Analytics counts visits. That’s all it’s used for.'),
+                   ('lock', 'Your answers stay private', 'Used to reply and plan your project. Never sold.'),
                    ('trash', 'Deleted when you ask', 'Ask once and anything I don’t have to keep is gone.')]
 
-privacy_main = page_head('Privacy, in <em>plain English.</em>', 'The short version: this site only collects what you send, and only uses it to reply to you and plan your project.', cls=' page-head-privacy') \
+privacy_main = page_head('Privacy, in <em>plain English.</em>', 'The short version: this site counts visits with Google Analytics. Beyond that, it only collects what you send, and only uses it to reply to you and plan your project.', cls=' page-head-privacy') \
     + legal_page(PRIVACY, PRIVACY_SUMMARY, 'Privacy details')
 
-page('privacy.html', 'Privacy policy | Stray Wolf Technology', 'What this website collects, who handles it, how long it’s kept and how to have it deleted. No cookies, ads or tracking.', privacy_main)
+page('privacy.html', 'Privacy policy | Stray Wolf Technology', 'What this website collects, who handles it, how long it’s kept and how to have it deleted. No ads, and nothing sold.', privacy_main)
 
 
 # ---- Terms

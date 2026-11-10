@@ -39,7 +39,7 @@ SITES = [
     },
     {
         "name": "Friends of The Colony Public Library",
-        "about": "A redesign concept for the library's nonprofit friends group in The Colony, Texas, built as a volunteer.",
+        "about": "A redesign concept for the library’s nonprofit friends group in The Colony, Texas, built as a volunteer.",
         "link": "https://fotcpl.org/",
         "image": "fotcpl",
         "tag": "Volunteer concept, not the official site",
