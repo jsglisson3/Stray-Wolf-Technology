@@ -1,6 +1,6 @@
 # Pick up here (Stray Wolf Technology)
 
-Last updated November 9, 2026, after the V19 pre-launch pass (see V19 at the bottom). Earlier: the V12 round (V11’s "print plate" redesign of the whole site, then a much calmer hero and three new pages). This repository (`jsglisson3/Stray-Wolf-Technology`) replaces `jsglisson3/Firemark` for the new brand.
+Last updated November 9, 2026, after the V12 round (V11's "print plate" redesign of the whole site, then a much calmer hero and three new pages: Pricing, Care plan and Reviews). This repository (`jsglisson3/Stray-Wolf-Technology`) replaces `jsglisson3/Firemark` for the new brand.
 
 ## Where things stand
 
@@ -143,6 +143,16 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V20 (Nov 10 2026, ~00:30 UTC): numbers band cut
+- Jeremy: "simpler is better", "this seems too sales focused" about the 5 days / 1 price / 30 days / $0 band under the hero. Cut completely (markup, NUMBERS data, CSS, count-up script). The hero now runs straight into How it works.
+
+## V19 (Nov 9 2026, ~22:00 UTC): the horizon hero, deeper footer, mockup credit
+- Jeremy loved the footer scene ("i love this", "this kind of stuff is great") and asked for it in the header or hero. Three previews (Horizon / Night / Window, artifact E9dTp4c4owAbsovwiX71Ay); he picked **A, Horizon**.
+- Hero: a paper-cut desert along the bottom edge (`.hero-scene`, in flow, 12.5vw tall so it never crops): sand hills in --stone-3/-2/stone, the wolf standing on the near ridge in charcoal, cacti in --sage, a thin orange sun, the orange ground line. The wolf and cactus are `<use>`s of the footer defs. Markup in `hero()` of tools/build.py, CSS in the Hero block.
+- Footer scene: far flat-top mesas, a row of distant cacti at 22%, four rocks on the ground line.
+- Pricing mockup card + homepage FAQ now say the mockup is credited in full toward the final price (Jeremy: "make it clearer this will come off their final price").
+- Earlier the same hour: numbers band centred (was stuck left: `.numbers { margin: 0 }` beat `.wrap`), footer scene height 18.67vw / viewBox 1200x224 so the wolf and moon never crop on wide screens, "Us." phase in --dusk (#4A5F75). Jeremy's monitor is ultrawide: screenshot at 1840 too.
+
 ## V18 (Nov 9, 2026): the polish pass
 Jeremy (19:56): "do an entire site polish and make sure colors are nice, enhance font where you can, keep polishing up the footer"; "a ton of text, I want nice subtle minimal but impressive, more texture across the site and some colors, it looks very much out of the box templaty".
 - **Fewer words on the homepage:** hero lead is one line; the How section lead is two sentences; each You/Me/Us column has a two-word lead and three ticks; the five service lines are one short sentence each; the close line is one sentence. `PHASES`, `SERVICES`, `LEAD` and `close_section()` in tools/build.py, the leads in src/home.html.
@@ -159,13 +169,3 @@ Jeremy (19:56): "do an entire site polish and make sure colors are nice, enhance
 - **Wolf v6 (Jeremy, 20:58: "in the footer make it way less cartoony", "make it a cool looking wolf"):** the cartoon parts are gone (the fat sitting wolf, the orange sound arcs, the dust puffs, the mound, the moon craters, the chubby cacti). The wolf is now a realistic standing silhouette drawn from point lists smoothed into curves (generator in the session scratch folder, wolf/wolfgen*.py; the paths live in the footer defs of src/layout.html: `#wolf-level`, `#wolf-howl`, `#wolf-far-hind`, `#wolf-far-front`, `#wolf-run`, `#wolf-legs-1..4`). The howl is a quick cross-fade from the level-headed wolf to the one with its head thrown back (`.pose-level`/`.pose-howl`, with the howling one as the still pose for reduced motion); the moon glow swells with it; then the galloping wolf runs out in four frames. Slimmer saguaros, a plain moon. The homepage ridge shows the same standing wolf.
 - **Depth:** the stone facets drift a little with the scroll on the hero, page heads and close bands (`--py` set by site.js, off for reduced motion); the charcoal work band carries the footer's grain (`.ink-grain`) and a flame line along its bottom edge; the After launch plate on Pricing has faint facets.
 - VERSION '18'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll, form/menu/carousel tests pass.
-
-## V19 (Nov 9, 2026): the pre-launch pass (SEO, accessibility, performance, security)
-Jeremy asked for a full pre-launch optimization: fix, don't redesign. What changed:
-- **Accessibility:** the "First" and "Then" labels in Your part, then mine were below 4.5:1 on sand (4.0 and 3.4); they now use `--sage-ink` and `--accent-dark` (5.2 and 4.6). The footer scene has a small pause button (WCAG 2.2.2: anything moving longer than 5 seconds must be stoppable), hidden when motion is off; the scene also rests while it's off screen. The hero "Recently built" thumbnail now goes round once (about 10 s) and rests. The consent checkbox is 24px (target size). The phone menu now closes at 1024px, where the full menu takes over (it closed at 768px before).
-- **tools/a11y-check.js was half blind:** axe skipped every scroll-reveal block (still invisible when it ran) and couldn't read the background behind the paper grain and facets, so it never checked contrast on most text. It now shows the reveals and hides the decorative layers before checking. Run it the same way as before.
-- **SEO:** more descriptive titles (Work, Pricing, About, Reviews, Start, Privacy); the homepage description no longer says "One designer"; thanks.html no longer carries a canonical (it's noindex); the old-address redirects point their canonical at the clean URL; the web manifest description was stale and is rebuilt.
-- **Security:** a Content-Security-Policy meta tag on every page (only the site's own files load; the inline script is allowed by a hash that build.py works out). form-action is deliberately left out so the Web3Forms post and redirect can't be blocked.
-- **Performance:** 240px hero thumbnails (`<image>-desktop-240.webp`, about 75% smaller), the GLP logo as WebP (35 KB to 13 KB); unused files deleted (Instrument Serif fonts, glp-netsheet and fotcpl-join images, glp-logo.png).
-- **Polish:** the FAQ rule stays inside the column at wide screens (it ran edge to edge) and the doubled rule above the first question is gone; the footer's "terms ." gap is fixed; the howling wolf moved right (x 400 to 480) so it isn't cut off on phones.
-- VERSION '19'. Checks: axe (fixed checker) 0 on all 10 pages at 390 and 1440; no sideways scroll or console errors at 12 widths from 320 to 2560; keyboard pass with visible focus on every page; 35 interaction checks pass (menu, carousel, FAQ, footer pause, form validation and send, honeypot, redirects, reduced motion).

@@ -281,15 +281,6 @@ html:not(.js) .phase::before, .phase.is-in::before { transform: scaleX(1); }
 @media (max-width: 63.99em) { .phases { grid-template-columns: 1fr; gap: var(--s6); } .phase-lead { max-width: 36ch; } }
 
 /* ------------------------------------------------------------------ What I do: five services, one line each, ruled */
-/* the numbers band under the hero: four big figures, the units in sage */
-.numbers-band { border-bottom: var(--rule-soft); }
-.numbers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s5); margin: 0 auto; padding-block: clamp(1.75rem, 3.5vw, 3rem); }
-.num { display: grid; gap: 0.3rem; padding-left: var(--s4); border-left: 2px solid var(--line); }
-.num dt { display: flex; align-items: baseline; gap: 0.45rem; font-family: var(--display); font-weight: 600; letter-spacing: -0.04em; line-height: 0.9; }
-.num-n { font-size: clamp(2.5rem, 1.1rem + 3.4vw, 4.5rem); font-variant-numeric: tabular-nums; }
-.num-u { font-family: var(--text); font-weight: 600; font-size: var(--t-small); letter-spacing: 0; color: var(--sage); }
-.num dd { margin: 0; font-size: var(--t-small); color: var(--muted); }
-@media (max-width: 63.99em) { .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5) var(--s4); } }
 /* the services: five plates with a big icon each */
 .svc-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s5) var(--s4); }
 .svc { display: grid; gap: var(--s3); align-content: start; padding-top: var(--s4); border-top: var(--rule); }

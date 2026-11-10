@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '19.1'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '20'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -209,20 +209,6 @@ def services():
 
 # ---- Who you'll work with: the brand story beside the promises in numbers ------------------------
 STORY = 'A stray wolf doesn’t run with the pack. Neither should your website. I build sites that are bold, different and made around your business.'
-# The promises as four big figures, in a band under the hero (V18: the graphic that replaced a paragraph).
-NUMBERS = [('5', 'days', 'to a price in writing'),
-           ('1', 'price', 'for the whole site'),
-           ('30', 'days', 'from yes to launch'),
-           ('$0', 'a month', 'after launch')]
-
-
-def numbers_html():
-    items = ''.join(f'''
-        <div class="num" data-reveal><dt><span class="num-n" data-count="{n.lstrip('$')}" data-prefix="{'$' if n.startswith('$') else ''}">{n}</span><span class="num-u">{u}</span></dt><dd>{t}</dd></div>''' for n, u, t in NUMBERS)
-    return f'''    <section class="numbers-band" aria-label="The promises, in numbers">
-      <dl class="wrap numbers">{items}
-      </dl>
-    </section>'''
 
 
 # ---- The work: one clean picture of each site, in a browser frame -------------------------
@@ -456,7 +442,7 @@ def page(file, title, desc, main, current=None, body_class='inner', banner=True,
 
 # 1) Homepage
 home = (SRC / 'home.html').read_text(encoding='utf-8')
-home = (home.replace('{{HERO}}', hero()).replace('{{NUMBERS}}', numbers_html()).replace('{{SERVICES}}', services()).replace('{{CAROUSEL}}', carousel(SITES))
+home = (home.replace('{{HERO}}', hero()).replace('{{SERVICES}}', services()).replace('{{CAROUSEL}}', carousel(SITES))
         .replace('{{TIMELINE}}', phases()).replace('{{FAQ}}', faq_section())
         .replace('{{CLOSE}}', close_section()))
 page('index.html', 'Stray Wolf Technology | Bespoke, hand-built websites', HOME_DESC, home, current='index.html', body_class='home', ld=True)
@@ -469,7 +455,7 @@ mod.SITES = SITES
 mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
-for _n in ('icon', 'ARROW', 'faq_section', 'numbers_html', 'phases', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
+for _n in ('icon', 'ARROW', 'faq_section', 'phases', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
            'STARTER_FROM', 'LARGER_FROM', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM', 'MOCKUP_FROM', 'MOCKUP_TO', 'REVIEWS'):
     setattr(mod, _n, globals()[_n])
 mod.read = read

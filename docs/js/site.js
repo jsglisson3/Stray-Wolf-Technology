@@ -99,24 +99,6 @@
     drift();
   }
 
-  /* ---- The numbers band: each figure counts up from zero the first time it is seen ---- */
-  const counters = document.querySelectorAll('.num-n[data-count]');
-  if (counters.length && !reduce.matches && 'IntersectionObserver' in window) {
-    const cio = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        cio.unobserve(entry.target);
-        const el = entry.target, end = Number(el.dataset.count) || 0, prefix = el.dataset.prefix || '', t0 = performance.now(), dur = 900;
-        const step = (now) => {
-          const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-          el.textContent = prefix + Math.round(end * e);
-          if (p < 1) requestAnimationFrame(step); else el.textContent = prefix + end;
-        };
-        requestAnimationFrame(step);
-      }
-    }, { threshold: 0.5 });
-    counters.forEach((el) => cio.observe(el));
-  }
 
   /* ---- Groups reveal one after another (a short stagger) ---------------------------- */
   document.querySelectorAll('.phases, .faqs, .shows, .pledges, .pv-cards, .svc-list, .rates').forEach((group) => {

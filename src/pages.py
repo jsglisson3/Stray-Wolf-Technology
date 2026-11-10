@@ -4,7 +4,6 @@
    SITES, work_list(sites)   the Work showcase (src/sites.py)
    services()                the "What I do" tiles
    close_section(hid, line)  the closing band with one big line and the Start a project button
-   numbers_html()            the four numbers (5 days, 1 price, 30 days, $0 a month)
    icon(name), ARROW         an icon from src/partials/sprite.html
    photo_or_mark(dark), HEADSHOT, STORY
    read(name)                a partial from src/partials
