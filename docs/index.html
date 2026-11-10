@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=33">
+  <link rel="stylesheet" href="css/site.css?v=34">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
 {
@@ -247,19 +247,44 @@
           </div>
         </div>
       </div>
+      <!-- V34 (Jeremy: "some birds flying around", "some clouds as well", "subtle but cool"): soft clouds drift and two small flocks cross the sky. Decoration only. -->
+      <div class="hero-sky" aria-hidden="true">
+        <svg class="sky-cloud sky-cloud-1" viewBox="0 0 120 44" focusable="false"><g class="sky-cl-back" transform="translate(0 3.2)"><rect x="6" y="23" width="108" height="15" rx="7.5"/><circle cx="33" cy="23" r="13"/><circle cx="59" cy="17" r="17"/><circle cx="85" cy="24" r="11.5"/></g><g class="sky-cl"><rect x="6" y="23" width="108" height="15" rx="7.5"/><circle cx="33" cy="23" r="13"/><circle cx="59" cy="17" r="17"/><circle cx="85" cy="24" r="11.5"/></g></svg><svg class="sky-cloud sky-cloud-2" viewBox="0 0 120 44" focusable="false"><g class="sky-cl-back" transform="translate(0 3.2)"><rect x="6" y="23" width="108" height="15" rx="7.5"/><circle cx="33" cy="23" r="13"/><circle cx="59" cy="17" r="17"/><circle cx="85" cy="24" r="11.5"/></g><g class="sky-cl"><rect x="6" y="23" width="108" height="15" rx="7.5"/><circle cx="33" cy="23" r="13"/><circle cx="59" cy="17" r="17"/><circle cx="85" cy="24" r="11.5"/></g></svg><svg class="sky-cloud sky-cloud-3" viewBox="0 0 120 44" focusable="false"><g class="sky-cl-back" transform="translate(0 3.2)"><rect x="6" y="23" width="108" height="15" rx="7.5"/><circle cx="33" cy="23" r="13"/><circle cx="59" cy="17" r="17"/><circle cx="85" cy="24" r="11.5"/></g><g class="sky-cl"><rect x="6" y="23" width="108" height="15" rx="7.5"/><circle cx="33" cy="23" r="13"/><circle cx="59" cy="17" r="17"/><circle cx="85" cy="24" r="11.5"/></g></svg>
+        <div class="sky-flock sky-flock-1"><svg class="sky-bird sky-bird-1" viewBox="0 0 24 12" focusable="false"><path d="M1.5 7 Q6.5 0.5 12 6.5 Q17.5 0.5 22.5 7"/></svg><svg class="sky-bird sky-bird-2" viewBox="0 0 24 12" focusable="false"><path d="M1.5 7 Q6.5 0.5 12 6.5 Q17.5 0.5 22.5 7"/></svg><svg class="sky-bird sky-bird-3" viewBox="0 0 24 12" focusable="false"><path d="M1.5 7 Q6.5 0.5 12 6.5 Q17.5 0.5 22.5 7"/></svg><svg class="sky-bird sky-bird-4" viewBox="0 0 24 12" focusable="false"><path d="M1.5 7 Q6.5 0.5 12 6.5 Q17.5 0.5 22.5 7"/></svg></div><div class="sky-flock sky-flock-2"><svg class="sky-bird sky-bird-1" viewBox="0 0 24 12" focusable="false"><path d="M1.5 7 Q6.5 0.5 12 6.5 Q17.5 0.5 22.5 7"/></svg><svg class="sky-bird sky-bird-2" viewBox="0 0 24 12" focusable="false"><path d="M1.5 7 Q6.5 0.5 12 6.5 Q17.5 0.5 22.5 7"/></svg></div>
+      </div>
       <svg class="hero-scene" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
-        <defs><radialGradient id="hs-glow"><stop offset=".4" stop-color="#E0763A" stop-opacity=".22"/><stop offset=".6" stop-color="#E0763A" stop-opacity=".08"/><stop offset="1" stop-color="#E0763A" stop-opacity="0"/></radialGradient></defs>
+        <defs><radialGradient id="hs-glow"><stop offset=".4" stop-color="#E0763A" stop-opacity=".22"/><stop offset=".6" stop-color="#E0763A" stop-opacity=".08"/><stop offset="1" stop-color="#E0763A" stop-opacity="0"/></radialGradient>
+          <clipPath id="hs-pool-clip"><ellipse cx="536" cy="134.4" rx="74" ry="4.9"/></clipPath>
+          <!-- V34: the head going down to drink, three steps from #wolf-level (generated; see PICKUP.md V34) -->
+          <g id="hs-dip-1"><path d="M-10.0 -104.0 C-16.7 -101.2 -30.7 -101.8 -40.0 -101.0 C-49.3 -100.2 -58.7 -100.3 -66.0 -99.0 C-73.3 -97.7 -78.7 -95.5 -84.0 -93.0 C-89.3 -90.5 -93.7 -89.2 -98.0 -84.0 C-102.3 -78.8 -107.7 -69.3 -110.0 -62.0 C-112.3 -54.7 -112.7 -46.7 -112.0 -40.0 C-111.3 -33.3 -106.0 -22.0 -106.0 -22.0 C-106.0 -22.0 -100.3 -32.0 -98.0 -38.0 C-95.7 -44.0 -94.0 -52.3 -92.0 -58.0 C-90.0 -63.7 -86.0 -72.0 -86.0 -72.0 C-86.0 -72.0 -90.3 -63.7 -92.0 -58.0 C-93.7 -52.3 -96.3 -44.7 -96.0 -38.0 C-95.7 -31.3 -91.3 -24.0 -90.0 -18.0 C-88.7 -12.0 -88.0 -2.0 -88.0 -2.0 C-88.0 -2.0 -72.0 0.0 -72.0 0.0 C-72.0 0.0 -74.3 -10.3 -76.0 -16.0 C-77.7 -21.7 -83.3 -29.0 -82.0 -34.0 C-80.7 -39.0 -72.0 -42.7 -68.0 -46.0 C-64.0 -49.3 -62.0 -51.7 -58.0 -54.0 C-54.0 -56.3 -51.7 -58.7 -44.0 -60.0 C-36.3 -61.3 -22.0 -62.3 -12.0 -62.0 C-2.0 -61.7 11.3 -61.7 16.0 -58.0 C20.7 -54.3 16.0 -46.7 16.0 -40.0 C16.0 -33.3 16.0 -24.3 16.0 -18.0 C16.0 -11.7 16.0 -2.0 16.0 -2.0 C16.0 -2.0 30.0 0.0 30.0 0.0 C30.0 0.0 29.5 -12.7 30.0 -20.0 C30.5 -27.3 32.0 -36.7 33.0 -44.0 C34.0 -51.3 34.2 -57.7 36.0 -64.0 C37.8 -70.3 42.0 -76.0 44.0 -82.0 C53.7 -87.1 64.3 -87.8 75.4 -92.5 C79.5 -92.5 84.1 -90.1 89.0 -89.2 C93.9 -88.3 100.1 -87.2 105.0 -87.4 C109.9 -87.5 118.1 -90.4 118.1 -90.4 C118.1 -90.4 111.1 -99.6 106.8 -103.4 C102.6 -107.2 96.9 -110.2 92.7 -113.0 C88.5 -115.7 84.6 -118.0 82.0 -119.7 C79.3 -121.4 77.0 -119.1 76.6 -123.0 C76.2 -126.9 79.4 -142.9 79.4 -142.9 C79.4 -142.9 69.1 -129.0 64.9 -125.9 C60.8 -122.7 58.7 -125.6 54.3 -124.3 C42.7 -121.5 20.8 -114.6 -10.0 -104.0 Z"/><g transform="translate(86.3 -107.8)"><g class="wolf-eye"><circle r="3.2"/><circle class="wolf-glint" cx="1.1" cy="-1.1" r="1.05"/></g></g></g>
+          <g id="hs-dip-2"><path d="M-10.0 -104.0 C-16.7 -101.2 -30.7 -101.8 -40.0 -101.0 C-49.3 -100.2 -58.7 -100.3 -66.0 -99.0 C-73.3 -97.7 -78.7 -95.5 -84.0 -93.0 C-89.3 -90.5 -93.7 -89.2 -98.0 -84.0 C-102.3 -78.8 -107.7 -69.3 -110.0 -62.0 C-112.3 -54.7 -112.7 -46.7 -112.0 -40.0 C-111.3 -33.3 -106.0 -22.0 -106.0 -22.0 C-106.0 -22.0 -100.3 -32.0 -98.0 -38.0 C-95.7 -44.0 -94.0 -52.3 -92.0 -58.0 C-90.0 -63.7 -86.0 -72.0 -86.0 -72.0 C-86.0 -72.0 -90.3 -63.7 -92.0 -58.0 C-93.7 -52.3 -96.3 -44.7 -96.0 -38.0 C-95.7 -31.3 -91.3 -24.0 -90.0 -18.0 C-88.7 -12.0 -88.0 -2.0 -88.0 -2.0 C-88.0 -2.0 -72.0 0.0 -72.0 0.0 C-72.0 0.0 -74.3 -10.3 -76.0 -16.0 C-77.7 -21.7 -83.3 -29.0 -82.0 -34.0 C-80.7 -39.0 -72.0 -42.7 -68.0 -46.0 C-64.0 -49.3 -62.0 -51.7 -58.0 -54.0 C-54.0 -56.3 -51.7 -58.7 -44.0 -60.0 C-36.3 -61.3 -22.0 -62.3 -12.0 -62.0 C-2.0 -61.7 11.3 -61.7 16.0 -58.0 C20.7 -54.3 16.0 -46.7 16.0 -40.0 C16.0 -33.3 16.0 -24.3 16.0 -18.0 C16.0 -11.7 16.0 -2.0 16.0 -2.0 C16.0 -2.0 30.0 0.0 30.0 0.0 C30.0 0.0 29.5 -12.7 30.0 -20.0 C30.5 -27.3 32.0 -36.7 33.0 -44.0 C34.0 -51.3 34.2 -57.7 36.0 -64.0 C37.8 -70.3 42.0 -76.0 44.0 -82.0 C53.4 -74.4 66.4 -64.5 79.9 -60.3 C83.9 -59.4 87.8 -55.9 92.3 -53.9 C96.9 -51.9 102.7 -49.4 107.5 -48.4 C112.3 -47.4 120.9 -48.2 120.9 -48.2 C120.9 -48.2 116.2 -58.8 113.0 -63.5 C109.8 -68.2 104.9 -72.5 101.5 -76.2 C98.1 -79.8 94.9 -83.0 92.7 -85.2 C90.5 -87.5 87.7 -85.9 88.3 -89.7 C88.8 -93.6 95.6 -108.4 95.6 -108.4 C95.6 -108.4 82.4 -97.3 77.6 -95.2 C72.8 -93.2 71.5 -96.5 66.9 -96.2 C58.6 -112.7 29.7 -113.3 -10.0 -104.0 Z"/><g transform="translate(94.1 -72.7)"><g class="wolf-eye"><circle r="3.2"/><circle class="wolf-glint" cx="1.1" cy="-1.1" r="1.05"/></g></g></g>
+          <g id="hs-dip-3"><path d="M-10.0 -104.0 C-16.7 -101.2 -30.7 -101.8 -40.0 -101.0 C-49.3 -100.2 -58.7 -100.3 -66.0 -99.0 C-73.3 -97.7 -78.7 -95.5 -84.0 -93.0 C-89.3 -90.5 -93.7 -89.2 -98.0 -84.0 C-102.3 -78.8 -107.7 -69.3 -110.0 -62.0 C-112.3 -54.7 -112.7 -46.7 -112.0 -40.0 C-111.3 -33.3 -106.0 -22.0 -106.0 -22.0 C-106.0 -22.0 -100.3 -32.0 -98.0 -38.0 C-95.7 -44.0 -94.0 -52.3 -92.0 -58.0 C-90.0 -63.7 -86.0 -72.0 -86.0 -72.0 C-86.0 -72.0 -90.3 -63.7 -92.0 -58.0 C-93.7 -52.3 -96.3 -44.7 -96.0 -38.0 C-95.7 -31.3 -91.3 -24.0 -90.0 -18.0 C-88.7 -12.0 -88.0 -2.0 -88.0 -2.0 C-88.0 -2.0 -72.0 0.0 -72.0 0.0 C-72.0 0.0 -74.3 -10.3 -76.0 -16.0 C-77.7 -21.7 -83.3 -29.0 -82.0 -34.0 C-80.7 -39.0 -72.0 -42.7 -68.0 -46.0 C-64.0 -49.3 -62.0 -51.7 -58.0 -54.0 C-54.0 -56.3 -51.7 -58.7 -44.0 -60.0 C-36.3 -61.3 -22.0 -62.3 -12.0 -62.0 C-2.0 -61.7 11.3 -61.7 16.0 -58.0 C20.7 -54.3 16.0 -46.7 16.0 -40.0 C16.0 -33.3 16.0 -24.3 16.0 -18.0 C16.0 -11.7 16.0 -2.0 16.0 -2.0 C16.0 -2.0 30.0 0.0 30.0 0.0 C30.0 0.0 29.5 -12.7 30.0 -20.0 C30.5 -27.3 32.0 -36.7 33.0 -44.0 C34.0 -51.3 34.2 -57.7 36.0 -64.0 C44.0 -48.0 57.8 -32.8 72.5 -24.0 C76.2 -22.2 79.2 -18.0 83.3 -15.0 C87.3 -12.0 92.4 -8.3 96.8 -6.2 C101.2 -4.2 109.8 -3.1 109.8 -3.1 C109.8 -3.1 107.6 -14.5 105.6 -19.8 C103.5 -25.1 99.7 -30.3 97.2 -34.7 C94.6 -39.0 92.2 -42.7 90.5 -45.4 C88.9 -48.1 85.8 -47.2 87.2 -50.8 C88.6 -54.5 98.5 -67.4 98.5 -67.4 C98.5 -67.4 83.1 -59.5 78.0 -58.5 C72.9 -57.6 72.3 -61.1 67.8 -61.9 C70.8 -89.9 38.0 -112.0 -10.0 -104.0 Z"/><g transform="translate(89.1 -32.9)"><g class="wolf-eye"><circle r="3.2"/><circle class="wolf-glint" cx="1.1" cy="-1.1" r="1.05"/></g></g></g>
+          <!-- V34: ribs, spines and blooms, drawn over #cactus -->
+          <g id="hs-cactus-detail"><path class="hs-rib" d="M-2.5 -4 V-123 M2.5 -4 V-123 M-37 -60 V-99 M-28 -53 H-10 M34 -76 V-105 M10 -71 H24"/><path class="hs-spine" d="M-7 -12 l-4.5 -2.6 M-7 -22 l-4.5 -2.6 M-7 -32 l-4.5 -2.6 M-7 -42 l-4.5 -2.6 M-7 -52 l-4.5 -2.6 M-7 -62 l-4.5 -2.6 M-7 -72 l-4.5 -2.6 M-7 -82 l-4.5 -2.6 M-7 -92 l-4.5 -2.6 M-7 -102 l-4.5 -2.6 M-7 -112 l-4.5 -2.6 M7 -17 l4.5 -2.6 M7 -27 l4.5 -2.6 M7 -37 l4.5 -2.6 M7 -47 l4.5 -2.6 M7 -57 l4.5 -2.6 M7 -67 l4.5 -2.6 M7 -77 l4.5 -2.6 M7 -87 l4.5 -2.6 M7 -97 l4.5 -2.6 M7 -107 l4.5 -2.6 M7 -117 l4.5 -2.6 M-44 -64 l-4.5 -2.6 M-44 -74 l-4.5 -2.6 M-44 -84 l-4.5 -2.6 M-44 -94 l-4.5 -2.6 M-30 -70 l4 -2.6 M-30 -81 l4 -2.6 M-30 -92 l4 -2.6 M-36 -46 l-1.5 4.5 M-22 -46 l0 4.5 M-41 -101 l-3.6 -3.4 M40 -82 l4.5 -2.6 M40 -91 l4.5 -2.6 M40 -100 l4.5 -2.6 M28 -86 l-4 -2.6 M28 -95 l-4 -2.6 M30 -64 l1.5 4.5 M16 -64 l0 4.5 M38 -107 l3.6 -3.4"/><circle class="hs-bloom" cx="-4.2" cy="-130.5" r="3.1"/><circle class="hs-bloom" cx="4.4" cy="-131" r="2.8"/><circle class="hs-bud" cx="0.2" cy="-134.2" r="3"/><circle class="hs-fruit" cx="-6.5" cy="-122" r="1.7"/><circle class="hs-bloom" cx="-40" cy="-104.5" r="2.6"/><circle class="hs-bud" cx="-35" cy="-106.4" r="2.5"/><circle class="hs-bud" cx="31.6" cy="-111.6" r="2.5"/><circle class="hs-bloom" cx="36.8" cy="-110.6" r="2.6"/><circle class="hs-fruit" cx="39.5" cy="-99" r="1.6"/></g>
+        </defs>
         <circle cx="980" cy="70" r="66" fill="url(#hs-glow)"/>
         <circle cx="980" cy="70" r="28" class="hs-sun"/>
         <path class="hs-far" d="M0 150 V92 L90 84 L180 90 L260 76 L330 80 L420 70 L520 84 L600 72 L700 80 L800 66 L900 78 L1000 70 L1100 82 L1200 74 V150Z"/>
-        <g transform="translate(250 112) scale(0.2)" class="hs-cactus-far"><use href="#cactus"/></g>
+        <g transform="translate(250 112) scale(0.2)" class="hs-cactus-far"><use href="#cactus"/><use href="#hs-cactus-detail"/></g>
         <path class="hs-mid" d="M0 150 V116 L120 106 L240 118 L380 102 L500 114 L620 104 L760 118 L880 108 L1020 120 L1200 110 V150Z"/>
-        <g transform="translate(760 130) scale(0.3)" class="hs-cactus"><use href="#cactus"/></g>
-        <g transform="translate(900 128) scale(0.42)" class="hs-cactus"><use href="#cactus"/></g>
-        <g transform="translate(1110 132) scale(0.26)" class="hs-cactus"><use href="#cactus"/></g>
-        <path class="hs-near" d="M0 150 V134 L160 128 L320 136 L480 126 L640 134 L800 128 L960 138 L1120 130 L1200 134 V150Z"/>
-        <g transform="translate(440 130) scale(0.42)" class="hs-wolf">
-          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use class="hs-level" href="#wolf-level"/><use class="hs-howl" href="#wolf-howl"/></g>
+        <g transform="translate(760 130) scale(0.3)" class="hs-cactus"><use href="#cactus"/><use href="#hs-cactus-detail"/></g>
+        <g transform="translate(900 128) scale(0.42)" class="hs-cactus"><use href="#cactus"/><use href="#hs-cactus-detail"/></g>
+        <g transform="translate(1110 132) scale(0.26)" class="hs-cactus"><use href="#cactus"/><use href="#hs-cactus-detail"/></g>
+        <!-- V34: the near ground is level from 392 to 622, where the wolf stands and the pool lies -->
+        <path class="hs-near" d="M0 150 V134 L160 128 L320 136 L392 128.5 L622 128.5 L680 133 L800 128 L960 138 L1120 130 L1200 134 V150Z"/>
+        <!-- V34 (Jeremy: "walk up on some water and drink a little bit then howl, like an oasis in the desert"): the pool, its reeds, and the rings the wolf makes -->
+        <g class="hs-oasis">
+          <ellipse cx="536" cy="134.9" rx="79" ry="6.2" class="hs-wet"/>
+          <ellipse cx="536" cy="134.4" rx="74" ry="4.9" class="hs-water"/>
+          <g clip-path="url(#hs-pool-clip)"><ellipse cx="554" cy="132.2" rx="46" ry="1.1" class="hs-shine"/><ellipse cx="522" cy="138.3" rx="58" ry="1.7" class="hs-deep"/>
+            <ellipse cx="489" cy="133" rx="11" ry="2" class="hs-rip hs-rip-1"/><ellipse cx="489" cy="133" rx="11" ry="2" class="hs-rip hs-rip-2"/></g>
+          <path class="hs-palm-trunk" d="M627.6 130 Q628.6 118 632.4 106 L634.6 106.6 Q631.4 118.4 630.8 130 Z"/>
+          <path class="hs-palm" d="M633.6 106.4 Q643 97.5 654 103.4 Q643.5 101.6 633.6 106.4 Z M633.6 106.4 Q645 104 650.5 113.6 Q643 107.4 633.6 106.4 Z M633.6 106.4 Q637 95 647.4 93 Q639.6 98.4 633.6 106.4 Z M633.6 106.4 Q624.4 97.5 613.4 103.4 Q623.8 101.6 633.6 106.4 Z M633.6 106.4 Q622.4 104 616.8 113.6 Q624.4 107.4 633.6 106.4 Z M633.6 106.4 Q630.4 95 620 93 Q627.8 98.4 633.6 106.4 Z"/>
+          <path class="hs-reed" d="M603.5 134.4 q-0.6 -7 -2.6 -12 M605.6 134.6 q0.2 -9 1 -15.5 M608 134.6 q1.2 -6 3.8 -10 M610.4 134.8 q2 -4 5.6 -6.4 M601.4 134.4 q-2.4 -4 -5.2 -6 M546 130.4 q-0.4 -3 -2 -5 M548 130.4 q0 -4 0.6 -6.4 M550 130.4 q1 -3 3 -4.6"/>
+          <rect class="hs-cattail" x="605.7" y="115.6" width="1.7" height="4.6" rx="0.85"/><rect class="hs-cattail" x="600.1" y="119.2" width="1.6" height="4" rx="0.8" transform="rotate(-12 600.9 121.2)"/>
+        </g>
+        <g transform="translate(440 132) scale(0.42)" class="hs-wolf">
+          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use class="hs-level" href="#wolf-level"/><use class="hs-d1" href="#hs-dip-1"/><use class="hs-d2" href="#hs-dip-2"/><use class="hs-d3" href="#hs-dip-3"/><use class="hs-howl" href="#wolf-howl"/></g>
           <g class="hs-run"><g class="run-body"><use href="#wolf-run"/><use class="gait-1" href="#wolf-legs-1"/><use class="gait-2" href="#wolf-legs-2"/><use class="gait-3" href="#wolf-legs-3"/><use class="gait-4" href="#wolf-legs-4"/></g></g>
         </g>
         <path d="M0 150 H1200" class="hs-line"/>
@@ -300,32 +325,40 @@
           <li class="phase phase-2">
             <i class="phase-pulse" aria-hidden="true"></i>
             <div class="phase-scene" aria-hidden="true"><svg class="hw hw2" viewBox="0 0 400 240" focusable="false">
-    <defs><clipPath id="hw2-clip"><rect x="88" y="27" width="200" height="14" rx="7"/></clipPath></defs>
+    <defs><clipPath id="hw2-clip"><rect x="54" y="22" width="150" height="12" rx="6"/></clipPath></defs>
     <g class="hw-stage">
-      <rect x="39" y="26" width="328" height="196" rx="6" class="hw-f-shadow"/>
-      <rect x="36" y="22" width="328" height="196" rx="6" class="hw-f-white hw-s-ink"/>
-      <path d="M36 46 H364" class="hw-s-line"/>
-      <circle cx="50" cy="34" r="3" class="hw-f-line-2"/><circle cx="60" cy="34" r="3" class="hw-f-line-2"/><circle cx="70" cy="34" r="3" class="hw-f-line-2"/>
-      <rect x="88" y="27" width="200" height="14" rx="7" class="hw-f-stone"/>
-      <g class="hw-ghost"><rect x="50" y="86" width="132" height="11"/><rect x="50" y="103" width="98" height="11"/><rect x="206" y="78" width="144" height="88"/>
-        <rect x="50" y="176" width="94" height="30"/><rect x="153" y="176" width="94" height="30"/><rect x="256" y="176" width="94" height="30"/></g>
-      <g clip-path="url(#hw2-clip)"><text class="hw-url" x="106" y="37.4">yourbusiness.com</text>
-        <g class="hw2-type"><rect x="103" y="27" width="130" height="14" class="hw-f-stone"/><g class="hw-a hw2-caret"><rect x="104" y="29.5" width="1.3" height="9" class="hw-f-ink"/></g></g></g>
-      <g class="hw-a hw2-dot"><circle cx="97" cy="34" r="3.2" class="hw-f-sage"/></g>
-      <g class="hw-a hw2-logo"><use href="#hw-mark" x="50" y="54" width="16" height="16"/></g>
-      <g class="hw-a hw2-nav"><rect x="262" y="60" width="22" height="4" rx="1" class="hw-f-line-2"/><rect x="290" y="60" width="22" height="4" rx="1" class="hw-f-line-2"/><rect x="318" y="60" width="30" height="4" rx="1" class="hw-f-line-2"/></g>
-      <g class="hw-a hw-l hw2-h1"><rect x="50" y="86" width="132" height="11" class="hw-f-ink"/></g>
-      <g class="hw-a hw-l hw2-h2"><rect x="50" y="103" width="98" height="11" class="hw-f-ink"/></g>
-      <g class="hw-a hw2-para"><rect x="50" y="124" width="120" height="4" rx="1" class="hw-f-line-2"/><rect x="50" y="133" width="96" height="4" rx="1" class="hw-f-line-2"/></g>
-      <g class="hw-a hw2-btn"><rect x="50" y="146" width="62" height="18" rx="2" class="hw-f-accent"/><rect x="61" y="153.5" width="40" height="3" rx="1" class="hw-f-paper"/></g>
-      <g class="hw-a hw2-hero"><use href="#hw-ph-a" x="206" y="78" width="144" height="88"/></g>
-      <g class="hw-a hw2-t1"><use href="#hw-ph-b" x="50" y="176" width="94" height="30"/></g>
-      <g class="hw-a hw2-t2"><use href="#hw-ph-c" x="153" y="176" width="94" height="30"/></g>
-      <g class="hw-a hw2-t3"><use href="#hw-ph-a" x="256" y="176" width="94" height="30"/></g>
-      <g class="hw-a hw2-seo"><rect x="235" y="192" width="146" height="46" rx="4" class="hw-f-shadow"/><rect x="232" y="188" width="146" height="46" rx="4" class="hw-f-white hw-s-ink"/>
-        <circle cx="248" cy="209" r="5.2" class="hw-s-ink2"/><path d="M252 213 l4.6 4.6" class="hw-s-ink2"/>
-        <rect x="264" y="198" width="78" height="6" rx="1" class="hw-f-dusk"/><rect x="264" y="209" width="56" height="4" rx="1" class="hw-f-sage"/><rect x="264" y="219" width="100" height="4" rx="1" class="hw-f-line-2"/>
-        <g class="hw-a hw2-seo-ok"><circle cx="374" cy="190" r="9" class="hw-f-accent"/><path d="M370.2 190.3 l2.7 2.7 l5.1 -5.6" class="hw-s-white"/></g></g>
+      <rect x="19" y="22" width="216" height="158" rx="6" class="hw-f-shadow"/>
+      <rect x="16" y="18" width="216" height="158" rx="6" class="hw-f-white hw-s-ink"/>
+      <path d="M16 38 H232" class="hw-s-line"/>
+      <circle cx="27" cy="28" r="2.4" class="hw-f-line-2"/><circle cx="35" cy="28" r="2.4" class="hw-f-line-2"/><circle cx="43" cy="28" r="2.4" class="hw-f-line-2"/>
+      <rect x="54" y="22" width="150" height="12" rx="6" class="hw-f-stone"/>
+      <g class="hw-ghost"><rect x="26" y="62" width="88" height="9"/><rect x="26" y="75" width="64" height="9"/><rect x="128" y="58" width="94" height="68"/>
+        <rect x="26" y="136" width="60" height="30"/><rect x="94" y="136" width="60" height="30"/><rect x="162" y="136" width="60" height="30"/></g>
+      <g clip-path="url(#hw2-clip)"><text class="hw-url hw-url-s" x="70" y="31.1">yourbusiness.com</text>
+        <g class="hw2-type"><rect x="67" y="22" width="110" height="12" class="hw-f-stone"/><g class="hw-a hw2-caret"><rect x="68" y="24" width="1.2" height="8" class="hw-f-ink"/></g></g></g>
+      <g class="hw-a hw2-dot"><circle cx="62" cy="28" r="2.7" class="hw-f-accent"/></g>
+      <g class="hw-a hw2-logo"><use href="#hw-mark" x="26" y="43" width="12" height="12"/></g>
+      <g class="hw-a hw2-nav"><rect x="158" y="47.5" width="16" height="3" rx="1" class="hw-f-line-2"/><rect x="179" y="47.5" width="16" height="3" rx="1" class="hw-f-line-2"/><rect x="200" y="47.5" width="22" height="3" rx="1" class="hw-f-line-2"/></g>
+      <g class="hw-a hw-l hw2-h1"><rect x="26" y="62" width="88" height="9" class="hw-f-ink"/></g>
+      <g class="hw-a hw-l hw2-h2"><rect x="26" y="75" width="64" height="9" class="hw-f-ink"/></g>
+      <g class="hw-a hw2-para"><rect x="26" y="92" width="80" height="3" rx="1" class="hw-f-line-2"/><rect x="26" y="99" width="62" height="3" rx="1" class="hw-f-line-2"/></g>
+      <g class="hw-a hw2-btn"><rect x="26" y="109" width="46" height="15" rx="2" class="hw-f-accent"/><rect x="34" y="115" width="30" height="3" rx="1" class="hw-f-paper"/></g>
+      <g class="hw-a hw2-hero"><use href="#hw-ph-a" x="128" y="58" width="94" height="68"/></g>
+      <g class="hw-a hw2-t1"><use href="#hw-ph-b" x="26" y="136" width="60" height="30"/></g>
+      <g class="hw-a hw2-t2"><use href="#hw-ph-c" x="94" y="136" width="60" height="30"/></g>
+      <g class="hw-a hw2-t3"><use href="#hw-ph-a" x="162" y="136" width="60" height="30"/></g>
+      <path class="hw-cable hw2-k1" pathLength="1" d="M232 56 C249 56 239 33 256 33"/><path class="hw-flow hw2-f1" pathLength="1" d="M232 56 C249 56 239 33 256 33"/><circle cx="232" cy="56" r="2.8" class="hw-f-ink"/><g class="hw-a hw2-p1"><rect x="255" y="29" width="8" height="8" rx="2" class="hw-f-ink"/></g><path class="hw-cable hw2-k2" pathLength="1" d="M232 84 C249 84 239 79 256 79"/><path class="hw-flow hw2-f2" pathLength="1" d="M232 84 C249 84 239 79 256 79"/><circle cx="232" cy="84" r="2.8" class="hw-f-ink"/><g class="hw-a hw2-p2"><rect x="255" y="75" width="8" height="8" rx="2" class="hw-f-ink"/></g><path class="hw-cable hw2-k3" pathLength="1" d="M232 112 C249 112 239 125 256 125"/><path class="hw-flow hw2-f3" pathLength="1" d="M232 112 C249 112 239 125 256 125"/><circle cx="232" cy="112" r="2.8" class="hw-f-ink"/><g class="hw-a hw2-p3"><rect x="255" y="121" width="8" height="8" rx="2" class="hw-f-ink"/></g><path class="hw-cable hw2-k4" pathLength="1" d="M232 140 C249 140 239 161 256 161"/><path class="hw-flow hw2-f4" pathLength="1" d="M232 140 C249 140 239 161 256 161"/><circle cx="232" cy="140" r="2.8" class="hw-f-ink"/><g class="hw-a hw2-p4"><rect x="255" y="157" width="8" height="8" rx="2" class="hw-f-ink"/></g>
+      <g class="hw-a hw2-c1"><rect x="264" y="21" width="124" height="30" rx="5" class="hw-f-shadow"/><rect x="262" y="18" width="124" height="30" rx="5" class="hw-f-white hw-s-ink"/><circle cx="279" cy="33" r="7.5" class="hw-i"/><ellipse cx="279" cy="33" rx="3.3" ry="7.5" class="hw-i"/><path d="M271.5 33 H286.5" class="hw-i"/><text class="hw-lbl" x="294" y="36.4">Domain</text></g><g class="hw-a hw2-ok1"><circle cx="372" cy="33" r="6.5" class="hw-f-accent"/><path d="M369.2 33.2 l2.0 2.0 l3.7 -4.1" class="hw-s-white"/></g>
+      <g class="hw-a hw2-c2"><rect x="264" y="57" width="124" height="50" rx="5" class="hw-f-shadow"/><rect x="262" y="54" width="124" height="50" rx="5" class="hw-f-white hw-s-ink"/><g transform="translate(281 84)"><g class="hw-a hw2-g1"><path d="M4.57 -6.32 L6.92 -7.89 L8.57 -6.06 L6.77 -3.88 L7.70 -1.24 L10.48 -0.69 L10.35 1.78 L7.53 2.04 L6.32 4.57 L7.89 6.92 L6.06 8.57 L3.88 6.77 L1.24 7.70 L0.69 10.48 L-1.78 10.35 L-2.04 7.53 L-4.57 6.32 L-6.92 7.89 L-8.57 6.06 L-6.77 3.88 L-7.70 1.24 L-10.48 0.69 L-10.35 -1.78 L-7.53 -2.04 L-6.32 -4.57 L-7.89 -6.92 L-6.06 -8.57 L-3.88 -6.77 L-1.24 -7.70 L-0.69 -10.48 L1.78 -10.35 L2.04 -7.53 Z M2.8 0 a2.8 2.8 0 1 0 -5.6 0 a2.8 2.8 0 1 0 5.6 0 Z" fill-rule="evenodd" class="hw-f-ink"/></g></g><g transform="translate(292.15 73.96)"><g class="hw-a hw2-g2"><path d="M-0.15 4.90 L-1.06 6.72 L-3.09 6.06 L-2.75 4.05 L-4.32 2.32 L-6.35 2.44 L-6.79 0.36 L-4.89 -0.36 L-4.16 -2.58 L-5.28 -4.28 L-3.70 -5.70 L-2.13 -4.41 L0.15 -4.90 L1.06 -6.72 L3.09 -6.06 L2.75 -4.05 L4.32 -2.32 L6.35 -2.44 L6.79 -0.36 L4.89 0.36 L4.16 2.58 L5.28 4.28 L3.70 5.70 L2.13 4.41 Z M1.9 0 a1.9 1.9 0 1 0 -3.8 0 a1.9 1.9 0 1 0 3.8 0 Z" fill-rule="evenodd" class="hw-f-accent"/></g></g><rect x="308" y="75" width="15" height="8" rx="4" class="hw-f-line-2"/><g class="hw-a hw2-tg1"><rect x="308" y="75" width="15" height="8" rx="4" class="hw-f-accent"/></g><g class="hw2-kn1"><circle cx="319" cy="79" r="2.8" class="hw-f-white"/></g><rect x="328" y="77" width="30" height="4" rx="1" class="hw-f-line-2"/><rect x="308" y="88" width="15" height="8" rx="4" class="hw-f-line-2"/><g class="hw-a hw2-tg2"><rect x="308" y="88" width="15" height="8" rx="4" class="hw-f-accent"/></g><g class="hw2-kn2"><circle cx="319" cy="92" r="2.8" class="hw-f-white"/></g><rect x="328" y="90" width="22" height="4" rx="1" class="hw-f-line-2"/><text class="hw-lbl" x="308" y="69">DNS</text></g><g class="hw-a hw2-ok2"><circle cx="372" cy="79" r="6.5" class="hw-f-accent"/><path d="M369.2 79.2 l2.0 2.0 l3.7 -4.1" class="hw-s-white"/></g>
+      <g class="hw-a hw2-c3"><rect x="264" y="113" width="124" height="30" rx="5" class="hw-f-shadow"/><rect x="262" y="110" width="124" height="30" rx="5" class="hw-f-white hw-s-ink"/><rect x="271" y="119" width="16" height="12" rx="1.5" class="hw-i"/><path d="M271.6 120 l7.4 6 l7.4 -6" class="hw-i"/><text class="hw-lbl" x="294" y="128.4">Email</text></g><g class="hw-a hw2-ok3"><circle cx="372" cy="125" r="6.5" class="hw-f-accent"/><path d="M369.2 125.2 l2.0 2.0 l3.7 -4.1" class="hw-s-white"/></g>
+      <g class="hw-a hw2-c4"><rect x="264" y="149" width="124" height="30" rx="5" class="hw-f-shadow"/><rect x="262" y="146" width="124" height="30" rx="5" class="hw-f-white hw-s-ink"/><rect x="271" y="153" width="16" height="7" rx="1.5" class="hw-i"/><rect x="271" y="162" width="16" height="7" rx="1.5" class="hw-i"/><circle cx="274.6" cy="156.5" r="1.2" class="hw-f-accent"/><circle cx="274.6" cy="165.5" r="1.2" class="hw-f-accent"/><text class="hw-lbl" x="294" y="164.4">Hosting</text></g><g class="hw-a hw2-ok4"><circle cx="372" cy="161" r="6.5" class="hw-f-accent"/><path d="M369.2 161.2 l2.0 2.0 l3.7 -4.1" class="hw-s-white"/></g>
+      <path class="hw-cable hw2-k5" pathLength="1" d="M124 176 V186"/><circle cx="124" cy="176" r="2.8" class="hw-f-ink"/>
+      <g class="hw-a hw2-p5"><rect x="120" y="184" width="8" height="8" rx="2" class="hw-f-ink"/></g>
+      <g class="hw-a hw2-seo"><rect x="19" y="194" width="370" height="36" rx="6" class="hw-f-shadow"/><rect x="16" y="190" width="370" height="36" rx="6" class="hw-f-white hw-s-ink"/>
+        <circle cx="35" cy="206.5" r="5.4" class="hw-s-ink2"/><path d="M39.2 210.7 l4.6 4.6" class="hw-s-ink2"/>
+        <rect x="56" y="198" width="68" height="20" rx="10" class="hw-f-paper hw-s-line"/><circle cx="68" cy="208" r="5.6" class="hw-ring"/><g class="hw-a hw2-s1"><circle cx="68" cy="208" r="6.2" class="hw-f-accent"/><path d="M65.4 208.2 l1.8 1.8 l3.5 -3.8" class="hw-s-white"/></g><text class="hw-chip" x="79" y="211.3">Google</text><rect x="131" y="198" width="56" height="20" rx="10" class="hw-f-paper hw-s-line"/><circle cx="143" cy="208" r="5.6" class="hw-ring"/><g class="hw-a hw2-s2"><circle cx="143" cy="208" r="6.2" class="hw-f-accent"/><path d="M140.4 208.2 l1.8 1.8 l3.5 -3.8" class="hw-s-white"/></g><text class="hw-chip" x="154" y="211.3">Bing</text><rect x="194" y="198" width="98" height="20" rx="10" class="hw-f-paper hw-s-line"/><circle cx="206" cy="208" r="5.6" class="hw-ring"/><g class="hw-a hw2-s3"><circle cx="206" cy="208" r="6.2" class="hw-f-accent"/><path d="M203.4 208.2 l1.8 1.8 l3.5 -3.8" class="hw-s-white"/></g><text class="hw-chip" x="217" y="211.3">DuckDuckGo</text>
+        <g class="hw-a hw2-more"><text class="hw-more" x="301" y="211.3">and more</text></g></g>
+      <g class="hw-a hw2-glow"><rect x="16" y="18" width="216" height="158" rx="6" class="hw-s-glow"/></g>
     </g>
   </svg></div>
             <p class="phase-k"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Then</p>
@@ -337,35 +370,48 @@
             <i class="phase-pulse" aria-hidden="true"></i>
             <div class="phase-scene" aria-hidden="true"><svg class="hw hw3" viewBox="0 0 400 240" focusable="false">
     <g class="hw-stage">
-      <g class="hw-a hw3-moon"><circle cx="366" cy="22" r="15" class="hw-f-accent-tint"/><circle cx="366" cy="22" r="8.5" class="hw-f-flame"/></g>
-      <g class="hw-a hw3-wolf"><g class="hw-wolf" transform="translate(324 40) scale(0.15)"><use href="#wolf-far-hind" opacity=".8"/><use href="#wolf-far-front" opacity=".8"/><use class="hw3-wl" href="#wolf-level"/><use class="hw3-wh" href="#wolf-howl"/></g></g>
-      <rect x="39" y="44" width="328" height="184" rx="6" class="hw-f-shadow"/>
-      <rect x="36" y="40" width="328" height="184" rx="6" class="hw-f-white hw-s-ink"/>
-      <path d="M36 64 H364" class="hw-s-line"/>
-      <circle cx="50" cy="52" r="3" class="hw-f-line-2"/><circle cx="60" cy="52" r="3" class="hw-f-line-2"/><circle cx="70" cy="52" r="3" class="hw-f-line-2"/>
-      <rect x="88" y="45" width="200" height="14" rx="7" class="hw-f-stone"/>
-      <g class="hw-ghost"><rect x="50" y="104" width="132" height="11"/><rect x="50" y="121" width="98" height="11"/><rect x="206" y="96" width="144" height="88"/>
-        <rect x="50" y="194" width="94" height="22"/><rect x="153" y="194" width="94" height="22"/><rect x="256" y="194" width="94" height="22"/></g>
-      <g class="hw3-site"><text class="hw-url" x="106" y="55.4">yourbusiness.com</text><circle cx="97" cy="52" r="3.2" class="hw-f-sage"/>
-        <g><use href="#hw-mark" x="50" y="72" width="16" height="16"/></g>
-      <g><rect x="262" y="78" width="22" height="4" rx="1" class="hw-f-line-2"/><rect x="290" y="78" width="22" height="4" rx="1" class="hw-f-line-2"/><rect x="318" y="78" width="30" height="4" rx="1" class="hw-f-line-2"/></g>
-      <g><rect x="50" y="104" width="132" height="11" class="hw-f-ink"/></g>
-      <g><rect x="50" y="121" width="98" height="11" class="hw-f-ink"/></g>
-      <g><rect x="50" y="142" width="120" height="4" rx="1" class="hw-f-line-2"/><rect x="50" y="151" width="96" height="4" rx="1" class="hw-f-line-2"/></g>
-      <g><rect x="50" y="164" width="62" height="18" rx="2" class="hw-f-accent"/><rect x="61" y="171.5" width="40" height="3" rx="1" class="hw-f-paper"/></g>
-      <g><use href="#hw-ph-a" x="206" y="96" width="144" height="88"/></g>
-      <g><use href="#hw-ph-b" x="50" y="194" width="94" height="22"/></g>
-      <g><use href="#hw-ph-c" x="153" y="194" width="94" height="22"/></g>
-      <g><use href="#hw-ph-a" x="256" y="194" width="94" height="22"/></g>
-        <g class="hw3-swap"><use href="#hw-ph-c" x="206" y="96" width="144" height="88"/></g></g>
-      <g class="hw-a hw3-tag-p"><rect x="44" y="24" width="78" height="22" rx="11" class="hw-f-ink-3"/><text class="hw-tag" x="83" y="38.8" text-anchor="middle">Preview</text></g>
-      <g class="hw-a hw3-tag-l"><rect x="44" y="24" width="64" height="22" rx="11" class="hw-f-good"/><g class="hw-a hw3-ring"><circle cx="59" cy="35" r="3.6" class="hw-s-paper"/></g><circle cx="59" cy="35" r="3.6" class="hw-f-paper"/><text class="hw-tag" x="82" y="38.8" text-anchor="middle">Live</text></g>
-      <g class="hw-a hw3-pin"><circle cx="322" cy="118" r="9.5" class="hw-f-dusk hw-s-white2"/><circle cx="322" cy="118" r="2.6" class="hw-f-paper"/></g>
-      <g class="hw-a hw3-pin-ok"><circle cx="322" cy="118" r="9.5" class="hw-f-sage hw-s-white2"/><path d="M318.2 118.3 l2.7 2.7 l5.1 -5.6" class="hw-s-white"/></g>
-      <g class="hw-a hw3-note"><rect x="229" y="136" width="104" height="34" rx="5" class="hw-f-shadow"/><rect x="226" y="132" width="104" height="34" rx="5" class="hw-f-white hw-s-dusk"/><rect x="236" y="142" width="72" height="5" rx="1" class="hw-f-ink-3"/><rect x="236" y="152" width="48" height="5" rx="1" class="hw-f-line-2"/></g>
-      <g class="hw-a hw3-yes"><g class="hw-a hw3-press"><rect x="261" y="206" width="116" height="30" rx="15" class="hw-f-shadow"/><rect x="258" y="202" width="116" height="30" rx="15" class="hw-f-ink"/><text class="hw-btn" x="316" y="221.2" text-anchor="middle">Looks good</text></g></g>
-      <g class="hw-a hw3-ripple"><circle cx="356" cy="223" r="9" class="hw-s-flame"/></g>
-      <g transform="translate(356 223)"><g class="hw3-cur"><path d="M0 0 L0 15 L4 11.5 L6.8 17.5 L9.2 16.4 L6.5 10.6 L11.5 10.6 Z" class="hw-f-ink hw-s-white1"/></g></g>
+      <g class="hw-a hw3-moon"><circle cx="278" cy="24" r="15" class="hw-f-accent-tint"/><g class="hw-a hw3-mring"><circle cx="278" cy="24" r="11" class="hw-s-flame"/></g><circle cx="278" cy="24" r="8.5" class="hw-f-flame"/></g>
+      <g class="hw-a hw3-wolf"><g class="hw-wolf" transform="translate(238 44) scale(0.18)"><use href="#wolf-far-hind" opacity=".8"/><use href="#wolf-far-front" opacity=".8"/><use class="hw3-wl" href="#wolf-level"/><use class="hw3-wh" href="#wolf-howl"/></g></g>
+      <rect x="23" y="48" width="272" height="162" rx="6" class="hw-f-shadow"/>
+      <rect x="20" y="44" width="272" height="162" rx="6" class="hw-f-white hw-s-ink"/>
+      <path d="M20 66 H292" class="hw-s-line"/>
+      <circle cx="33" cy="55" r="2.7" class="hw-f-line-2"/><circle cx="42" cy="55" r="2.7" class="hw-f-line-2"/><circle cx="51" cy="55" r="2.7" class="hw-f-line-2"/>
+      <rect x="64" y="49" width="170" height="12" rx="6" class="hw-f-stone"/>
+      <g class="hw-ghost"><rect x="32" y="92" width="104" height="10"/><rect x="32" y="106" width="76" height="10"/><rect x="158" y="88" width="122" height="72"/>
+        <rect x="32" y="170" width="76" height="26"/><rect x="118" y="170" width="76" height="26"/><rect x="204" y="170" width="76" height="26"/></g>
+      <g class="hw3-site"><text class="hw-url hw-url-s" x="81" y="58.1">yourbusiness.com</text><circle cx="72.5" cy="55" r="2.8" class="hw-f-line-2"/>
+        <use href="#hw-mark" x="32" y="72" width="13" height="13"/>
+        <rect x="214" y="77" width="16" height="3.5" rx="1" class="hw-f-line-2"/><rect x="235" y="77" width="16" height="3.5" rx="1" class="hw-f-line-2"/><rect x="256" y="77" width="24" height="3.5" rx="1" class="hw-f-line-2"/>
+        <rect x="32" y="92" width="104" height="10" class="hw-f-ink"/><rect x="32" y="106" width="76" height="10" class="hw-f-ink"/>
+        <rect x="32" y="124" width="92" height="3.5" rx="1" class="hw-f-line-2"/><rect x="32" y="131.5" width="72" height="3.5" rx="1" class="hw-f-line-2"/>
+        <rect x="32" y="143" width="52" height="16" rx="2" class="hw-f-accent"/><rect x="41" y="149.5" width="34" height="3" rx="1" class="hw-f-paper"/>
+        <use href="#hw-ph-a" x="158" y="88" width="122" height="72"/>
+        <use href="#hw-ph-b" x="32" y="170" width="76" height="26"/><use href="#hw-ph-c" x="118" y="170" width="76" height="26"/><use href="#hw-ph-a" x="204" y="170" width="76" height="26"/>
+        <g class="hw3-swap"><use href="#hw-ph-c" x="158" y="88" width="122" height="72"/></g></g>
+      <g class="hw-a hw3-live-dot"><circle cx="72.5" cy="55" r="2.8" class="hw-f-good"/></g>
+      <rect x="313" y="76" width="68" height="142" rx="9" class="hw-f-shadow"/>
+      <rect x="310" y="72" width="68" height="142" rx="9" class="hw-f-white hw-s-ink"/>
+      <rect x="335" y="77" width="18" height="3" rx="1.5" class="hw-f-line-2"/>
+      <g class="hw-ghost"><rect x="318" y="102" width="52" height="38"/><rect x="318" y="148" width="46" height="7"/><rect x="318" y="158" width="32" height="7"/></g>
+      <g class="hw3-phone"><use href="#hw-mark" x="318" y="86" width="10" height="10"/>
+        <rect x="358" y="88.5" width="12" height="2" rx="1" class="hw-f-line-2"/><rect x="358" y="92.5" width="12" height="2" rx="1" class="hw-f-line-2"/>
+        <use href="#hw-ph-a" x="318" y="102" width="52" height="38"/><g class="hw3-swap"><use href="#hw-ph-c" x="318" y="102" width="52" height="38"/></g>
+        <rect x="318" y="148" width="46" height="7" class="hw-f-ink"/><rect x="318" y="158" width="32" height="7" class="hw-f-ink"/>
+        <rect x="318" y="172" width="44" height="3" rx="1" class="hw-f-line-2"/><rect x="318" y="178.5" width="34" height="3" rx="1" class="hw-f-line-2"/>
+        <rect x="318" y="189" width="38" height="13" rx="2" class="hw-f-accent"/><rect x="325" y="194" width="24" height="3" rx="1" class="hw-f-paper"/></g>
+      <g class="hw-a hw3-glow1"><rect x="20" y="44" width="272" height="162" rx="6" class="hw-s-glow-g"/></g>
+      <g class="hw-a hw3-glow2"><rect x="310" y="72" width="68" height="142" rx="9" class="hw-s-glow-g"/></g>
+      <g class="hw-a hw3-tag-p"><rect x="28" y="20" width="120" height="22" rx="11" class="hw-f-ink-3"/>
+        <rect x="38.5" y="29.5" width="9" height="7.5" rx="1.4" class="hw-f-paper"/><path d="M40.6 29.5 v-2.2 a2.4 2.4 0 0 1 4.8 0 v2.2" class="hw-s-paper"/>
+        <text class="hw-tag" x="53" y="34.8">Private preview</text></g>
+      <g class="hw-a hw3-tag-l"><rect x="28" y="20" width="64" height="22" rx="11" class="hw-f-good"/><g class="hw-a hw3-ring"><circle cx="43" cy="31" r="3.6" class="hw-s-paper"/></g><circle cx="43" cy="31" r="3.6" class="hw-f-paper"/><text class="hw-tag" x="66" y="34.8" text-anchor="middle">Live</text></g>
+      <g class="hw-a hw3-pin"><circle cx="258" cy="104" r="9.5" class="hw-f-dusk hw-s-white2"/><circle cx="258" cy="104" r="2.6" class="hw-f-paper"/></g>
+      <g class="hw-a hw3-pin-ok"><circle cx="258" cy="104" r="9.5" class="hw-f-sage hw-s-white2"/><path d="M254.2 104.3 l2.7 2.7 l5.1 -5.6" class="hw-s-white"/></g>
+      <g class="hw-a hw3-note"><rect x="169" y="122" width="104" height="34" rx="5" class="hw-f-shadow"/><rect x="166" y="118" width="104" height="34" rx="5" class="hw-f-white hw-s-dusk"/><rect x="176" y="128" width="72" height="5" rx="1" class="hw-f-ink-3"/><rect x="176" y="138" width="48" height="5" rx="1" class="hw-f-line-2"/></g>
+      <g class="hw-a hw3-yes"><g class="hw-a hw3-press"><rect x="101" y="203" width="116" height="30" rx="15" class="hw-f-shadow"/><rect x="98" y="199" width="116" height="30" rx="15" class="hw-f-ink"/><text class="hw-btn" x="156" y="218.2" text-anchor="middle">Looks good</text></g></g>
+      <g class="hw-a hw3-ripple"><circle cx="196" cy="220" r="9" class="hw-s-flame"/></g>
+      <g transform="translate(92 62)"><g class="hw3-cf1"><circle cx="37.7" cy="0.3" r="2.1" class="hw-f-dusk"/><rect x="31.7" y="19.7" width="3" height="6" rx="0.8" transform="rotate(93 33.2 22.7)" class="hw-f-accent"/><rect x="5.8" y="18.0" width="3" height="6" rx="0.8" transform="rotate(78 7.3 21.0)" class="hw-f-good"/><circle cx="-3.3" cy="30.0" r="2.1" class="hw-f-flame"/><rect x="-19.4" y="19.1" width="3" height="6" rx="0.8" transform="rotate(0 -17.9 22.1)" class="hw-f-sage"/><rect x="-41.8" y="3.2" width="3" height="6" rx="0.8" transform="rotate(22 -40.3 6.2)" class="hw-f-dusk"/><circle cx="-30.9" cy="-10.1" r="2.0" class="hw-f-accent"/><rect x="-17.8" y="-20.4" width="3" height="6" rx="0.8" transform="rotate(99 -16.3 -17.4)" class="hw-f-good"/><rect x="-1.3" y="-33.2" width="3" height="6" rx="0.8" transform="rotate(162 0.2 -30.2)" class="hw-f-flame"/><circle cx="12.0" cy="-25.1" r="1.6" class="hw-f-sage"/><rect x="23.1" y="-16.1" width="3" height="6" rx="0.8" transform="rotate(33 24.6 -13.1)" class="hw-f-dusk"/></g></g><g transform="translate(216 96)"><g class="hw3-cf2"><circle cx="41.0" cy="0.8" r="1.8" class="hw-f-dusk"/><rect x="46.2" y="15.2" width="3" height="6" rx="0.8" transform="rotate(148 47.7 18.2)" class="hw-f-accent"/><rect x="13.0" y="19.9" width="3" height="6" rx="0.8" transform="rotate(113 14.5 22.9)" class="hw-f-good"/><circle cx="2.3" cy="26.6" r="1.7" class="hw-f-flame"/><rect x="-33.1" y="30.2" width="3" height="6" rx="0.8" transform="rotate(103 -31.6 33.2)" class="hw-f-sage"/><rect x="-51.7" y="15.7" width="3" height="6" rx="0.8" transform="rotate(115 -50.2 18.7)" class="hw-f-dusk"/><circle cx="-32.3" cy="-3.0" r="2.0" class="hw-f-accent"/><rect x="-34.1" y="-23.9" width="3" height="6" rx="0.8" transform="rotate(118 -32.6 -20.9)" class="hw-f-good"/><rect x="-24.3" y="-31.6" width="3" height="6" rx="0.8" transform="rotate(35 -22.8 -28.6)" class="hw-f-flame"/><circle cx="-3.2" cy="-30.5" r="1.5" class="hw-f-sage"/><rect x="13.1" y="-26.6" width="3" height="6" rx="0.8" transform="rotate(134 14.6 -23.6)" class="hw-f-dusk"/><rect x="45.2" y="-27.9" width="3" height="6" rx="0.8" transform="rotate(104 46.7 -24.9)" class="hw-f-accent"/></g></g><g transform="translate(340 96)"><g class="hw3-cf3"><circle cx="29.8" cy="4.0" r="1.9" class="hw-f-dusk"/><rect x="26.4" y="19.0" width="3" height="6" rx="0.8" transform="rotate(156 27.9 22.0)" class="hw-f-accent"/><rect x="4.8" y="23.0" width="3" height="6" rx="0.8" transform="rotate(18 6.3 26.0)" class="hw-f-good"/><circle cx="-12.0" cy="22.6" r="1.7" class="hw-f-flame"/><rect x="-35.1" y="12.6" width="3" height="6" rx="0.8" transform="rotate(87 -33.6 15.6)" class="hw-f-sage"/><rect x="-38.7" y="-2.8" width="3" height="6" rx="0.8" transform="rotate(0 -37.2 0.2)" class="hw-f-dusk"/><circle cx="-25.5" cy="-20.7" r="1.7" class="hw-f-accent"/><rect x="-9.0" y="-22.2" width="3" height="6" rx="0.8" transform="rotate(69 -7.5 -19.2)" class="hw-f-good"/><rect x="3.5" y="-26.1" width="3" height="6" rx="0.8" transform="rotate(21 5.0 -23.1)" class="hw-f-flame"/><circle cx="30.8" cy="-13.2" r="2.0" class="hw-f-sage"/></g></g>
+      <g transform="translate(196 220)"><g class="hw3-cur"><path d="M0 0 L0 15 L4 11.5 L6.8 17.5 L9.2 16.4 L6.5 10.6 L11.5 10.6 Z" class="hw-f-ink hw-s-white1"/></g></g>
     </g>
   </svg></div>
             <p class="phase-k"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Before launch</p>
@@ -613,7 +659,7 @@
     </div>
   </footer>
 
-  <script src="js/analytics.js?v=33" data-ga="G-K661V9VYG2" async></script>
-  <script src="js/site.js?v=33" defer></script>
+  <script src="js/analytics.js?v=34" data-ga="G-K661V9VYG2" async></script>
+  <script src="js/site.js?v=34" defer></script>
 </body>
 </html>

@@ -236,7 +236,7 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
   .hdr-moon i { animation: moonring 16s ease-out infinite; }
   .brand-eyes { animation: wolf-eyes 16s ease-in-out infinite; }
 }
-.scene-paused .site-header *, .scene-paused .site-header::after, .scene-paused .hdr-moon::before, .scene-paused .hero-scene * { animation-play-state: paused !important; }
+.scene-paused .site-header *, .scene-paused .site-header::after, .scene-paused .hdr-moon::before, .scene-paused .hero-scene *, .scene-paused .hero-sky * { animation-play-state: paused !important; }
 @keyframes hdr-twinkle { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 @keyframes hdr-shoot { 0%, 93% { opacity: 0; transform: translate(0, 0) rotate(var(--sa)); } 94% { opacity: 0.9; } 97.5%, 100% { opacity: 0; transform: translate(var(--sx), var(--sy)) rotate(var(--sa)); } }
 @keyframes hdr-ember { 0% { background-position: -30% 0; } 55%, 100% { background-position: 130% 0; } }
@@ -301,27 +301,75 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 .hero { border-bottom: var(--rule-soft); background: radial-gradient(70rem 30rem at 92% -12%, var(--haze) 0%, rgb(241 226 209 / 0) 62%); }
 .hero-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s5); row-gap: var(--s6); align-items: end; padding-block: clamp(3rem, 7vw, 6.5rem) clamp(1.5rem, 3vw, 3rem); }
 /* the horizon (V19): a paper-cut desert along the bottom edge; in flow, so the words always sit above it; 12.5vw keeps the drawing uncropped at every width */
-.hero-scene { position: relative; display: block; width: 100%; height: 12.5vw; min-height: 110px; max-height: 300px; }
+.hero { --hs-h: clamp(110px, 12.5vw, 300px); }
+.hero-scene { position: relative; z-index: 0; display: block; width: 100%; height: var(--hs-h); }
+.hero > .wrap { z-index: 2; }
 .hs-far { fill: var(--stone-3); } .hs-mid { fill: var(--stone-2); } .hs-near { fill: var(--stone); }
 .hs-wolf { fill: var(--ink); } .hs-cactus { fill: var(--sage); } .hs-cactus-far { fill: var(--sage); opacity: 0.45; }
+/* V34: ribs, spines and blooms on the cactuses */
+.hs-rib { fill: none; stroke: var(--sage-ink); stroke-width: 1.5; stroke-linecap: round; opacity: 0.75; }
+.hs-spine { fill: none; stroke: var(--sage-ink); stroke-width: 1.3; stroke-linecap: round; }
+.hs-bloom { fill: #FFF6DC; } .hs-bud { fill: var(--flame); } .hs-fruit { fill: var(--accent); }
+/* V34: the oasis. A pool on the near ground, reeds at its far end, rings on the water while the wolf drinks */
+.hs-wet { fill: var(--stone-2); } .hs-water { fill: #7F9BB2; } .hs-shine { fill: #fff; opacity: 0.42; } .hs-deep { fill: var(--dusk); opacity: 0.38; }
+.hs-reed { fill: none; stroke: var(--sage-ink); stroke-width: 1.1; stroke-linecap: round; } .hs-cattail { fill: #6B4A32; } .hs-palm { fill: var(--sage); } .hs-palm-trunk { fill: #8C7A63; }
+.hs-rip { fill: none; stroke: #fff; stroke-width: 0.55; opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; }
 .hs-sun { fill: #EA9C66; }
 /* V22: the wolf runs in once and stops on the ridge. The legs take their colour from --leg (the footer's are pale). */
 .hs-wolf { --leg: var(--ink); --eye: var(--paper); --glint: 0; --eye-scale: 1.15; }
 .hs-run { opacity: 0; }
-.hs-howl { opacity: 0; }
+.hs-howl, .hs-d1, .hs-d2, .hs-d3 { opacity: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .hs-run { animation: hs-run 1.9s cubic-bezier(0.3, 0.5, 0.4, 1) 0.6s both; }
   .hs-stand { animation: hs-stand 1.9s linear 0.6s both; }
   .hs-level { animation: hs-level 16s linear infinite; }
   .hs-howl { animation: hs-howl 16s linear infinite; }
+  .hs-d1 { animation: hs-d1 16s step-end infinite; } .hs-d2 { animation: hs-d2 16s step-end infinite; } .hs-d3 { animation: hs-d3 16s step-end infinite; }
+  .hs-rip-1 { animation: hs-rip-1 16s linear infinite; } .hs-rip-2 { animation: hs-rip-2 16s linear infinite; }
   .hs-run .gait-1, .hs-run .gait-2, .hs-run .gait-3, .hs-run .gait-4, .hs-run .run-body { animation-iteration-count: 5; }
 }
 @keyframes hs-run { 0% { opacity: 1; transform: translateX(-1500px); } 86% { opacity: 1; transform: translateX(-12px); } 93%, 100% { opacity: 0; transform: translateX(0); } }
 /* the howl, on the header moon's 16s clock (header.css): the level head cross-fades to the raised one and back */
-@keyframes hs-level { 0%, 40% { opacity: 1; } 41.5%, 53% { opacity: 0; } 54.5%, 100% { opacity: 1; } }
+/* V34: before the howl the head goes down to the water in three quick steps (18% to 19.2%), drinks, and comes back up (34.2% to 35.4%) */
+@keyframes hs-level { 0%, 17.99% { opacity: 1; } 18%, 35.39% { opacity: 0; } 35.4%, 40% { opacity: 1; } 41.5%, 53% { opacity: 0; } 54.5%, 100% { opacity: 1; } }
+@keyframes hs-d1 { 0% { opacity: 0; } 18% { opacity: 1; } 18.6% { opacity: 0; } 34.8% { opacity: 1; } 35.4% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes hs-d2 { 0% { opacity: 0; } 18.6% { opacity: 1; } 19.2% { opacity: 0; } 34.2% { opacity: 1; } 34.8% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes hs-d3 { 0% { opacity: 0; } 19.2% { opacity: 1; } 34.2% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes hs-rip-1 { 0%, 20% { opacity: 0; transform: scale(0.2); } 20.6% { opacity: 0.9; } 26.5% { opacity: 0; transform: scale(1.3); } 26.6%, 27.4% { opacity: 0; transform: scale(0.2); } 28% { opacity: 0.9; } 34%, 100% { opacity: 0; transform: scale(1.3); } }
+@keyframes hs-rip-2 { 0%, 23.6% { opacity: 0; transform: scale(0.2); } 24.2% { opacity: 0.9; } 30.2% { opacity: 0; transform: scale(1.3); } 30.3%, 31% { opacity: 0; transform: scale(0.2); } 31.6% { opacity: 0.8; } 37.5%, 100% { opacity: 0; transform: scale(1.3); } }
 @keyframes hs-howl { 0%, 40% { opacity: 0; } 41.5%, 53% { opacity: 1; } 54.5%, 100% { opacity: 0; } }
 @keyframes hs-stand { 0%, 85% { opacity: 0; } 93%, 100% { opacity: 1; } }
 .hs-line { stroke: var(--accent); stroke-width: 2; }
+/* V34: the sky. A layer over the desert and under the words: three soft clouds drifting, two small flocks of birds crossing.
+   Without motion (reduced motion) the clouds and one flock simply sit in the sky. The footer's pause button stops them too. */
+.hero-sky { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+.sky-cloud { position: absolute; height: auto; }
+.sky-cl { fill: #fff; } .sky-cl-back { fill: var(--stone-2); opacity: 0.6; }
+.sky-cloud-1 { left: 68%; top: 0.9vw; width: clamp(96px, 11vw, 230px); opacity: 0.8; }
+.sky-cloud-2 { left: 12%; bottom: calc(var(--hs-h) * 0.66); width: clamp(64px, 6.5vw, 140px); opacity: 0.7; }
+.sky-cloud-3 { left: 84%; top: 34%; width: clamp(72px, 8vw, 170px); opacity: 0.5; }
+.sky-flock { position: absolute; left: 58%; bottom: calc(var(--hs-h) * 0.8); width: 120px; height: 54px; }
+.sky-flock-2 { left: 30%; bottom: auto; top: 16%; width: 56px; height: 26px; opacity: 0.6; display: none; }
+.sky-bird { position: absolute; width: 28px; height: 14px; overflow: visible; }
+.sky-bird path { fill: none; stroke: var(--ink-3); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.8; transform-box: fill-box; transform-origin: 50% 85%; }
+.sky-flock-1 .sky-bird-1 { left: 88px; top: 20px; } .sky-flock-1 .sky-bird-2 { left: 50px; top: 2px; width: 24px; height: 12px; } .sky-flock-1 .sky-bird-3 { left: 44px; top: 38px; width: 23px; height: 11.5px; } .sky-flock-1 .sky-bird-4 { left: 4px; top: 18px; width: 20px; height: 10px; }
+.sky-flock-2 .sky-bird { width: 17px; height: 8.5px; } .sky-flock-2 .sky-bird-1 { left: 0; top: 2px; } .sky-flock-2 .sky-bird-2 { left: 30px; top: 14px; }
+@media (prefers-reduced-motion: no-preference) {
+  .sky-cloud { left: 0; will-change: transform; }
+  .sky-cloud-1 { animation: sky-drift 170s linear -96s infinite; }
+  .sky-cloud-2 { animation: sky-drift 120s linear -22s infinite; }
+  .sky-cloud-3 { animation: sky-drift 210s linear -150s infinite; }
+  .sky-flock { left: 0; }
+  .sky-flock-1 { animation: sky-fly-1 44s linear 3.5s infinite both; }
+  .sky-flock-2 { display: block; animation: sky-fly-2 67s linear 19s infinite both; }
+  .sky-bird path { animation: sky-flap 0.56s ease-in-out infinite alternate; }
+  .sky-bird-2 path { animation-duration: 0.5s; animation-delay: -0.2s; } .sky-bird-3 path { animation-duration: 0.62s; animation-delay: -0.35s; } .sky-bird-4 path { animation-duration: 0.47s; animation-delay: -0.1s; }
+}
+@keyframes sky-drift { from { transform: translateX(-26vw); } to { transform: translateX(104vw); } }
+@keyframes sky-fly-1 { 0% { transform: translate(-120px, 1.5vw); } 30% { transform: translate(52vw, -0.6vw); } 60%, 100% { transform: translate(104vw, 0.8vw); } }
+@keyframes sky-fly-2 { 0% { transform: translate(104vw, 0); } 50%, 100% { transform: translate(-60px, 1.6vw); } }
+@keyframes sky-flap { from { transform: scaleY(1); } to { transform: scaleY(0.3); } }
+@media (max-width: 47.99em) { .sky-cloud-3 { display: none; } .sky-bird { scale: 0.8; } .sky-flock-1 { bottom: calc(var(--hs-h) * 0.5); } }
 .hero-h1 { grid-column: 1 / -1; font-size: clamp(2.6rem, 0.2rem + 6.4vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; max-width: 15ch; margin: 0; font-weight: 600; }
 /* V21: one ruled row under the headline, the sentence left and the buttons right, so the words and the actions read as one block */
 .hero-text { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4) var(--s5); min-width: 0; padding-top: var(--s4); border-top: var(--rule-soft); }
@@ -373,8 +421,8 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
   .phase::after { top: 0.3rem; }
 }
 /* what happens once the job is on: one quiet line under the three steps */
-/* how-scenes:start  (V33, generated together with src/partials/how-scenes.html)
-   Three small scenes above You / Me / Us, on one 16s clock that starts when the list scrolls in (.phases.is-in):
+/* how-scenes:start  (V34, generated together with src/partials/how-scenes.html)
+   Three small scenes above You / Me / Us, on one 20s clock that starts when the list scrolls in (.phases.is-in):
    what you send, the site being built, the checkpoint and launch, a rest, then a soft reset. The resting style of every piece
    is its final state, so reduced motion and no-JS show three finished pictures. The footer's pause button stops them too. */
 .phase-scene { aspect-ratio: 400 / 240; margin-bottom: var(--s3); background: var(--paper-2); border: 1px solid var(--line-2); box-shadow: 0 22px 34px -28px rgb(36 34 31 / 0.5); overflow: hidden; }
@@ -395,21 +443,33 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
 .hw-tag { font: 650 10.5px var(--text); fill: var(--paper-2); }
 .hw-btn { font: 650 11.5px var(--text); fill: var(--paper-2); }
 .hw-say { font: 600 11px var(--text); fill: var(--paper-2); }
+.hw-url-s { font-size: 8.5px; } .hw-lbl { font: 650 9.5px var(--text); fill: var(--ink); } .hw-chip { font: 650 9px var(--text); fill: var(--ink); } .hw-more { font: 550 9px var(--text); fill: var(--muted); }
+.hw-i { fill: none; stroke: var(--ink); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; } .hw-ring { fill: #fff; stroke: var(--line-2); stroke-width: 1.2; }
+.hw-cable { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1 2; }
+.hw-flow { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 0.16 1.6; stroke-dashoffset: 0.2; }
+.hw-s-glow { fill: none; stroke: var(--accent); stroke-width: 3; } .hw-s-glow-g { fill: none; stroke: var(--good); stroke-width: 3; }
 .hw-s-sage { stroke: var(--sage); stroke-width: 1.2; }
 .hw-wolf { fill: var(--ink); --eye: var(--paper-2); --glint: 0; --eye-scale: 1.6; }
 .hw-a { transform-box: fill-box; transform-origin: 50% 50%; }
 .hw-l { transform-origin: 0 50%; }
-.hw2-type { transform: translateX(104px); }
+.hw2-type { transform: translateX(84px); }
 .hw2-caret { opacity: 0; }
+.hw2-glow { opacity: 0; }
 .hw3-tag-p { opacity: 0; }
 .hw3-pin { opacity: 0; }
 .hw3-note { opacity: 0; }
 .hw3-pin-ok { opacity: 0; }
 .hw3-cur { opacity: 0; }
 .hw3-ripple { opacity: 0; }
+.hw3-glow1 { opacity: 0; }
+.hw3-glow2 { opacity: 0; }
+.hw3-cf1 { opacity: 0; }
+.hw3-cf2 { opacity: 0; }
+.hw3-cf3 { opacity: 0; }
 .hw3-ring { opacity: 0; }
 .hw3-wl { opacity: 0; }
-.phases.is-in :is(.hw1-q1, .hw1-a1, .hw1-a1-b1, .hw1-q2, .hw1-a2, .hw1-a2-b1, .hw1-a2-b2, .hw1-q3, .hw1-ok, .hw2-type, .hw2-caret, .hw2-dot, .hw2-logo, .hw2-nav, .hw2-h1, .hw2-h2, .hw2-para, .hw2-btn, .hw2-hero, .hw2-t1, .hw2-t2, .hw2-t3, .hw2-seo, .hw2-seo-ok, .hw3-site, .hw3-tag-p, .hw3-yes, .hw3-pin, .hw3-note, .hw3-swap, .hw3-pin-ok, .hw3-cur, .hw3-press, .hw3-ripple, .hw3-tag-l, .hw3-ring, .hw3-moon, .hw3-wolf, .hw3-wl, .hw3-wh, .hw-stage) { animation: 16s linear infinite both; }
+.hw3-mring { opacity: 0; }
+.phases.is-in :is(.hw1-q1, .hw1-a1, .hw1-a1-b1, .hw1-q2, .hw1-a2, .hw1-a2-b1, .hw1-a2-b2, .hw1-q3, .hw1-ok, .hw2-type, .hw2-caret, .hw2-dot, .hw2-k1, .hw2-p1, .hw2-c1, .hw2-ok1, .hw2-logo, .hw2-nav, .hw2-h1, .hw2-h2, .hw2-para, .hw2-btn, .hw2-hero, .hw2-t1, .hw2-t2, .hw2-t3, .hw2-k2, .hw2-p2, .hw2-c2, .hw2-g1, .hw2-g2, .hw2-tg1, .hw2-kn1, .hw2-tg2, .hw2-kn2, .hw2-ok2, .hw2-k3, .hw2-p3, .hw2-c3, .hw2-ok3, .hw2-k4, .hw2-p4, .hw2-c4, .hw2-ok4, .hw2-k5, .hw2-p5, .hw2-seo, .hw2-s1, .hw2-s2, .hw2-s3, .hw2-more, .hw2-f1, .hw2-f2, .hw2-f3, .hw2-f4, .hw2-glow, .hw3-site, .hw3-phone, .hw3-tag-p, .hw3-yes, .hw3-pin, .hw3-note, .hw3-swap, .hw3-pin-ok, .hw3-cur, .hw3-press, .hw3-ripple, .hw3-tag-l, .hw3-live-dot, .hw3-glow1, .hw3-glow2, .hw3-cf1, .hw3-cf2, .hw3-cf3, .hw3-ring, .hw3-moon, .hw3-wolf, .hw3-wl, .hw3-wh, .hw3-mring, .hw-stage) { animation: 20s linear infinite both; }
 .phases.is-in .hw1-q1 { animation-name: hw1-q1; }
 .phases.is-in .hw1-a1 { animation-name: hw1-a1; }
 .phases.is-in .hw1-a1-b1 { animation-name: hw1-a1-b1; }
@@ -422,6 +482,10 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
 .phases.is-in .hw2-type { animation-name: hw2-type; }
 .phases.is-in .hw2-caret { animation-name: hw2-caret; }
 .phases.is-in .hw2-dot { animation-name: hw2-dot; }
+.phases.is-in .hw2-k1 { animation-name: hw2-k1; }
+.phases.is-in .hw2-p1 { animation-name: hw2-p1; }
+.phases.is-in .hw2-c1 { animation-name: hw2-c1; }
+.phases.is-in .hw2-ok1 { animation-name: hw2-ok1; }
 .phases.is-in .hw2-logo { animation-name: hw2-logo; }
 .phases.is-in .hw2-nav { animation-name: hw2-nav; }
 .phases.is-in .hw2-h1 { animation-name: hw2-h1; }
@@ -432,9 +496,38 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
 .phases.is-in .hw2-t1 { animation-name: hw2-t1; }
 .phases.is-in .hw2-t2 { animation-name: hw2-t2; }
 .phases.is-in .hw2-t3 { animation-name: hw2-t3; }
+.phases.is-in .hw2-k2 { animation-name: hw2-k2; }
+.phases.is-in .hw2-p2 { animation-name: hw2-p2; }
+.phases.is-in .hw2-c2 { animation-name: hw2-c2; }
+.phases.is-in .hw2-g1 { animation-name: hw2-g1; }
+.phases.is-in .hw2-g2 { animation-name: hw2-g2; }
+.phases.is-in .hw2-tg1 { animation-name: hw2-tg1; }
+.phases.is-in .hw2-kn1 { animation-name: hw2-kn1; }
+.phases.is-in .hw2-tg2 { animation-name: hw2-tg2; }
+.phases.is-in .hw2-kn2 { animation-name: hw2-kn2; }
+.phases.is-in .hw2-ok2 { animation-name: hw2-ok2; }
+.phases.is-in .hw2-k3 { animation-name: hw2-k3; }
+.phases.is-in .hw2-p3 { animation-name: hw2-p3; }
+.phases.is-in .hw2-c3 { animation-name: hw2-c3; }
+.phases.is-in .hw2-ok3 { animation-name: hw2-ok3; }
+.phases.is-in .hw2-k4 { animation-name: hw2-k4; }
+.phases.is-in .hw2-p4 { animation-name: hw2-p4; }
+.phases.is-in .hw2-c4 { animation-name: hw2-c4; }
+.phases.is-in .hw2-ok4 { animation-name: hw2-ok4; }
+.phases.is-in .hw2-k5 { animation-name: hw2-k5; }
+.phases.is-in .hw2-p5 { animation-name: hw2-p5; }
 .phases.is-in .hw2-seo { animation-name: hw2-seo; }
-.phases.is-in .hw2-seo-ok { animation-name: hw2-seo-ok; }
+.phases.is-in .hw2-s1 { animation-name: hw2-s1; }
+.phases.is-in .hw2-s2 { animation-name: hw2-s2; }
+.phases.is-in .hw2-s3 { animation-name: hw2-s3; }
+.phases.is-in .hw2-more { animation-name: hw2-more; }
+.phases.is-in .hw2-f1 { animation-name: hw2-f1; }
+.phases.is-in .hw2-f2 { animation-name: hw2-f2; }
+.phases.is-in .hw2-f3 { animation-name: hw2-f3; }
+.phases.is-in .hw2-f4 { animation-name: hw2-f4; }
+.phases.is-in .hw2-glow { animation-name: hw2-glow; }
 .phases.is-in .hw3-site { animation-name: hw3-site; }
+.phases.is-in .hw3-phone { animation-name: hw3-phone; }
 .phases.is-in .hw3-tag-p { animation-name: hw3-tag-p; }
 .phases.is-in .hw3-yes { animation-name: hw3-yes; }
 .phases.is-in .hw3-pin { animation-name: hw3-pin; }
@@ -445,66 +538,113 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
 .phases.is-in .hw3-press { animation-name: hw3-press; }
 .phases.is-in .hw3-ripple { animation-name: hw3-ripple; }
 .phases.is-in .hw3-tag-l { animation-name: hw3-tag-l; }
+.phases.is-in .hw3-live-dot { animation-name: hw3-live-dot; }
+.phases.is-in .hw3-glow1 { animation-name: hw3-glow1; }
+.phases.is-in .hw3-glow2 { animation-name: hw3-glow2; }
+.phases.is-in .hw3-cf1 { animation-name: hw3-cf1; }
+.phases.is-in .hw3-cf2 { animation-name: hw3-cf2; }
+.phases.is-in .hw3-cf3 { animation-name: hw3-cf3; }
 .phases.is-in .hw3-ring { animation-name: hw3-ring; }
 .phases.is-in .hw3-moon { animation-name: hw3-moon; }
 .phases.is-in .hw3-wolf { animation-name: hw3-wolf; }
 .phases.is-in .hw3-wl { animation-name: hw3-wl; }
 .phases.is-in .hw3-wh { animation-name: hw3-wh; }
+.phases.is-in .hw3-mring { animation-name: hw3-mring; }
 .phases.is-in .hw-stage { animation-name: hw-stage; }
-@keyframes hw1-q1 { 0%, 2.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 5%, 100% { opacity: 1; transform: none; } }
-@keyframes hw1-a1 { 0%, 6.25% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 8.75%, 100% { opacity: 1; transform: none; } }
-@keyframes hw1-a1-b1 { 0%, 7.5% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 9.69%, 100% { transform: none; } }
-@keyframes hw1-q2 { 0%, 10% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 12.5%, 100% { opacity: 1; transform: none; } }
-@keyframes hw1-a2 { 0%, 13.12% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 15.62%, 100% { opacity: 1; transform: none; } }
-@keyframes hw1-a2-b1 { 0%, 14.37% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 16.56%, 100% { transform: none; } }
-@keyframes hw1-a2-b2 { 0%, 15.31% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 17.5%, 100% { transform: none; } }
-@keyframes hw1-q3 { 0%, 17.19% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 19.69%, 100% { opacity: 1; transform: none; } }
-@keyframes hw1-ok { 0%, 19.69% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 22.5%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-type { 0%, 23.12% { transform: translateX(0); animation-timing-function: steps(16, end); } 30.63%, 100% { transform: translateX(104px); } }
-@keyframes hw2-caret { 0%, 30.94% { opacity: 1; } 31.56%, 100% { opacity: 0; } }
-@keyframes hw2-dot { 0%, 30.94% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 33.12%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-logo { 0%, 31.87% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 34.38%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-nav { 0%, 32.5% { opacity: 0; animation-timing-function: ease; } 35%, 100% { opacity: 1; } }
-@keyframes hw2-h1 { 0%, 34.38% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 37.19%, 100% { transform: none; } }
-@keyframes hw2-h2 { 0%, 35.62% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 38.44%, 100% { transform: none; } }
-@keyframes hw2-para { 0%, 37.5% { opacity: 0; animation-timing-function: ease; } 40%, 100% { opacity: 1; } }
-@keyframes hw2-btn { 0%, 38.75% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 41.25%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-hero { 0%, 40% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 43.75%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-t1 { 0%, 43.12% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 45.94%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-t2 { 0%, 44.06% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 46.88%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-t3 { 0%, 45% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 47.81%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-seo { 0%, 47.5% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 50.62%, 100% { opacity: 1; transform: none; } }
-@keyframes hw2-seo-ok { 0%, 50% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 52.5%, 100% { opacity: 1; transform: none; } }
-@keyframes hw3-site { 0%, 54.37% { opacity: 0; animation-timing-function: ease; } 58.12%, 100% { opacity: 1; } }
-@keyframes hw3-tag-p { 0%, 55.62% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 58.13%, 71.25% { opacity: 1; transform: none; } 72.5%, 100% { opacity: 0; transform: none; } }
-@keyframes hw3-yes { 0%, 56.88% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 59.38%, 100% { opacity: 1; transform: none; } }
-@keyframes hw3-pin { 0%, 59.38% { opacity: 0; transform: translateY(-14px); animation-timing-function: var(--ease-spring); } 61.88%, 65% { opacity: 1; transform: none; } 65.94%, 100% { opacity: 0; transform: none; } }
-@keyframes hw3-note { 0%, 60.94% { opacity: 0; transform: scale(0.6); animation-timing-function: var(--ease-spring); } 63.12%, 65.62% { opacity: 1; transform: none; } 67.19%, 100% { opacity: 0; transform: none; } }
-@keyframes hw3-swap { 0%, 64.38% { opacity: 0; animation-timing-function: ease; } 67.19%, 100% { opacity: 1; } }
-@keyframes hw3-pin-ok { 0%, 65% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 67.19%, 70% { opacity: 1; transform: none; } 71.56%, 100% { opacity: 0; transform: none; } }
-@keyframes hw3-cur { 0%, 66.88% { opacity: 0; transform: translate(-70px, 46px); } 67.5% { opacity: 1; transform: translate(-70px, 46px); animation-timing-function: var(--ease-out); } 70.94%, 75.62% { opacity: 1; transform: none; } 77.5%, 100% { opacity: 0; transform: none; } }
-@keyframes hw3-press { 0%, 71.25% { transform: none; } 71.88% { transform: scale(0.93); } 73.12%, 100% { transform: none; } }
-@keyframes hw3-ripple { 0%, 71.38% { opacity: 0; transform: scale(0.5); } 71.88% { opacity: 0.9; transform: scale(0.7); animation-timing-function: ease-out; } 75.31%, 100% { opacity: 0; transform: scale(2.6); } }
-@keyframes hw3-tag-l { 0%, 72.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 75%, 100% { opacity: 1; transform: none; } }
-@keyframes hw3-ring { 0%, 74.38% { opacity: 0; transform: none; } 74.69% { opacity: 0.9; animation-timing-function: ease-out; } 79.38% { opacity: 0; transform: scale(3.2); } 79.69% { opacity: 0; transform: none; } 80% { opacity: 0.9; animation-timing-function: ease-out; } 84.69%, 100% { opacity: 0; transform: scale(3.2); } }
-@keyframes hw3-moon { 0%, 73.75% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 78.12%, 100% { opacity: 1; transform: none; } }
-@keyframes hw3-wolf { 0%, 73.75% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 76.88%, 100% { opacity: 1; transform: none; } }
-@keyframes hw3-wl { 0%, 78.12% { opacity: 1; } 79.69%, 100% { opacity: 0; } }
-@keyframes hw3-wh { 0%, 78.12% { opacity: 0; animation-timing-function: ease; } 79.69%, 100% { opacity: 1; } }
+@keyframes hw1-q1 { 0%, 2% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 4%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a1 { 0%, 5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 7%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a1-b1 { 0%, 6% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 7.75%, 100% { transform: none; } }
+@keyframes hw1-q2 { 0%, 8% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 10%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a2 { 0%, 10.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 12.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-a2-b1 { 0%, 11.5% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 13.25%, 100% { transform: none; } }
+@keyframes hw1-a2-b2 { 0%, 12.25% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 14%, 100% { transform: none; } }
+@keyframes hw1-q3 { 0%, 13.75% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 15.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw1-ok { 0%, 15.75% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 18%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-type { 0%, 18.5% { transform: translateX(0); animation-timing-function: steps(16, end); } 23%, 100% { transform: translateX(84px); } }
+@keyframes hw2-caret { 0%, 23.25% { opacity: 1; } 23.75%, 100% { opacity: 0; } }
+@keyframes hw2-dot { 0%, 23.25% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 25%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-k1 { 0%, 23% { stroke-dashoffset: 1; animation-timing-function: var(--ease-out); } 24.75%, 100% { stroke-dashoffset: 0; } }
+@keyframes hw2-p1 { 0%, 24.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 26%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-c1 { 0%, 24.75% { opacity: 0.32; transform: scale(0.97); animation-timing-function: var(--ease-spring); } 26.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-ok1 { 0%, 26% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 27.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-logo { 0%, 24.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 26.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-nav { 0%, 25% { opacity: 0; animation-timing-function: ease; } 27%, 100% { opacity: 1; } }
+@keyframes hw2-h1 { 0%, 26% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 28.25%, 100% { transform: none; } }
+@keyframes hw2-h2 { 0%, 26.75% { transform: scaleX(0); animation-timing-function: var(--ease-out); } 29%, 100% { transform: none; } }
+@keyframes hw2-para { 0%, 28% { opacity: 0; animation-timing-function: ease; } 30%, 100% { opacity: 1; } }
+@keyframes hw2-btn { 0%, 28.75% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 30.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-hero { 0%, 29.5% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 32.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-t1 { 0%, 31.5% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 33.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-t2 { 0%, 32.1% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 34.35%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-t3 { 0%, 32.7% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 34.95%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-k2 { 0%, 27% { stroke-dashoffset: 1; animation-timing-function: var(--ease-out); } 28.75%, 100% { stroke-dashoffset: 0; } }
+@keyframes hw2-p2 { 0%, 28.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 30%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-c2 { 0%, 28.75% { opacity: 0.32; transform: scale(0.97); animation-timing-function: var(--ease-spring); } 30.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-g1 { 0%, 29% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.45, 0, 0.3, 1); } 37%, 100% { transform: rotate(360deg); } }
+@keyframes hw2-g2 { 0%, 29% { transform: rotate(0deg); animation-timing-function: cubic-bezier(0.45, 0, 0.3, 1); } 37%, 100% { transform: rotate(-480deg); } }
+@keyframes hw2-tg1 { 0%, 31% { opacity: 0; animation-timing-function: ease; } 32%, 100% { opacity: 1; } }
+@keyframes hw2-kn1 { 0%, 31% { transform: translateX(-7px); animation-timing-function: var(--ease-out); } 32.1%, 100% { transform: none; } }
+@keyframes hw2-tg2 { 0%, 33.5% { opacity: 0; animation-timing-function: ease; } 34.5%, 100% { opacity: 1; } }
+@keyframes hw2-kn2 { 0%, 33.5% { transform: translateX(-7px); animation-timing-function: var(--ease-out); } 34.6%, 100% { transform: none; } }
+@keyframes hw2-ok2 { 0%, 36.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 38.25%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-k3 { 0%, 33% { stroke-dashoffset: 1; animation-timing-function: var(--ease-out); } 34.75%, 100% { stroke-dashoffset: 0; } }
+@keyframes hw2-p3 { 0%, 34.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 36%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-c3 { 0%, 34.75% { opacity: 0.32; transform: scale(0.97); animation-timing-function: var(--ease-spring); } 36.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-ok3 { 0%, 35.75% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 37.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-k4 { 0%, 36% { stroke-dashoffset: 1; animation-timing-function: var(--ease-out); } 37.75%, 100% { stroke-dashoffset: 0; } }
+@keyframes hw2-p4 { 0%, 37.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 39%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-c4 { 0%, 37.75% { opacity: 0.32; transform: scale(0.97); animation-timing-function: var(--ease-spring); } 39.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-ok4 { 0%, 38.75% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 40.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-k5 { 0%, 39.5% { stroke-dashoffset: 1; animation-timing-function: var(--ease-out); } 40.5%, 100% { stroke-dashoffset: 0; } }
+@keyframes hw2-p5 { 0%, 40.25% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 41.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-seo { 0%, 40.5% { opacity: 0.32; transform: translateY(4px); animation-timing-function: var(--ease-out); } 42.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-s1 { 0%, 43% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 44.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-s2 { 0%, 44.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 46.25%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-s3 { 0%, 46% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 47.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw2-more { 0%, 47.25% { opacity: 0; animation-timing-function: ease; } 49%, 100% { opacity: 1; } }
+@keyframes hw2-f1 { 0%, 48% { stroke-dashoffset: -1.1; animation-timing-function: ease-in-out; } 50.5%, 100% { stroke-dashoffset: 0.2; } }
+@keyframes hw2-f2 { 0%, 48.35% { stroke-dashoffset: -1.1; animation-timing-function: ease-in-out; } 50.85%, 100% { stroke-dashoffset: 0.2; } }
+@keyframes hw2-f3 { 0%, 48.7% { stroke-dashoffset: -1.1; animation-timing-function: ease-in-out; } 51.2%, 100% { stroke-dashoffset: 0.2; } }
+@keyframes hw2-f4 { 0%, 49.05% { stroke-dashoffset: -1.1; animation-timing-function: ease-in-out; } 51.55%, 100% { stroke-dashoffset: 0.2; } }
+@keyframes hw2-glow { 0%, 50.25% { opacity: 0; transform: none; } 51% { opacity: 0.95; transform: none; animation-timing-function: ease-out; } 54.25%, 100% { opacity: 0; transform: scale(1.05); } }
+@keyframes hw3-site { 0%, 54.5% { opacity: 0; animation-timing-function: ease; } 57.5%, 100% { opacity: 1; } }
+@keyframes hw3-phone { 0%, 55.5% { opacity: 0; animation-timing-function: ease; } 58.5%, 100% { opacity: 1; } }
+@keyframes hw3-tag-p { 0%, 56% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 58%, 70.5% { opacity: 1; transform: none; } 71.5%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-yes { 0%, 57% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 59%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-pin { 0%, 59.25% { opacity: 0; transform: translateY(-14px); animation-timing-function: var(--ease-spring); } 61.25%, 64.5% { opacity: 1; transform: none; } 65.25%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-note { 0%, 60.5% { opacity: 0; transform: scale(0.6); animation-timing-function: var(--ease-spring); } 62.25%, 64.5% { opacity: 1; transform: none; } 65.75%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-swap { 0%, 64% { opacity: 0; animation-timing-function: ease; } 66.25%, 100% { opacity: 1; } }
+@keyframes hw3-pin-ok { 0%, 64.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 66.25%, 69% { opacity: 1; transform: none; } 70.25%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-cur { 0%, 66.5% { opacity: 0; transform: translate(70px, -52px); } 67% { opacity: 1; transform: translate(70px, -52px); animation-timing-function: var(--ease-out); } 70%, 74% { opacity: 1; transform: none; } 75.5%, 100% { opacity: 0; transform: none; } }
+@keyframes hw3-press { 0%, 70.5% { transform: none; } 71% { transform: scale(0.93); } 72%, 100% { transform: none; } }
+@keyframes hw3-ripple { 0%, 70.6% { opacity: 0; transform: scale(0.5); } 71% { opacity: 0.9; transform: scale(0.7); animation-timing-function: ease-out; } 73.75%, 100% { opacity: 0; transform: scale(2.6); } }
+@keyframes hw3-tag-l { 0%, 71.5% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 73.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-live-dot { 0%, 72% { opacity: 0; transform: scale(0.4); animation-timing-function: var(--ease-spring); } 73.75%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-glow1 { 0%, 71.75% { opacity: 0; transform: none; } 72.5% { opacity: 0.95; transform: none; animation-timing-function: ease-out; } 76%, 100% { opacity: 0; transform: scale(1.06); } }
+@keyframes hw3-glow2 { 0%, 72.5% { opacity: 0; transform: none; } 73.25% { opacity: 0.95; transform: none; animation-timing-function: ease-out; } 76.75%, 100% { opacity: 0; transform: scale(1.06); } }
+@keyframes hw3-cf1 { 0%, 72% { opacity: 0; transform: translateY(0) scale(0.12); } 72.4% { opacity: 1; transform: translateY(0) scale(0.2); animation-timing-function: cubic-bezier(0.1, 0.7, 0.3, 1); } 75.75% { opacity: 1; transform: translateY(0) scale(1); animation-timing-function: ease-in; } 80%, 100% { opacity: 0; transform: translateY(14px) scale(1.06); } }
+@keyframes hw3-cf2 { 0%, 72.9% { opacity: 0; transform: translateY(0) scale(0.12); } 73.3% { opacity: 1; transform: translateY(0) scale(0.2); animation-timing-function: cubic-bezier(0.1, 0.7, 0.3, 1); } 76.65% { opacity: 1; transform: translateY(0) scale(1); animation-timing-function: ease-in; } 80.9%, 100% { opacity: 0; transform: translateY(14px) scale(1.06); } }
+@keyframes hw3-cf3 { 0%, 73.6% { opacity: 0; transform: translateY(0) scale(0.12); } 74% { opacity: 1; transform: translateY(0) scale(0.2); animation-timing-function: cubic-bezier(0.1, 0.7, 0.3, 1); } 77.35% { opacity: 1; transform: translateY(0) scale(1); animation-timing-function: ease-in; } 81.6%, 100% { opacity: 0; transform: translateY(14px) scale(1.06); } }
+@keyframes hw3-ring { 0%, 73% { opacity: 0; transform: none; } 73.25% { opacity: 0.9; animation-timing-function: ease-out; } 77% { opacity: 0; transform: scale(3.2); } 77.25% { opacity: 0; transform: none; } 77.5% { opacity: 0.9; animation-timing-function: ease-out; } 81.25%, 100% { opacity: 0; transform: scale(3.2); } }
+@keyframes hw3-moon { 0%, 73% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 76.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-wolf { 0%, 73% { opacity: 0; transform: translateY(9px); animation-timing-function: var(--ease-out); } 75.5%, 100% { opacity: 1; transform: none; } }
+@keyframes hw3-wl { 0%, 76.5% { opacity: 1; } 77.75%, 100% { opacity: 0; } }
+@keyframes hw3-wh { 0%, 76.5% { opacity: 0; animation-timing-function: ease; } 77.75%, 100% { opacity: 1; } }
+@keyframes hw3-mring { 0%, 77.25% { opacity: 0; transform: none; } 77.5% { opacity: 0.8; animation-timing-function: ease-out; } 81.5% { opacity: 0; transform: scale(2.1); } 81.75% { opacity: 0; transform: none; } 82% { opacity: 0.8; animation-timing-function: ease-out; } 86%, 100% { opacity: 0; transform: scale(2.1); } }
 @keyframes hw-stage { 0% { opacity: 0; } 2.5%, 94% { opacity: 1; } 97%, 100% { opacity: 0; } }
 .phase-pulse { position: absolute; left: 0; top: 0; width: calc(100% + var(--s5)); height: 10px; pointer-events: none; }
 .phase-3 .phase-pulse { width: 100%; }
 .phase-pulse::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--next); box-shadow: 0 0 0 5px color-mix(in srgb, var(--next) 28%, transparent); opacity: 0; }
 .phase-3 .phase-pulse::after { background: var(--phase); box-shadow: 0 0 0 5px color-mix(in srgb, var(--phase) 28%, transparent); }
-.phases.is-in .phase-1 .phase-pulse::after { animation: hw-run-1 16s linear infinite both; }
-@keyframes hw-run-1 { 0%, 19.06% { left: 0; opacity: 0; } 19.56% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 23.44% { left: calc(100% - 10px); opacity: 1; } 25.31%, 100% { left: calc(100% - 10px); opacity: 0; } }
-@keyframes hw-fall-1 { 0%, 19.06% { top: 0; opacity: 0; } 19.56% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 23.44% { top: calc(100% - 10px); opacity: 1; } 25.31%, 100% { top: calc(100% - 10px); opacity: 0; } }
-.phases.is-in .phase-2 .phase-pulse::after { animation: hw-run-2 16s linear infinite both; }
-@keyframes hw-run-2 { 0%, 50% { left: 0; opacity: 0; } 50.5% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 54.37% { left: calc(100% - 10px); opacity: 1; } 56.25%, 100% { left: calc(100% - 10px); opacity: 0; } }
-@keyframes hw-fall-2 { 0%, 50% { top: 0; opacity: 0; } 50.5% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 54.37% { top: calc(100% - 10px); opacity: 1; } 56.25%, 100% { top: calc(100% - 10px); opacity: 0; } }
-.phases.is-in .phase-3 .phase-pulse::after { animation: hw-run-3 16s linear infinite both; }
-@keyframes hw-run-3 { 0%, 72.5% { left: 0; opacity: 0; } 73% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 76.88% { left: calc(100% - 10px); opacity: 1; } 78.75%, 100% { left: calc(100% - 10px); opacity: 0; } }
-@keyframes hw-fall-3 { 0%, 72.5% { top: 0; opacity: 0; } 73% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 76.88% { top: calc(100% - 10px); opacity: 1; } 78.75%, 100% { top: calc(100% - 10px); opacity: 0; } }
+.phases.is-in .phase-1 .phase-pulse::after { animation: hw-run-1 20s linear infinite both; }
+@keyframes hw-run-1 { 0%, 15.25% { left: 0; opacity: 0; } 15.65% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 18.75% { left: calc(100% - 10px); opacity: 1; } 20.25%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-1 { 0%, 15.25% { top: 0; opacity: 0; } 15.65% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 18.75% { top: calc(100% - 10px); opacity: 1; } 20.25%, 100% { top: calc(100% - 10px); opacity: 0; } }
+.phases.is-in .phase-2 .phase-pulse::after { animation: hw-run-2 20s linear infinite both; }
+@keyframes hw-run-2 { 0%, 51% { left: 0; opacity: 0; } 51.4% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 54.5% { left: calc(100% - 10px); opacity: 1; } 56%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-2 { 0%, 51% { top: 0; opacity: 0; } 51.4% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 54.5% { top: calc(100% - 10px); opacity: 1; } 56%, 100% { top: calc(100% - 10px); opacity: 0; } }
+.phases.is-in .phase-3 .phase-pulse::after { animation: hw-run-3 20s linear infinite both; }
+@keyframes hw-run-3 { 0%, 71.5% { left: 0; opacity: 0; } 71.9% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 75% { left: calc(100% - 10px); opacity: 1; } 76.5%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-3 { 0%, 71.5% { top: 0; opacity: 0; } 71.9% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 75% { top: calc(100% - 10px); opacity: 1; } 76.5%, 100% { top: calc(100% - 10px); opacity: 0; } }
 @media (max-width: 63.99em) {
   .phase-scene { max-width: 27rem; }
   .phase-pulse { top: 0.3rem; width: 10px; height: calc(100% + var(--s6)); }
