@@ -29,7 +29,7 @@ def notes_list(items):
 # ---------------------------------------------------------------- Work
 
 work_main = page_head('Sites I’ve designed and built <em>by hand.</em>', 'Each one made for one business. Tap any of them to see it live.',
-                      [f'{len(SITES)} sites so far', 'Built by hand, no templates', 'Made for phones too']) + f'''
+                      [f'{len(SITES)} sites so far', 'Built by hand, no templates', 'Looks right on every screen']) + f'''
     <section class="section work-section" aria-label="Websites">
       <div class="wrap">
 {work_list(SITES)}
@@ -363,6 +363,7 @@ page('privacy.html', 'Privacy policy | Stray Wolf Technology', 'What this websit
 TERMS = [
     ('using', 'Using this site', '<p>By using straywolftech.com, you agree to these terms and to the <a href="privacy.html">privacy policy</a>. If you don’t agree, please don’t use the site. On this page, “I” and “me” mean Stray Wolf Technology and anyone who works with it.</p>'),
     ('offer', 'Nothing here is a contract', '<p>Prices, timelines and descriptions on this site are general information and starting points. They aren’t an offer or a promise. Every project gets its own written price and project agreement before any work starts. If anything on this site differs from a signed agreement, the agreement wins.</p>'),
+    ('payments', 'Payments and refunds', f'<p>Every project has its own signed agreement, and that agreement decides. This is how payments work:</p><ul><li><strong>Deposit.</strong> Half the price is due when you sign. It holds your spot and is not refundable once work has started. Cancel before any work starts and I refund it.</li><li><strong>The rest.</strong> The other half is due before the site goes live or is handed over. Smaller jobs may be paid in full up front.</li><li><strong>Mockups.</strong> A mockup is paid up front and isn’t refundable. If the full site goes ahead within 60 days, the whole mockup fee comes off the price.</li><li><strong>Invoices.</strong> Due within 14 days. If a payment is late, I may pause the work until it’s paid.</li><li><strong>Ending early.</strong> If a project stops part way, you pay for the work done up to that point. If I end it for my own reasons, I refund anything not yet earned.</li><li><strong>Ownership.</strong> The site becomes yours once it’s paid in full.</li><li><strong>After launch.</strong> Anything in my work that isn’t right in the first 30 days, I fix at no charge. There are no monthly fees. Later changes are priced before I start.</li><li><strong>Other companies.</strong> Your domain, hosting and email are paid to those companies directly and follow their own refund rules.</li></ul><p>Questions about an invoice? {Mail_me}.</p>'),
     ('send', 'What you send me', '<p>Sending the form or an email doesn’t make you a client or commit either of us to anything. I may say no to any project, for any reason.</p><p>Please only send information that’s accurate and that you have the right to share. Don’t send passwords, payment details or anything confidential. You keep owning anything you send. You let me use it to reply to you and price your project.</p>'),
     ('own', 'Who owns this site', '<p>The design, words, code, logo and wolf on this site belong to Stray Wolf Technology. You’re welcome to look around and share links. Please don’t copy the site, its words or its logo.</p><p>The client sites on the Work page belong to their owners and are shown with their permission. Their names and logos are theirs.</p>'),
     ('accuracy', 'Accuracy and changes', '<p>I work to keep this site accurate and running. I can’t promise it’s always complete, current, error-free or available. I may change or remove anything on it at any time.</p>'),
@@ -377,7 +378,7 @@ TERMS_SUMMARY = [('doc', 'No deal until it’s signed', 'Prices here are startin
                  ('shield', 'Send only what’s yours', 'Accurate details you have the right to share. Never passwords or payment details.'),
                  ('layout', 'The work shown is theirs', 'Client sites belong to their owners and appear with their OK.')]
 
-terms_main = page_head('Terms, in <em>plain English.</em>', 'The rules for using this site. It’s here to show my work and start a conversation. Nothing on it is a contract until you and I both sign one.', cls=' page-head-privacy') \
+terms_main = page_head('Terms, in <em>plain English.</em>', 'The rules for using this site, and how payments and refunds work. Nothing on this site is a contract until you and I both sign one.', cls=' page-head-privacy') \
     + legal_page(TERMS, TERMS_SUMMARY, 'Terms of use')
 
-page('terms.html', 'Terms of use | Stray Wolf Technology', 'The terms for using straywolftech.com: nothing here is a contract until it’s signed, who owns what, and the limits on liability.', terms_main)
+page('terms.html', 'Terms of use | Stray Wolf Technology', 'The terms for using straywolftech.com and for paying for a project: deposits, refunds, ownership, and the limits on liability.', terms_main)

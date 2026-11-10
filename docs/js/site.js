@@ -105,50 +105,6 @@
     group.querySelectorAll(':scope > [data-reveal], :scope > * > [data-reveal]').forEach((el, i) => el.style.setProperty('--rd', `${Math.min(i, 6) * 80}ms`));
   });
 
-  /* ---- The hero: one real site at a time on its stone panel. It changes by itself; the caption and link follow,
-     and a thin orange line along the rule shows when the next one is coming.
-     Hovering with a mouse, focusing or pressing Next stops it. Nothing moves when the visitor asked for reduced motion. */
-  document.querySelectorAll('[data-sites]').forEach((box) => {
-    const imgs = [...box.querySelectorAll('[data-site-img]')];
-    if (imgs.length < 2) return;
-    const name = box.querySelector('[data-site-name]');
-    const link = box.querySelector('[data-site-link]');
-    const domain = box.querySelector('[data-site-domain]');
-    const now = box.querySelector('[data-site-now]');
-    const frame = box.querySelector('[data-site-frame]');
-    const next = box.querySelector('[data-site-next]');
-    const every = +box.dataset.every || 5200;
-    box.style.setProperty('--tick', every + 'ms');
-    // It goes round once (each site shown, back to the first) and then rests, so nothing keeps changing beside the text.
-    let i = 0, timer = null, stopped = reduce.matches, seen = false;
-    const tick = (on) => { box.classList.remove('is-ticking'); if (on) { void box.offsetWidth; box.classList.add('is-ticking'); } };
-    const show = (n) => {
-      i = (n + imgs.length) % imgs.length;
-      imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
-      const d = imgs[i].dataset;
-      if (name) name.textContent = d.name;
-      if (link) link.href = d.link;
-      if (domain) domain.textContent = d.domain;
-      if (now) now.textContent = String(i + 1);
-      if (frame) frame.href = d.link;
-    };
-    const stop = () => { clearInterval(timer); timer = null; tick(false); };
-    const start = () => {
-      if (stopped || timer || !seen || document.hidden) return;
-      tick(true);
-      timer = setInterval(() => { show(i + 1); if (i === 0) { stopped = true; stop(); } else tick(true); }, every);
-    };
-    if (next) next.addEventListener('click', () => { show(i + 1); stopped = true; stop(); });
-    box.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') stop(); });
-    box.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !box.matches(':focus-within')) start(); });
-    box.addEventListener('focusin', stop);
-    box.addEventListener('focusout', () => setTimeout(() => { if (!box.matches(':focus-within')) start(); }, 0));
-    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver((es) => es.forEach((en) => { seen = en.isIntersecting; en.isIntersecting ? start() : stop(); }), { threshold: 0.3 }).observe(box);
-    } else { seen = true; start(); }
-  });
-
   /* ---- The work carousel: big centred slides that move on by themselves ---------------------
      The bar in the current dot fills over a few seconds, then the next site slides in (and round again).
      It rests while a pointer or keyboard is inside it, while it's off screen or the tab is hidden.

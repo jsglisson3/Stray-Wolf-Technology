@@ -214,8 +214,7 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 }
 
 /* ------------------------------------------------------------------ Hero: the words
-   The headline on the left; the lead, the buttons and one small picture of a recent site on the right.
-   The picture changes by itself every few seconds (site.js, "The hero"). The full showcase lives on the Work page. */
+   V21: the headline wide across the top, then one ruled row with the sentence and the two buttons. The desert runs along the bottom. */
 .hero { border-bottom: var(--rule-soft); background: radial-gradient(70rem 30rem at 92% -12%, var(--haze) 0%, rgb(241 226 209 / 0) 62%); }
 .hero-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s5); row-gap: var(--s6); align-items: end; padding-block: clamp(3rem, 7vw, 6.5rem) clamp(1.5rem, 3vw, 3rem); }
 /* the horizon (V19): a paper-cut desert along the bottom edge; in flow, so the words always sit above it; 12.5vw keeps the drawing uncropped at every width */
@@ -224,38 +223,18 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 .hs-wolf { fill: var(--ink); } .hs-cactus { fill: var(--sage); } .hs-cactus-far { fill: var(--sage); opacity: 0.45; }
 .hs-sun-fill { fill: var(--haze); } .hs-sun { fill: none; stroke: var(--accent); stroke-width: 2; }
 .hs-line { stroke: var(--accent); stroke-width: 2; }
-.hero-h1 { grid-column: 1 / span 7; font-size: clamp(2.6rem, 0.2rem + 6.4vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; max-width: 9ch; margin: 0; font-weight: 600; }
-.hero-text { grid-column: 9 / -1; display: grid; gap: var(--s4); justify-items: start; min-width: 0; }
-.hero-lead { font-size: var(--t-body); line-height: 1.55; max-width: 40ch; }
-.hero-text .button-row { margin-top: var(--s2); }
-/* the recent-work line: a thumbnail, the site's name, and the way to the Work page */
-.hero-recent { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.75rem 1rem; width: 100%; margin-top: var(--s4); padding-top: var(--s4); border-top: var(--rule-soft); text-decoration: none; color: var(--ink); font-size: var(--t-small); }
-.hero-recent-frame { position: relative; display: block; width: 5.5rem; aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-2); }
-.hero-recent-frame::after { content: ""; position: absolute; inset: 0; border: 1px solid rgb(36 34 31 / 0.14); pointer-events: none; }
-.hero-recent-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top; opacity: 0; transition: opacity 1100ms ease; }
-.hero-recent-frame img.is-on { opacity: 1; }
-.hero-recent-text { display: grid; gap: 0.05rem; align-content: center; min-height: calc(3 * 1.4em); line-height: 1.4; min-width: 0; }
-.hero-recent-k { color: var(--muted); }
-.hero-recent-name { font-weight: 600; }
-.hero-recent-go { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; white-space: nowrap; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 1.5px; text-underline-offset: 0.2em; }
-.hero-recent-go .icon { width: 1rem; height: 1rem; color: var(--accent); transition: transform 200ms var(--ease-out); }
-.hero-recent:hover .hero-recent-go .icon { transform: translateX(3px); }
-.hero-recent:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-@media (max-width: 79.99em) {
-  .hero-grid { align-items: start; }
-  .hero-h1 { grid-column: 1 / span 6; }
-  .hero-text { grid-column: 8 / -1; }
-}
+.hero-h1 { grid-column: 1 / -1; font-size: clamp(2.6rem, 0.2rem + 6.4vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; max-width: 15ch; margin: 0; font-weight: 600; }
+/* V21: one ruled row under the headline, the sentence left and the buttons right, so the words and the actions read as one block */
+.hero-text { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4) var(--s5); min-width: 0; padding-top: var(--s4); border-top: var(--rule-soft); }
+.hero-lead { font-size: var(--t-lead); line-height: 1.45; max-width: 40ch; }
+.hero-text .button-row { margin-top: 0; }
 @media (max-width: 63.99em) {
   .hero-grid { row-gap: var(--s5); }
-  .hero-h1, .hero-text { grid-column: 1 / -1; }
   .hero-h1 { max-width: 11ch; }
 }
 @media (max-width: 47.99em) {
   .hero-grid { padding-block: 2rem 1.5rem; }
   .hero-text .button-row { width: 100%; }
-  .hero-recent { grid-template-columns: auto minmax(0, 1fr); }
-  .hero-recent-go { grid-column: 1 / -1; }
 }
 
 /* ------------------------------------------------------------------ How it works: your part, then mine, then one checkpoint

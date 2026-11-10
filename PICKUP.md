@@ -143,6 +143,10 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V21 (Nov 10 2026, ~00:50 UTC): hero in one block
+- Jeremy: the hero's right-hand column (lead, buttons, Recently built thumbnail) "looks bolted on". Three options shown (artifact E9dTp4c4owAbsovwiX71Ay); he picked **B, One row**: the headline runs wide across the top, then one ruled row with the sentence left and the buttons right. The Recently built thumbnail and its rotation script are gone (Work is in the menu).
+- Work page note "Made for phones too" is now "Looks right on every screen" (Jeremy: "make that sound better").
+
 ## V20 (Nov 10 2026, ~00:30 UTC): numbers band cut
 - Jeremy: "simpler is better", "this seems too sales focused" about the 5 days / 1 price / 30 days / $0 band under the hero. Cut completely (markup, NUMBERS data, CSS, count-up script). The hero now runs straight into How it works.
 

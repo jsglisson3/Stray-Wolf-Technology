@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '20'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '21'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -120,15 +120,11 @@ PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
 
 
 def hero():
-    """The words. The headline on the left; the lead, the buttons and one small picture of a recent site on the right.
-    The picture changes by itself every few seconds (site.js, "The hero"); the full showcase is on the Work page.
+    """The words. V21 (Nov 10 2026, Jeremy: the right-hand column "looks bolted on"): the headline runs wide across the top,
+    then one ruled row under it, the sentence on the left and the two buttons on the right. The "Recently built" thumbnail is gone;
+    Work is in the menu.
     V19 (Nov 9 2026, Jeremy picked "Horizon" of three): a paper-cut desert runs along the bottom edge, daytime tones, the wolf standing
     on the near ridge (the wolf and cactus shapes are the footer's, reused with <use>), cacti in cactus green, a thin orange sun."""
-    imgs = []
-    for i, s in enumerate(SITES):
-        im = s['image']
-        imgs.append(f'<img src="images/work/{im}-desktop-480.webp" srcset="images/work/{im}-desktop-240.webp 240w, images/work/{im}-desktop-480.webp 480w" sizes="88px" width="480" height="300" alt="{esc(s["name"])}: the homepage" class="{"is-on" if i == 0 else ""}" data-site-img data-name="{esc(s["name"])}" data-link="{esc(s["link"])}" data-domain="{esc(host(s["link"]))}"{"" if i == 0 else " loading=\"lazy\""} decoding="async">')
-    first = SITES[0]
     return f'''    <section class="hero has-facets" aria-labelledby="hero-h">
       <div class="wrap hero-grid">
         <h1 id="hero-h" class="hero-h1">{words(H1_A)} <em>{words(H1_B, len(H1_A.split()))}</em></h1>
@@ -138,11 +134,6 @@ def hero():
             <a class="button button-lg" href="start.html">Start a project{ARROW}</a>
             <a class="button button-quiet button-lg" href="#how">How it works</a>
           </div>
-          <a class="hero-recent" href="work.html" data-sites data-every="3200">
-            <span class="hero-recent-frame" aria-hidden="true">{''.join(imgs)}</span>
-            <span class="hero-recent-text"><span class="hero-recent-k">Recently built</span><span class="hero-recent-name" data-site-name>{esc(first['name'])}</span></span>
-            <span class="hero-recent-go">See the work{ARROW}</span>
-          </a>
         </div>
       </div>
       <svg class="hero-scene" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
