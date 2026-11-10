@@ -210,7 +210,7 @@ INCLUDED = [
     ('words', 'Help with the words', 'Clear pages people actually read.'),
     ('phone', 'Made for phones', 'Built for small screens first.'),
     ('globe', 'Domain and email set up', 'In your name. The registrar’s yearly fee is about $15.'),
-    ('search', 'Set up so Google can read it', 'Titles, descriptions, a fast site. No ranking promises.'),
+    ('search', 'Set up for search engines', 'Google, Bing, DuckDuckGo and more. No ranking promises.'),
     ('key', 'Yours to keep', 'Domain, content and site, once it’s paid for.'),
     ('calendar', 'Thirty days of fixes', 'Anything not right in the first month, fixed free.'),
 ]
@@ -242,7 +242,7 @@ rates_html = ''.join(f'''
           </li>''' for n, price, t, who in RATES)
 
 pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. Here’s where most projects land.',
-                         ['A price in writing first', 'Half to start, half at launch', 'No monthly fees, ever']) + f'''
+                         ['A price in writing first', 'A mockup first, credited in full', 'No monthly fees, ever']) + f'''
     <section class="section" aria-labelledby="rates-h">
       <div class="wrap">
         <header class="sec-head">

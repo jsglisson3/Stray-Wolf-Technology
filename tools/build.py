@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '30'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '31'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -177,12 +177,13 @@ PHASES = [
     ('First', 'You.', 'Tell me what you want.', [
         'A conversation about your business and your goals',
         'Your logo, and as many photos as you can',
-        'Your main headline or slogan. I’ll write the rest.']),
+        'Your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest.']),
     ('Then', 'Me.', 'I take over.', [
         'A price in writing, within five days',
         'Help finding a domain name that’s available',
         'The design and the build, start to finish',
-        'Domain, hosting and email set up']),
+        'Domain, hosting and email set up',
+        'SEO for Google, Bing, DuckDuckGo and more']),
     ('Before launch', 'Us.', 'One checkpoint.', [
         'You see it before anyone else',
         'You say yes, or tell me what to change',
@@ -206,16 +207,18 @@ def phases():
         <p class="phases-note" data-reveal>{icon('list')}<span>{PHASE_NOTE}</span></p>'''
 
 
-# ---- What I do: five services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler) ----
+# ---- What I do: six services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler.
+#      V31: search engine setup added at Jeremy's request, "SEO optimization for bing/google/duckduckgo and more") ----
 SERVICES = [('layout', 'Website design and build', 'Made for your business. No templates.'),
             ('wrench', 'Fixes and single pages', 'Something broken, or one new page. Days, not weeks.'),
             ('globe', 'Domain search and setup', 'I’ll help you find a name that’s available, then register it in your name.'),
             ('server', 'Hosting and small updates', 'No monthly fee. Changes quoted per job.'),
-            ('mail', 'Business email setup', 'you@yourbusiness.com, set up and handed over.')]
+            ('mail', 'Business email setup', 'you@yourbusiness.com, set up and handed over.'),
+            ('search', 'Search engine setup', 'Built so Google, Bing, DuckDuckGo and the rest can find and read it.')]
 
 
 def services():
-    """Five plates, each with a big line icon (the sprite), a name and one line."""
+    """Six plates, each with a big line icon (the sprite), a name and one line."""
     rows = ''.join(f'''
           <li class="svc" data-reveal><span class="plate-ic" aria-hidden="true">{icon(ic)}</span><h3>{h}</h3><p>{t}</p></li>''' for ic, h, t in SERVICES)
     return f'''        <ul class="svc-list" role="list">{rows}
@@ -326,7 +329,8 @@ FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, 
         ('Do you take every job?', 'No. I take the jobs I know I can do well, a few at a time. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
         ('How long does it take?', 'About 30 days from yes. If you have a date that matters, put it in the form.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
-        ('What do you need from me?', 'Your logo, as many photos as you can, and the words that matter most, like your main headline or slogan. I’ll write the rest. Once I take the job, I’ll send a short list of how to send it all. The 30 days starts when I have it.'),
+        ('Will my site show up on Google?', 'It’s built to. Every site gets the SEO basics: clear titles and descriptions, your business details in the format search engines read, a sitemap and fast pages. Then I submit it to Google and Bing. DuckDuckGo and Yahoo draw on Bing, so that covers them too. Nobody can honestly promise a ranking, so I don’t.'),
+        ('What do you need from me?', 'Your logo, as many photos as you can, and the words that matter most: your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest. Once I take the job, I’ll send a short list of how to send it all. The 30 days starts when I have it.'),
 ]
 
 

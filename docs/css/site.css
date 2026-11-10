@@ -379,11 +379,10 @@ html:not(.js) .phase::before, .phase.is-in::before, html:not(.js) .phase::after,
 
 /* ------------------------------------------------------------------ What I do: five services, one line each, ruled */
 /* the services: five plates with a big icon each */
-.svc-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s5) var(--s4); }
+.svc-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s6) var(--s5); }
 .svc { display: grid; gap: var(--s3); align-content: start; padding-top: var(--s4); border-top: var(--rule); }
 .svc h3 { font-size: var(--t-h4); letter-spacing: -0.02em; line-height: 1.12; }
 .svc p { font-size: var(--t-small); max-width: 26ch; }
-@media (max-width: 79.99em) { .svc-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 63.99em) { .svc-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 47.99em) { .svc-list { grid-template-columns: 1fr; gap: 0; } .svc { grid-template-columns: 3.25rem minmax(0, 1fr); column-gap: var(--s4); row-gap: 0.25rem; padding-block: var(--s4); } .svc .plate-ic { grid-row: 1 / span 2; } .svc p { max-width: none; } }
 /* the ridge: low hills rising out of the page into the charcoal work band, one cactus on the skyline */
