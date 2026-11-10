@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '27'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '30'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -169,20 +169,25 @@ def hero():
     </section>'''
 
 
-# ---- How it works (V16, Nov 9 2026): three columns. Everything up front is the client's, then Jeremy takes over, then one checkpoint.
+# ---- How it works (V16, Nov 9 2026): three columns. The client's part, then Jeremy takes over, then one checkpoint.
+# V29 (Nov 10 2026, Jeremy on how he really works): it starts with a conversation. From the client he needs the logo, as many photos
+# as they can send and the few words that matter most (a main headline or slogan); he writes the rest. He helps find a domain
+# name that is available, not just register it. Once he takes the job he sends a short list of what to send and how (PHASE_NOTE).
 PHASES = [
-    ('First', 'You.', 'Everything up front.', [
-        'What you want from the site',
-        'The words for each page',
-        'Your logo and your photos']),
+    ('First', 'You.', 'Tell me what you want.', [
+        'A conversation about your business and your goals',
+        'Your logo, and as many photos as you can',
+        'Your main headline or slogan. I’ll write the rest.']),
     ('Then', 'Me.', 'I take over.', [
         'A price in writing, within five days',
+        'Help finding a domain name that’s available',
         'The design and the build, start to finish',
         'Domain, hosting and email set up']),
     ('Before launch', 'Us.', 'One checkpoint.', [
         'You see it before anyone else',
         'You say yes, or tell me what to change',
         'Then it goes live'])]
+PHASE_NOTE = 'Once I take the job, I’ll send a short list of what I need and how to send it: your photos, your logo, the key words, and your current site if you have one.'
 
 
 def phases():
@@ -197,13 +202,14 @@ def phases():
             <ul class="phase-list" role="list">{rows}</ul>
           </li>''')
     return f'''        <ol class="phases" role="list">{''.join(cols)}
-        </ol>'''
+        </ol>
+        <p class="phases-note" data-reveal>{icon('list')}<span>{PHASE_NOTE}</span></p>'''
 
 
 # ---- What I do: five services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler) ----
 SERVICES = [('layout', 'Website design and build', 'Made for your business. No templates.'),
             ('wrench', 'Fixes and single pages', 'Something broken, or one new page. Days, not weeks.'),
-            ('globe', 'Domain registration and setup', 'In your name, pointed at your site.'),
+            ('globe', 'Domain search and setup', 'I’ll help you find a name that’s available, then register it in your name.'),
             ('server', 'Hosting and small updates', 'No monthly fee. Changes quoted per job.'),
             ('mail', 'Business email setup', 'you@yourbusiness.com, set up and handed over.')]
 
@@ -320,7 +326,7 @@ FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, 
         ('Do you take every job?', 'No. I take the jobs I know I can do well, a few at a time. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
         ('How long does it take?', 'About 30 days from yes. If you have a date that matters, put it in the form.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
-        ('What do you need from me?', 'Three things: what you want, the words for each page, and your logo and photos. The 30 days starts when I have them. Nothing yet? Say so and we’ll work it out.'),
+        ('What do you need from me?', 'Your logo, as many photos as you can, and the words that matter most, like your main headline or slogan. I’ll write the rest. Once I take the job, I’ll send a short list of how to send it all. The 30 days starts when I have it.'),
 ]
 
 

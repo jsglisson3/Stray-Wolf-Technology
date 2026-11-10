@@ -306,7 +306,7 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 .hs-wolf { fill: var(--ink); } .hs-cactus { fill: var(--sage); } .hs-cactus-far { fill: var(--sage); opacity: 0.45; }
 .hs-sun { fill: #EA9C66; }
 /* V22: the wolf runs in once and stops on the ridge. The legs take their colour from --leg (the footer's are pale). */
-.hs-wolf { --leg: var(--ink); }
+.hs-wolf { --leg: var(--ink); --eye: var(--paper); --glint: 0; --eye-scale: 1.15; }
 .hs-run { opacity: 0; }
 .hs-howl { opacity: 0; }
 @media (prefers-reduced-motion: no-preference) {
@@ -339,12 +339,19 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 /* ------------------------------------------------------------------ How it works: your part, then mine, then one checkpoint
    Three columns under a heavy rule: You. / Me. / Us. A small label with an arrow says the order; a short list under each. */
 .phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s6) var(--s5); }
-.phase { position: relative; display: grid; gap: var(--s3); align-content: start; padding-top: calc(var(--s4) + 2px); --phase: var(--ink); }
-.phase::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--phase); transform: scaleX(0); transform-origin: left; transition: transform 1000ms var(--ease-out) var(--rd, 0ms); }
-html:not(.js) .phase::before, .phase.is-in::before { transform: scaleX(1); }
-.phase-1 { --phase: var(--sage); }
-.phase-2 { --phase: var(--accent); }
-.phase-3 { --phase: var(--dusk); }
+/* V29 (Nov 10 2026, Jeremy: "how can you make this piece special"): the trail. One line runs through the three steps and draws
+   itself from You to Us when the section scrolls in, turning from green to orange to blue on the way, with a small marker where
+   each step starts. On phones and tablets the steps stack, so the trail runs down the left side instead.
+   ::before is this step's stretch of the line (it reaches across the gap to the next step), ::after is the marker.
+   --td is when this step's stretch starts drawing; each one starts as the one before it finishes. */
+.phase { position: relative; display: grid; gap: var(--s3); align-content: start; padding-top: calc(var(--s4) + 8px); --phase: var(--ink); --next: var(--phase); --td: 0ms; }
+.phase::before { content: ""; position: absolute; left: 0; right: calc(var(--s5) * -1); top: 4px; height: 2px; background: linear-gradient(90deg, var(--phase) 0 60%, var(--next)); transform: scaleX(0); transform-origin: left; transition: transform 600ms linear calc(var(--td) + 250ms); }
+.phase-3::before { right: 0; transition-duration: 900ms; transition-timing-function: var(--ease-out); }
+.phase::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--phase); box-shadow: 0 0 0 4px var(--stone); transform: scale(0); transition: transform 450ms cubic-bezier(0.3, 1.5, 0.5, 1) calc(var(--td) + 150ms); }
+html:not(.js) .phase::before, .phase.is-in::before, html:not(.js) .phase::after, .phase.is-in::after { transform: none; }
+.phase-1 { --phase: var(--sage); --next: var(--accent); }
+.phase-2 { --phase: var(--accent); --next: var(--dusk); --td: 600ms; }
+.phase-3 { --phase: var(--dusk); --td: 1200ms; }
 .phase-k, .phase-h, .phase-list .icon { color: var(--phase); }
 .phase-k { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 650; font-size: var(--t-small); }
 .phase-k .icon { width: 1rem; height: 1rem; }
@@ -356,7 +363,19 @@ html:not(.js) .phase::before, .phase.is-in::before { transform: scaleX(1); }
 .phase-list { display: grid; gap: 0.55rem; margin-top: var(--s2); padding-top: var(--s3); border-top: var(--rule-soft); }
 .phase-list li { display: flex; gap: 0.6rem; align-items: flex-start; line-height: 1.4; }
 .phase-list .icon { width: 1.1rem; height: 1.1rem; flex: none; margin-top: 0.2rem; }
-@media (max-width: 63.99em) { .phases { grid-template-columns: 1fr; gap: var(--s6); } .phase-lead { max-width: 36ch; } }
+@media (max-width: 63.99em) {
+  .phases { grid-template-columns: 1fr; gap: var(--s6); }
+  .phase-lead { max-width: 36ch; }
+  /* the trail runs down the left side; each step draws its own stretch as it scrolls in */
+  .phase { padding-top: 0; padding-left: 1.9rem; --td: 0ms; }
+  .phase::before { left: 4px; right: auto; top: 0.5rem; bottom: calc(var(--s6) * -1 - 0.5rem); width: 2px; height: auto; background: linear-gradient(180deg, var(--phase) 0 60%, var(--next)); transform: scaleY(0); transform-origin: top; transition-duration: 900ms; transition-timing-function: var(--ease-out); }
+  .phase-3::before { right: auto; bottom: 0; }
+  .phase::after { top: 0.3rem; }
+}
+/* what happens once the job is on: one quiet line under the three steps */
+.phases-note { display: flex; gap: 0.75rem; align-items: flex-start; margin-top: var(--s7); padding-top: var(--s4); border-top: var(--rule-soft); max-width: 62rem; line-height: 1.5; }
+.phases-note .icon { flex: none; width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; color: var(--sage-ink); }
+.phases-note span { max-width: 78ch; }
 
 /* ------------------------------------------------------------------ What I do: five services, one line each, ruled */
 /* the services: five plates with a big icon each */
@@ -370,7 +389,7 @@ html:not(.js) .phase::before, .phase.is-in::before { transform: scaleX(1); }
 /* the ridge: low hills rising out of the page into the charcoal work band, one cactus on the skyline */
 .ridge { position: absolute; left: 0; right: 0; bottom: 100%; width: 100%; height: clamp(3rem, 6vw, 6rem); display: block; }
 .ridge-far { fill: var(--stone-2); }
-.ridge-near { fill: var(--ink); }
+.ridge-near { fill: var(--ink); --eye: var(--paper); --glint: 0; --eye-scale: 1.45; }
 
 /* ------------------------------------------------------------------ Mounts: a real site on stone, the same way everywhere */
 .mount { position: relative; background: var(--stone); padding: clamp(1rem, 3.2vw, 3rem); }
@@ -787,6 +806,11 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .pose-howl { animation: pose-howl 18s linear infinite; }
 .moon-glow { transform-box: fill-box; transform-origin: center; animation: moon-glow 18s ease-in-out infinite; }
 .leg-up, .leg-lo { fill: none; stroke: var(--leg, #F4F2EE); stroke-linecap: round; stroke-linejoin: round; }
+/* V30: every wolf has an eye. Round, with a small glint, so it reads friendly, like a dog's. Each scene sets the colours and the
+   size through custom properties, which reach into <use>: dark eye with a pale glint on the pale footer wolf (the default),
+   a plain pale eye, a little larger, on the small dark wolves in the hero and on the ridge. */
+.wolf-eye { fill: var(--eye, #24221F); transform: scale(var(--eye-scale, 1)); }
+.wolf-glint { fill: var(--eye-glint, #F4F2EE); opacity: var(--glint, 1); }
 .leg-up { stroke-width: 11; }
 .leg-lo { stroke-width: 7; }
 .leg-far { opacity: 0.8; }
@@ -881,7 +905,7 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .site-header.is-hidden { transform: none; }
-  .phase::before { transform: none; }
+  .phase::before, .phase::after { transform: none; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 @media print {

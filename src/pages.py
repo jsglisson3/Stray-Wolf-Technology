@@ -129,7 +129,7 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Six quick quest
             <ol class="next-steps" role="list">
               <li><strong>Within 5 days</strong>I read your answers and reply. If it’s not something I can do well, I’ll say so.</li>
               <li><strong>Before anything starts</strong>You get a price in writing.</li>
-              <li><strong>Your part</strong>You send the words, photos and logo.</li>
+              <li><strong>Your part</strong>You send your logo, photos and key words.</li>
               <li><strong>About 30 days</strong>Your site goes live.</li>
             </ol>
           </div>
@@ -179,7 +179,7 @@ thanks_main = end_page('Got it. Thanks.', 'Your answers are in. Here’s what ha
             <li class="is-done"><span class="ts-n">{icon('check')}</span><span><strong>Your answers are in</strong>Nothing else to do right now.</span></li>
             <li><span class="ts-n">2</span><span><strong>I reply within five days</strong>With questions, a time to talk, or an honest no if it’s not something I can do well.</span></li>
             <li><span class="ts-n">3</span><span><strong>A price in writing</strong>Before anything starts.</span></li>
-            <li><span class="ts-n">4</span><span><strong>Your part</strong>You send the words, photos and logo.</span></li>
+            <li><span class="ts-n">4</span><span><strong>Your part</strong>You send your logo, photos and key words.</span></li>
             <li><span class="ts-n">5</span><span><strong>Live in about 30 days</strong>Only once you’ve seen it and said yes.</span></li>
           </ol>
 ''' + go_cards([('index.html', 'arrow-left', 'Back to the homepage', 'Where you started'), ('work.html', 'layout', 'See the work', 'Sites I’ve built')], 'Where to next'),

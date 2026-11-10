@@ -5,7 +5,7 @@
       <div class="wrap">
         <header class="sec-head">
           <h2 id="how-h" class="h2" data-reveal>Your part, then mine.</h2>
-          <p class="lead" data-reveal>Yours up front. Then mine. One checkpoint before launch.</p>
+          <p class="lead" data-reveal>It starts with a conversation. Then your part, then mine, and one checkpoint before launch.</p>
         </header>
 {{TIMELINE}}
       </div>
@@ -21,12 +21,16 @@
     </section>
 
     <section class="section work-band ink-grain" id="work" aria-labelledby="work-h">
-      <!-- the ridge: the charcoal band rises out of the page as low hills, with one cactus on the skyline (the footer scene, by day) -->
-      <svg class="ridge" viewBox="0 0 1200 64" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
-        <path class="ridge-far" d="M0 64 V34 L110 26 L240 40 L370 18 L500 34 L610 14 L720 30 L860 10 L990 28 L1100 18 L1200 26 V64Z"/>
-        <path class="ridge-near" d="M0 64 V50 L130 42 L290 54 L420 40 L560 50 L690 44 L820 55 L950 46 L1090 56 L1200 48 V64Z"/>
-        <g class="ridge-near" transform="translate(452 42) scale(0.2)"><use href="#wolf-far-hind"/><use href="#wolf-far-front"/><use href="#wolf-level"/></g>
-        <g class="ridge-near" transform="translate(760 50) scale(0.3)">
+      <!-- the ridge: the charcoal band rises out of the page as low hills, with a wolf and a cactus on the skyline (the footer scene, by day).
+           V28 (Nov 10 2026, Jeremy: "the wolf gets cut off so does the cactus"): the hills are twice as wide (2400) and the scene is scaled
+           by its height, so wider screens show more hills instead of zooming in and cutting off the wolf's head and the cactus top.
+           The wolf and the cactus each stand on a short level ledge, so their feet sit on the ridge line. They stay near the middle
+           (1052 and 1360), which is all a phone shows. -->
+      <svg class="ridge" viewBox="0 0 2400 64" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+        <path class="ridge-far" d="M0 64 V30 L120 20 L260 34 L400 16 L520 28 L600 34 L710 26 L840 40 L970 18 L1100 34 L1210 14 L1320 30 L1460 10 L1590 28 L1700 18 L1800 26 L1930 12 L2060 30 L2190 16 L2300 32 L2400 22 V64Z"/>
+        <path class="ridge-near" d="M0 64 V46 L150 54 L300 44 L450 53 L600 50 L730 42 L890 54 L1010 41 L1075 41 L1160 50 L1290 44 L1345 50 L1378 50 L1420 55 L1550 46 L1690 56 L1800 48 L1940 54 L2080 45 L2240 55 L2400 47 V64Z"/>
+        <g class="ridge-near" transform="translate(1052 41) scale(0.2)"><use href="#wolf-far-hind"/><use href="#wolf-far-front"/><use href="#wolf-level"/></g>
+        <g class="ridge-near" transform="translate(1361 50) scale(0.3)">
           <path d="M-13 0 V-100 Q-13 -116 0 -116 Q13 -116 13 -100 V0 Z"/>
           <path d="M-13 -50 H-30 V-84 Q-30 -98 -40 -98 Q-50 -98 -50 -84 V-42 Q-50 -30 -38 -30 H-13 Z"/>
           <path d="M13 -66 H30 V-92 Q30 -106 40 -106 Q50 -106 50 -92 V-54 Q50 -42 38 -42 H13 Z"/>
