@@ -143,6 +143,21 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V26 (Nov 10 2026, ~03:25 UTC): the header sky, polished
+- Jeremy, right after the moon moved: "Can u work on it alot more polish this up even more". Read as the header and its moon (said so in the thread).
+- The moon is shaded like a moon now, not a flat dot: lit from the upper left, five faint seas, a tight warm halo that fits inside the bar, and a soft ring that goes out and fades with the howl (`.hdr-moon i`, `moonring`, same 16s clock). A patch of plain night behind it hides any star that would touch it. `--moon` is the disc width (18px phone, 22px laptop, 28px wide); everything else is sized from it. The footer scene's moon has the same shading (`#moon-lit`, `#moon-sea` in src/layout.html).
+- Stars: three sizes, two with a faint warm or cool tint, all placed in one evenly spread pass so they never bunch up. Edge stars (`.hdr-sky`, `.hdr-stars`) run the full width along the top and bottom of the bar. Open-sky stars (`.hdr-field`, three layers) are masked out over the logo and over the links, so no star ever sits on a letter. If the logo or the links change width, change the mask numbers in the Header block. The twinkle is gentler (`hdr-twinkle`, 0.5 to 1).
+- Shooting star: a faint tail with a bright head, crossing only open sky (left of the links on desktop, left of the moon on tablets, off on phones). Its travel is set by `--sx`, `--sy`, `--sa`.
+- Sizes and positions in the sky are in % of the bar (`--b`), not vw, so a scrollbar does not shift them.
+- The star maps are generated, not hand-typed. The generator is not in the repo; to change the stars, edit the `background:` lists directly or ask for a new map.
+- VERSION is '26'. Checks: axe 0 on all 10 pages, no sideways scroll 320 to 1920, form/menu tests pass, 0 running animations with reduced motion, pause button stops header + hero.
+
+## V25 (Nov 10 2026, ~02:55 UTC): the moon moves to the top right of the header
+- Jeremy, on the moon rising behind the logo wolf: "okay i see it but dont put it here i dont like that maybe the top right of the header or something". Rule: nothing behind or around the logo. Keep the logo clean.
+- The moon is now `.hdr-moon`, an `<i>` inside `.hdr-sky` (src/layout.html), a small bright disc with a soft halo. `.brand-moon` is gone. Placement by width (Header block of the CSS): 1568px and up, in the open sky right of the button, halfway to the screen edge; 1024 to 1567px, smaller and higher in the top right corner past the button; tablets, just left of the Menu button; phones, midway between the logo and the Menu button; under 360px wide it is hidden (no room).
+- Unchanged: the 16s clock (moon glows, logo wolf's eyes light up, ridge wolf howls), stars, shooting star, ember, pause button, reduced motion. The V24 notes below still describe those; only the moon's place and markup changed.
+- VERSION is '25'. Checks: axe 0 on all 10 pages, no sideways scroll 320 to 1920, form/menu tests pass, 0 running animations with reduced motion, pause button stops header + hero.
+
 ## V24 (Nov 10 2026, ~02:35 UTC): the header comes alive, and howls with the hero
 - Jeremy: "add some movement to it", "use all your UI/UX powers", "have a moon involved and tie it in with the wolf", then (with a shot of header + hero) "make them both work together". The idea: one sky. The sun sets on the right in the hero while a full moon comes up on the left in the header.
 - Header (`.hdr-sky` in src/layout.html, CSS at the top of the Header block): stars in two layers that twinkle out of step plus a few still ones, a shooting star about every 23s, an ember that runs along the orange line every 11s, and a pale moon (`.brand-moon`) that rises behind the logo wolf on load. The moon is one square with a radial gradient (disc = inner 58%, halo fades to nothing at the edge) so it never shows a cut edge; it is sized and placed in % of the logo box (head centre is 11.4% across).
