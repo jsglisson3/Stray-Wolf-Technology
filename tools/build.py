@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '23'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '24'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -120,7 +120,9 @@ PROMISES = [('craft', 'Made for you', 'No templates or page builders'),
 
 
 def hero():
-    """The words. V22 (Nov 10 2026, final polish): the sun is a soft filled disc with a glow, half behind the far hills, and on load
+    """The words. V24 (Nov 10 2026): the wolf on the ridge lifts its head and howls every 16 seconds, in step with the moon
+    behind the logo in the header (the cross-fade between the level and the howling silhouette, as in the footer).
+    V22 (Nov 10 2026, final polish): the sun is a soft filled disc with a glow, half behind the far hills, and on load
     the wolf runs in from the left and stops on the ridge, once (it stands still for anyone with reduced motion).
     V21 (Nov 10 2026, Jeremy: the right-hand column "looks bolted on"): the headline runs wide across the top,
     then one ruled row under it, the sentence on the left and the two buttons on the right. The "Recently built" thumbnail is gone;
@@ -150,7 +152,7 @@ def hero():
         <g transform="translate(1110 132) scale(0.26)" class="hs-cactus"><use href="#cactus"/></g>
         <path class="hs-near" d="M0 150 V134 L160 128 L320 136 L480 126 L640 134 L800 128 L960 138 L1120 130 L1200 134 V150Z"/>
         <g transform="translate(440 130) scale(0.42)" class="hs-wolf">
-          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use href="#wolf-level"/></g>
+          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use class="hs-level" href="#wolf-level"/><use class="hs-howl" href="#wolf-howl"/></g>
           <g class="hs-run"><g class="run-body"><use href="#wolf-run"/><use class="gait-1" href="#wolf-legs-1"/><use class="gait-2" href="#wolf-legs-2"/><use class="gait-3" href="#wolf-legs-3"/><use class="gait-4" href="#wolf-legs-4"/></g></g>
         </g>
         <path d="M0 150 H1200" class="hs-line"/>

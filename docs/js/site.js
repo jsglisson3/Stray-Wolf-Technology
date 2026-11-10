@@ -188,6 +188,7 @@
     const btn = scene.querySelector('[data-scene-toggle]');
     if (btn) btn.addEventListener('click', () => {
       const paused = scene.classList.toggle('is-paused');
+      document.documentElement.classList.toggle('scene-paused', paused);   // the header sky and the hero wolf stop with it
       btn.setAttribute('aria-label', paused ? 'Play the animation' : 'Pause the animation');
     });
     if ('IntersectionObserver' in window) {

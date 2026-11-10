@@ -30,7 +30,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=23">
+  <link rel="stylesheet" href="css/site.css?v=24">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="inner">
@@ -75,10 +75,12 @@
   <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>
 
   <header class="site-header" data-header>
+    <!-- the night sky behind the bar: two layers of stars that twinkle out of step, and a rare shooting star -->
+    <div class="hdr-sky" aria-hidden="true"><i class="hdr-stars"></i><i class="hdr-stars hdr-stars-2"></i><i class="hdr-shoot"></i></div>
     <div class="wrap header-wrap">
       <div class="header-row">
         <div class="brand-group">
-          <a class="brand" href="index.html"><img src="images/brand/stray-wolf-logo-reverse.svg" width="642" height="150" alt="Stray Wolf Technology, home"></a>
+          <a class="brand" href="index.html"><span class="brand-moon" aria-hidden="true"><i></i></span><img src="images/brand/stray-wolf-logo-reverse.svg" width="642" height="150" alt="Stray Wolf Technology, home"><svg class="brand-eyes" viewBox="0 0 641.6 150" aria-hidden="true" focusable="false"><g transform="translate(0,2) scale(0.73)"><path d="M70.48 101.79 L87.52 107.21 Q90.00 108.00 87.53 108.82 L77.47 112.18 Q75.00 113.00 73.69 110.75 L69.31 103.25 Q68.00 101.00 70.48 101.79Z"/><path d="M129.52 101.79 L112.48 107.21 Q110.00 108.00 112.47 108.82 L122.53 112.18 Q125.00 113.00 126.31 110.75 L130.69 103.25 Q132.00 101.00 129.52 101.79Z"/></g></svg></a>
         </div>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="menu-bars" aria-hidden="true"><span></span><span></span></span><span data-menu-label>Menu</span></button>
         <nav class="site-nav" id="site-nav" aria-label="Main">
@@ -257,6 +259,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=23" defer></script>
+  <script src="js/site.js?v=24" defer></script>
 </body>
 </html>

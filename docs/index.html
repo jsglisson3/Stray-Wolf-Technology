@@ -30,7 +30,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=23">
+  <link rel="stylesheet" href="css/site.css?v=24">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
   {
@@ -105,10 +105,12 @@
   <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>
 
   <header class="site-header" data-header>
+    <!-- the night sky behind the bar: two layers of stars that twinkle out of step, and a rare shooting star -->
+    <div class="hdr-sky" aria-hidden="true"><i class="hdr-stars"></i><i class="hdr-stars hdr-stars-2"></i><i class="hdr-shoot"></i></div>
     <div class="wrap header-wrap">
       <div class="header-row">
         <div class="brand-group">
-          <a class="brand" href="index.html"><img src="images/brand/stray-wolf-logo-reverse.svg" width="642" height="150" alt="Stray Wolf Technology, home"></a>
+          <a class="brand" href="index.html"><span class="brand-moon" aria-hidden="true"><i></i></span><img src="images/brand/stray-wolf-logo-reverse.svg" width="642" height="150" alt="Stray Wolf Technology, home"><svg class="brand-eyes" viewBox="0 0 641.6 150" aria-hidden="true" focusable="false"><g transform="translate(0,2) scale(0.73)"><path d="M70.48 101.79 L87.52 107.21 Q90.00 108.00 87.53 108.82 L77.47 112.18 Q75.00 113.00 73.69 110.75 L69.31 103.25 Q68.00 101.00 70.48 101.79Z"/><path d="M129.52 101.79 L112.48 107.21 Q110.00 108.00 112.47 108.82 L122.53 112.18 Q125.00 113.00 126.31 110.75 L130.69 103.25 Q132.00 101.00 129.52 101.79Z"/></g></svg></a>
         </div>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle><span class="menu-bars" aria-hidden="true"><span></span><span></span></span><span data-menu-label>Menu</span></button>
         <nav class="site-nav" id="site-nav" aria-label="Main">
@@ -150,7 +152,7 @@
         <g transform="translate(1110 132) scale(0.26)" class="hs-cactus"><use href="#cactus"/></g>
         <path class="hs-near" d="M0 150 V134 L160 128 L320 136 L480 126 L640 134 L800 128 L960 138 L1120 130 L1200 134 V150Z"/>
         <g transform="translate(440 130) scale(0.42)" class="hs-wolf">
-          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use href="#wolf-level"/></g>
+          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use class="hs-level" href="#wolf-level"/><use class="hs-howl" href="#wolf-howl"/></g>
           <g class="hs-run"><g class="run-body"><use href="#wolf-run"/><use class="gait-1" href="#wolf-legs-1"/><use class="gait-2" href="#wolf-legs-2"/><use class="gait-3" href="#wolf-legs-3"/><use class="gait-4" href="#wolf-legs-4"/></g></g>
         </g>
         <path d="M0 150 H1200" class="hs-line"/>
@@ -406,6 +408,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=23" defer></script>
+  <script src="js/site.js?v=24" defer></script>
 </body>
 </html>
