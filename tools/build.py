@@ -17,11 +17,11 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '21'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '22'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
-EMAIL = 'info@straywolftech.com'                    # e.g. 'jeremy@straywolftech.com'  (shows in the footer and on the Start page)
+EMAIL = 'info@straywolftech.com'                    # the public address (Google Workspace alias of jeremy@); shows in the footer, on Start and in the legal pages
 PHONE = ''                    # e.g. '(469) 555-0123'            (same places; tap to call on phones)
 BOOKING_URL = ''              # e.g. a Cal.com or Calendly link for "Book a 15-minute call"
 HEADSHOT = False              # True once docs/images/jeremy.webp is a real photo (4:3 or square, 1200px wide or more); used on the About page
@@ -120,7 +120,9 @@ PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
 
 
 def hero():
-    """The words. V21 (Nov 10 2026, Jeremy: the right-hand column "looks bolted on"): the headline runs wide across the top,
+    """The words. V22 (Nov 10 2026, final polish): the sun is a soft filled disc with a glow, half behind the far hills, and on load
+    the wolf runs in from the left and stops on the ridge, once (it stands still for anyone with reduced motion).
+    V21 (Nov 10 2026, Jeremy: the right-hand column "looks bolted on"): the headline runs wide across the top,
     then one ruled row under it, the sentence on the left and the two buttons on the right. The "Recently built" thumbnail is gone;
     Work is in the menu.
     V19 (Nov 9 2026, Jeremy picked "Horizon" of three): a paper-cut desert runs along the bottom edge, daytime tones, the wolf standing
@@ -137,7 +139,9 @@ def hero():
         </div>
       </div>
       <svg class="hero-scene" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
-        <circle cx="980" cy="48" r="26" class="hs-sun-fill"/><circle cx="980" cy="48" r="26" class="hs-sun"/>
+        <defs><radialGradient id="hs-glow"><stop offset=".4" stop-color="#E0763A" stop-opacity=".22"/><stop offset=".6" stop-color="#E0763A" stop-opacity=".08"/><stop offset="1" stop-color="#E0763A" stop-opacity="0"/></radialGradient></defs>
+        <circle cx="980" cy="70" r="66" fill="url(#hs-glow)"/>
+        <circle cx="980" cy="70" r="28" class="hs-sun"/>
         <path class="hs-far" d="M0 150 V92 L90 84 L180 90 L260 76 L330 80 L420 70 L520 84 L600 72 L700 80 L800 66 L900 78 L1000 70 L1100 82 L1200 74 V150Z"/>
         <g transform="translate(250 112) scale(0.2)" class="hs-cactus-far"><use href="#cactus"/></g>
         <path class="hs-mid" d="M0 150 V116 L120 106 L240 118 L380 102 L500 114 L620 104 L760 118 L880 108 L1020 120 L1200 110 V150Z"/>
@@ -145,7 +149,10 @@ def hero():
         <g transform="translate(900 128) scale(0.42)" class="hs-cactus"><use href="#cactus"/></g>
         <g transform="translate(1110 132) scale(0.26)" class="hs-cactus"><use href="#cactus"/></g>
         <path class="hs-near" d="M0 150 V134 L160 128 L320 136 L480 126 L640 134 L800 128 L960 138 L1120 130 L1200 134 V150Z"/>
-        <g transform="translate(440 130) scale(0.42)" class="hs-wolf"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use href="#wolf-level"/></g>
+        <g transform="translate(440 130) scale(0.42)" class="hs-wolf">
+          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use href="#wolf-level"/></g>
+          <g class="hs-run"><g class="run-body"><use href="#wolf-run"/><use class="gait-1" href="#wolf-legs-1"/><use class="gait-2" href="#wolf-legs-2"/><use class="gait-3" href="#wolf-legs-3"/><use class="gait-4" href="#wolf-legs-4"/></g></g>
+        </g>
         <path d="M0 150 H1200" class="hs-line"/>
       </svg>
     </section>'''
@@ -302,7 +309,7 @@ FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, 
         ('Do you take every job?', 'No. I take the jobs I know I can do well, a few at a time. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
         ('How long does it take?', 'About 30 days from yes. If you have a date that matters, put it in the form.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
-        ('What do you need from me?', 'Three things, your 10%: what you want, the words for each page, and your logo and photos. The 30 days starts when I have them. Nothing yet? Say so and we’ll work it out.'),
+        ('What do you need from me?', 'Three things: what you want, the words for each page, and your logo and photos. The 30 days starts when I have them. Nothing yet? Say so and we’ll work it out.'),
 ]
 
 

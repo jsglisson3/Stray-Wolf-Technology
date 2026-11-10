@@ -30,7 +30,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=21">
+  <link rel="stylesheet" href="css/site.css?v=22">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
   {
@@ -139,7 +139,9 @@
         </div>
       </div>
       <svg class="hero-scene" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
-        <circle cx="980" cy="48" r="26" class="hs-sun-fill"/><circle cx="980" cy="48" r="26" class="hs-sun"/>
+        <defs><radialGradient id="hs-glow"><stop offset=".4" stop-color="#E0763A" stop-opacity=".22"/><stop offset=".6" stop-color="#E0763A" stop-opacity=".08"/><stop offset="1" stop-color="#E0763A" stop-opacity="0"/></radialGradient></defs>
+        <circle cx="980" cy="70" r="66" fill="url(#hs-glow)"/>
+        <circle cx="980" cy="70" r="28" class="hs-sun"/>
         <path class="hs-far" d="M0 150 V92 L90 84 L180 90 L260 76 L330 80 L420 70 L520 84 L600 72 L700 80 L800 66 L900 78 L1000 70 L1100 82 L1200 74 V150Z"/>
         <g transform="translate(250 112) scale(0.2)" class="hs-cactus-far"><use href="#cactus"/></g>
         <path class="hs-mid" d="M0 150 V116 L120 106 L240 118 L380 102 L500 114 L620 104 L760 118 L880 108 L1020 120 L1200 110 V150Z"/>
@@ -147,7 +149,10 @@
         <g transform="translate(900 128) scale(0.42)" class="hs-cactus"><use href="#cactus"/></g>
         <g transform="translate(1110 132) scale(0.26)" class="hs-cactus"><use href="#cactus"/></g>
         <path class="hs-near" d="M0 150 V134 L160 128 L320 136 L480 126 L640 134 L800 128 L960 138 L1120 130 L1200 134 V150Z"/>
-        <g transform="translate(440 130) scale(0.42)" class="hs-wolf"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use href="#wolf-level"/></g>
+        <g transform="translate(440 130) scale(0.42)" class="hs-wolf">
+          <g class="hs-stand"><use href="#wolf-far-hind" opacity=".85"/><use href="#wolf-far-front" opacity=".85"/><use href="#wolf-level"/></g>
+          <g class="hs-run"><g class="run-body"><use href="#wolf-run"/><use class="gait-1" href="#wolf-legs-1"/><use class="gait-2" href="#wolf-legs-2"/><use class="gait-3" href="#wolf-legs-3"/><use class="gait-4" href="#wolf-legs-4"/></g></g>
+        </g>
         <path d="M0 150 H1200" class="hs-line"/>
       </svg>
     </section>
@@ -282,7 +287,7 @@
             </details>
             <details class="faq" data-reveal>
               <summary><span>What do you need from me?</span><span class="faq-ic" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span></summary>
-              <div class="faq-a"><p>Three things, your 10%: what you want, the words for each page, and your logo and photos. The 30 days starts when I have them. Nothing yet? Say so and we’ll work it out.</p></div>
+              <div class="faq-a"><p>Three things: what you want, the words for each page, and your logo and photos. The 30 days starts when I have them. Nothing yet? Say so and we’ll work it out.</p></div>
             </details>
         </div>
       </div>
@@ -401,6 +406,6 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=21" defer></script>
+  <script src="js/site.js?v=22" defer></script>
 </body>
 </html>

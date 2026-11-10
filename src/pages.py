@@ -129,7 +129,7 @@ start_main = page_head('Tell me about <em>your business.</em>', 'Six quick quest
             <ol class="next-steps" role="list">
               <li><strong>Within 5 days</strong>I read your answers and reply. If it’s not something I can do well, I’ll say so.</li>
               <li><strong>Before anything starts</strong>You get a price in writing.</li>
-              <li><strong>Your 10%</strong>You send the words, photos and logo.</li>
+              <li><strong>Your part</strong>You send the words, photos and logo.</li>
               <li><strong>About 30 days</strong>Your site goes live.</li>
             </ol>
           </div>
@@ -179,7 +179,7 @@ thanks_main = end_page('Got it. Thanks.', 'Your answers are in. Here’s what ha
             <li class="is-done"><span class="ts-n">{icon('check')}</span><span><strong>Your answers are in</strong>Nothing else to do right now.</span></li>
             <li><span class="ts-n">2</span><span><strong>I reply within five days</strong>With questions, a time to talk, or an honest no if it’s not something I can do well.</span></li>
             <li><span class="ts-n">3</span><span><strong>A price in writing</strong>Before anything starts.</span></li>
-            <li><span class="ts-n">4</span><span><strong>Your 10%</strong>You send the words, photos and logo.</span></li>
+            <li><span class="ts-n">4</span><span><strong>Your part</strong>You send the words, photos and logo.</span></li>
             <li><span class="ts-n">5</span><span><strong>Live in about 30 days</strong>Only once you’ve seen it and said yes.</span></li>
           </ol>
 ''' + go_cards([('index.html', 'arrow-left', 'Back to the homepage', 'Where you started'), ('work.html', 'layout', 'See the work', 'Sites I’ve built')], 'Where to next'),
@@ -310,7 +310,7 @@ page('reviews.html', 'Client reviews | Stray Wolf Technology', reviews_desc, rev
 # Conservative on purpose: plain first-person copy, but every protective point a Texas web business should cover.
 # A template, not legal advice. Update LEGAL_UPDATED whenever either page changes in substance.
 
-LEGAL_UPDATED = 'November 9, 2026'
+LEGAL_UPDATED = 'November 10, 2026'
 mail_me = (f'email {CONTACT["email"]}' if CONTACT['email'] else 'reply to any email from me')
 Mail_me = mail_me[0].upper() + mail_me[1:]
 
@@ -340,7 +340,7 @@ PRIVACY = [
     ('who', 'Who I am', f'<p>This site belongs to Stray Wolf Technology, a web design business based in Texas. On this page, “I” and “me” mean Stray Wolf Technology. Questions about your privacy? {Mail_me}.</p>'),
     ('collects', 'What this site collects', '<p>Only what you choose to send. On the Start a project page, that’s your name, business name and email, plus anything else you add, like a phone number, a link or a note. If you email me, I get what’s in your email.</p><p>This site sets no cookies and runs no analytics, ads or tracking. Its fonts load from this site, not from Google or anyone else.</p>'),
     ('used', 'How I use it', '<p>To reply to you, understand your project and send you a price. If you become a client, also to run the project, send invoices and keep the records the law asks a business to keep.</p><p>I don’t sell your details. I don’t share them for anyone’s marketing, and I won’t add you to a mailing list.</p>'),
-    ('shared', 'Who else handles it', '<p>A few services keep this site and my email running. Each one only gets what it needs to do its job:</p><ul><li><strong>Web3Forms</strong> delivers the form to my inbox.</li><li><strong>Cloudflare</strong> runs the domain and forwards email.</li><li><strong>Google</strong> stores my email in Gmail.</li><li><strong>GitHub</strong> hosts the site. Like most hosts, it keeps short technical logs, such as IP addresses, to keep the service secure.</li></ul><p>Each of these companies has its own privacy policy. If a team member or contractor helps on your project, they see only what the project needs and must keep it private. I’ll also share information if the law requires it, or to protect my rights or someone’s safety.</p>'),
+    ('shared', 'Who else handles it', '<p>A few services keep this site and my email running. Each one only gets what it needs to do its job:</p><ul><li><strong>Web3Forms</strong> delivers the form to my inbox.</li><li><strong>Cloudflare</strong> runs the domain.</li><li><strong>Google Workspace</strong> handles my email.</li><li><strong>GitHub</strong> hosts the site. Like most hosts, it keeps short technical logs, such as IP addresses, to keep the service secure.</li></ul><p>Each of these companies has its own privacy policy. If a team member or contractor helps on your project, they see only what the project needs and must keep it private. I’ll also share information if the law requires it, or to protect my rights or someone’s safety.</p>'),
     ('kept', 'How long I keep it', '<p>If your project doesn’t go ahead, I delete your form answers within 12 months. If you become a client, I keep project emails and invoices as long as tax and business records require, usually up to seven years. Anything I don’t need to keep, I’ll delete when you ask.</p>'),
     ('safe', 'Keeping it safe', '<p>My accounts use strong passwords and two-step login, and this whole site runs over a secure connection (HTTPS). Even so, no website, form or email is ever completely secure, and I can’t promise it will be.</p><p class="pv-warn"><strong>Please don’t send passwords, card or bank numbers, Social Security numbers or health information through the form or by email.</strong> If your project needs a login, I’ll set up a safer way to share it.</p>'),
     ('choices', 'Your choices', f'<p>You can ask to see what I have about you, correct it or delete it. {Mail_me}. I’ll answer within 30 days, and asking won’t change how I treat you.</p>'),
