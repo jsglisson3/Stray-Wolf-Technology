@@ -1,6 +1,6 @@
 # Stray Wolf Technology website
 
-The website for Stray Wolf Technology: bespoke, hand-built websites, by referral, for businesses anywhere in the US.
+The website for Stray Wolf Technology: bespoke websites, by referral, for owner-run businesses.
 This is the rebrand of the Firemark site. The Firemark site and its notes stay in the old `jsglisson3/Firemark` repository.
 
 Start with **PICKUP.md**. It has where things stand, the before-launch list and how to publish.

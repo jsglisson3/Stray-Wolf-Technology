@@ -22,7 +22,7 @@ Preview of the current build: https://claude.ai/artifact/4Ra3dXbmWZopH7tLtSyNQQ
 
 - Name **Stray Wolf Technology**; brand shows "Stray Wolf" with small "Technology". Logo locked (Zilla Slab wordmark with the cactus t, faceted wolf).
 - Headline: **"A website built around your needs."**
-- Positioning on the site: bespoke, hand-built websites; one person; by referral only; a few clients at a time.
+- Positioning on the site: bespoke websites made for one business, no templates or page builders; by referral only; a few clients at a time. Never "hand-built" or "by hand" (see V23).
 - Services (What I do): website design and build; domain registration and setup; hosting and small updates; business email setup (renamed from "email at your own domain" Nov 9: a professional address instead of a Gmail, set up and handed over). **Not** Google Business Profile or social media.
 - Client sites: a simple list, one clean image and a link each, never case studies. On the homepage they sit near the end, in a carousel.
 - No Texas or personal-background copy on the site. Jeremy by first name only. Pricing stays "a price in writing", no numbers.
@@ -142,6 +142,13 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - **Legal (from the "Protect my business" thread):** Privacy rewritten, new terms.html (in PUBLIC and the sitemap), a required consent checkbox on the Start form (posts `consent=...` to Web3Forms), site.js counts a required checkbox, legal.css appended.
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
+
+## V23 (Nov 10 2026, ~02:15 UTC): the night bar header, no more "by hand"
+- Jeremy: "make the header a standout piece". Three options shown (artifact E9dTp4c4owAbsovwiX71Ay: Night bar / Centered sign / Floating plate); he picked **A, Night bar**. The header is charcoal with ten faint stars (radial gradients) and a 2px orange line under it, the same night as the footer scene. Reverse logo, light links, flame underline on the current page; the Start button turns pale on the Start page. The phone menu is a charcoal sheet. theme-color is #24221F. Focus rings inside the header are flame.
+- Logo: Jeremy asked for TECHNOLOGY "like 2 percent bigger". It is 15% bigger in all eight lockups in docs/images/brand (the path is wrapped in `<g data-tech="1.15" transform=...>`, anchored left-top in the horizontal lockup and centre-top in the stacked one). 2% would not have been visible. The email signature PNGs in docs/images/email were made before this and were left alone.
+- **Copy rule (Jeremy, Nov 10): no "by hand", "hand-built" or similar anywhere.** He asked if it was fair to call building with AI "by hand"; it isn't, so every one came out. What the site says now: "custom", "made for one business", "no templates, no page builders", "one site for one business". Hero lead is "Websites that don't look like everyone else's." Work headline is "Sites I've designed and built." Footer tag is "Bespoke websites. By referral, for owner-run businesses."
+- tools/og-card.html is now the real source of the link preview card (night scene); the card was re-rendered with the new logo.
+- Hosting question (same hour): client sites are plain files, so the "$0 a month" line holds on free static hosting. Advice given: Cloudflare Pages in an account in the client's name (GitHub Pages terms don't suit hosting other people's business sites).
 
 ## V22 (Nov 10 2026, ~01:10 UTC): final touches
 - Jeremy asked if there were final tweaks to put it over the top. Five small ones, nothing new on the page (plus the email move: privacy page names Google Workspace, legal date Nov 10):

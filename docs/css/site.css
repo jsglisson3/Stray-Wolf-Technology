@@ -160,26 +160,30 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
 .draft-banner { background: var(--note-bg); color: var(--note-ink); text-align: center; font-size: var(--t-small); padding: 0.5rem var(--gutter); }
 
 /* ------------------------------------------------------------------ Header
-   A plain paper bar with a charcoal rule under it. It tucks away while you read down and comes back
-   the moment you scroll up (site.js adds .is-scrolled and .is-hidden). On phones the menu opens as a full sheet. */
-.site-header { position: sticky; top: 0; z-index: 30; background: var(--paper); border-bottom: var(--rule-soft); transition: transform 380ms var(--ease-out), border-color 200ms ease; }
+   V23 (Nov 10 2026, Jeremy: "make the header a standout piece", picked from three): the night bar. Charcoal with a few faint
+   stars and the orange ground line under it, the same night as the footer scene, so the page opens and closes on one note.
+   It tucks away while you read down and comes back the moment you scroll up (site.js adds .is-scrolled and .is-hidden).
+   On phones the menu opens as a full charcoal sheet. */
+.site-header { position: sticky; top: 0; z-index: 30; background-color: var(--ink); color: var(--on-ink); border-bottom: 2px solid var(--accent); transition: transform 380ms var(--ease-out), box-shadow 200ms ease;
+  background-image: radial-gradient(circle at 12% 30%, rgb(244 242 238 / 0.55) 0 1px, transparent 1.6px), radial-gradient(circle at 31% 72%, rgb(244 242 238 / 0.35) 0 1px, transparent 1.6px), radial-gradient(circle at 47% 22%, rgb(244 242 238 / 0.5) 0 1.2px, transparent 1.7999999999999998px), radial-gradient(circle at 58% 64%, rgb(244 242 238 / 0.3) 0 1px, transparent 1.6px), radial-gradient(circle at 71% 38%, rgb(244 242 238 / 0.45) 0 1px, transparent 1.6px), radial-gradient(circle at 86% 78%, rgb(244 242 238 / 0.35) 0 1.2px, transparent 1.7999999999999998px), radial-gradient(circle at 95% 26%, rgb(244 242 238 / 0.5) 0 1px, transparent 1.6px), radial-gradient(circle at 4% 80%, rgb(244 242 238 / 0.3) 0 1px, transparent 1.6px), radial-gradient(circle at 22% 14%, rgb(244 242 238 / 0.3) 0 1px, transparent 1.6px), radial-gradient(circle at 64% 12%, rgb(244 242 238 / 0.3) 0 1px, transparent 1.6px); }
+.site-header :focus-visible { outline-color: var(--flame); }
 .site-header.is-hidden:not(:focus-within) { transform: translateY(-100%); }
-.site-header.is-scrolled { border-bottom-color: var(--ink); box-shadow: 0 10px 30px -22px rgba(36, 34, 31, 0.45); }
+.site-header.is-scrolled { box-shadow: 0 12px 30px -18px rgba(36, 34, 31, 0.6); }
 .header-row { display: flex; align-items: center; justify-content: space-between; gap: 2rem; height: 5.5rem; }
 .brand-group { display: flex; align-items: center; gap: 1.1rem; min-width: 0; }
 .brand { display: block; flex: none; }
 .brand img { height: 3.1rem; width: auto; }
 .nav-list { display: flex; align-items: center; gap: 0.25rem; font-weight: 600; font-size: var(--t-body); }
 .nav-list a { text-decoration: none; }
-.nav-list a:not(.button) { position: relative; display: inline-flex; align-items: center; min-height: 2.9rem; padding: 0 0.85rem; color: var(--ink); }
-.nav-list a:not(.button)::after { content: ""; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 0.45rem; height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-out); }
+.nav-list a:not(.button) { position: relative; display: inline-flex; align-items: center; min-height: 2.9rem; padding: 0 0.85rem; color: var(--on-ink); }
+.nav-list a:not(.button)::after { content: ""; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 0.45rem; height: 2px; background: var(--on-ink); transform: scaleX(0); transform-origin: left; transition: transform 240ms var(--ease-out); }
 .nav-list a:not(.button):hover::after { transform: scaleX(1); }
-.nav-list a[aria-current="page"]:not(.button)::after { background: var(--accent); transform: scaleX(1); }
+.nav-list a[aria-current="page"]:not(.button)::after { background: var(--flame); transform: scaleX(1); }
 .nav-act { margin-left: 0.75rem; }
 .nav-act .button { min-height: 3rem; padding-inline: 1.15rem 1rem; }
-.nav-act .button[aria-current="page"] { --b-bg: var(--ink); --b-bg-hover: var(--ink); }
+.nav-act .button[aria-current="page"] { --b-bg: var(--on-ink); --b-bg-hover: #fff; --b-fg: var(--ink); }
 .nav-home, .nav-note { display: none; }
-.menu-toggle { display: none; align-items: center; gap: 0.6rem; min-height: 2.75rem; padding: 0 0.9rem; background: transparent; border: 0; border-radius: var(--r); box-shadow: inset 0 0 0 1.5px var(--ink); font-weight: 600; cursor: pointer; }
+.menu-toggle { display: none; align-items: center; gap: 0.6rem; min-height: 2.75rem; padding: 0 0.9rem; background: transparent; color: var(--on-ink); border: 0; border-radius: var(--r); box-shadow: inset 0 0 0 1.5px rgb(244 242 238 / 0.7); font-weight: 600; cursor: pointer; }
 .menu-bars { position: relative; width: 1.125rem; height: 0.75rem; }
 .menu-bars span { position: absolute; left: 0; right: 0; height: 2px; background: currentColor; transition: transform 260ms var(--ease-out), top 260ms var(--ease-out); }
 .menu-bars span:first-child { top: 0; }
@@ -192,15 +196,15 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
   .brand img { height: 2.35rem; }
   .menu-toggle { display: inline-flex; }
   .menu-open { overflow: hidden; }
-  .site-nav { position: fixed; left: 0; right: 0; bottom: 0; top: var(--menu-top, 4.25rem); z-index: 29; background: var(--paper); padding: 0.5rem var(--gutter) max(1.5rem, env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow-y: auto; visibility: hidden; opacity: 0; transform: translateY(-0.5rem); transition: opacity 220ms ease, transform 280ms var(--ease-out), visibility 0s linear 280ms; }
+  .site-nav { position: fixed; left: 0; right: 0; bottom: 0; top: var(--menu-top, 4.25rem); z-index: 29; background: var(--ink); padding: 0.5rem var(--gutter) max(1.5rem, env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow-y: auto; visibility: hidden; opacity: 0; transform: translateY(-0.5rem); transition: opacity 220ms ease, transform 280ms var(--ease-out), visibility 0s linear 280ms; }
   .menu-open .site-nav { visibility: visible; opacity: 1; transform: none; transition: opacity 220ms ease, transform 280ms var(--ease-out), visibility 0s; }
   .menu-open .site-header { transform: none; }
   .nav-list { flex-direction: column; align-items: stretch; gap: 0; }
   .nav-home { display: block; }
-  .nav-list li:not(.nav-act) { border-bottom: var(--rule); }
+  .nav-list li:not(.nav-act) { border-bottom: 1px solid rgb(244 242 238 / 0.22); }
   .nav-list a:not(.button) { display: flex; min-height: 0; padding: 0.85rem 0 0.7rem; font-family: var(--display); font-weight: 500; font-size: clamp(1.9rem, 1.2rem + 3vw, 2.5rem); line-height: 1; letter-spacing: -0.035em; }
   .nav-list a:not(.button)::after { display: none; }
-  .nav-list a[aria-current="page"]:not(.button) { color: var(--accent); }
+  .nav-list a[aria-current="page"]:not(.button) { color: var(--flame); }
   .menu-open .nav-list li { animation: rise 500ms var(--ease-out) both; }
   .menu-open .nav-list li:nth-child(2) { animation-delay: 50ms; }
   .menu-open .nav-list li:nth-child(3) { animation-delay: 100ms; }
@@ -210,7 +214,7 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
   .menu-open .nav-list li:nth-child(7) { animation-delay: 300ms; }
   .nav-act { margin: 1.75rem 0 0; }
   .nav-act .button { width: 100%; padding: 1.15rem 1.4rem; font-size: 1.125rem; }
-  .nav-note { display: flex; align-items: center; gap: 0.6rem; margin-top: auto; padding-top: 2rem; color: var(--muted); font-size: var(--t-small); }
+  .nav-note { display: flex; align-items: center; gap: 0.6rem; margin-top: auto; padding-top: 2rem; color: var(--on-ink-muted); font-size: var(--t-small); }
 }
 
 /* ------------------------------------------------------------------ Hero: the words

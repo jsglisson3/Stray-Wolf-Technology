@@ -28,8 +28,8 @@ def notes_list(items):
 
 # ---------------------------------------------------------------- Work
 
-work_main = page_head('Sites I’ve designed and built <em>by hand.</em>', 'Each one made for one business. Tap any of them to see it live.',
-                      [f'{len(SITES)} sites so far', 'Built by hand, no templates', 'Looks right on every screen']) + f'''
+work_main = page_head('Sites I’ve designed <em>and built.</em>', 'Each one made for one business. Tap any of them to see it live.',
+                      [f'{len(SITES)} sites so far', 'No templates, no page builders', 'Looks right on every screen']) + f'''
     <section class="section work-section" aria-label="Websites">
       <div class="wrap">
 {work_list(SITES)}
@@ -37,8 +37,8 @@ work_main = page_head('Sites I’ve designed and built <em>by hand.</em>', 'Each
     </section>
 {close_section('work-close-h', 'Want yours on this list?')}'''
 
-page('work.html', 'Work: websites built by hand | Stray Wolf Technology',
-     'Websites Stray Wolf Technology has designed and built by hand for owner-run businesses. Tap any one to see it live.',
+page('work.html', 'Work: custom websites, one at a time | Stray Wolf Technology',
+     'Custom websites Stray Wolf Technology has designed and built for owner-run businesses. Tap any one to see it live.',
      work_main, current='work.html')
 
 
@@ -46,7 +46,7 @@ page('work.html', 'Work: websites built by hand | Stray Wolf Technology',
 # A profile card, six pledges, and the story behind the name. No case studies, no personal background, nothing about working alone (Jeremy may hire).
 
 
-PLEDGES = [('craft', 'Hand-built', 'For your business. No templates, no page builders.'),
+PLEDGES = [('craft', 'Made for you', 'One site for one business. No templates, no page builders.'),
            ('chat', 'You first, then the design', 'I learn what you want before I design anything.'),
            ('doc', 'A price in writing', 'Before anything starts. No tiers, no add-ons.'),
            ('eye', 'Nothing goes live without you', 'You see it first. It launches when you say yes.'),
@@ -105,8 +105,8 @@ about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
 
 {close_section('about-close-h')}'''
 
-page('about.html', 'About: bold, hand-built websites | Stray Wolf Technology',
-     'About Stray Wolf Technology and Jeremy: bold, hand-built websites made around your business, not a template.',
+page('about.html', 'About: bold, custom websites | Stray Wolf Technology',
+     'About Stray Wolf Technology and Jeremy: bold, custom websites made around your business, not a template.',
      about_main, current='about.html')
 
 
@@ -201,7 +201,7 @@ page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not 
 # Jeremy's to confirm or change before launch.
 
 RATES = [
-    ('A starter site', STARTER_FROM, 'Up to five pages, written with you and built by hand. Domain and email set up.', 'What most owner-run businesses need.'),
+    ('A starter site', STARTER_FROM, 'Up to five pages, written with you and built around your business. Domain and email set up.', 'What most owner-run businesses need.'),
     ('A larger site', LARGER_FROM, 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.', 'More to show, or more to sell.'),
     ('A mockup first', f'{MOCKUP_FROM}<span> to ${MOCKUP_TO}</span>', 'Your homepage, designed first so you can see it.', '<strong>Credited in full.</strong> Go ahead with the site and every dollar of the mockup comes off your final price.'),
     ('A fix, a page or a refresh', FIX_FROM, f'A fix from ${FIX_FROM}, a new page from ${PAGE_FROM}, new words and photos from ${REFRESH_FROM}. Days, not weeks.', 'For a website you already have.'),
@@ -272,7 +272,7 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
 {close_section('pricing-close-h', 'Want a number for yours?')}'''
 
 page('pricing.html', 'Pricing: what a website costs | Stray Wolf Technology',
-     f'What a hand-built website costs: starter sites from ${STARTER_FROM}, larger sites from ${LARGER_FROM}, one price in writing before anything starts.',
+     f'What a custom website costs: starter sites from ${STARTER_FROM}, larger sites from ${LARGER_FROM}, one price in writing before anything starts.',
      pricing_main, current='pricing.html')
 
 

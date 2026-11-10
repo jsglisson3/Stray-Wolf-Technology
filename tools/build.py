@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = False              # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '22'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '23'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -47,8 +47,8 @@ REVIEWS = [
 # ---- Google Search Console: paste the content value from the "HTML tag" method here, then rebuild ----
 SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site-verification" content="...">
 
-TAGLINE = 'Bespoke, hand-built websites, by referral, for owner-run businesses. Bold, different and built around yours.'
-HOME_DESC = 'Bespoke, hand-built websites for owner-run businesses, by referral. Design, domain, hosting and email, with one price in writing before anything starts.'   # the homepage's line in search results
+TAGLINE = 'Bespoke websites, by referral, for owner-run businesses. Bold, different and built around yours.'
+HOME_DESC = 'Bespoke websites for owner-run businesses, by referral. Design, domain, hosting and email, with one price in writing before anything starts.'   # the homepage's line in search results
 YEAR = str(datetime.date.today().year)
 ROBOTS_META = '  <meta name="robots" content="noindex, nofollow">\n'
 BANNER = '  <aside class="draft-banner" aria-label="Draft notice">Draft preview. Not yet public.</aside>\n'
@@ -113,8 +113,8 @@ def words(s, start=0):
 H1_A = 'A website built around'
 H1_B = 'your needs.'
 H1 = f'{H1_A} {H1_B}'
-LEAD = 'Hand-built websites that don’t look like everyone else’s.'
-PROMISES = [('craft', 'Hand-built', 'No templates or page builders'),
+LEAD = 'Websites that don’t look like everyone else’s.'
+PROMISES = [('craft', 'Made for you', 'No templates or page builders'),
             ('key', 'Yours to keep', 'Your domain, your site'),
             ('calendar', 'About 30 days', 'From answers to launch')]
 
@@ -166,7 +166,7 @@ PHASES = [
         'Your logo and your photos']),
     ('Then', 'Me.', 'I take over.', [
         'A price in writing, within five days',
-        'The design and the build, by hand',
+        'The design and the build, start to finish',
         'Domain, hosting and email set up']),
     ('Before launch', 'Us.', 'One checkpoint.', [
         'You see it before anyone else',
@@ -190,7 +190,7 @@ def phases():
 
 
 # ---- What I do: five services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler) ----
-SERVICES = [('layout', 'Website design and build', 'By hand, for your business. No templates.'),
+SERVICES = [('layout', 'Website design and build', 'Made for your business. No templates.'),
             ('wrench', 'Fixes and single pages', 'Something broken, or one new page. Days, not weeks.'),
             ('globe', 'Domain registration and setup', 'In your name, pointed at your site.'),
             ('server', 'Hosting and small updates', 'No monthly fee. Changes quoted per job.'),
@@ -443,7 +443,7 @@ home = (SRC / 'home.html').read_text(encoding='utf-8')
 home = (home.replace('{{HERO}}', hero()).replace('{{SERVICES}}', services()).replace('{{CAROUSEL}}', carousel(SITES))
         .replace('{{TIMELINE}}', phases()).replace('{{FAQ}}', faq_section())
         .replace('{{CLOSE}}', close_section()))
-page('index.html', 'Stray Wolf Technology | Bespoke, hand-built websites', HOME_DESC, home, current='index.html', body_class='home', ld=True)
+page('index.html', 'Stray Wolf Technology | Bespoke websites for owner-run businesses', HOME_DESC, home, current='index.html', body_class='home', ld=True)
 
 # 2) Inner pages (content in src/pages.py)
 spec, mod = load('pages')
