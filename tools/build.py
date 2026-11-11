@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '42'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '43'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -261,7 +261,9 @@ PHASES = [
         'Help finding a domain name that’s available',
         'The design and the build, start to finish',
         'Domain, hosting and email set up',
-        'SEO for Google, Bing, DuckDuckGo and more']),
+        'Set up so Google, Bing and DuckDuckGo can find it (SEO)']),   # V42 (Jeremy, Nov 11: plainer words, "put SEO in () at the end")
+    # (V42: a second line under "I take over." was tried, "You don't have to deal with the tech. That's my job.", and Jeremy
+    #  asked for it to be deleted the same night. phases() still takes an optional 5th field for a line like that.)
     ('Before launch', 'Us.', 'One checkpoint.', [
         'You see it before anyone else',
         'You say yes, or tell me what to change',
@@ -274,20 +276,24 @@ def phases():
     the trail when one step hands over to the next. The whole list is revealed as one block, so all three scenes share a clock."""
     scenes = [s.strip() for s in read('how-scenes.html').split('-->', 1)[1].split('<!-- next -->')]
     cols = []
-    for i, (k, h, lead, items) in enumerate(PHASES):
+    for i, (k, h, lead, items, *sub) in enumerate(PHASES):
         rows = ''.join(f'<li>{icon("check")}<span>{t}</span></li>' for t in items)
+        sub = f'<span class="phase-sub">{sub[0]}</span>' if sub else ''
         cols.append(f'''
           <li class="phase phase-{i + 1}">
             <i class="phase-pulse" aria-hidden="true"></i>
             <div class="phase-scene" aria-hidden="true">{scenes[i]}</div>
             <p class="phase-k">{ARROW if i else ''}{k}</p>
             <h3 class="phase-h">{h}</h3>
-            <p class="phase-lead">{lead}</p>
+            <p class="phase-lead">{lead}{sub}</p>
             <ul class="phase-list" role="list">{rows}</ul>
           </li>''')
     return f'''        <ol class="phases" role="list" data-reveal>{''.join(cols)}
         </ol>
-        <p class="phases-note" data-reveal>{icon('list')}<span>{PHASE_NOTE}</span></p>'''
+        <div class="phases-end" data-reveal>
+          <p class="phases-note">{icon('list')}<span>{PHASE_NOTE}</span></p>
+          <a class="button button-lg" href="start.html">Start a project{icon('arrow')}</a>
+        </div>'''
 
 
 # ---- What I do: six services, one line each (V15: the tabs and the little scenes are gone; Jeremy wanted the site simpler.

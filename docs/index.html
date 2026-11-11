@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=42">
+  <link rel="stylesheet" href="css/site.css?v=43">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
 {
@@ -321,10 +321,13 @@
     </section>
 
 
-    <section class="section on-stone tex tex-left" id="how" aria-labelledby="how-h">
-      <div class="wrap">
-        <header class="sec-head">
-          <h2 id="how-h" class="h2" data-reveal>Your part, then mine.</h2>
+    <!-- V42 (Nov 11 2026, Jeremy: "make this whole section look like the key selling point.. it does not get more important than this.
+         we are explaining our whole purpose"): its own stage, wider than the rest of the page, with a centred heading. -->
+    <section class="section on-stone tex tex-left how-stage" id="how" aria-labelledby="how-h">
+      <div class="wrap wrap-how">
+        <header class="how-head">
+          <p class="how-eyebrow" data-reveal><span class="how-dots" aria-hidden="true"><i></i><i></i><i></i></span>How it works</p>
+          <h2 id="how-h" class="how-title" data-reveal>Your part, then mine.</h2>
           <p class="lead" data-reveal>It starts with a conversation. Then your part, then mine, and one checkpoint before launch.</p>
         </header>
         <ol class="phases" role="list" data-reveal>
@@ -342,7 +345,7 @@
             <p class="phase-k"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Then</p>
             <h3 class="phase-h">Me.</h3>
             <p class="phase-lead">I take over.</p>
-            <ul class="phase-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>A price in writing, within five days</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Help finding a domain name that’s available</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>The design and the build, start to finish</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Domain, hosting and email set up</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>SEO for Google, Bing, DuckDuckGo and more</span></li></ul>
+            <ul class="phase-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>A price in writing, within five days</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Help finding a domain name that’s available</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>The design and the build, start to finish</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Domain, hosting and email set up</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Set up so Google, Bing and DuckDuckGo can find it (SEO)</span></li></ul>
           </li>
           <li class="phase phase-3">
             <i class="phase-pulse" aria-hidden="true"></i>
@@ -353,7 +356,10 @@
             <ul class="phase-list" role="list"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>You see it before anyone else</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>You say yes, or tell me what to change</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Then it goes live</span></li></ul>
           </li>
         </ol>
-        <p class="phases-note" data-reveal><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg><span>Once I take the job, I’ll send a short list of what I need and how to send it: your logo, as many photos as you can, and your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest.</span></p>
+        <div class="phases-end" data-reveal>
+          <p class="phases-note"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg><span>Once I take the job, I’ll send a short list of what I need and how to send it: your logo, as many photos as you can, and your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest.</span></p>
+          <a class="button button-lg" href="start.html">Start a project<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
       </div>
     </section>
 
@@ -592,7 +598,7 @@
     </div>
   </footer>
 
-  <script src="js/analytics.js?v=42" data-ga="G-K661V9VYG2" async></script>
-  <script src="js/site.js?v=42" defer></script>
+  <script src="js/analytics.js?v=43" data-ga="G-K661V9VYG2" async></script>
+  <script src="js/site.js?v=43" defer></script>
 </body>
 </html>

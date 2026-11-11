@@ -502,7 +502,7 @@ li:hover > .plate-ic { background: var(--ink); color: var(--paper); transform: t
    ::before is this step's stretch of the line (it reaches across the gap to the next step), ::after is the marker.
    --td is when this step's stretch starts drawing; each one starts as the one before it finishes. */
 .phase { position: relative; display: grid; gap: var(--s3); align-content: start; padding-top: calc(var(--s4) + 8px); --phase: var(--ink); --next: var(--phase); --td: 0ms; }
-.phase::before { content: ""; position: absolute; left: 0; right: calc(var(--s5) * -1); top: 4px; height: 2px; background: linear-gradient(90deg, var(--phase) 0 60%, var(--next)); transform: scaleX(0); transform-origin: left; transition: transform 600ms linear calc(var(--td) + 250ms); }
+.phase::before { content: ""; position: absolute; left: 0; right: calc(var(--col-gap, var(--s5)) * -1); top: 4px; height: 2px; background: linear-gradient(90deg, var(--phase) 0 60%, var(--next)); transform: scaleX(0); transform-origin: left; transition: transform 600ms linear calc(var(--td) + 250ms); }
 .phase-3::before { right: 0; transition-duration: 900ms; transition-timing-function: var(--ease-out); }
 .phase::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--phase); box-shadow: 0 0 0 4px var(--stone); transform: scale(0); transition: transform 450ms cubic-bezier(0.3, 1.5, 0.5, 1) calc(var(--td) + 150ms); }
 html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase::after, .phases.is-in .phase::after { transform: none; }
@@ -530,6 +530,36 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
   .phase::after { top: 0.3rem; }
 }
 /* what happens once the job is on: one quiet line under the three steps */
+/* V42 (Nov 11 2026, Jeremy: "make all the spacing look better. and just make this whole section look like the key selling point.. like it
+   does not get more important than this. we are explaining our whole purpose"). The section gets its own stage: more room above and below,
+   a soft light behind the scenes, a wider column than the rest of the page (so the scenes are bigger), a centred heading under a small
+   "How it works" label in the three step colours, the three steps lined up row by row (subgrid: scenes, labels, names, lines and lists all
+   start at the same height), and a closing row with what I'll ask for once I take the job and the Start a project button. */
+.how-stage { padding-block: clamp(4.5rem, 8vw, 8.5rem);
+  background: radial-gradient(60% 45% at 50% 46%, rgb(255 253 248 / 0.6), rgb(255 253 248 / 0) 72%), linear-gradient(180deg, var(--stone) 0%, var(--stone-3) 100%); }
+/* the facet texture fades out well before the picture ends, so no hard edge runs through the lists */
+#how.tex::before { --tex-fade: linear-gradient(180deg, transparent 0, #000 7rem, #000 24rem, transparent 44rem); }
+.wrap-how { max-width: 1880px; }
+.how-head { display: grid; justify-items: center; gap: var(--s4); max-width: 62rem; margin: 0 auto clamp(3rem, 6vw, 5.5rem); text-align: center; }
+.how-eyebrow { display: inline-flex; align-items: center; gap: 0.75rem; font-size: var(--t-small); font-weight: 650; letter-spacing: 0.14em; text-transform: uppercase; }
+.how-dots { display: inline-flex; gap: 0.3rem; }
+.how-dots i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--dusk); }
+.how-dots i:nth-child(2) { background: var(--accent); } .how-dots i:nth-child(3) { background: var(--sage); }
+.how-title { font-size: clamp(2.75rem, 1.1rem + 5.4vw, 6.75rem); line-height: 0.98; letter-spacing: -0.045em; font-weight: 600; }
+.how-head .lead { max-width: 40ch; }
+.phases { --col-gap: clamp(1.5rem, 2.4vw, 3rem); column-gap: var(--col-gap); }
+@media (min-width: 64em) {
+  .phases { grid-template-rows: repeat(5, auto); row-gap: 0; }
+  .phase { grid-row: span 5; grid-template-rows: subgrid; row-gap: var(--s3); }
+}
+.phase-lead { max-width: 30ch; }
+.phase-sub { display: block; margin-top: 0.4rem; font-size: 1.0625rem; line-height: 1.45; font-weight: 450; }
+.phase-list { font-size: 1.0625rem; align-content: start; }
+.phases-end { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s5) var(--s7); margin-top: clamp(3rem, 6vw, 5rem);
+  padding: clamp(1.25rem, 2.2vw, 2rem) clamp(1.25rem, 2.6vw, 2.5rem); border-radius: 16px; background: rgb(255 253 248 / 0.72);
+  box-shadow: 0 0 0 1px rgb(36 34 31 / 0.06), 0 22px 40px -30px rgb(36 34 31 / 0.45); }
+.phases-end .phases-note { flex: 1 1 32rem; margin: 0; padding: 0; border: 0; }
+.phases-end .button { flex: none; }
 /* how-scenes:start  (V38, generated together with src/partials/how-scenes.html by v38/gen_cards.py)
    Jeremy (Nov 11 2026): the old scenes were "a little bleh" and "too clip arty"; he picked "Real devices + logo wolf".
    V38: no mug ("the coffee seems so random"), TVIS on every screen ("use TVIS for every example"), a more muscular wolf.
@@ -539,9 +569,9 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
    faceted wolf (the logo's facets and orange ear) walks through them: it watches the questions, watches the build, and howls
    when the site goes live. The resting style of every piece is its final state, so reduced motion and no-JS show three
    finished pictures with the wolf sitting in Us. The footer's pause button stops them too. */
-.phase-scene { position: relative; aspect-ratio: 400 / 240; margin-bottom: var(--s3); container-type: inline-size; overflow: hidden; isolation: isolate;
+.phase-scene { position: relative; aspect-ratio: 400 / 240; margin-bottom: var(--s3); container-type: inline-size; overflow: hidden; isolation: isolate; border-radius: clamp(10px, 0.9vw, 16px);
   background: radial-gradient(120% 95% at 14% 0%, #FFFDF8 0%, rgb(255 253 248 / 0) 62%), linear-gradient(180deg, #F2ECE2 0%, #ECE4D7 100%);
-  box-shadow: 0 0 0 1px rgb(36 34 31 / 0.07), 0 24px 36px -28px rgb(36 34 31 / 0.55); }
+  box-shadow: 0 0 0 1px rgb(36 34 31 / 0.07), 0 34px 54px -36px rgb(36 34 31 / 0.6), 0 8px 18px -12px rgb(36 34 31 / 0.22); }
 .dv { position: absolute; inset: 0; font-size: 1px; font-size: 0.25cqw; font-family: var(--text); color: var(--ink); line-height: 1.25; }
 .dv * { box-sizing: border-box; }
 .dv i, .dv b { font-style: normal; }
@@ -656,7 +686,7 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
 .dv-cf7 { background: var(--dusk); --cx: 108em; --cy: -10em; --cr: 220deg; } .dv-cf8 { background: var(--accent); --cx: -50em; --cy: -30em; --cr: 90deg; }
 .dv-cf9 { background: #E8C34A; --cx: 30em; --cy: -34em; --cr: -90deg; }
 /* ---- the wolf */
-.cw { position: absolute; z-index: 5; left: 0; width: 84.3em; height: 62.6em; transform: translateX(-90em); }
+.cw { position: absolute; z-index: 5; left: 0; width: 84.3em; height: 62.6em; transform: translateX(-86em); }
 .cw-svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .cw-shadow { position: absolute; left: 14%; right: 6%; bottom: -0.5em; height: 6em; background: radial-gradient(closest-side, rgb(36 34 31 / 0.32), rgb(36 34 31 / 0)); }
 .cw-walk { opacity: 0; }
@@ -703,13 +733,13 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
   .phases.is-in .dv1-k3 { animation: dv-k16 24s linear infinite both; }
   @keyframes dv-k16 { 0%, 20.417% { opacity: 0; transform: scale(0.6); animation-timing-function: var(--ease-spring); } 22.083%, 96.25% { opacity: 1; transform: none; } 98.333%, 100% { opacity: 0; transform: scale(0.6); } }
   .phases.is-in .cw-1 { animation: dv-k17 24s linear infinite both; }
-  @keyframes dv-k17 { 0% { transform: translateX(-90em); } 0% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 5.208% { transform: translateX(128em); } 20.833% { transform: translateX(128em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 25.833% { transform: translateX(430em); } 99.875% { transform: translateX(430em); } 99.917% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 100% { transform: translateX(-90em); } 100% { transform: translateX(-90em); } }
+  @keyframes dv-k17 { 0% { transform: translateX(-86em); } 0% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 7.5% { transform: translateX(128em); } 20.833% { transform: translateX(128em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 30.625% { transform: translateX(410em); } 99.875% { transform: translateX(410em); } 99.917% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 100% { transform: translateX(-86em); } 100% { transform: translateX(-86em); } }
   .phases.is-in .cw-1 .cw-walk { animation: dv-k18 24s linear infinite both; }
-  @keyframes dv-k18 { 0% { opacity: 0; } 0% { opacity: 0; } 0%, 5.208% { opacity: 1; } 5.25% { opacity: 0; } 20.792% { opacity: 0; } 20.833%, 25.833% { opacity: 1; } 25.875% { opacity: 0; } 99.875% { opacity: 0; } 99.917%, 100% { opacity: 1; } 100% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes dv-k18 { 0% { opacity: 0; } 0% { opacity: 0; } 0%, 7.5% { opacity: 1; } 7.542% { opacity: 0; } 20.042% { opacity: 0; } 20.083%, 30.625% { opacity: 1; } 30.667% { opacity: 0; } 100% { opacity: 0; } }
   .phases.is-in .cw-1 .cw-sit { animation: dv-k19 24s linear infinite both; }
-  @keyframes dv-k19 { 0% { opacity: 0; } 5.208% { opacity: 0; } 5.25%, 20.792% { opacity: 1; } 20.833% { opacity: 0; } 25.833% { opacity: 0; } 25.875%, 99.875% { opacity: 1; } 99.917% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes dv-k19 { 0% { opacity: 0; } 6.75% { opacity: 0; transform: translateY(-1.2px); } 7.5% { opacity: 1; transform: none; } 20.083% { opacity: 1; transform: none; } 20.833% { opacity: 0; transform: none; } 29.875% { opacity: 0; transform: translateY(-1.2px); } 30.625% { opacity: 1; transform: none; } 99.167% { opacity: 1; transform: none; } 99.917% { opacity: 0; transform: none; } 100% { opacity: 0; } }
   .phases.is-in .cw-1 .cw-hd { animation: dv-k20 24s linear infinite both; }
-  @keyframes dv-k20 { 0% { transform: none; } 7.917% { transform: none; animation-timing-function: var(--ease-out); } 9.375%, 10.417% { transform: rotate(-9deg); animation-timing-function: ease-in-out; } 12.083% { transform: none; } 15.833% { transform: none; animation-timing-function: var(--ease-out); } 17.292%, 17.917% { transform: rotate(7deg); animation-timing-function: ease-in-out; } 19.583% { transform: none; } 18.542% { transform: none; animation-timing-function: var(--ease-out); } 20%, 19.792% { transform: rotate(-4deg); animation-timing-function: ease-in-out; } 21.458% { transform: none; } 100% { transform: none; } }
+  @keyframes dv-k20 { 0% { transform: none; } 8.333% { transform: none; animation-timing-function: var(--ease-out); } 9.792%, 10.833% { transform: rotate(-9deg); animation-timing-function: ease-in-out; } 12.5% { transform: none; } 16.042% { transform: none; animation-timing-function: var(--ease-out); } 17.5%, 18.125% { transform: rotate(7deg); animation-timing-function: ease-in-out; } 19.792% { transform: none; } 18.75% { transform: none; animation-timing-function: var(--ease-out); } 20.208%, 20% { transform: rotate(-4deg); animation-timing-function: ease-in-out; } 21.667% { transform: none; } 100% { transform: none; } }
   .phases.is-in .dv2-built { animation: dv-k21 24s linear infinite both; }
   @keyframes dv-k21 { 0% { clip-path: inset(0 0 100% 0); } 27.083% { clip-path: inset(0 0 100% 0); } 30.833% { clip-path: inset(0 0 86% 0); } 32.917% { clip-path: inset(0 0 86% 0); } 37.083% { clip-path: inset(0 0 53% 0); } 39.167% { clip-path: inset(0 0 53% 0); } 42.083% { clip-path: inset(0 0 26% 0); } 43.333% { clip-path: inset(0 0 26% 0); } 44.167% { clip-path: inset(0 0 0% 0); } 96.25% { clip-path: inset(0 0 0 0); } 98.333%, 100% { clip-path: inset(0 0 100% 0); } }
   .phases.is-in .dv2-scan { animation: dv-k22 24s linear infinite both; }
@@ -739,13 +769,13 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
   .phases.is-in .dv2-ok4 { animation: dv-k34 24s linear infinite both; }
   @keyframes dv-k34 { 0%, 49.167% { opacity: 0; transform: scale(0.6); animation-timing-function: var(--ease-spring); } 50.833%, 96.25% { opacity: 1; transform: none; } 98.333%, 100% { opacity: 0; transform: scale(0.6); } }
   .phases.is-in .cw-2 { animation: dv-k35 24s linear infinite both; }
-  @keyframes dv-k35 { 0% { transform: translateX(-90em); } 0% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 0.042% { transform: translateX(-90em); } 25.417% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 31.667% { transform: translateX(300em); } 52.5% { transform: translateX(300em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 56.667% { transform: translateX(430em); } 99.875% { transform: translateX(430em); } 99.917% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 100% { transform: translateX(-90em); } 100% { transform: translateX(-90em); } }
+  @keyframes dv-k35 { 0% { transform: translateX(-86em); } 0% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 0.042% { transform: translateX(-86em); } 29.583% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 42.917% { transform: translateX(300em); } 52.292% { transform: translateX(300em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 56.25% { transform: translateX(410em); } 99.875% { transform: translateX(410em); } 99.917% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 100% { transform: translateX(-86em); } 100% { transform: translateX(-86em); } }
   .phases.is-in .cw-2 .cw-walk { animation: dv-k36 24s linear infinite both; }
-  @keyframes dv-k36 { 0% { opacity: 0; } 0% { opacity: 0; } 0%, 0.042% { opacity: 1; } 0.083% { opacity: 0; } 25.375% { opacity: 0; } 25.417%, 31.667% { opacity: 1; } 31.708% { opacity: 0; } 52.458% { opacity: 0; } 52.5%, 56.667% { opacity: 1; } 56.708% { opacity: 0; } 99.875% { opacity: 0; } 99.917%, 100% { opacity: 1; } 100% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes dv-k36 { 0% { opacity: 0; } 28.792% { opacity: 0; } 28.833%, 42.917% { opacity: 1; } 42.958% { opacity: 0; } 51.5% { opacity: 0; } 51.542%, 56.25% { opacity: 1; } 56.292% { opacity: 0; } 100% { opacity: 0; } }
   .phases.is-in .cw-2 .cw-sit { animation: dv-k37 24s linear infinite both; }
-  @keyframes dv-k37 { 0% { opacity: 0; } 0.042% { opacity: 0; } 0.083%, 25.375% { opacity: 1; } 25.417% { opacity: 0; } 31.667% { opacity: 0; } 31.708%, 52.458% { opacity: 1; } 52.5% { opacity: 0; } 56.667% { opacity: 0; } 56.708%, 99.875% { opacity: 1; } 99.917% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes dv-k37 { 0% { opacity: 0; } 0% { opacity: 0; transform: translateY(-1.2px); } 0.042% { opacity: 1; transform: none; } 28.833% { opacity: 1; transform: none; } 29.583% { opacity: 0; transform: none; } 42.167% { opacity: 0; transform: translateY(-1.2px); } 42.917% { opacity: 1; transform: none; } 51.542% { opacity: 1; transform: none; } 52.292% { opacity: 0; transform: none; } 55.5% { opacity: 0; transform: translateY(-1.2px); } 56.25% { opacity: 1; transform: none; } 99.167% { opacity: 1; transform: none; } 99.917% { opacity: 0; transform: none; } 100% { opacity: 0; } }
   .phases.is-in .cw-2 .cw-hd { animation: dv-k38 24s linear infinite both; }
-  @keyframes dv-k38 { 0% { transform: none; } 33.125% { transform: none; animation-timing-function: var(--ease-out); } 34.583%, 36.042% { transform: rotate(-16deg); animation-timing-function: ease-in-out; } 37.708% { transform: none; } 38.542% { transform: none; animation-timing-function: var(--ease-out); } 40%, 40.625% { transform: rotate(-11deg); animation-timing-function: ease-in-out; } 42.292% { transform: none; } 49.375% { transform: none; animation-timing-function: var(--ease-out); } 50.833%, 51.875% { transform: rotate(-18deg); animation-timing-function: ease-in-out; } 53.542% { transform: none; } 100% { transform: none; } }
+  @keyframes dv-k38 { 0% { transform: none; } 43.958% { transform: none; animation-timing-function: var(--ease-out); } 45.417%, 46.458% { transform: rotate(-14deg); animation-timing-function: ease-in-out; } 48.125% { transform: none; } 49.375% { transform: none; animation-timing-function: var(--ease-out); } 50.833%, 51.458% { transform: rotate(-18deg); animation-timing-function: ease-in-out; } 53.125% { transform: none; } 100% { transform: none; } }
   .phases.is-in .dv3-ask { animation: dv-k39 24s linear infinite both; }
   @keyframes dv-k39 { 0%, 60.417% { opacity: 0; transform: translateY(-8em); animation-timing-function: var(--ease-spring); } 62.5%, 96.25% { opacity: 1; transform: none; } 98.333%, 100% { opacity: 0; transform: translateY(-8em); } }
   .phases.is-in .dv3-prev { animation: dv-k40 24s linear infinite both; }
@@ -783,11 +813,11 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
   .phases.is-in .dv-cf9 { animation: dv-k56 24s linear infinite both; }
   @keyframes dv-k56 { 0%, 68.75% { opacity: 0; transform: translate(0, 0) rotate(0); } 69.167% { opacity: 1; } 75.417% { opacity: 0.9; transform: translate(var(--cx), var(--cy)) rotate(var(--cr)); animation-timing-function: ease-in; } 78.333%, 100% { opacity: 0; transform: translate(var(--cx), calc(var(--cy) + 14em)) rotate(calc(var(--cr) * 2)); } }
   .phases.is-in .cw-3 { animation: dv-k57 24s linear infinite both; }
-  @keyframes dv-k57 { 0% { transform: translateX(-90em); } 0% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 0.042% { transform: translateX(-90em); } 56.667% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 62.5% { transform: translateX(198em); } 89.167% { transform: translateX(198em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 94.167% { transform: translateX(430em); } 99.875% { transform: translateX(430em); } 99.917% { transform: translateX(-90em); animation-timing-function: cubic-bezier(.35, .1, .45, 1); } 100% { transform: translateX(-90em); } 100% { transform: translateX(-90em); } }
+  @keyframes dv-k57 { 0% { transform: translateX(-86em); } 0% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 0.042% { transform: translateX(-86em); } 55.625% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 65.625% { transform: translateX(198em); } 88.75% { transform: translateX(198em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 96.25% { transform: translateX(410em); } 99.875% { transform: translateX(410em); } 99.917% { transform: translateX(-86em); animation-timing-function: cubic-bezier(.3, .08, .55, 1); } 100% { transform: translateX(-86em); } 100% { transform: translateX(-86em); } }
   .phases.is-in .cw-3 .cw-walk { animation: dv-k58 24s linear infinite both; }
-  @keyframes dv-k58 { 0% { opacity: 0; } 0% { opacity: 0; } 0%, 0.042% { opacity: 1; } 0.083% { opacity: 0; } 56.625% { opacity: 0; } 56.667%, 62.5% { opacity: 1; } 62.542% { opacity: 0; } 89.125% { opacity: 0; } 89.167%, 94.167% { opacity: 1; } 94.208% { opacity: 0; } 99.875% { opacity: 0; } 99.917%, 100% { opacity: 1; } 100% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes dv-k58 { 0% { opacity: 0; } 54.833% { opacity: 0; } 54.875%, 65.625% { opacity: 1; } 65.667% { opacity: 0; } 87.958% { opacity: 0; } 88%, 96.25% { opacity: 1; } 96.292% { opacity: 0; } 100% { opacity: 0; } }
   .phases.is-in .cw-3 .cw-sit { animation: dv-k59 24s linear infinite both; }
-  @keyframes dv-k59 { 0% { opacity: 0; } 0.042% { opacity: 0; } 0.083%, 56.625% { opacity: 1; } 56.667% { opacity: 0; } 62.5% { opacity: 0; } 62.542%, 89.125% { opacity: 1; } 89.167% { opacity: 0; } 94.167% { opacity: 0; } 94.208%, 99.875% { opacity: 1; } 99.917% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes dv-k59 { 0% { opacity: 0; } 0% { opacity: 0; transform: translateY(-1.2px); } 0.042% { opacity: 1; transform: none; } 54.875% { opacity: 1; transform: none; } 55.625% { opacity: 0; transform: none; } 64.875% { opacity: 0; transform: translateY(-1.2px); } 65.625% { opacity: 1; transform: none; } 88% { opacity: 1; transform: none; } 88.75% { opacity: 0; transform: none; } 95.5% { opacity: 0; transform: translateY(-1.2px); } 96.25% { opacity: 1; transform: none; } 99.167% { opacity: 1; transform: none; } 99.917% { opacity: 0; transform: none; } 100% { opacity: 0; } }
   .phases.is-in .cw-3 .cw-hd { animation: dv-k60 24s linear infinite both; }
   @keyframes dv-k60 { 0%, 69.583% { transform: none; animation-timing-function: var(--ease-out); } 71.458%, 77.917% { transform: rotate(-38deg); animation-timing-function: ease-in-out; } 80%, 81.667% { transform: none; } 82.917% { transform: rotate(-8deg); } 85.417%, 100% { transform: none; } }
   .phases.is-in .cw-3 .cw-ring-1 { animation: dv-k61 24s linear infinite both; }
@@ -795,31 +825,31 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
   .phases.is-in .cw-3 .cw-ring-2 { animation: dv-k62 24s linear infinite both; }
   @keyframes dv-k62 { 0%, 72.083% { opacity: 0; } 72.917% { opacity: 0.7; } 75.417% { opacity: 0; } 75.625% { opacity: 0; } 76.458% { opacity: 0.7; } 78.75%, 100% { opacity: 0; } }
   .phases.is-in .cw { opacity: 1; }
-  .phases.is-in .cw-fn, .phases.is-in .cw-hf { animation: cw-swing 0.56s ease-in-out infinite alternate; }
-  .phases.is-in .cw-ff, .phases.is-in .cw-hn { animation: cw-swing 0.56s ease-in-out infinite alternate-reverse; }
-  .phases.is-in .cw-bob { animation: cw-bob 0.28s ease-in-out infinite alternate; }
+  .phases.is-in .cw-fn, .phases.is-in .cw-hf { animation: cw-swing 0.2s ease-in-out infinite alternate; }
+  .phases.is-in .cw-ff, .phases.is-in .cw-hn { animation: cw-swing 0.2s ease-in-out infinite alternate-reverse; }
+  .phases.is-in .cw-bob { animation: cw-bob 0.2s ease-in-out infinite alternate; }
   .phases.is-in .cw-tl { animation: cw-wag 0.9s ease-in-out infinite alternate; }
-  @keyframes cw-swing { from { transform: rotate(17deg); } to { transform: rotate(-17deg); } }
-  @keyframes cw-bob { from { transform: translateY(0); } to { transform: translateY(-1.6px); } }
+  @keyframes cw-swing { from { transform: rotate(24deg); } to { transform: rotate(-24deg); } }
+  @keyframes cw-bob { from { transform: translateY(0.4px); } to { transform: translateY(-1.1px); } }
   @keyframes cw-wag { from { transform: rotate(-5deg); } to { transform: rotate(4deg); } }
   .dv-phone:not(.dv3-phone) { animation: dv-float 6s ease-in-out infinite alternate; }
   @keyframes dv-float { from { translate: 0 0; } to { translate: 0 -2.5em; } }
 }
-.phase-pulse { position: absolute; left: 0; top: 0; width: calc(100% + var(--s5)); height: 10px; pointer-events: none; }
+.phase-pulse { position: absolute; left: 0; top: 0; width: calc(100% + var(--col-gap, var(--s5))); height: 10px; pointer-events: none; }
 .phase-3 .phase-pulse { width: 100%; }
 .phase-pulse::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--next); box-shadow: 0 0 0 5px color-mix(in srgb, var(--next) 28%, transparent); opacity: 0; }
 .phase-3 .phase-pulse::after { background: var(--phase); box-shadow: 0 0 0 5px color-mix(in srgb, var(--phase) 28%, transparent); }
 .phases.is-in .phase-1 .phase-pulse::after { animation: hw-run-1 24s linear infinite both; }
-@keyframes hw-run-1 { 0%, 20.833% { left: 0; opacity: 0; } 21.25% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 25% { left: calc(100% - 10px); opacity: 1; } 26.667%, 100% { left: calc(100% - 10px); opacity: 0; } }
-@keyframes hw-fall-1 { 0%, 20.833% { top: 0; opacity: 0; } 21.25% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 25% { top: calc(100% - 10px); opacity: 1; } 26.667%, 100% { top: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-run-1 { 0%, 24.583% { left: 0; opacity: 0; } 25% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 29.583% { left: calc(100% - 10px); opacity: 1; } 31.25%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-1 { 0%, 24.583% { top: 0; opacity: 0; } 25% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 29.583% { top: calc(100% - 10px); opacity: 1; } 31.25%, 100% { top: calc(100% - 10px); opacity: 0; } }
 .phases.is-in .phase-2 .phase-pulse::after { animation: hw-run-2 24s linear infinite both; }
-@keyframes hw-run-2 { 0%, 52.5% { left: 0; opacity: 0; } 52.917% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 56.25% { left: calc(100% - 10px); opacity: 1; } 57.917%, 100% { left: calc(100% - 10px); opacity: 0; } }
-@keyframes hw-fall-2 { 0%, 52.5% { top: 0; opacity: 0; } 52.917% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 56.25% { top: calc(100% - 10px); opacity: 1; } 57.917%, 100% { top: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-run-2 { 0%, 52.917% { left: 0; opacity: 0; } 53.333% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 55.833% { left: calc(100% - 10px); opacity: 1; } 57.5%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-2 { 0%, 52.917% { top: 0; opacity: 0; } 53.333% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 55.833% { top: calc(100% - 10px); opacity: 1; } 57.5%, 100% { top: calc(100% - 10px); opacity: 0; } }
 .phases.is-in .phase-3 .phase-pulse::after { animation: hw-run-3 24s linear infinite both; }
-@keyframes hw-run-3 { 0%, 89.167% { left: 0; opacity: 0; } 89.583% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 92.917% { left: calc(100% - 10px); opacity: 1; } 94.583%, 100% { left: calc(100% - 10px); opacity: 0; } }
-@keyframes hw-fall-3 { 0%, 89.167% { top: 0; opacity: 0; } 89.583% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 92.917% { top: calc(100% - 10px); opacity: 1; } 94.583%, 100% { top: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-run-3 { 0%, 90% { left: 0; opacity: 0; } 90.417% { left: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 94.583% { left: calc(100% - 10px); opacity: 1; } 96.25%, 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes hw-fall-3 { 0%, 90% { top: 0; opacity: 0; } 90.417% { top: 0; opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); } 94.583% { top: calc(100% - 10px); opacity: 1; } 96.25%, 100% { top: calc(100% - 10px); opacity: 0; } }
 @media (max-width: 63.99em) {
-  .phase-scene { max-width: 30rem; }
+  .phase-scene { max-width: 40rem; }
   .phase-pulse { top: 0.3rem; width: 10px; height: calc(100% + var(--s6)); }
   .phase-3 .phase-pulse { width: 10px; height: calc(100% - 0.3rem); }
   .phases.is-in .phase-1 .phase-pulse::after { animation-name: hw-fall-1; }

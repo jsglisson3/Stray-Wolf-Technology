@@ -143,6 +143,27 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V43 (Nov 11 2026): How it works becomes the centrepiece
+
+(Built as cloud V42, then merged on top of the separate project's V42, the Google G mark: #i-g in the sprite, .g-mark in
+google_profile_link() and google_review_badge() in tools/build.py, its CSS kept at the end of p11/motion.css. All of it is kept.)
+
+Jeremy: "make the dog movment smoother, and make all the spacing loook better. and just mkae this whole sectiono look like the key
+selling point.. like it does not get more important than this. we are explaining our whole purpose". And for Me: "something generic
+about just solving tech problems for them"; he picked "You don't have to deal with the tech. That's my job." on a decision card.
+- The section (#how in src/home.html) has its own stage (.how-stage): more room, a soft light behind the scenes, a wider column
+  (.wrap-how, 1880px, so the scenes are about 25% bigger on desktop), a centred heading under a "How it works" label with the three
+  step colours. The facet texture fades out by 44rem so it no longer leaves a hard edge through the lists.
+- Desktop: the three steps line up row by row with CSS subgrid (scene, label, name, line, list). The scenes have rounded corners and a
+  deeper shadow. Tablet scenes may be 40rem wide.
+- Me briefly had a second line ("You don't have to deal with the tech. That's my job."); Jeremy had it deleted. phases() still
+  accepts an optional 5th field (.phase-sub). Under the steps, one closing row (.phases-end): the "Once I take the job" note
+  and a Start a project button.
+- The wolf (v42/gen_cards.py): a steady trot, legs 0.2 s a step at 24 degrees so the paws keep up with the ground (no skating),
+  walks ease into each stop, the sit pose fades in over the walk (never see-through), new timeline with HANDOVERS to match.
+- The Me list's last line is now "Set up so Google, Bing and DuckDuckGo can find it (SEO)" (Jeremy: plainer, "put SEO in () at the end").
+- CSS for the section is in p11/home.css above the generated block. VERSION 43.
+
 ## V41 (Nov 11 2026): You card notes, a tablet in Us, a healthier furry wolf
 
 (Built as cloud V39, then merged on top of the separate project's V39 and V40, the Google Business Profile work:
