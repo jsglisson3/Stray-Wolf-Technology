@@ -1330,3 +1330,31 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 
 /* V27 (final audit): the form's grids never grow wider than the screen, even with enlarged letter and word spacing (WCAG 1.4.12) */
 .intake, .qs, .q { grid-template-columns: minmax(0, 1fr); }
+
+/* V35: Google Business Profile. The "Review us on Google" button (outline stars: an invitation, never a rating; plain text, no Google logo),
+   the Reviews page band that holds it, and the small "See us on Google" link. All of it is left off the pages until the links are set. */
+.g-review { display: inline-flex; align-items: center; gap: 0.95rem; padding: 0.85rem 1.1rem 0.85rem 1.15rem; background: var(--white); color: var(--ink);
+  border: 1.5px solid var(--ink); border-radius: 0.9rem; text-decoration: none; box-shadow: 0 1px 0 var(--ink), 0 14px 28px -20px rgb(36 34 31 / 0.6);
+  transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out); }
+.g-review:hover { transform: translateY(-2px); box-shadow: 0 3px 0 var(--ink), 0 18px 30px -18px rgb(36 34 31 / 0.6); }
+.g-review:active { transform: translateY(0); box-shadow: 0 1px 0 var(--ink); }
+.g-review-stars { display: inline-flex; gap: 0.12rem; color: var(--accent); }
+.g-review-stars .icon { width: 1.15rem; height: 1.15rem; transition: fill 160ms ease; }
+.g-review:hover .g-review-stars .icon, .g-review:focus-visible .g-review-stars .icon { fill: currentColor; }
+.g-review-stars .icon:nth-child(2) { transition-delay: 50ms; } .g-review-stars .icon:nth-child(3) { transition-delay: 100ms; }
+.g-review-stars .icon:nth-child(4) { transition-delay: 150ms; } .g-review-stars .icon:nth-child(5) { transition-delay: 200ms; }
+.g-review-t { display: grid; line-height: 1.2; padding-left: 0.95rem; border-left: 1px solid var(--line); }
+.g-review-t small { font-size: 0.8125rem; color: var(--muted); font-weight: 500; }
+.g-review-t strong { font-family: var(--display); font-weight: 600; font-size: 1.125rem; letter-spacing: -0.01em; }
+.g-review-go { width: 1.1rem; height: 1.1rem; color: var(--accent); }
+@media (max-width: 29.99em) { .g-review { flex-wrap: wrap; row-gap: 0.6rem; } .g-review-t { padding-left: 0; border-left: 0; } }
+@media (prefers-reduced-motion: reduce) { .g-review, .g-review-stars .icon { transition: none; } .g-review:hover { transform: none; } }
+.g-band { background: var(--stone); }
+.g-band-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s5); align-items: center; }
+.g-band-text { grid-column: 1 / span 6; display: grid; gap: var(--s3); }
+.g-band-text p { max-width: 42ch; }
+.g-band-act { grid-column: 8 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); }
+@media (max-width: 63.99em) { .g-band-text, .g-band-act { grid-column: 1 / -1; } }
+.g-profile { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; color: var(--ink); text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.25em; }
+.g-profile .icon, .reach .icon { width: 1rem; height: 1rem; color: var(--accent); }
+.site-footer .reach .icon { color: var(--flame); }

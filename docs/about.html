@@ -29,7 +29,7 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/site.css?v=38">
+  <link rel="stylesheet" href="css/site.css?v=39">
   <script>document.documentElement.classList.add('js')</script>
   <script type="application/ld+json">
 {
@@ -50,7 +50,7 @@
       }
     },
     {
-      "@type": "Organization",
+      "@type": "ProfessionalService",
       "@id": "https://straywolftech.com/#business",
       "name": "Stray Wolf Technology",
       "alternateName": "Stray Wolf",
@@ -72,10 +72,20 @@
         "addressRegion": "TX",
         "addressCountry": "US"
       },
-      "areaServed": {
-        "@type": "Country",
-        "name": "United States"
-      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Dallas, TX"
+        },
+        {
+          "@type": "City",
+          "name": "The Colony, TX"
+        },
+        {
+          "@type": "City",
+          "name": "Chattanooga, TN"
+        }
+      ],
       "knowsAbout": [
         "Website design",
         "Web development",
@@ -163,6 +173,7 @@
     <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-words" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M12 5v14M9 19h6"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3.2l2.7 5.5 6 .9-4.35 4.25 1 6L12 17l-5.35 2.85 1-6L3.3 9.6l6-.9L12 3.2z"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6L12 3z"/><path d="M9 12l2 2 4-4"/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></symbol>
     <symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12.5A8.5 8.5 0 1 1 11.5 3.5a3 3 0 0 0 4 4 3 3 0 0 0 5 5z"/><path d="M8.5 9.5h.01M8 14.5h.01M12.5 16h.01M13 11.5h.01" style="stroke-width:2.6"/></symbol>
@@ -367,7 +378,7 @@
     </div>
   </footer>
 
-  <script src="js/analytics.js?v=38" data-ga="G-K661V9VYG2" async></script>
-  <script src="js/site.js?v=38" defer></script>
+  <script src="js/analytics.js?v=39" data-ga="G-K661V9VYG2" async></script>
+  <script src="js/site.js?v=39" defer></script>
 </body>
 </html>

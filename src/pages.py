@@ -182,7 +182,8 @@ thanks_main = end_page('Got it. Thanks.', 'Your answers are in. Here’s what ha
             <li><span class="ts-n">4</span><span><strong>Your part</strong>You send your logo, photos and key words.</span></li>
             <li><span class="ts-n">5</span><span><strong>Live in about 30 days</strong>Only once you’ve seen it and said yes.</span></li>
           </ol>
-''' + go_cards([('index.html', 'arrow-left', 'Back to the homepage', 'Where you started'), ('work.html', 'layout', 'See the work', 'Sites I’ve built')], 'Where to next'),
+''' + go_cards([('index.html', 'arrow-left', 'Back to the homepage', 'Where you started'), ('work.html', 'layout', 'See the work', 'Sites I’ve built')]
+               + ([(esc(GOOGLE_PROFILE_URL), 'star', 'See us on Google', 'Our Business Profile')] if GOOGLE_PROFILE_URL else []), 'Where to next'),
     '', WOLF)
 
 page('thanks.html', 'Thanks | Stray Wolf Technology', 'Your answers are in.', thanks_main)
@@ -287,6 +288,21 @@ page('pricing.html', 'Pricing: what a website costs | Stray Wolf Technology',
 
 sites_rows = ''.join(f'''<li data-reveal><h3>{s["name"]}</h3><p>{s["about"]}</p>{visit(s, 'link-arrow ruled-go').replace('Visit the site', '<span>Visit the site</span>')}</li>''' for s in SITES)
 
+# The Google band: the "Review us on Google" button for past clients, and the profile link. Shows only once the
+# GOOGLE_REVIEW_URL / GOOGLE_PROFILE_URL settings in tools/build.py are filled in (after the profile is verified).
+google_band = ''
+if GOOGLE_REVIEW_URL or GOOGLE_PROFILE_URL:
+    google_band = f'''
+    <section class="section g-band" aria-labelledby="g-band-h">
+      <div class="wrap g-band-grid">
+        <div class="g-band-text" data-reveal>
+          <h2 id="g-band-h" class="h3">Worked with Stray Wolf?</h2>
+          <p>A few honest words on Google help the next owner decide. It takes about a minute, and every review is read.</p>
+        </div>
+        <div class="g-band-act" data-reveal>{google_review_badge('About a minute')}{google_profile_link()}</div>
+      </div>
+    </section>'''
+
 if REVIEWS:
     quotes = ''.join(f'''
           <li class="quote" data-reveal>
@@ -300,13 +316,13 @@ if REVIEWS:
         <ul class="quotes" role="list">{quotes}
         </ul>
       </div>
-    </section>
+    </section>{google_band}
 {close_section('reviews-close-h', 'Ready to start yours?')}'''
     reviews_desc = 'What clients say about working with Stray Wolf Technology, in their own words.'
 else:
     reviews_main = page_head('What clients <em>say.</em>', 'This page is waiting on real words. The first sites launched recently, and I’d rather show what people actually said than fill the space.') + \
       two_col('soon-h', 'Coming soon.', 'Real words from real clients, as they come in. Until then, the work speaks for itself.',
-              f'<ul class="ruled ruled-sites" role="list">{sites_rows}</ul>', ' tex tex-left') + f'''
+              f'<ul class="ruled ruled-sites" role="list">{sites_rows}</ul>', ' tex tex-left') + google_band + f'''
 {close_section('reviews-close-h', 'Ready to start yours?')}'''
     reviews_desc = 'What clients say about working with Stray Wolf Technology. Coming soon, as the first sites settle in.'
 

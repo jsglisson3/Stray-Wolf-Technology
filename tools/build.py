@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '38'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '39'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -53,8 +53,19 @@ SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site
 BING_VERIFY = ''              # optional: the content value of Bing Webmaster Tools' <meta name="msvalidate.01" ...> tag (or just import from Search Console)
 # ---- Profiles that are really yours (Google Business Profile share link, LinkedIn, Facebook...). Tells Google they're the same business. ----
 SAME_AS = [
-    # 'https://g.page/r/...',
+    # 'https://www.linkedin.com/company/...',   (GOOGLE_PROFILE_URL below is added on its own, no need to repeat it here)
 ]
+
+# ---- Google Business Profile (Nov 11 2026: created as a service business, verification pending). Leave both empty until the
+# profile is verified and public: nothing Google-related shows on the site while they're empty. Then paste them in and rebuild.
+#   GOOGLE_PROFILE_URL: the profile's public link. Business Profile > Share > copy the link (https://maps.app.goo.gl/... or https://g.page/...)
+#   GOOGLE_REVIEW_URL:  the "ask for reviews" link. Business Profile > Ask for reviews > copy (https://g.page/r/.../review)
+# With them set: the Reviews page gets the "Review us on Google" button, the footer and Thanks page get "See us on Google",
+# the structured data names the profile (sameAs), and straywolftech.com/review/ forwards to the review form (a short link
+# for emails, invoices and a QR code). Until then /review/ forwards to the Reviews page, so a printed link never breaks.
+GOOGLE_PROFILE_URL = ''
+GOOGLE_REVIEW_URL = ''
+SERVICE_AREAS = [('Dallas', 'TX'), ('The Colony', 'TX'), ('Chattanooga', 'TN')]   # the same areas as the Business Profile
 
 TAGLINE = 'Bespoke websites, by referral, for owner-run businesses. Bold, different and built around yours.'
 HOME_DESC = 'Bespoke websites for owner-run businesses, by referral. Design, domain, hosting and email, with one price in writing before anything starts.'   # the homepage's line in search results
@@ -93,8 +104,31 @@ WAYS = [x for x in (EMAIL_LINK, PHONE_LINK, BOOKING_LINK) if x]
 def reach_block():
     """The footer's contact lines. Until an email or phone exists, the form is the way in."""
     if WAYS:
-        return '<ul class="reach" role="list">' + ''.join(f'<li>{x}</li>' for x in WAYS) + '</ul>'
+        g = google_profile_link('')
+        return '<ul class="reach" role="list">' + ''.join(f'<li>{x}</li>' for x in WAYS + ([g] if g else [])) + '</ul>'
     return '<p class="muted">The quickest way is the <a href="start.html">Start a project</a> page. You\'ll hear back within five days.</p>'
+
+
+def google_profile_link(cls='g-profile'):
+    """'See us on Google': a plain text link to the Business Profile (no Google logo: their brand rules don't allow it here). '' while unset."""
+    if not GOOGLE_PROFILE_URL:
+        return ''
+    cls_attr = f' class="{cls}"' if cls else ''
+    return (f'<a{cls_attr} href="{esc(GOOGLE_PROFILE_URL)}" rel="noopener" target="_blank">'
+            f'<svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><span>See us on Google</span>'
+            f'<span class="visually-hidden"> (opens in a new tab)</span></a>')
+
+
+def google_review_badge(lead='Worked with Stray Wolf?'):
+    """The "Review us on Google" button: five outline stars (an invitation, not a rating) and plain text. '' while unset."""
+    if not GOOGLE_REVIEW_URL:
+        return ''
+    stars = ''.join('<svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>' for _ in range(5))
+    return (f'<a class="g-review" href="{esc(GOOGLE_REVIEW_URL)}" rel="noopener" target="_blank">'
+            f'<span class="g-review-stars" aria-hidden="true">{stars}</span>'
+            f'<span class="g-review-t"><small>{lead}</small><strong>Review us on Google</strong></span>'
+            f'<svg class="icon g-review-go" aria-hidden="true"><use href="#i-arrow-out"/></svg>'
+            f'<span class="visually-hidden"> (opens Google in a new tab)</span></a>')
 
 
 def photo_or_mark(dark=True):
@@ -461,14 +495,14 @@ def ld_json(file, title, desc):
     base = f'https://{DOMAIN}/'
     url = base + ('' if file == 'index.html' else file)
     business = {
-        '@type': 'Organization', '@id': base + '#business',
+        '@type': 'ProfessionalService', '@id': base + '#business',   # a kind of LocalBusiness (and of Organization), matching the Business Profile
         'name': 'Stray Wolf Technology', 'alternateName': 'Stray Wolf',
         'description': TAGLINE, 'url': base,
         'logo': {'@type': 'ImageObject', 'url': base + 'images/stray-wolf-logo-512.png', 'width': 512, 'height': 512},
         'image': base + 'images/og-card.jpg',
         'founder': {'@type': 'Person', 'name': 'Jeremy'},
         'address': {'@type': 'PostalAddress', 'addressRegion': 'TX', 'addressCountry': 'US'},   # "based in Texas" (privacy page); no street address on purpose
-        'areaServed': {'@type': 'Country', 'name': 'United States'},
+        'areaServed': [{'@type': 'City', 'name': f'{c}, {st}'} for c, st in SERVICE_AREAS],   # matches the Business Profile's service areas
         'knowsAbout': ['Website design', 'Web development', 'Domain registration', 'Website hosting', 'Business email setup'],
     }
     if EMAIL:
@@ -477,8 +511,9 @@ def ld_json(file, title, desc):
     if PHONE:
         business['telephone'] = tel
         business['contactPoint']['telephone'] = tel
-    if SAME_AS:
-        business['sameAs'] = SAME_AS
+    same_as = SAME_AS + ([GOOGLE_PROFILE_URL] if GOOGLE_PROFILE_URL and GOOGLE_PROFILE_URL not in SAME_AS else [])
+    if same_as:
+        business['sameAs'] = same_as
     graph = [
         {'@type': 'WebSite', '@id': base + '#website', 'name': 'Stray Wolf Technology',
          'alternateName': ['Stray Wolf', DOMAIN], 'url': base, 'inLanguage': 'en-US', 'publisher': {'@id': base + '#business'}},
@@ -562,7 +597,8 @@ mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
 for _n in ('icon', 'ARROW', 'faq_section', 'phases', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
-           'STARTER_FROM', 'LARGER_FROM', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM', 'MOCKUP_FROM', 'MOCKUP_TO', 'REVIEWS'):
+           'STARTER_FROM', 'LARGER_FROM', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM', 'MOCKUP_FROM', 'MOCKUP_TO', 'REVIEWS',
+           'google_profile_link', 'google_review_badge', 'GOOGLE_PROFILE_URL', 'GOOGLE_REVIEW_URL'):
     setattr(mod, _n, globals()[_n])
 mod.read = read
 mod.WAYS = WAYS
@@ -586,6 +622,16 @@ for old, new in (('contact.html', 'start.html'), ('brand.html', 'index.html'), (
 <body><p>This page has moved to <a href="{new}">{new}</a>.</p></body></html>
 ''', encoding='utf-8')
     print('redirect', old, '->', new)
+
+# 4b) The short review link, straywolftech.com/review/: Google's review form once GOOGLE_REVIEW_URL is set, the Reviews page until then
+(DOCS / 'review').mkdir(exist_ok=True)
+_rv = GOOGLE_REVIEW_URL or f'https://{DOMAIN}/reviews.html'
+(DOCS / 'review' / 'index.html').write_text(f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Review Stray Wolf Technology</title><meta name="robots" content="noindex, nofollow">
+<meta http-equiv="refresh" content="0; url={esc(_rv)}"></head>
+<body><p>Taking you to <a href="{esc(_rv)}">{'the review form on Google' if GOOGLE_REVIEW_URL else 'the Reviews page'}</a>.</p></body></html>
+''', encoding='utf-8')
+print('redirect review/ ->', _rv)
 
 # 5) Sitemap, robots.txt and the web manifest, so the domain setting flows through
 _sm = DOCS / 'sitemap.xml'
