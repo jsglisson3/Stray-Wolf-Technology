@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '41'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '42'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -110,23 +110,23 @@ def reach_block():
 
 
 def google_profile_link(cls='g-profile'):
-    """'See us on Google': a plain text link to the Business Profile (no Google logo: their brand rules don't allow it here). '' while unset."""
+    """'See us on Google': the Google G mark (as on the TVIS site) and a text link to the Business Profile. '' while unset."""
     if not GOOGLE_PROFILE_URL:
         return ''
     cls_attr = f' class="{cls}"' if cls else ''
     return (f'<a{cls_attr} href="{esc(GOOGLE_PROFILE_URL)}" rel="noopener" target="_blank">'
-            f'<svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><span>See us on Google</span>'
+            f'<svg class="g-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-g"/></svg><span>See us on Google</span>'
             f'<span class="visually-hidden"> (opens in a new tab)</span></a>')
 
 
 def google_review_badge(lead='Worked with Stray Wolf?'):
-    """The "Review us on Google" button: five outline stars (an invitation, not a rating) and plain text. '' while unset."""
+    """The "Review us on Google" button: the Google G mark, five outline stars (an invitation, not a rating) and the words. '' while unset."""
     if not GOOGLE_REVIEW_URL:
         return ''
     stars = ''.join('<svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>' for _ in range(5))
     return (f'<a class="g-review" href="{esc(GOOGLE_REVIEW_URL)}" rel="noopener" target="_blank">'
-            f'<span class="g-review-stars" aria-hidden="true">{stars}</span>'
-            f'<span class="g-review-t"><small>{lead}</small><strong>Review us on Google</strong></span>'
+            f'<svg class="g-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-g"/></svg>'
+            f'<span class="g-review-t"><span class="g-review-stars" aria-hidden="true">{stars}</span><strong>Review us on Google</strong></span>'
             f'<svg class="icon g-review-go" aria-hidden="true"><use href="#i-arrow-out"/></svg>'
             f'<span class="visually-hidden"> (opens Google in a new tab)</span></a>')
 

@@ -1401,3 +1401,9 @@ textarea.field { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
 .g-profile { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; color: var(--ink); text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.25em; }
 .g-profile .icon, .reach .icon { width: 1rem; height: 1rem; color: var(--accent); }
 .site-footer .reach .icon { color: var(--flame); }
+/* V41: the Google G mark on the button and beside "See us on Google" (the same mark the TVIS site uses next to Facebook) */
+.g-mark { width: 2.25rem; height: 2.25rem; flex: none; }
+.g-review-t { gap: 0.2rem; }
+.g-review-stars .icon { width: 0.95rem; height: 0.95rem; }
+.g-profile .g-mark, .reach .g-mark { width: 1.25rem; height: 1.25rem; }
+@media (max-width: 29.99em) { .g-review { flex-wrap: nowrap; } .g-review-t { padding-left: 0.8rem; border-left: 1px solid var(--line); } }
