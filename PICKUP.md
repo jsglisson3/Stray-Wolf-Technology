@@ -143,6 +143,25 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V41 (Nov 11 2026): You card notes, a tablet in Us, a healthier furry wolf
+
+(Built as cloud V39, then merged on top of the separate project's V39 and V40, the Google Business Profile work:
+GOOGLE_PROFILE_URL / GOOGLE_REVIEW_URL / SERVICE_AREAS in tools/build.py, the g-band in src/pages.py, #i-star in the sprite, the
+.g-review CSS now kept at the end of p11/motion.css, and the /review/ redirect. All of it is kept.)
+
+Jeremy, on V38: "work on the you section still needs work", "put a tablet in the US some how to imply it wroks there",
+"make the wolfs fur better.. he jsut looks sick or something".
+- You: a "Your project / Notes from our chat" card beside the phone fills in as the answers arrive: Now (A Facebook page),
+  Goal (More estimate calls), then Next (A price in writing), each with a blue tick. Blue, like the rest of You. The chat client is
+  not named. Phone at x 214, wolf sits at x 128.
+- Us: laptop (86,40 200x128), a tablet (14,86 92x124, images/work/tvis-tablet-384.webp from a 768x1024 shot of TVIS) and a
+  smaller phone (318,102 56x112); all three glow green at launch. The ask card says "Checked on a computer, a tablet and a phone."
+  The wolf now sits and howls in front, between the devices (x 198); confetti comes from the Live pill (186, 50).
+- Wolf (v39/wolf.py): fur tufts (tufts()) on the ruff, chest, belly, thighs and a bushy tail with a dark tip; a grey wolf's
+  pale cheeks, muzzle, throat, chest and leg fronts (mixp ramp); head carried higher in the walk (WALK_HEAD); calmer facet jitter;
+  the round pale eye the site's other wolves have (V30), plus a dark brow.
+- Generators v39/gen_cards.py + v39/wolf.py (copies in /mnt/project-files/rebrand/site-v39/). VERSION 41.
+
 ## V38 (Nov 11 2026): You / Me / Us cards redone after Jeremy's notes
 
 Jeremy, on V37: "the coffee seems so random", "the site choices are terrible use TVIS for every example", "that wolf needs to be a little more musculuar".
