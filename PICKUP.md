@@ -143,6 +143,31 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V45 (Nov 11 2026): a mockup checkpoint, four steps, a clearer You card, the handoff
+
+(Built as cloud V44, then merged on top of the separate project's V44 polish, which edited docs/css/site.css directly: --line-2
+borders, body font smoothing, the .has-facets fade, --tex-fade/--tex-h, .svc p, #services padding, .prose p, .ruled li, mobile
+pledges, the story padding, .foot-tag. All of it is now in the p11 parts (base, home, pages, about, footer). Also V45: the missing
+images/work/tvis-phone-600.webp, which phones asked for and showed as a broken square.)
+
+Jeremy: "we need to add a checkpoint phase for mockups before we get to deep on a build", "put some real effort into how to
+include a mockup checkpoint"; the You notes card "does not make sense try again"; the Us step should "sound like we have more of a
+handoff and check list to not be transactional"; he picked the heading "You talk. I build." on a decision card.
+- Four steps now (PHASES in tools/build.py): You. (First) / Us. (Before the build: "See it before I build it.", the homepage
+  mockup from Pricing, credited in full) / Me. (Then: "I take over.", the price line moved to the mockup step) / Us. (Before launch:
+  "A walkthrough, then the handoff."). Both checkpoints are green (your green light); the trail runs blue, green, orange, green.
+- Layout (p11/home.css): four across from 100em, two by two from 64em (each row lined up with subgrid, a gap track between rows,
+  the second step's trail stops at its own edge), one column with the trail down the left below 64em.
+- Mockup scene (v44/gen_cards.py, scenem/animm): a printed TVIS homepage mockup taped to the wall with a grey "Your photo here" box,
+  a pale blue client note "Use my photo here?", the box dissolves into the real photo, v1 turns to v2, an orange tick on the note,
+  then a green APPROVED stamp lands. The wolf sits under it and looks up. Note: in the scenes, any left/top on an element that
+  also sets its own font-size is in THAT element's em (the stamp and the note's tick).
+- The clock is 31 s now (Me and Us moved on by 6.85 s); wolves are cw-1 (You), cw-2 (mockup), cw-3 (Me), cw-4 (Us, resting).
+- You card: three questions, the chat scrolls up (v44/chat.js measures it into v44/chat.txt), notes "Website now / Your work /
+  The goal", no NEXT row.
+- Heading "You talk. I build." and the lead "One conversation to start, and I handle the rest. Before launch, I walk you through it
+  and hand it over, all in your name." (balanced, two lines on desktop). VERSION 45.
+
 ## V43 (Nov 11 2026): How it works becomes the centrepiece
 
 (Built as cloud V42, then merged on top of the separate project's V42, the Google G mark: #i-g in the sprite, .g-mark in

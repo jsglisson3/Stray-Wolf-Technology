@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '44'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '45'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -256,18 +256,28 @@ PHASES = [
         'Whether you have a website now',
         'Your situation, and what you want to do',
         'The goal of the website']),
-    ('Then', 'Me.', 'I take over.', [
+    # V44 (Jeremy, Nov 11 2026: "we need to add a checkpoint phase for mockups before we get to deep on a build", "put some real
+    # effort into how to include a mockup checkpoint"). A second Us. step before the build, in the checkpoint green: the homepage
+    # mockup from the Pricing page (MOCKUP_FROM to MOCKUP_TO, credited in full). "Before the build" pairs with "Before launch".
+    ('Before the build', 'Us.', 'See it before I build it.', [
         'A price in writing, within five days',
+        'Your homepage, designed first as a mockup',
+        'You say yes, or tell me what to change',
+        'Go ahead, and the mockup comes off the price']),
+    ('Then', 'Me.', 'I take over.', [
         'Help finding a domain name that’s available',
         'The design and the build, start to finish',
         'Domain, hosting and email set up',
         'Set up so Google, Bing and DuckDuckGo can find it (SEO)']),   # V42 (Jeremy, Nov 11: plainer words, "put SEO in () at the end")
     # (V42: a second line under "I take over." was tried, "You don't have to deal with the tech. That's my job.", and Jeremy
     #  asked for it to be deleted the same night. phases() still takes an optional 5th field for a line like that.)
-    ('Before launch', 'Us.', 'One checkpoint.', [
-        'You see it before anyone else',
+    # V44 (Jeremy, Nov 11: "make it sound like we have more of a handoff and check list to not be transactional").
+    # Was: 'One checkpoint.' / You see it before anyone else / You say yes, or tell me what to change / Then it goes live.
+    ('Before launch', 'Us.', 'A walkthrough, then the handoff.', [
+        'I walk you through it first',
+        'You and I go down the launch checklist',
         'You say yes, or tell me what to change',
-        'Then it goes live'])]
+        'It goes live, all in your name'])]
 PHASE_NOTE = 'Once I take the job, I’ll send a short list of what I need and how to send it: your logo, as many photos as you can, and your main headline or slogan, key phrases, wording or other guidelines. I’ll write the rest.'
 
 
