@@ -143,6 +143,15 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V46 (Nov 11 2026): the service tiles
+
+Jeremy: "Can you make these buttons awesome ?" (the six icon tiles in What I do). Each is now a faceted charcoal plate (four
+conic facets, like the logo wolf) with a soft light that sweeps across it now and then, and its own inline SVG icon (SVC_ICONS in
+tools/build.py; outlines are paths so pathLength works in Safari). When a row scrolls in its icon draws itself, then keeps one quiet
+motion: the page blocks build, the wrench turns, the globe spins (orange meridian), the server lights blink, a new-mail dot pings,
+the magnifier scans the lines. Reduced motion and no-JS show the finished icons; the footer pause stops them. CSS sits after
+#services in p11/home.css. VERSION 46.
+
 ## V45 (Nov 11 2026): a mockup checkpoint, four steps, a clearer You card, the handoff
 
 (Built as cloud V44, then merged on top of the separate project's V44 polish, which edited docs/css/site.css directly: --line-2

@@ -953,8 +953,61 @@ html:not(.js) .phase::before, .phases.is-in .phase::before, html:not(.js) .phase
 .svc h3 { font-size: var(--t-h4); letter-spacing: -0.02em; line-height: 1.12; }
 .svc p { font-size: var(--t-small); max-width: 31ch; color: var(--ink-3); }
 #services { padding-bottom: calc(var(--section) + clamp(1.5rem, 3vw, 3rem)); }
+/* V46 (Jeremy, Nov 11 2026: "Can you make these buttons awesome ?"): the six service tiles. A faceted charcoal plate (four
+   low-poly facets, like the logo wolf and the hero), a soft light that sweeps across the facets now and then, and a drawn icon in
+   paper white with one orange detail. When a row scrolls in its icon draws itself, then keeps one quiet motion of its own. */
+.svc-ic { --ic: 4.5rem; position: relative; display: grid; place-items: center; width: var(--ic); height: var(--ic); border-radius: 16px; overflow: hidden; isolation: isolate;
+  background: radial-gradient(120% 90% at 20% 0%, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0) 60%),
+    conic-gradient(from 222deg at 36% 31%, #4A4540 0 23%, #2C2926 0 50%, #3A3632 0 76%, #46413B 0);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.14), inset 0 -2px 0 rgb(0 0 0 / 0.22), 0 14px 22px -14px rgb(36 34 31 / 0.7), 0 2px 4px rgb(36 34 31 / 0.12);
+  transition: transform 350ms var(--ease-out), box-shadow 350ms var(--ease-out); }
+.svc-ic::after { content: ""; position: absolute; inset: -40%; z-index: 1; pointer-events: none; opacity: 0;
+  background: linear-gradient(115deg, rgb(255 255 255 / 0) 42%, rgb(255 250 240 / 0.22) 50%, rgb(255 255 255 / 0) 58%); transform: translateX(-60%); }
+.svc-ic svg { position: relative; z-index: 2; width: 58%; height: 58%; overflow: visible; fill: none; stroke: #F4EFE6; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.svc-ic .si-a { fill: var(--flame); stroke: none; }
+.svc-ic .si-f { fill: rgb(244 239 230 / 0.4); stroke: none; }
+.svc-ic .si-dot { fill: rgb(244 239 230 / 0.55); stroke: none; }
+.svc-ic .si-lat { stroke: rgb(244 239 230 / 0.45); stroke-width: 1.3; }
+.svc-ic .si-mer { stroke: var(--flame); }
+.svc-ic .si-spark { stroke: var(--flame); stroke-width: 1.7; fill: none; opacity: 0; }
+.svc-ic .si-led { fill: #8FD3A6; stroke: none; }
+.svc-ic .si-ring { fill: none; stroke: var(--flame); stroke-width: 1.4; opacity: 0; }
+.svc-ic .si-new { stroke: #2C2926; stroke-width: 1.6; paint-order: stroke; }
+.svc-ic .si-txt { stroke: rgb(244 239 230 / 0.32); stroke-width: 2; }
+.svc-ic .si-glass { fill: rgb(238 122 69 / 0.22); stroke: none; }
+.svc-ic .si-glint { stroke: rgb(255 255 255 / 0.8); stroke-width: 1.4; }
+.svc-ic .si-wrench, .svc-ic .si-mer, .svc-ic .si-a, .svc-ic .si-f, .svc-ic .si-led, .svc-ic .si-ring, .svc-ic .si-lens, .svc-ic .si-spark { transform-box: fill-box; transform-origin: center; }
+.svc-ic .si-wrench { transform-origin: 30% 70%; }
+.svc:hover .svc-ic { transform: translateY(-3px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), inset 0 -2px 0 rgb(0 0 0 / 0.22), 0 20px 26px -14px rgb(36 34 31 / 0.75), 0 2px 4px rgb(36 34 31 / 0.12); }
+@media (prefers-reduced-motion: no-preference) {
+  html.js .svc-ic .si-d { stroke-dasharray: 1; }
+  .svc.is-in .si-d { animation: si-draw 1s var(--ease-out) calc(var(--rd, 0ms) + 250ms) both; }
+  .svc.is-in .si-b1 { animation: si-grow 500ms var(--ease-spring) calc(var(--rd, 0ms) + 900ms) both; }
+  .svc.is-in .si-b2 { animation: si-grow 500ms var(--ease-spring) calc(var(--rd, 0ms) + 1050ms) both; }
+  .svc.is-in .si-b3 { animation: si-grow 500ms var(--ease-spring) calc(var(--rd, 0ms) + 1200ms) both; }
+  .svc.is-in .si-dot { animation: fade-in 400ms ease calc(var(--rd, 0ms) + 800ms) both; }
+  .svc.is-in .si-wrench { animation: si-turn 7s var(--ease-out) calc(var(--rd, 0ms) + 900ms) infinite; }
+  .svc.is-in .si-spark { animation: si-spark 7s ease calc(var(--rd, 0ms) + 900ms) infinite; }
+  .svc.is-in .si-mer { animation: si-spin 5s linear calc(var(--rd, 0ms) + 600ms) infinite; }
+  .svc.is-in .si-led1 { animation: si-blink 2.6s steps(1) calc(var(--rd, 0ms) + 900ms) infinite; }
+  .svc.is-in .si-led2 { animation: si-blink 2.6s steps(1) calc(var(--rd, 0ms) + 2200ms) infinite; }
+  .svc.is-in .si-new { animation: si-grow 500ms var(--ease-spring) calc(var(--rd, 0ms) + 1100ms) both; }
+  .svc.is-in .si-ring { animation: si-ping 4s ease-out calc(var(--rd, 0ms) + 1500ms) infinite; }
+  .svc.is-in .si-lens { animation: si-scan 5.5s ease-in-out calc(var(--rd, 0ms) + 600ms) infinite; }
+  .svc.is-in .svc-ic::after { animation: si-sheen 9s ease-in-out calc(var(--rd, 0ms) * 4 + 1.6s) infinite; }
+  @keyframes si-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes si-grow { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: none; } }
+  @keyframes si-turn { 0%, 6% { transform: none; } 12% { transform: rotate(-32deg); } 18% { transform: rotate(4deg); } 22%, 100% { transform: none; } }
+  @keyframes si-spark { 0%, 11% { opacity: 0; transform: scale(0.6); } 14% { opacity: 1; transform: none; } 22%, 100% { opacity: 0; transform: scale(1.15); } }
+  @keyframes si-spin { from { transform: scaleX(1); } 50% { transform: scaleX(-1); } to { transform: scaleX(1); } }
+  @keyframes si-blink { 0% { opacity: 1; } 8% { opacity: 0.25; } 14% { opacity: 1; } 20% { opacity: 0.35; } 26%, 100% { opacity: 1; } }
+  @keyframes si-ping { 0% { opacity: 0.9; transform: scale(0.85); } 45%, 100% { opacity: 0; transform: scale(1.9); } }
+  @keyframes si-scan { 0%, 100% { transform: translateX(-7px); } 45%, 55% { transform: translateX(1px); } }
+  @keyframes si-sheen { 0%, 70% { opacity: 0; transform: translateX(-60%); } 74% { opacity: 1; } 88% { opacity: 1; transform: translateX(60%); } 92%, 100% { opacity: 0; transform: translateX(60%); } }
+}
+.scene-paused .svc-ic *, .scene-paused .svc-ic::after { animation-play-state: paused !important; }
 @media (max-width: 63.99em) { .svc-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 47.99em) { .svc-list { grid-template-columns: 1fr; gap: 0; } .svc { grid-template-columns: 3.25rem minmax(0, 1fr); column-gap: var(--s4); row-gap: 0.25rem; padding-block: var(--s4); } .svc .plate-ic { grid-row: 1 / span 2; } .svc p { max-width: none; } }
+@media (max-width: 47.99em) { .svc-list { grid-template-columns: 1fr; gap: 0; } .svc { grid-template-columns: 3.75rem minmax(0, 1fr); column-gap: var(--s4); row-gap: 0.25rem; padding-block: var(--s4); } .svc .svc-ic { grid-row: 1 / span 2; --ic: 3.75rem; } .svc p { max-width: none; } }
 /* the ridge: low hills rising out of the page into the charcoal work band, one cactus on the skyline */
 .ridge { position: absolute; left: 0; right: 0; bottom: 100%; width: 100%; height: clamp(3rem, 6vw, 6rem); display: block; }
 .ridge-far { fill: var(--stone-2); }

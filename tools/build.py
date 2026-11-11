@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '45'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '46'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -316,10 +316,46 @@ SERVICES = [('layout', 'Website design and build', 'Made for your business. No t
             ('search', 'Search engine setup', 'Built so Google, Bing, DuckDuckGo and the rest can find and read it.')]
 
 
+# V46 (Jeremy, Nov 11 2026: "Can you make these buttons awesome ?" about the six service tiles). Each tile is a small faceted
+# charcoal plate (the logo's low-poly facets) with its own drawn icon that draws itself in when the row scrolls into view, then
+# keeps one quiet motion of its own: the page blocks build, the wrench turns, the globe spins, the server lights blink, a new
+# email dot pulses, the magnifier scans. Paper-white lines, orange for the one thing that matters, a soft light sweeps the facets.
+# pathLength="1" lets every line draw in with the same dash. Reduced motion and no-JS show the finished icons, still.
+def _rp(x, y, w, h, r):
+    """a rounded rectangle as a path (Safari only honours pathLength on paths, which the draw-in needs)"""
+    return (f'M{x + r} {y}H{x + w - r}A{r} {r} 0 0 1 {x + w} {y + r}V{y + h - r}A{r} {r} 0 0 1 {x + w - r} {y + h}'
+            f'H{x + r}A{r} {r} 0 0 1 {x} {y + h - r}V{y + r}A{r} {r} 0 0 1 {x + r} {y}Z')
+
+
+def _cp(cx, cy, r):
+    return f'M{cx - r} {cy}A{r} {r} 0 1 1 {cx + r} {cy}A{r} {r} 0 1 1 {cx - r} {cy}Z'
+
+
+_D = 'class="si-d" pathLength="1"'
+SVC_ICONS = {
+    'layout': (f'<path {_D} d="{_rp(3.5, 6, 25, 20, 3)}"/><path {_D} d="M3.5 11h25"/>'
+               '<circle class="si-dot" cx="7" cy="8.5" r="0.9"/><circle class="si-dot" cx="10" cy="8.5" r="0.9"/>'
+               '<rect class="si-a si-b1" x="7" y="14" width="10.5" height="3.2" rx="1"/>'
+               '<rect class="si-f si-b2" x="7" y="19.4" width="7" height="2.8" rx="1"/>'
+               '<rect class="si-f si-b3" x="20" y="14" width="5.5" height="8.2" rx="1"/>'),
+    'wrench': ('<g class="si-wrench"><path ' + _D + ' transform="translate(4 4)" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></g>'
+               '<g class="si-a si-spark"><path d="M25.5 21.5l2.4 1.1M23.2 24.6l1 2.4M26 25.2l1.8 1.8"/></g>'),
+    'globe': (f'<path {_D} d="{_cp(16, 16, 11.5)}"/><path {_D} d="M4.5 16h23"/><path class="si-d si-lat" pathLength="1" d="M7 9.5h18M7 22.5h18"/>'
+              '<ellipse class="si-mer" cx="16" cy="16" rx="5" ry="11.5"/>'),
+    'server': (f'<path {_D} d="{_rp(4.5, 5.5, 23, 9, 2.2)}"/><path {_D} d="{_rp(4.5, 17.5, 23, 9, 2.2)}"/>'
+               f'<path {_D} d="M15 10h8.5M15 22h8.5"/><circle class="si-led si-led1" cx="9" cy="10" r="1.5"/><circle class="si-led si-led2" cx="9" cy="22" r="1.5"/>'),
+    'mail': (f'<path {_D} d="{_rp(3.5, 8, 25, 17.5, 2.6)}"/><path {_D} d="M4.5 9.5l11.5 8.5 11.5-8.5"/>'
+             '<circle class="si-ring" cx="26.5" cy="8.5" r="4"/><circle class="si-a si-new" cx="26.5" cy="8.5" r="3.4"/>'),
+    'search': ('<path class="si-txt" d="M4 8.5h15M4 13.5h19M4 18.5h11M4 23.5h15"/>'
+               '<g class="si-lens"><circle class="si-glass" cx="18.5" cy="15" r="6.2"/>' + f'<path {_D} d="{_cp(18.5, 15, 6.2)}"/>'
+               '<path ' + _D + ' d="M23 19.5l5 5"/><path class="si-glint" d="M15.4 12.6a4 4 0 0 1 2.6-1.6"/></g>'),
+}
+
+
 def services():
-    """Six plates, each with a big line icon (the sprite), a name and one line."""
+    """Six plates, each with its own drawn, quietly moving icon (V46), a name and one line."""
     rows = ''.join(f'''
-          <li class="svc" data-reveal><span class="plate-ic" aria-hidden="true">{icon(ic)}</span><h3>{h}</h3><p>{t}</p></li>''' for ic, h, t in SERVICES)
+          <li class="svc" data-reveal><span class="svc-ic svc-ic-{ic}" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false">{SVC_ICONS[ic]}</svg></span><h3>{h}</h3><p>{t}</p></li>''' for ic, h, t in SERVICES)
     return f'''        <ul class="svc-list" role="list">{rows}
         </ul>'''
 
