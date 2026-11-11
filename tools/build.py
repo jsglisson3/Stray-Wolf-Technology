@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '46'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '47'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -395,7 +395,7 @@ def mount(s, sizes, phone=True):
     return f'''<div class="mount"><a class="mount-pic" href="{link}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{pic}</a>{phone_of(img) if phone else ''}</div>'''
 
 
-def visit(s, cls='button button-quiet'):
+def visit(s, cls='button button-visit'):
     name, link = esc(s['name']), esc(s['link'])
     return f'<a class="{cls}" href="{link}" target="_blank" rel="noopener">Visit the site{icon("arrow-out")}<span class="visually-hidden">: {name} (opens in a new tab)</span></a>'
 
@@ -413,7 +413,7 @@ def carousel(sites):
               <h3 class="slide-name">{esc(s['name'])}</h3>
               <p class="slide-about">{esc(s['about'])}</p>
               {tag}
-              {visit(s, 'button button-quiet slide-link')}
+              {visit(s, 'button button-visit slide-link')}
             </div>
           </li>''')
     dots = ''.join(f'<button type="button" class="car-dot" data-dot="{i}" aria-label="Show site {i + 1}: {esc(s["name"])}"><i></i></button>' for i, s in enumerate(sites))

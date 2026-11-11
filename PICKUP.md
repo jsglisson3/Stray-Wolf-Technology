@@ -143,6 +143,23 @@ Jeremy: "spend the entire day making this page pop.. add some texture.. review s
 - Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
 - VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
 
+## V47 (Nov 11 2026): sharper work frames, and a conversation on the mockup card
+
+Jeremy: "Sharpen up all these boxes and frames as well" (the homepage work slider), "sharpen the logo frames and just polish and
+sharpen all these lines and boxes up" (the Work page list), and on the Before the build card "something that shows and implies we
+are talking or going back and forth", "I like what we have but just something on top of it".
+- Mounts (home and Work): a rounded plate with soft facets like the logo (sand on light pages, charcoal in the dark band), the
+  screenshot in a slim browser window (three dots, fine edge, soft shadow), the phone as a real phone (graphite frame, glass, side
+  button). The Work page mount no longer bleeds to the screen edge on phones.
+- Logos sit on a small raised plate (both pages). The rule above the words is a fine line with a short orange tick.
+- Visit the site is a raised key with the arrow on its own small facet (class `button-visit`, set in visit() in tools/build.py).
+- Slider keys are small faceted charcoal plates like the service tiles; the progress bars are rounded and the current one is longer;
+  See all the work has its arrow in a ring that fills orange on hover. All in the Mounts / Recent work block of p11/home.css.
+- Before the build: a short chat over the mockup (generator v47/gen_cards.py, copy in /mnt/project-files/rebrand/site-v47/). Mine on
+  the left in orange with the wolf mark, the client's on the right in blue, typing dots before each reply: "Here's your mockup." /
+  "Love it. One small change?" (the note goes up) / "Done. Here's v2." / "Perfect. Let's build it!", then the APPROVED stamp.
+  The card clock is now 33 s (Me and Us start two seconds later).
+
 ## V46 (Nov 11 2026): the service tiles
 
 Jeremy: "Can you make these buttons awesome ?" (the six icon tiles in What I do). Each is now a faceted charcoal plate (four
