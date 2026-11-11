@@ -67,7 +67,7 @@ profile_card = f'''<figure class="profile{' has-photo' if HEADSHOT else ''}" dat
           </figcaption>
         </figure>'''
 
-about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
+about_main = f'''    <section class="about-hero tex" aria-labelledby="about-h">
       <div class="wrap about-hero-grid">
         <div class="about-text">
           <h1 id="about-h" class="h1">Different, <em>on purpose.</em></h1>
@@ -79,7 +79,7 @@ about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
       </div>
     </section>
 
-    <section class="section" aria-labelledby="how-h">
+    <section class="section tex tex-left tex-b" aria-labelledby="how-h">
       <div class="wrap">
         <header class="sec-head">
           <h2 id="how-h" class="h2" data-reveal>Six things you can count on.</h2>
@@ -91,7 +91,7 @@ about_main = f'''    <section class="about-hero" aria-labelledby="about-h">
       </div>
     </section>
 
-    <section class="section story" aria-labelledby="story-h">
+    <section class="section story tex" aria-labelledby="story-h">
       <div class="wrap story-grid">
         <div class="story-art" aria-hidden="true">
           <img src="images/brand/stray-wolf-facets.svg" width="200" height="200" alt="" loading="lazy" decoding="async">
@@ -119,7 +119,7 @@ else:
 
 start_main = page_head('Tell me about <em>your business.</em>', 'Six quick questions, about two minutes. I read every answer, and you’ll hear from me within five days. The rest we work out on a call.',
                        ['About 2 minutes', 'Most answers are optional', 'A reply within 5 days'], cls=' page-head-start') + f'''
-    <section class="section section-tight start-section" aria-label="The questions">
+    <section class="section section-tight start-section tex tex-left tex-b" aria-label="The questions">
       <div class="wrap start-grid">
         <h2 id="start-h" class="visually-hidden">The questions</h2>
         {form}
@@ -159,7 +159,7 @@ def go_cards(links, label):
 
 
 def end_page(h1, lead, inner, badge, side):
-    return f'''    <section class="end-page" aria-labelledby="end-h">
+    return f'''    <section class="end-page tex tex-left" aria-labelledby="end-h">
       <div class="wrap end-grid">
         <div class="end-text">{badge}
           <h1 id="end-h" class="h1">{h1}</h1>
@@ -197,6 +197,8 @@ page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not 
 
 
 # ---------------------------------------------------------------- Pricing (FIRST DRAFT, Nov 9 2026)
+# V35 (Nov 10 2026, Jeremy: "add something ... like doesn't fit? Let's talk it through to make it seem like I can fit everyone"):
+# the price list ends with a "Don't see your job here?" row that says "Let's talk" where the price would be, linking to the Start form.
 # The numbers are settings at the top of tools/build.py (STARTER_FROM, LARGER_FROM, FIX_FROM). Every line here is
 # Jeremy's to confirm or change before launch.
 
@@ -243,13 +245,18 @@ rates_html = ''.join(f'''
 
 pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. Here’s where most projects land.',
                          ['A price in writing first', 'A mockup first, credited in full', 'No monthly fees, ever']) + f'''
-    <section class="section" aria-labelledby="rates-h">
+    <section class="section tex tex-left" aria-labelledby="rates-h">
       <div class="wrap">
         <header class="sec-head">
           <h2 id="rates-h" class="h2" data-reveal>What projects usually cost.</h2>
           <p class="lead" data-reveal>Every site is priced on its own. These are the starting points, so you know before we talk.</p>
         </header>
         <ul class="rates" role="list">{rates_html}
+          <li class="rate rate-fit" data-reveal>
+            <h3 class="rate-name">Don’t see your job here?</h3>
+            <p class="rate-price"><small>Any size</small>Let’s talk</p>
+            <div class="rate-text"><p>Most projects don’t fit in a box. Tell me what you need, big or small, and I’ll work out a version that fits you and your budget.</p><p><a class="link-arrow" href="start.html"><span>Talk it through with me</span>{ARROW}</a></p></div>
+          </li>
           <li class="rate rate-after" data-reveal>
             <h3 class="rate-name">After launch</h3>
             <p class="rate-price"><small>Monthly</small>$0</p>
@@ -258,7 +265,7 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
         </ul>
       </div>
     </section>
-    <section class="section on-stone" aria-labelledby="incl-h">
+    <section class="section on-stone tex tex-b" aria-labelledby="incl-h">
       <div class="wrap">
         <header class="sec-head">
           <h2 id="incl-h" class="h2" data-reveal>In every price.</h2>
@@ -267,7 +274,7 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
         {pledge_list(INCLUDED)}
       </div>
     </section>
-''' + two_col('extra-h', 'What costs extra.', 'Quoted on their own, and always before, never after.', ruled(EXTRA)) + '\n' \
+''' + two_col('extra-h', 'What costs extra.', 'Quoted on their own, and always before, never after.', ruled(EXTRA), ' tex tex-left') + '\n' \
   + f'''
 {close_section('pricing-close-h', 'Want a number for yours?')}'''
 
@@ -299,7 +306,7 @@ if REVIEWS:
 else:
     reviews_main = page_head('What clients <em>say.</em>', 'This page is waiting on real words. The first sites launched recently, and I’d rather show what people actually said than fill the space.') + \
       two_col('soon-h', 'Coming soon.', 'Real words from real clients, as they come in. Until then, the work speaks for itself.',
-              f'<ul class="ruled ruled-sites" role="list">{sites_rows}</ul>') + f'''
+              f'<ul class="ruled ruled-sites" role="list">{sites_rows}</ul>', ' tex tex-left') + f'''
 {close_section('reviews-close-h', 'Ready to start yours?')}'''
     reviews_desc = 'What clients say about working with Stray Wolf Technology. Coming soon, as the first sites settle in.'
 

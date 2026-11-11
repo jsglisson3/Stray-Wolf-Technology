@@ -32,7 +32,7 @@ SITES = [
     {
         "name": "GLP Home Options",
         "about": "A home-buying business in Chattanooga, Tennessee.",
-        "link": "https://glphomeoptions.com/",
+        "link": "https://jsglisson3.github.io/GLP-Home-Options/",
         "image": "glp",
         "tag": "",
         "logo": ("glp-logo.webp", 240, 132),
