@@ -53,18 +53,18 @@ SEARCH_CONSOLE = ''           # e.g. 'AbCdEf123...' from <meta name="google-site
 BING_VERIFY = ''              # optional: the content value of Bing Webmaster Tools' <meta name="msvalidate.01" ...> tag (or just import from Search Console)
 # ---- Profiles that are really yours (Google Business Profile share link, LinkedIn, Facebook...). Tells Google they're the same business. ----
 SAME_AS = [
+    'https://g.page/r/CfdnwlRHO5SNEBM',   # the Business Profile's own address (the review link without /review)
     # 'https://www.linkedin.com/company/...',   (GOOGLE_PROFILE_URL below is added on its own, no need to repeat it here)
 ]
 
-# ---- Google Business Profile (Nov 11 2026: created as a service business, verification pending). Leave both empty until the
-# profile is verified and public: nothing Google-related shows on the site while they're empty. Then paste them in and rebuild.
+# ---- Google Business Profile (Nov 11 2026: created as a service business, links filled in). Empty = nothing Google-related shows.
 #   GOOGLE_PROFILE_URL: the profile's public link. Business Profile > Share > copy the link (https://maps.app.goo.gl/... or https://g.page/...)
 #   GOOGLE_REVIEW_URL:  the "ask for reviews" link. Business Profile > Ask for reviews > copy (https://g.page/r/.../review)
 # With them set: the Reviews page gets the "Review us on Google" button, the footer and Thanks page get "See us on Google",
 # the structured data names the profile (sameAs), and straywolftech.com/review/ forwards to the review form (a short link
 # for emails, invoices and a QR code). Until then /review/ forwards to the Reviews page, so a printed link never breaks.
-GOOGLE_PROFILE_URL = ''
-GOOGLE_REVIEW_URL = ''
+GOOGLE_PROFILE_URL = 'https://share.google/uQjBeT1gwU9UAhhyP'   # the Share link from the profile (Nov 11 2026)
+GOOGLE_REVIEW_URL = 'https://g.page/r/CfdnwlRHO5SNEBM/review'   # from Ask for reviews (Nov 11 2026)
 SERVICE_AREAS = [('Dallas', 'TX'), ('The Colony', 'TX'), ('Chattanooga', 'TN')]   # the same areas as the Business Profile
 
 TAGLINE = 'Bespoke websites, by referral, for owner-run businesses. Bold, different and built around yours.'
