@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-BBuf8z1dZOwjRUhVxrsh/+osEV1RgC/87wAMDBite9o=' 'sha256-ikh5Hotv8pg/Nu6ONDqsd6+tzqTrNOx1i7sdaWj30t8='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<style>[hidden]{display:none!important}body{margin:0}</style>
+<title>Client Requests Admin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Zilla+Slab:wght@600&display=swap">
+<script>
+  /* The address of your Site Notes service. "demo" shows made-up sample data. */
+  window.SITE_NOTES_API = "https://site-notes.jsglisson.workers.dev";
+</script>
+<style>
+/* Layout: dark header bar, client list on the left, that client's requests on the right; stacks on phones */
+:root{--bg:#f6f5f2;--paper:#fff;--ink:#24221f;--muted:#6b665f;--line:#e3dfd8;--accent:#c2541b;--on-accent:#fff;--bar:#24221f;--on-bar:#f6f5f2;--ok:#2f7a4b;--bad:#b3261e;--pin:#1f5fa8;--on-pin:#fff;
+  --display:"Zilla Slab",Georgia,serif;--text:"Inter",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1917;--paper:#23211f;--ink:#ece8e1;--muted:#a39d94;--line:#3a3733;--accent:#e47a3f;--on-accent:#1a1917;--bar:#0f0e0d;--on-bar:#ece8e1;--ok:#5fbf83;--bad:#ef7a72;--pin:#7fb2ea;--on-pin:#10233a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1a1917;--paper:#23211f;--ink:#ece8e1;--muted:#a39d94;--line:#3a3733;--accent:#e47a3f;--on-accent:#1a1917;--bar:#0f0e0d;--on-bar:#ece8e1;--ok:#5fbf83;--bad:#ef7a72;--pin:#7fb2ea;--on-pin:#10233a;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--text)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hdr{background:var(--bar);color:var(--on-bar)}
+.hdr-in{max-width:1240px;margin:0 auto;padding-block:14px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+.hdr h1{font-size:22px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.nav button{background:none;border:1px solid transparent;border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;color:var(--on-bar);opacity:.8}
+.nav button[aria-pressed="true"]{border-color:var(--on-bar);opacity:1}
+.nav .quiet{text-decoration:underline;font-weight:400;font-size:13px}
+.main{max-width:1240px;margin:0 auto;padding-block:20px 56px;display:grid;grid-template-columns:280px minmax(0,1fr);gap:20px;align-items:start}
+.main.one{grid-template-columns:minmax(0,1fr)}
+@media (max-width:780px){.main{grid-template-columns:minmax(0,1fr)}}
+.label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.clients{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.clients button{width:100%;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;gap:10px;justify-content:space-between;align-items:center}
+.clients button[aria-current="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.clients b{font-weight:600;min-width:0;overflow-wrap:anywhere}
+.count{font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;background:var(--accent);color:var(--on-accent);flex:none;font-variant-numeric:tabular-nums}
+.count.zero{background:none;color:var(--muted);border:1px solid var(--line)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;min-width:0}
+.card-hd{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center}
+.card-hd h2{font-size:24px}
+.sub{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.tabs{display:flex;gap:6px}
+.tabs button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.batch{padding:14px 20px 8px}
+.batch+.batch{border-top:1px solid var(--line)}
+.batch-hd{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.batch-hd h3{font:600 13px/1.3 var(--text);color:var(--muted)}
+.req{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;padding:10px 0;border-top:1px dashed var(--line);align-items:start}
+.batch-hd+.req{border-top:0}
+.num{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:var(--pin);color:var(--on-pin);font-size:12px;font-weight:600}
+.says{overflow-wrap:anywhere;white-space:pre-line}
+.pics{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pics button{width:84px;height:64px;border-radius:6px;border:1px solid var(--line);background:var(--bg);padding:0;overflow:hidden;font-size:11px;color:var(--muted)}
+.pics img{width:100%;height:100%;object-fit:cover;display:block}
+.done{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600;white-space:nowrap}
+.done input{width:18px;height:18px;accent-color:var(--ok)}
+.req.is-done .says{text-decoration:line-through;color:var(--muted)}
+.none{padding:24px 20px;color:var(--muted)}
+.link{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:13px}
+.link.bad{color:var(--bad)}
+.btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:6px;padding:9px 14px;font-weight:600}
+.btn.plain{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.btn[disabled]{opacity:.5;cursor:default}
+.gate{max-width:360px;margin:12vh auto 0;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:22px;display:grid;gap:10px}
+.gate p{margin:0;font-size:13px;color:var(--muted)}
+.field{display:grid;gap:4px;min-width:0}
+.field label{font-size:13px;font-weight:600}
+.field input{padding:9px 10px;border-radius:6px;border:1px solid var(--line);background:var(--bg);width:100%}
+.field small{color:var(--muted);font-size:12px}
+.err{color:var(--bad)!important;font-size:13px;margin:0}
+.pad{padding:18px 20px;display:grid;gap:14px}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:620px){.form{grid-template-columns:minmax(0,1fr)}}
+.crow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:6px 16px;padding:14px 20px;border-top:1px solid var(--line);align-items:center}
+@media (max-width:700px){.crow{grid-template-columns:minmax(0,1fr)}}
+.crow b{font-weight:600}
+.pw{font:600 15px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere}
+.crow .acts{display:flex;flex-wrap:wrap;gap:6px 14px}
+.sendbox{border:1px dashed var(--line);border-radius:8px;padding:12px 14px;background:var(--bg);white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;user-select:all}
+.veil{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.8);display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;place-items:center;padding:20px}
+.veil img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;background:#fff}
+.veil .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.veil a,.veil button{background:#fff;color:#24221f;border:0;border-radius:6px;padding:9px 14px;font-weight:600;text-decoration:none;font-size:14px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;max-width:calc(100% - 32px);text-align:center}
+</style>
+
+</head>
+<body>
+<div id="gate" class="gut" hidden><form class="gate" id="login">
+  <h2>Stray Wolf admin</h2>
+  <div class="field"><label for="pw">Password</label><input id="pw" type="password" autocapitalize="off" autocomplete="current-password"></div>
+  <p class="err" id="err" hidden></p>
+  <button class="btn" type="submit" id="go">Log in</button>
+  <p id="demo-note" hidden>Demo password: <b>wolf</b>. The clients and requests inside are made-up samples.</p>
+</form></div>
+
+<div id="app" hidden>
+  <header class="hdr gut"><div class="hdr-in">
+    <h1>Client requests</h1>
+    <div class="nav">
+      <button type="button" id="v-req" aria-pressed="true">Requests</button>
+      <button type="button" id="v-cli" aria-pressed="false">Clients and passwords</button>
+      <button type="button" class="quiet" id="refresh">Refresh</button>
+      <button type="button" class="quiet" id="out">Log out</button>
+    </div>
+  </div></header>
+  <div class="main gut" id="main"></div>
+</div>
+
+<script>
+(function(){
+  var API = String(window.SITE_NOTES_API || "demo").replace(/\/+$/,""), DEMO = API === "demo";
+  var TOKEN_KEY = "swn-admin-token";
+  var token = null, data = { clients: [], batches: [] }, view = "req", cur = null, show = "open", lastAdded = null;
+  try { token = localStorage.getItem(TOKEN_KEY); } catch(e){}
+  var $ = function(id){ return document.getElementById(id); };
+  function el(t, props, kids){
+    var e = document.createElement(t), k;
+    for (k in props || {}) {
+      if (k === "class") e.className = props[k]; else if (k === "text") e.textContent = props[k];
+      else if (k.slice(0,2) === "on") e.addEventListener(k.slice(2), props[k]);
+      else if (props[k] !== false && props[k] != null) e.setAttribute(k, props[k] === true ? "" : props[k]);
+    }
+    (kids || []).forEach(function(c){ if (c != null) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return e;
+  }
+  function toast(text){ var t = el("div",{class:"toast",role:"status",text:text}); document.body.appendChild(t); setTimeout(function(){ t.remove(); }, 2600); }
+  function copy(text){ try { navigator.clipboard.writeText(text).then(function(){ toast("Copied."); }, function(){ toast("Select the text and copy it."); }); } catch(e){ toast("Select the text and copy it."); } }
+  function when(iso){ var d = new Date(iso); return isNaN(d) ? iso : d.toLocaleString(undefined,{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}); }
+  function slug(s){ return String(s).toLowerCase().replace(/&/g," and ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40); }
+  var WORDS = ["maple","cedar","birch","canyon","river","mesa","ridge","willow","juniper","prairie","timber","summit","harbor","meadow","copper","granite","lantern","saddle","thicket","ember"];
+  function newPassword(){ var r = new Uint32Array(2); crypto.getRandomValues(r); return WORDS[r[0] % WORDS.length] + "-" + String(1000 + r[1] % 9000); }
+
+  /* ---------- talking to the service (or to sample data in demo mode) ---------- */
+  var demoPw = {};
+  function demoData(){
+    var now = Date.now(), ago = function(h){ return new Date(now - h*36e5).toISOString(); };
+    return { clients: [
+        {site:"tvis-construction", name:"TVIS Construction", url:"tvisconstruction.com", password:"granite-4821", created:ago(900)},
+        {site:"cedar-street", name:"Cedar Street Barbers (sample)", url:"cedarstreetbarbers.com", password:"maple-7730", created:ago(400)},
+        {site:"juniper-bakery", name:"Juniper Bakery (sample)", url:"juniperbakery.com", password:"ember-2206", created:ago(200)} ],
+      batches: [
+        {id:"b3", site:"tvis-construction", at:ago(2), notes:[
+          {n:1, title:"Home", on:"Top of the page: Groundwork Done Right.", text:"Can we add the new excavator picture here?", pics:["demo:1","demo:2"], done:false},
+          {n:2, title:"Home", on:"Menu: Call 423-225-7038", text:"We're getting a second number for the office. I'll send it Friday.", pics:[], done:false},
+          {n:3, title:"Projects", on:"Pictures for the site", text:"New photos from the Hixson driveway job.", pics:["demo:3","demo:4","demo:5"], done:false}]},
+        {id:"b2", site:"cedar-street", at:ago(26), notes:[
+          {n:1, title:"Home", on:"Services: Haircut · $30", text:"Change this to $32.", pics:[], done:false},
+          {n:2, title:"Home", on:"Hours: Saturday · 8 am – 3 pm", text:"We now close at 4 on Saturdays.", pics:[], done:true}]},
+        {id:"b1", site:"juniper-bakery", at:ago(190), notes:[
+          {n:1, title:"Welcome", on:"Pictures for the site", text:"Here's our logo and a few shots of the shop.", pics:["demo:6","demo:7"], done:true}]} ] };
+  }
+  function demoPic(key){
+    var tints = ["#8a5a3c","#6f8a6a","#4f6b7a","#a0762f","#7c776f","#c2541b","#55606b"], n = Number(key.split(":")[1]) || 0;
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="' + tints[n % tints.length] + '"/><text x="400" y="315" font-family="Georgia,serif" font-size="44" fill="#fff" fill-opacity=".85" text-anchor="middle">sample picture ' + n + '</text></svg>';
+    return "data:image/svg+xml," + encodeURIComponent(svg);
+  }
+  function call(path, body){
+    if (DEMO) return Promise.resolve(demoCall(path, body));
+    var headers = token ? { authorization: "Bearer " + token } : {};
+    return fetch(API + path, { method: body ? "POST" : "GET", headers: headers, body: body ? JSON.stringify(body) : undefined })
+      .then(function(r){ return r.json().then(function(d){ d.status = r.status; return d; }); })
+      .catch(function(){ return { ok:false, status:0, error:"Couldn't reach the service. Check your internet and try again." }; })
+      .then(function(d){ if (d.status === 401 && path !== "/api/admin/login") { logout("Please log in again."); } return d; });
+  }
+  function demoCall(path, b){
+    if (path === "/api/admin/login") return b.password.trim().toLowerCase() === "wolf" ? {ok:true, token:"demo"} : {ok:false, error:'That password isn\'t right. In this demo it\'s "wolf".'};
+    if (path === "/api/admin/data") { if (!demoCall.d) demoCall.d = demoData(); return {ok:true, clients:demoCall.d.clients, batches:demoCall.d.batches}; }
+    var d = demoCall.d;
+    if (path === "/api/admin/done") { d.batches.forEach(function(x){ if (x.id === b.batch) x.notes.forEach(function(n){ if (n.n === b.n) n.done = b.done; }); }); return {ok:true}; }
+    if (path === "/api/admin/batch/delete") { d.batches = d.batches.filter(function(x){ return x.id !== b.batch; }); return {ok:true}; }
+    if (path === "/api/admin/client/delete") { d.clients = d.clients.filter(function(x){ return x.site !== b.site; }); return {ok:true}; }
+    if (path === "/api/admin/client") {
+      var old = d.clients.filter(function(x){ return x.site === b.site; })[0];
+      var c = { site:b.site, name:b.name || (old && old.name) || b.site, url:b.url || (old && old.url) || "", password:b.password || (old && old.password), created:(old && old.created) || new Date().toISOString() };
+      d.clients = d.clients.filter(function(x){ return x.site !== b.site; }).concat([c]).sort(function(a,z){ return a.name.localeCompare(z.name); });
+      return {ok:true, client:c};
+    }
+    return {ok:false, error:"Not in the demo."};
+  }
+  var picCache = {};
+  function picSrc(key){
+    if (picCache[key]) return picCache[key];
+    return picCache[key] = DEMO ? Promise.resolve(demoPic(key)) :
+      fetch(API + "/api/admin/pic?key=" + encodeURIComponent(key), { headers: { authorization: "Bearer " + token } })
+        .then(function(r){ if (!r.ok) throw 0; return r.blob(); }).then(function(b){ return URL.createObjectURL(b); }).catch(function(){ delete picCache[key]; return ""; });
+  }
+
+  /* ---------- login ---------- */
+  function showGate(msg){ $("app").hidden = true; $("gate").hidden = false; $("demo-note").hidden = !DEMO; $("err").hidden = !msg; $("err").textContent = msg || ""; $("pw").value = ""; $("pw").focus(); }
+  function logout(msg){ token = null; try { localStorage.removeItem(TOKEN_KEY); } catch(e){} showGate(msg); }
+  $("login").addEventListener("submit", function(e){
+    e.preventDefault(); $("go").disabled = true;
+    call("/api/admin/login", { password: $("pw").value }).then(function(d){
+      $("go").disabled = false;
+      if (!d.ok) { $("err").textContent = d.error || "That password isn't right."; $("err").hidden = false; return; }
+      token = d.token; try { localStorage.setItem(TOKEN_KEY, token); } catch(e){}
+      load();
+    });
+  });
+  $("out").onclick = function(){ logout(); };
+  $("refresh").onclick = function(){ load(true); };
+  $("v-req").onclick = function(){ view = "req"; draw(); };
+  $("v-cli").onclick = function(){ view = "cli"; draw(); };
+
+  function load(say){
+    return call("/api/admin/data").then(function(d){
+      if (!d.ok) { if (d.status !== 401) { $("gate").hidden = true; $("app").hidden = false; $("main").textContent = ""; $("main").appendChild(el("p",{class:"err",text:d.error || "Couldn't load."})); } return; }
+      data = d; $("gate").hidden = true; $("app").hidden = false;
+      if (say) toast("Up to date.");
+      draw();
+    });
+  }
+
+  /* ---------- requests view ---------- */
+  function nameOf(site){ var c = data.clients.filter(function(x){ return x.site === site; })[0]; return c ? c.name : site + " (removed client)"; }
+  function openCount(site){ var n = 0; data.batches.forEach(function(b){ if (!site || b.site === site) b.notes.forEach(function(x){ if (!x.done) n++; }); }); return n; }
+  function sites(){
+    var list = data.clients.map(function(c){ return c.site; });
+    data.batches.forEach(function(b){ if (list.indexOf(b.site) < 0) list.push(b.site); });
+    return list;
+  }
+  function draw(){
+    $("v-req").setAttribute("aria-pressed", view === "req"); $("v-cli").setAttribute("aria-pressed", view === "cli");
+    var main = $("main"); main.textContent = ""; main.className = "main gut" + (view === "cli" ? " one" : "");
+    if (view === "cli") return drawClients(main);
+    var all = sites(); if (cur && all.indexOf(cur) < 0) cur = null;
+    var ul = el("ul",{class:"clients"});
+    [null].concat(all).forEach(function(site){
+      var n = openCount(site);
+      ul.appendChild(el("li",{},[el("button",{type:"button","aria-current":String(site === cur),onclick:function(){ cur = site; draw(); }},[
+        el("b",{text: site ? nameOf(site) : "Everyone"}), el("span",{class:"count" + (n ? "" : " zero"), text: n ? n + " open" : "all done"})])]));
+    });
+    main.appendChild(el("nav",{"aria-label":"Clients"},[el("p",{class:"label",text:"Clients"}), ul]));
+
+    var card = el("section",{class:"card"}), client = data.clients.filter(function(c){ return c.site === cur; })[0];
+    var tabs = el("div",{class:"tabs"});
+    [["open","Open"],["done","Done"],["all","All"]].forEach(function(t){ tabs.appendChild(el("button",{type:"button","aria-pressed":String(show === t[0]),text:t[1],onclick:function(){ show = t[0]; draw(); }})); });
+    card.appendChild(el("div",{class:"card-hd"},[el("div",{},[el("h2",{text: cur ? nameOf(cur) : "Everyone"}), el("div",{class:"sub",text: client ? client.url : (cur ? "" : "Every client's requests, newest first")})]), tabs]));
+    var any = false;
+    data.batches.forEach(function(b){
+      if (cur && b.site !== cur) return;
+      var rows = b.notes.filter(function(n){ return show === "all" || (show === "done") === !!n.done; });
+      if (!rows.length) return; any = true;
+      var del = el("button",{class:"link bad",type:"button",text:"Delete",onclick:function(){
+        if (del.textContent === "Delete") { del.textContent = "Really delete these notes and pictures?"; setTimeout(function(){ del.textContent = "Delete"; }, 4000); return; }
+        call("/api/admin/batch/delete",{batch:b.id}).then(function(d){ if (d.ok) { toast("Deleted."); load(); } });
+      }});
+      var box = el("div",{class:"batch"},[el("div",{class:"batch-hd"},[el("h3",{text:(cur ? "" : nameOf(b.site) + " · ") + "Sent " + when(b.at)}), del])]);
+      rows.forEach(function(n){
+        var pics = n.pics.length ? el("div",{class:"pics"}) : null;
+        n.pics.forEach(function(key, i){
+          var btn = el("button",{type:"button","aria-label":"Open picture " + (i + 1),text:"…",onclick:function(){ viewer(key); }});
+          picSrc(key).then(function(src){ btn.textContent = ""; if (src) btn.appendChild(el("img",{src:src,alt:""})); else btn.textContent = "missing"; });
+          pics.appendChild(btn);
+        });
+        var cb = el("input",{type:"checkbox",id:"cb-" + b.id + "-" + n.n,onchange:function(){
+          n.done = cb.checked; call("/api/admin/done",{batch:b.id,n:n.n,done:cb.checked}).then(function(d){ if (!d.ok) toast(d.error || "That didn't save."); draw(); });
+        }}); cb.checked = !!n.done;
+        box.appendChild(el("div",{class:"req" + (n.done ? " is-done" : "")},[
+          el("span",{class:"num",text:String(n.n)}),
+          el("div",{},[el("div",{class:"sub",text:(n.title ? n.title + " · " : "") + n.on}), el("div",{class:"says",text:n.text || "(pictures only)"}), pics]),
+          el("label",{class:"done"},[cb,"Done"])]));
+      });
+      card.appendChild(box);
+    });
+    if (!any) card.appendChild(el("div",{class:"none",text: show === "open" ? "Nothing open here. All caught up." : "Nothing here yet."}));
+    main.appendChild(card);
+  }
+  function viewer(key){
+    var img = el("img",{alt:"Picture from the client"}), save = el("a",{text:"Save picture",download:key.replace(/[^\w-]+/g,"-") + ".jpg",target:"_blank",rel:"noopener"});
+    var veil = el("div",{class:"veil",role:"dialog","aria-label":"Picture",onclick:function(e){ if (e.target === veil) veil.remove(); }},[img, el("div",{class:"row"},[save, el("button",{type:"button",text:"Close",onclick:function(){ veil.remove(); }})])]);
+    picSrc(key).then(function(src){ img.src = src; save.href = src; });
+    document.body.appendChild(veil);
+  }
+
+  /* ---------- clients and passwords view ---------- */
+  function sendText(c){ var site = c.url ? c.url.replace(/^https?:\/\//,"").replace(/\/+$/,"") : "[their site address]";
+    return "Here's how to ask me for changes to your website:\n\n1. Go to " + site + "/notes (or press and hold the little wolf at the very bottom of your website for 2 seconds).\n2. Type this password: " + c.password + "\n3. Tap a box to send me what I need. To ask for a change, tap Open Edit mode, tap the part you mean, and type what you'd like. You can add photos too.\n4. Tap Send to Jeremy. That's it.\n\nYou can't break anything. Nothing on your website changes until I make the update."; }
+  function drawClients(main){
+    var card = el("section",{class:"card"});
+    card.appendChild(el("div",{class:"card-hd"},[el("div",{},[el("h2",{text:"Clients and passwords"}), el("div",{class:"sub",text:"Add a client right after you meet. Send them their address and password."})])]));
+    var name = el("input",{id:"c-name",placeholder:"Cedar Street Barbers"}), url = el("input",{id:"c-url",placeholder:"cedarstreetbarbers.com"}),
+        site = el("input",{id:"c-site",placeholder:"cedar-street-barbers"}), pw = el("input",{id:"c-pw",value:newPassword()}), err = el("p",{class:"err",hidden:true});
+    var touched = false; site.oninput = function(){ touched = true; }; name.oninput = function(){ if (!touched) site.value = slug(name.value); };
+    var add = el("button",{class:"btn",type:"submit",text:"Add client"});
+    card.appendChild(el("form",{class:"pad",onsubmit:function(e){
+      e.preventDefault(); err.hidden = true;
+      if (!name.value.trim()) { err.textContent = "Give the client a name."; err.hidden = false; return; }
+      if (data.clients.some(function(c){ return c.site === site.value.trim(); })) { err.textContent = "That short name is already used. Change it a little."; err.hidden = false; return; }
+      add.disabled = true;
+      call("/api/admin/client",{site:site.value.trim(),name:name.value.trim(),url:url.value.trim(),password:pw.value.trim()}).then(function(d){
+        add.disabled = false;
+        if (!d.ok) { err.textContent = d.error || "That didn't save."; err.hidden = false; return; }
+        lastAdded = d.client.site; toast("Client added."); load();
+      });
+    }},[
+      el("p",{class:"label",text:"Add a client"}),
+      el("div",{class:"form"},[
+        el("div",{class:"field"},[el("label",{for:"c-name",text:"Business name"}), name]),
+        el("div",{class:"field"},[el("label",{for:"c-url",text:"Site address"}), url, el("small",{text:"Their live site, or the preview address before launch."})]),
+        el("div",{class:"field"},[el("label",{for:"c-site",text:"Short name"}), site, el("small",{text:"Lowercase letters, numbers and dashes. Goes in their site's code."})]),
+        el("div",{class:"field"},[el("label",{for:"c-pw",text:"Their password"}), pw, el("small",{text:"Made up for you. Change it if you like (6 or more characters)."})])
+      ]), err, el("div",{},[add])
+    ]));
+    if (!data.clients.length) card.appendChild(el("div",{class:"none",text:"No clients yet."}));
+    data.clients.forEach(function(c){
+      var rm = el("button",{class:"link bad",type:"button",text:"Remove",onclick:function(){
+        if (rm.textContent === "Remove") { rm.textContent = "Really remove? Their login stops working."; setTimeout(function(){ rm.textContent = "Remove"; }, 4000); return; }
+        call("/api/admin/client/delete",{site:c.site}).then(function(d){ if (d.ok) { toast("Removed."); load(); } });
+      }});
+      var pwBox = el("div",{},[el("div",{class:"sub",text:"Password"}), el("div",{class:"pw",text:c.password})]);
+      // Change password: type any password (6 or more characters), or tap "Make one for me"
+      function editPw() {
+        var inp = el("input",{value:c.password,"aria-label":"New password for " + c.name,autocomplete:"off",spellcheck:"false"}), msg = el("p",{class:"err",hidden:true});
+        function save(v) {
+          v = String(v || "").trim();
+          if (v.length < 6) { msg.textContent = "Use at least 6 characters."; msg.hidden = false; return; }
+          if (v === c.password) { load(); return; }
+          call("/api/admin/client",{site:c.site,password:v}).then(function(d){
+            if (d.ok) { lastAdded = c.site; toast("Password changed. The old one no longer works."); load(); }
+            else { msg.textContent = d.error || "That didn't save. Try again."; msg.hidden = false; }
+          });
+        }
+        inp.addEventListener("keydown",function(e){ if (e.key === "Enter") save(inp.value); if (e.key === "Escape") load(); });
+        pwBox.replaceChildren(el("div",{class:"sub",text:"New password"}), inp, msg,
+          el("div",{class:"acts"},[
+            el("button",{class:"btn",type:"button",text:"Save",onclick:function(){ save(inp.value); }}),
+            el("button",{class:"link",type:"button",text:"Make one for me",onclick:function(){ inp.value = newPassword(); inp.focus(); }}),
+            el("button",{class:"link",type:"button",text:"Cancel",onclick:function(){ load(); }})]));
+        inp.focus(); inp.select();
+      }
+      var row = el("div",{class:"crow"},[
+        el("div",{},[el("b",{text:c.name}), el("div",{class:"sub",text:(c.url || "no site address yet") + " · short name: " + c.site})]),
+        pwBox,
+        el("div",{class:"acts"},[
+          el("button",{class:"link",type:"button",text:"Copy what to send them",onclick:function(){ copy(sendText(c)); }}),
+          el("button",{class:"link",type:"button",text:"Change password",onclick:function(){ editPw(); }}),
+          el("button",{class:"link",type:"button",text:"New password",onclick:function(){ call("/api/admin/client",{site:c.site,password:newPassword()}).then(function(d){ if (d.ok) { lastAdded = c.site; toast("New password set. The old one no longer works."); load(); } }); }}),
+          rm])
+      ]);
+      card.appendChild(row);
+      if (lastAdded === c.site) card.appendChild(el("div",{class:"pad"},[el("p",{class:"label",text:"Send this to " + c.name}), el("div",{class:"sendbox",text:sendText(c)}), el("div",{},[el("button",{class:"btn plain",type:"button",text:"Copy",onclick:function(){ copy(sendText(c)); }})])]));
+    });
+    main.appendChild(card);
+  }
+
+  if (token) load(); else showGate();
+})();
+</script>
+</body>
+</html>
