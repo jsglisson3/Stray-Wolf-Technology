@@ -266,3 +266,50 @@
     });
   }
 })();
+
+/* Moon door (Nov 12 2026, Jeremy: "if i hold the moon it starts to slowly go bright and phase into an admin page").
+   Hold the footer moon for 2 seconds: a soft moonlight grows from it, then washes over the whole page, and
+   /admin/ comes up out of the light (the admin page fades in from the same colour). Let go early and the light
+   fades away. Nothing shows or links to it; a normal tap does nothing. Same effect as the client sites' doors. */
+(() => {
+  const WASH = '#FFFDF8', HOLD = 2000, TO = '/admin/';
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer = 0, glow = null, glowAnim = null, opened = false, sx = 0, sy = 0;
+  const layer = (css) => { const d = document.createElement('div'); d.setAttribute('aria-hidden', 'true'); d.setAttribute('data-moon-light', ''); d.style.cssText = 'position:fixed;pointer-events:none;z-index:2147483646;' + css; document.body.appendChild(d); return d; };
+  document.querySelectorAll('[data-moon-door]').forEach((el) => { el.style.touchAction = 'none'; el.style.webkitTouchCallout = 'none'; el.style.userSelect = 'none'; el.style.webkitUserSelect = 'none'; });
+  const reset = () => {
+    clearTimeout(timer); timer = 0;
+    if (!glow) return;
+    const g = glow; glow = null;
+    const cs = getComputedStyle(g), o = cs.opacity, t = cs.transform;
+    if (glowAnim) glowAnim.cancel();
+    g.animate([{ opacity: o, transform: t }, { opacity: 0, transform: t }], { duration: 380, easing: 'ease-out', fill: 'forwards' }).onfinish = () => g.remove();
+  };
+  const start = (e, el) => {
+    if (e.button > 0) return;
+    reset(); opened = false; sx = e.clientX; sy = e.clientY;
+    const r = (el.querySelector('[data-door-center]') || el).getBoundingClientRect();
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2, size = Math.max(110, Math.max(r.width, r.height) * 3.4);
+    glow = layer(`left:${cx - size / 2}px;top:${cy - size / 2}px;width:${size}px;height:${size}px;border-radius:50%;opacity:0;mix-blend-mode:screen;` +
+      `background:radial-gradient(circle,${WASH} 0,${WASH} 9%,rgba(255,250,236,.85) 18%,rgba(255,240,214,.4) 38%,rgba(255,236,206,.12) 54%,rgba(255,236,206,0) 70%)`);
+    glowAnim = glow.animate([{ opacity: 0, transform: 'scale(.35)' }, { opacity: 0.7, transform: 'scale(.8)', offset: 0.45 }, { opacity: 1, transform: 'scale(1.3)' }], { duration: HOLD, easing: 'cubic-bezier(.4,0,.7,1)', fill: 'forwards' });
+    timer = setTimeout(() => {
+      opened = true; timer = 0;
+      try { sessionStorage.setItem('sw-moonlight', '1'); } catch (x) { /* private mode: no fade-in, still opens */ }
+      if (navigator.vibrate) try { navigator.vibrate(12); } catch (x) { /* not on this device */ }
+      const far = Math.max(Math.hypot(cx, cy), Math.hypot(innerWidth - cx, cy), Math.hypot(cx, innerHeight - cy), Math.hypot(innerWidth - cx, innerHeight - cy));
+      const d = far * 4 + 200, from = Math.min(1, size * 0.9 / d);
+      const wash = layer(`left:${cx - d / 2}px;top:${cy - d / 2}px;width:${d}px;height:${d}px;border-radius:50%;transform:scale(${from});` +
+        `background:radial-gradient(circle,${WASH} 0,${WASH} 50%,rgba(255,253,248,.85) 66%,rgba(255,250,236,.35) 84%,rgba(255,250,236,0) 100%)`);
+      const go = () => { location.href = TO; };
+      if (calm) { wash.style.transform = 'none'; setTimeout(go, 120); return; }
+      wash.animate([{ transform: `scale(${from})` }, { transform: 'scale(1)' }], { duration: 800, easing: 'cubic-bezier(.6,0,.8,.5)', fill: 'forwards' }).onfinish = go;
+      setTimeout(go, 1200);
+    }, HOLD);
+  };
+  document.addEventListener('pointerdown', (e) => { const el = e.target.closest && e.target.closest('[data-moon-door]'); if (el) start(e, el); }, true);
+  document.addEventListener('pointermove', (e) => { if (timer && Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 14) reset(); }, true);
+  ['pointerup', 'pointercancel'].forEach((n) => addEventListener(n, () => { if (timer && !opened) reset(); }, true));
+  document.addEventListener('contextmenu', (e) => { if (e.target.closest && e.target.closest('[data-moon-door]') && (timer || opened)) e.preventDefault(); }, true);
+  addEventListener('pageshow', (e) => { if (e.persisted) { opened = false; document.querySelectorAll('[data-moon-light]').forEach((d) => d.remove()); } });
+})();
