@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-Pn4KJC0/+ArCJzggPDD5vZdTeA5I1pl8lsDJKrTmhuQ='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-eF55lO9229X+ntL77tpZnZMbH0gm9EdLX3zA6FsJPnA='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Client Requests Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Zilla+Slab:wght@600&display=swap">
@@ -305,7 +305,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 
   /* ---------- clients and passwords view ---------- */
   function sendText(c){ var site = c.url ? c.url.replace(/^https?:\/\//,"").replace(/\/+$/,"") : "[their site address]";
-    return "Here's how to ask me for changes to your website:\n\n1. Go to " + site + "/portal (or press and hold the little wolf at the very bottom of your website for 2 seconds).\n2. Type this password: " + c.password + "\n3. Tap a box to send me what I need. To ask for a change, tap Open Edit mode, tap the part you mean, and type what you'd like. You can add photos too.\n4. Tap Send to Jeremy. That's it.\n\nYou can't break anything. Nothing on your website changes until I make the update."; }
+    return "Here's how to ask me for changes to your website:\n\n1. Go to " + site + "/portal (or press and hold the little wolf at the very bottom of your website for 2 seconds).\n2. Type this password: " + c.password + "\n3. Tap a box to send me what I need. To ask for a change, tap Open Edit mode, tap the part you mean, and type what you'd like. You can add photos too.\n4. Tap Send to Stray Wolf. That's it.\n\nYou can't break anything. Nothing on your website changes until I make the update."; }
   function drawClients(main){
     var card = el("section",{class:"card"});
     card.appendChild(el("div",{class:"card-hd"},[el("div",{},[el("h2",{text:"Clients and passwords"}), el("div",{class:"sub",text:"Add a client right after you meet. Send them their address and password."})])]));
