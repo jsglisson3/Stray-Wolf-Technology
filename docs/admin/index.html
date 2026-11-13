@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-IE7blBaxrpblB5UIjOy+GYwfD3bfKnuC5crLMnDijOA='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-grruWDrTd9wR5D5oIWsPIvv/brURFXnCZelF5JFm4rE='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Zilla+Slab:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Zilla+Slab:wght@600&display=swap">
 <script>
   /* The address of your Site Notes service. "demo" shows made-up sample data. */
   window.SITE_NOTES_API = "https://site-notes.jsglisson.workers.dev";
@@ -31,7 +31,8 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1917;--paper:#23211f;--ink:#ece8e1;--muted:#a39d94;--line:#3a3733;--accent:#e47a3f;--on-accent:#1a1917;--bar:#0f0e0d;--on-bar:#ece8e1;--ok:#5fbf83;--bad:#ef7a72;--pin:#7fb2ea;--on-pin:#10233a;--hover:#2b2926;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#1a1917;--paper:#23211f;--ink:#ece8e1;--muted:#a39d94;--line:#3a3733;--accent:#e47a3f;--on-accent:#1a1917;--bar:#0f0e0d;--on-bar:#ece8e1;--ok:#5fbf83;--bad:#ef7a72;--pin:#7fb2ea;--on-pin:#10233a;--hover:#2b2926;color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--text)}
+body{background:var(--bg);color:var(--ink);font:385 15px/1.5 var(--text)}
+b,strong,th,h3,h4,h5{font-weight:575}
 h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
 button,input{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -42,14 +43,14 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .brand{display:flex;align-items:center;gap:12px;margin-right:auto;min-width:0;background:none;border:0;padding:6px 8px;margin-left:-8px;border-radius:8px;color:var(--on-bar)}
 .brand:hover{background:rgb(255 255 255 / .06)}
 .brand img{height:30px;width:auto;display:block}
-.brand .tag{font:600 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;opacity:.7;padding-left:12px;border-left:1px solid rgb(255 255 255 / .22);height:22px;display:flex;align-items:center}
+.brand .tag{font:575 11px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;opacity:.7;padding-left:12px;border-left:1px solid rgb(255 255 255 / .22);height:22px;display:flex;align-items:center}
 .nav{display:flex;gap:2px;align-items:center;background:rgb(255 255 255 / .07);padding:3px;border-radius:10px}
-.nav button{background:none;border:0;border-radius:7px;padding:7px 13px;white-space:nowrap;font-size:14px;font-weight:600;color:var(--on-bar);opacity:.7;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.nav button{background:none;border:0;border-radius:7px;padding:7px 13px;white-space:nowrap;font-size:14px;font-weight:575;color:var(--on-bar);opacity:.7;display:inline-flex;gap:8px;align-items:center;justify-content:center}
 .nav button:hover{opacity:1}
 .nav button[aria-pressed="true"]{background:rgb(255 255 255 / .13);opacity:1}
-.badge{font-size:11px;font-weight:700;line-height:18px;min-width:18px;padding:0 6px;border-radius:999px;background:var(--accent);color:var(--on-accent);text-align:center;font-variant-numeric:tabular-nums}
+.badge{font-size:11px;font-weight:670;line-height:18px;min-width:18px;padding:0 6px;border-radius:999px;background:var(--accent);color:var(--on-accent);text-align:center;font-variant-numeric:tabular-nums}
 .tools{display:flex;gap:2px}
-.icon-btn{background:none;border:0;color:var(--on-bar);opacity:.7;border-radius:8px;padding:8px 10px;display:inline-flex;gap:7px;align-items:center;font-size:13px;font-weight:600}
+.icon-btn{background:none;border:0;color:var(--on-bar);opacity:.7;border-radius:8px;padding:8px 10px;display:inline-flex;gap:7px;align-items:center;font-size:13px;font-weight:575}
 .icon-btn:hover{opacity:1;background:rgb(255 255 255 / .08)}
 .icon-btn svg,.ico{flex:none}
 @media (max-width:900px){.hdr-in{padding-block:10px;flex-wrap:wrap}.nav{order:3;width:100%;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav button{flex:1 0 auto}}
@@ -57,14 +58,16 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .main{max-width:1180px;margin:0 auto;padding-block:28px 64px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start}
 .main.one{grid-template-columns:minmax(0,1fr)}
 @media (max-width:780px){.main{grid-template-columns:minmax(0,1fr);padding-block:20px 48px}}
-.label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.label{font-size:11px;font-weight:575;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
 .side .label{padding-left:12px}
+.side-sep{padding:16px 12px 6px}
+.ga-sep{padding:18px 24px 8px;border-top:1px solid var(--line)}
 .clients{list-style:none;margin:0;padding:0;display:grid;gap:2px}
 .clients button{width:100%;text-align:left;background:none;border:0;border-radius:8px;padding:9px 12px;display:flex;gap:10px;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted)}
 .clients button:hover{background:var(--hover);color:var(--ink)}
 .clients button[aria-current="true"]{background:var(--paper);color:var(--ink);box-shadow:0 0 0 1px var(--line),inset 3px 0 0 var(--accent)}
-.clients b{font-weight:600;min-width:0;overflow-wrap:anywhere}
-.count{font-size:11px;font-weight:700;line-height:20px;min-width:20px;padding:0 7px;border-radius:999px;background:var(--accent);color:var(--on-accent);flex:none;text-align:center;font-variant-numeric:tabular-nums}
+.clients b{font-weight:575;min-width:0;overflow-wrap:anywhere}
+.count{font-size:11px;font-weight:670;line-height:20px;min-width:20px;padding:0 7px;border-radius:999px;background:var(--accent);color:var(--on-accent);flex:none;text-align:center;font-variant-numeric:tabular-nums}
 .count.zero{background:none;color:var(--ok);padding:0;display:inline-grid;place-items:center}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;min-width:0;box-shadow:0 1px 2px rgb(0 0 0 / .04)}
 .card-hd{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:space-between;align-items:center}
@@ -72,31 +75,34 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .sub{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
 a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink)}
 .tabs{display:inline-flex;gap:2px;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:3px}
-.tabs button{border:0;background:none;border-radius:6px;padding:5px 14px;font-size:13px;font-weight:600;color:var(--muted)}
+.tabs button{border:0;background:none;border-radius:6px;padding:5px 14px;font-size:13px;font-weight:575;color:var(--muted)}
 .tabs button:hover{color:var(--ink)}
 .tabs button[aria-pressed="true"]{background:var(--paper);color:var(--ink);box-shadow:0 1px 2px rgb(0 0 0 / .14),0 0 0 1px var(--line)}
 .batch{padding:16px 24px 10px}
 .batch+.batch{border-top:1px solid var(--line)}
 .batch-hd{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;margin-bottom:4px}
-.batch-hd h3{font:600 12px/1.3 var(--text);letter-spacing:.04em;color:var(--muted)}
+.batch-hd h3{font:575 12px/1.3 var(--text);letter-spacing:.04em;color:var(--muted)}
 .req{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 14px;padding:12px 0;border-top:1px solid var(--line);align-items:start}
 .batch-hd+.req{border-top:0}
-.num{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:var(--pin);color:var(--on-pin);font-size:12px;font-weight:600}
+.num{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:var(--pin);color:var(--on-pin);font-size:12px;font-weight:575}
 .says{overflow-wrap:anywhere;white-space:pre-line}
 .where{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:10px 12px;margin:0 0 8px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
 .where.portal{grid-template-columns:auto minmax(0,1fr)}
 .where-txt{min-width:0;display:grid;gap:2px}
 .where-1{font-size:13.5px;color:var(--muted)}
-.where-1 b{color:var(--ink);font-weight:600}
+.where-1 b{color:var(--ink);font-weight:575}
 .where-path{margin-left:6px;color:var(--muted)}
-.where-2{font-size:13.5px;color:var(--ink);overflow-wrap:anywhere}
-.where-3{font-size:13px;color:var(--muted);font-style:italic;overflow-wrap:anywhere}
+.where-2{font-size:13.5px;color:var(--ink);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .where-ico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--pin) 14%,transparent);color:var(--pin)}
 .pmap{position:relative;width:28px;height:40px;border:1.5px solid color-mix(in srgb,var(--muted) 55%,transparent);border-radius:5px;background:repeating-linear-gradient(to bottom,transparent 0 7px,color-mix(in srgb,var(--muted) 18%,transparent) 7px 8px);background-clip:content-box;padding:4px 5px}
 .pdot{position:absolute;left:50%;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--bg);transform:translate(-50%,-50%)}
 .where .btn{white-space:nowrap}
+.shot{width:136px;aspect-ratio:16/10;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);cursor:zoom-in;display:block}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
+.shot:hover,.shot:focus-visible{border-color:var(--accent)}
+.veil .veil-go{background:var(--accent);color:#fff;display:inline-flex;align-items:center;gap:6px}
 .req-body{min-width:0}
-@media (max-width:640px){.req{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"num done" "body body";gap:8px 10px}.req>.num{grid-area:num}.req>.done{grid-area:done;justify-self:end}.req>.req-body{grid-area:body}.where{grid-template-columns:auto minmax(0,1fr);padding:10px}.where .btn{grid-column:1/-1;justify-self:stretch;justify-content:center}}
+@media (max-width:640px){.req{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"num done" "body body";gap:8px 10px}.req>.num{grid-area:num}.req>.done{grid-area:done;justify-self:end}.req>.req-body{grid-area:body}.where{grid-template-columns:auto minmax(0,1fr);padding:10px}.where .btn{grid-column:1/-1;justify-self:stretch;justify-content:center}.where.has-shot{grid-template-columns:minmax(0,1fr)}.where.has-shot .shot{width:100%}}
 .says{font-size:15.5px}
 
 .pics{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -108,7 +114,7 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .pic figcaption{font-size:12.5px;line-height:1.35;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
 .pic figcaption.no-cap{color:var(--muted);font-style:italic}
 @media (max-width:560px){.pic,.pics .pic button{width:calc(50vw - 64px)}.pics .pic button{height:auto;aspect-ratio:4/3}}
-.done{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:600;white-space:nowrap;color:var(--muted)}
+.done{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:575;white-space:nowrap;color:var(--muted)}
 .done input{width:18px;height:18px;accent-color:var(--ok)}
 .req.is-done .says{text-decoration:line-through;color:var(--muted)}
 .none{padding:52px 24px;color:var(--muted);display:grid;gap:6px;justify-items:center;text-align:center}
@@ -116,7 +122,7 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .none .ok-dot{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok);margin-bottom:6px}
 .link{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:13px}
 .link.bad{color:var(--bad)}
-.btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:8px;padding:9px 16px;font-weight:600;font-size:14px;display:inline-flex;gap:7px;align-items:center;justify-content:center}
+.btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:8px;padding:9px 16px;font-weight:575;font-size:14px;display:inline-flex;gap:7px;align-items:center;justify-content:center}
 .btn:hover{filter:brightness(1.06)}
 .btn.plain{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
 .btn.plain:hover{background:var(--hover);filter:none}
@@ -134,7 +140,7 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .gate .btn{font-size:17px;padding:13px 18px}
 .gate .err{text-align:center}
 .field{display:grid;gap:6px;min-width:0;align-content:start}
-.field label{font-size:13px;font-weight:600}
+.field label{font-size:13px;font-weight:575}
 .field input,.pw-edit input{padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);width:100%;min-height:40px}
 .field input:focus,.pw-edit input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
 .field small{color:var(--muted);font-size:12px}
@@ -148,7 +154,7 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .crow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:10px 20px;padding:16px 24px;border-top:1px solid var(--line);align-items:center}
 .card-hd+.crow{border-top:0}
 @media (max-width:760px){.crow{grid-template-columns:minmax(0,1fr)}}
-.crow b{font-weight:600;font-size:15px}
+.crow b{font-weight:575;font-size:15px}
 .meta{display:grid;gap:2px;margin-top:2px}
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px}
 .pw-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:4px 4px 4px 11px;max-width:100%}
@@ -164,11 +170,11 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .sendbox{padding:14px 16px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;user-select:all}
 .veil{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.85);display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:12px;place-items:center;padding:20px}
 .veil-cap{margin:0;color:#fff;font-size:16px;text-align:center;max-width:60ch;overflow-wrap:anywhere}
-.veil-cap b{font-weight:600;opacity:.75}
+.veil-cap b{font-weight:575;opacity:.75}
 .veil img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;background:#fff}
 .veil .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.veil a,.veil button{background:#fff;color:#24221f;border:0;border-radius:6px;padding:9px 14px;font-weight:600;text-decoration:none;font-size:14px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;max-width:calc(100% - 32px);text-align:center}
+.veil a,.veil button{background:#fff;color:#24221f;border:0;border-radius:6px;padding:9px 14px;font-weight:575;text-decoration:none;font-size:14px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-weight:575;font-size:14px;max-width:calc(100% - 32px);text-align:center}
 
 /* ---------- Overview (the cockpit) ---------- */
 .home{display:grid;gap:22px;width:100%}
@@ -182,8 +188,8 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 @media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tile{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px 15px;text-align:left;display:grid;gap:4px;align-content:start;min-width:0;box-shadow:0 1px 2px rgb(0 0 0 / .04);position:relative;overflow:hidden}
 button.tile:hover{border-color:color-mix(in srgb,var(--ink) 22%,var(--line))}
-.tile .t-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:7px;align-items:center}
-.tile .t-num{font:600 36px/1.1 var(--text);letter-spacing:-.02em;color:var(--ink);margin-top:4px}
+.tile .t-label{font-size:11px;font-weight:575;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:7px;align-items:center}
+.tile .t-num{font:575 36px/1.1 var(--text);letter-spacing:-.02em;color:var(--ink);margin-top:4px}
 .tile .t-sub{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
 .tile.hot{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
 .tile.hot::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent)}
@@ -198,14 +204,14 @@ button.tile:hover{border-color:color-mix(in srgb,var(--ink) 22%,var(--line))}
 .status{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 14px;padding:14px 20px;border-top:1px solid var(--line);align-items:center}
 .card-hd+.status{border-top:0}
 .mono-av{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font:600 14px/1 var(--display);letter-spacing:.02em;background:color-mix(in srgb,var(--accent) 14%,var(--paper));color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line))}
-.status b{font-weight:600}
+.status b{font-weight:575}
 .status .when{font-size:13px;color:var(--muted)}
 .status .links{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:3px}
 .status .links a{font-size:13px;color:var(--muted);text-decoration:none;display:inline-flex;gap:5px;align-items:center}
 .status .links a:hover{color:var(--ink);text-decoration:underline}
 .status .right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 @media (max-width:560px){.status{grid-template-columns:auto minmax(0,1fr)}.status .right{grid-column:2;flex-direction:row;align-items:center;flex-wrap:wrap}}
-.pill{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);color:var(--muted)}
+.pill{font-size:12px;font-weight:575;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);color:var(--muted)}
 .pill.on{background:color-mix(in srgb,var(--accent) 14%,transparent);border-color:color-mix(in srgb,var(--accent) 35%,transparent);color:var(--accent)}
 .pill.ok{background:color-mix(in srgb,var(--ok) 12%,transparent);border-color:color-mix(in srgb,var(--ok) 30%,transparent);color:var(--ok)}
 .feed{list-style:none;margin:0;padding:6px 0}
@@ -213,7 +219,7 @@ button.tile:hover{border-color:color-mix(in srgb,var(--ink) 22%,var(--line))}
 .feed li button:hover{background:var(--hover)}
 .feed .dot{transform:translateY(-1px)}
 .feed .what{font-size:14px}
-.feed .what b{font-weight:600}
+.feed .what b{font-weight:575}
 .feed .snip{grid-column:2;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .feed .t{grid-column:2;font-size:12px;color:var(--muted)}
 .quiet{padding:28px 20px;color:var(--muted);font-size:14px;text-align:center}
@@ -231,7 +237,7 @@ button.tile:hover{border-color:color-mix(in srgb,var(--ink) 22%,var(--line))}
 .person{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr) auto;gap:6px 20px;padding:13px 20px;border-top:1px solid var(--line);align-items:center}
 .grp-hd+.person{border-top:0}
 @media (max-width:760px){.person{grid-template-columns:minmax(0,1fr)}}
-.person b{font-weight:600}
+.person b{font-weight:575}
 .person .role{font-size:13px;color:var(--muted)}
 .reach{display:flex;flex-wrap:wrap;gap:6px 8px}
 .reach a{display:inline-flex;gap:7px;align-items:center;font-size:14px;color:var(--ink);text-decoration:none;padding:5px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);overflow-wrap:anywhere}
@@ -249,24 +255,24 @@ button.tile:hover{border-color:color-mix(in srgb,var(--ink) 22%,var(--line))}
 .ga-n{padding:16px 20px;border-top:1px solid var(--line);min-width:0}
 .ga-n:nth-child(odd){border-right:1px solid var(--line)}
 .ga-n:nth-child(-n+2){border-top:0}
-.ga-n .t-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.ga-n .t-num{font:600 30px/1.1 var(--text);letter-spacing:-.02em;margin-top:6px;overflow-wrap:anywhere}
+.ga-n .t-label{font-size:11px;font-weight:575;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ga-n .t-num{font:575 30px/1.1 var(--text);letter-spacing:-.02em;margin-top:6px;overflow-wrap:anywhere}
 .ga-n .t-num.word{font-size:22px;line-height:1.3;padding-top:6px}
-.chg{font-size:12px;font-weight:600;margin-top:2px;color:var(--muted)}
+.chg{font-size:12px;font-weight:575;margin-top:2px;color:var(--muted)}
 .chg.up{color:var(--ok)}.chg.down{color:var(--bad)}
 .ga-foot{padding:12px 20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.ga-foot a{font-size:13px;font-weight:600;color:var(--ink);display:inline-flex;gap:6px;align-items:center}
-.tag-s{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:2px 7px}
+.ga-foot a{font-size:13px;font-weight:575;color:var(--ink);display:inline-flex;gap:6px;align-items:center}
+.tag-s{font-size:11px;font-weight:575;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:2px 7px}
 a.btn{text-decoration:none}
 .sort-note{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding:12px 16px;border:1px dashed color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:10px;font-size:14px;color:var(--muted)}
 .sort-list{list-style:none;margin:0;padding:6px 0}
 .sort-item{display:flex;gap:12px;align-items:center;padding:10px 16px 10px 12px;border-top:1px solid var(--line);background:var(--paper);cursor:grab}
 .sort-item:first-child{border-top:0}
-.sort-item b{font-weight:600}
+.sort-item b{font-weight:575}
 .sort-item.dragging{opacity:.45}
 .sort-item.over{box-shadow:inset 0 3px 0 var(--accent)}
 .grip{color:var(--muted);display:inline-grid}
-.sort-n{font-size:12px;font-weight:600;color:var(--muted);width:18px;text-align:right;font-variant-numeric:tabular-nums}
+.sort-n{font-size:12px;font-weight:575;color:var(--muted);width:18px;text-align:right;font-variant-numeric:tabular-nums}
 .sort-btns{display:flex;gap:4px}
 .sort-btns .mini{width:40px;height:40px;border:1px solid var(--line);border-radius:8px}
 .mini[disabled]{opacity:.3;cursor:default}
@@ -274,12 +280,12 @@ a.btn{text-decoration:none}
 .gv{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
 .ga-row{display:grid;grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(0,.75fr)) minmax(0,1fr);gap:8px 16px;align-items:center;padding:14px 24px;border:0;border-top:1px solid var(--line);background:none;width:100%;text-align:left}
 button.ga-row:hover{background:var(--hover)}
-.ga-head{padding-block:10px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-top:0}
+.ga-head{padding-block:10px;font-size:11px;font-weight:575;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-top:0}
 .ga-who{display:flex;gap:12px;align-items:center;min-width:0}
-.ga-who b{display:block;font-weight:600}
+.ga-who b{display:block;font-weight:575}
 .ga-cell{display:grid;gap:1px;min-width:0}
-.ga-k{display:none;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.ga-v{font:600 22px/1.15 var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.ga-k{display:none;font-size:11px;font-weight:575;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ga-v{font:575 22px/1.15 var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .ga-src{font:600 17px/1.3 var(--display)}
 .ga-cell .tag-s{justify-self:start;margin-top:4px}
 .ga-off-row{grid-column:2/-1;font-size:14px;color:var(--muted)}
@@ -296,13 +302,13 @@ button.ga-row:hover{background:var(--hover)}
 .ga-row{grid-template-columns:minmax(0,1.7fr) repeat(4,minmax(0,.8fr))}
 .ga-summary{padding:18px 24px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--accent) 6%,var(--paper));display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
 .ga-sum-line{margin:0;font-size:17px;line-height:1.55;max-width:70ch}
-.ga-sum-line b{font-weight:600}
+.ga-sum-line b{font-weight:575}
 .ga-cell.hero .ga-v,.ga-n.hero .t-num{color:var(--accent)}
 .ga-n .t-label{display:flex;gap:7px;align-items:center}
 .help-w{position:relative;display:inline-flex}
-.help{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--muted);font:700 11px/1 var(--text);letter-spacing:0;display:inline-grid;place-items:center;padding:0}
+.help{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--muted);font:670 11px/1 var(--text);letter-spacing:0;display:inline-grid;place-items:center;padding:0}
 .help:hover,.help[aria-expanded="true"]{color:var(--ink);border-color:var(--muted)}
-.tip{display:none;position:absolute;left:-10px;top:calc(100% + 8px);z-index:30;width:250px;background:var(--ink);color:var(--paper);font:400 13px/1.45 var(--text);letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:8px;box-shadow:0 8px 24px -8px rgb(0 0 0 / .45)}
+.tip{display:none;position:absolute;left:-10px;top:calc(100% + 8px);z-index:30;width:250px;background:var(--ink);color:var(--paper);font:385 13px/1.45 var(--text);letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:8px;box-shadow:0 8px 24px -8px rgb(0 0 0 / .45)}
 .help:hover+.tip,.help:focus-visible+.tip,.help[aria-expanded="true"]+.tip{display:block}
 .ga-n:nth-child(even) .tip,.ga-n:nth-child(3) .tip,.ga-box:last-child .tip{left:auto;right:-10px}
 @media (max-width:1000px){.ga-n:nth-child(3) .tip{left:-10px;right:auto}}
@@ -312,7 +318,7 @@ button.ga-row:hover{background:var(--hover)}
 .spark rect.now{fill:var(--accent)}
 .ga-chart{padding:20px 24px 16px;border-top:1px solid var(--line)}
 .ga-chart-hd{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;align-items:baseline;margin-bottom:14px}
-.ga-chart h3,.ga-box h3{font:600 15px/1.3 var(--text);display:flex;gap:8px;align-items:center}
+.ga-chart h3,.ga-box h3{font:575 15px/1.3 var(--text);display:flex;gap:8px;align-items:center}
 .chart{padding-left:34px}
 .plot{position:relative;height:190px}
 .plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
@@ -334,21 +340,21 @@ button.ga-row:hover{background:var(--hover)}
 .dt-scroll{max-height:280px;overflow:auto;margin-top:8px;border:1px solid var(--line);border-radius:8px}
 .dt{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
 .dt th,.dt td{padding:6px 12px;text-align:right;border-bottom:1px solid var(--line)}
-.dt th[scope=row],.dt thead th:first-child{text-align:left;font-weight:400}
-.dt thead th{position:sticky;top:0;background:var(--paper);font-weight:600}
+.dt th[scope=row],.dt thead th:first-child{text-align:left;font-weight:385}
+.dt thead th{position:sticky;top:0;background:var(--paper);font-weight:575}
 .ga-split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);border-top:1px solid var(--line)}
 .ga-box{padding:18px 24px;min-width:0}
 .ga-box+.ga-box{border-left:1px solid var(--line)}
 @media (max-width:760px){.ga-split{grid-template-columns:minmax(0,1fr)}.ga-box+.ga-box{border-left:0;border-top:1px solid var(--line)}}
 .tp{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}
 .tp li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start}
-.tp-n{font-size:12px;font-weight:600;color:var(--muted);width:16px;padding-top:2px}
+.tp-n{font-size:12px;font-weight:575;color:var(--muted);width:16px;padding-top:2px}
 .tp-top{display:flex;justify-content:space-between;gap:12px;font-size:14px}
-.tp-top b{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tp-top b{font-weight:575;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tp-v{color:var(--muted);white-space:nowrap;font-size:13px}
 .tp-bar{height:6px;border-radius:3px;background:color-mix(in srgb,var(--muted) 14%,transparent);margin-top:6px}
 .tp-bar span{display:block;height:100%;border-radius:3px;background:var(--accent)}
-.src{font:600 24px/1.25 var(--text);letter-spacing:-.01em;margin-top:10px}
+.src{font:575 24px/1.25 var(--text);letter-spacing:-.01em;margin-top:10px}
 .ga-row{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) repeat(4,minmax(0,.7fr))}
 .ga-trend .row-spark{margin-top:0;height:26px;max-width:150px}
 .ga-box.facts{display:grid;gap:18px;align-content:start}
@@ -356,7 +362,7 @@ button.ga-row:hover{background:var(--hover)}
 .fact .src{margin-top:4px;font-size:19px}
 .ga-head.mid{border-top:1px solid var(--line)}
 .tp-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tp-c{color:var(--muted);font-weight:400}
+.tp-c{color:var(--muted);font-weight:385}
 @media (max-width:700px){.ga-trend{grid-column:1/-1}.ga-trend .row-spark{max-width:none}}
 
 
@@ -440,11 +446,11 @@ button.ga-row:hover{background:var(--hover)}
         {site:"juniper-bakery", name:"Juniper Bakery (sample)", url:"juniperbakery.com", password:"ember-2206", created:hrs(200), contacts:[]} ],
       batches: [
         {id:"b3", site:"tvis-construction", at:hrs(2), notes:[
-          {n:1, page:"/", url:"https://tvisconstruction.com/", sel:"#top h1", path:[1,0,0], fx:.42, fy:.55, py:.03, snip:"Groundwork Done Right.", vw:390, title:"Home", on:"Top of the page: Groundwork Done Right.", text:"Can we add the new excavator picture here?\n\nPhoto 1: The new CAT 320, front view\nPhoto 2: Same machine on the Hixson job", pics:["demo:1","demo:2"], picNotes:["The new CAT 320, front view","Same machine on the Hixson job"], done:false},
-          {n:2, page:"/", url:"https://tvisconstruction.com/", sel:"header nav a.call", path:[0,1,4], fx:.5, fy:.5, py:0, snip:"Call 423-225-7038", vw:1440, title:"Home", on:"Menu: Call 423-225-7038", text:"We're getting a second number for the office. I'll send it Friday.", pics:[], done:false},
+          {n:1, page:"/", url:"https://tvisconstruction.com/", sel:"#top h1", path:[1,0,0], fx:.42, fy:.55, py:.03, snip:"Groundwork Done Right.", vw:390, shot:"demo:shot1", title:"Home", on:"Top of the page: Groundwork Done Right.", text:"Can we add the new excavator picture here?\n\nPhoto 1: The new CAT 320, front view\nPhoto 2: Same machine on the Hixson job", pics:["demo:1","demo:2"], picNotes:["The new CAT 320, front view","Same machine on the Hixson job"], done:false},
+          {n:2, page:"/", url:"https://tvisconstruction.com/", sel:"header nav a.call", path:[0,1,4], fx:.5, fy:.5, py:0, snip:"Call 423-225-7038", vw:1440, shot:"demo:shot2", title:"Home", on:"Menu: Call 423-225-7038", text:"We're getting a second number for the office. I'll send it Friday.", pics:[], done:false},
           {n:3, page:"/portal/", title:"Client Portal", on:"Pictures for the site", text:"New photos from the Hixson driveway job.\n\nPhoto 1: Before we started\nPhoto 3: Finished driveway, from the road", pics:["demo:3","demo:4","demo:5"], picNotes:["Before we started","","Finished driveway, from the road"], done:false}]},
         {id:"b2", site:"cedar-street", at:hrs(26), notes:[
-          {n:1, page:"/", url:"https://cedarstreetbarbers.com/", sel:"#services li:nth-of-type(1)", fx:.8, fy:.4, py:.46, snip:"Haircut · $30", vw:1280, title:"Home", on:"Services: Haircut · $30", text:"Change this to $32.", pics:[], done:false},
+          {n:1, page:"/", url:"https://cedarstreetbarbers.com/", sel:"#services li:nth-of-type(1)", fx:.8, fy:.4, py:.46, snip:"Haircut · $30", vw:1280, shot:"demo:shot3", title:"Home", on:"Services: Haircut · $30", text:"Change this to $32.", pics:[], done:false},
           {n:2, page:"/", title:"Home", on:"Hours: Saturday · 8 am – 3 pm", text:"We now close at 4 on Saturdays.", pics:[], done:true}]},
         {id:"b1", site:"juniper-bakery", at:hrs(190), notes:[
           {n:1, title:"Welcome", on:"Pictures for the site", text:"Here's our logo and a few shots of the shop.", pics:["demo:6","demo:7"], done:true}]} ] };
@@ -458,8 +464,25 @@ button.ga-row:hover{background:var(--hover)}
     return out;
   }
   function demoPic(key){
+    if (/^demo:shot/.test(key)) return demoShot(key);
     var tints = ["#8a5a3c","#6f8a6a","#4f6b7a","#a0762f","#7c776f","#c2541b","#55606b"], n = Number(key.split(":")[1]) || 0;
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="' + tints[n % tints.length] + '"/><text x="400" y="315" font-family="Georgia,serif" font-size="44" fill="#fff" fill-opacity=".85" text-anchor="middle">sample picture ' + n + '</text></svg>';
+    return "data:image/svg+xml," + encodeURIComponent(svg);
+  }
+  // Demo only: a pretend snapshot of a website spot, with the ring and pin the portal draws.
+  function demoShot(key){
+    var k = key.slice(9), d = {
+      "1": {bg:"#2b2f2a", band:"#3d443a", h:"Groundwork Done Right.", sub:"Excavation and site work in Chattanooga", hx:60, hy:150, hw:400, hh:62, px:230, py:186},
+      "2": {bg:"#f4f1ea", band:"#ffffff", h:"TVIS Construction", sub:"Services   About   Call 423-225-7038", hx:470, hy:22, hw:170, hh:40, px:560, py:44, dark:1},
+      "3": {bg:"#f7f3ee", band:"#efe7dc", h:"Services", sub:"Haircut \u00b7 $30     Beard trim \u00b7 $15     Kids \u00b7 $20", hx:44, hy:208, hw:150, hh:40, px:120, py:228, dark:1}}[k] || {};
+    var ink = d.dark ? "#24221f" : "#ffffff", soft = d.dark ? "#6b665e" : "#c9cbc4";
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400"><rect width="640" height="400" fill="' + d.bg + '"/><rect y="0" width="640" height="84" fill="' + d.band + '"/>' +
+      '<rect x="40" y="30" width="110" height="22" rx="4" fill="' + soft + '" opacity=".5"/>' +
+      '<text x="60" y="' + (k === "1" ? 196 : k === "3" ? 120 : 200) + '" font-family="Arial,sans-serif" font-weight="700" font-size="' + (k === "1" ? 46 : 36) + '" fill="' + ink + '">' + d.h + '</text>' +
+      '<text x="' + (k === "2" ? 300 : 60) + '" y="' + (k === "1" ? 250 : k === "3" ? 236 : 50) + '" font-family="Arial,sans-serif" font-size="' + (k === "2" ? 15 : 20) + '" fill="' + soft + '">' + d.sub + '</text>' +
+      '<rect x="60" y="300" width="160" height="44" rx="6" fill="#e07a3a"/><rect x="236" y="300" width="160" height="44" rx="6" fill="none" stroke="' + soft + '"/>' +
+      '<rect x="' + d.hx + '" y="' + d.hy + '" width="' + d.hw + '" height="' + d.hh + '" rx="8" fill="none" stroke="#e07a3a" stroke-width="4"/>' +
+      '<circle cx="' + d.px + '" cy="' + d.py + '" r="13" fill="#e07a3a" stroke="#fff" stroke-width="4"/></svg>';
     return "data:image/svg+xml," + encodeURIComponent(svg);
   }
   function call(path, body){
@@ -483,9 +506,10 @@ button.ga-row:hover{background:var(--hover)}
       d.clients = d.clients.filter(function(x){ return x.site !== b.site; }).concat([c]).sort(function(a,z){ return a.name.localeCompare(z.name); });
       return {ok:true, client:c};
     }
-    if (path === "/api/admin/stats") { var k = ["tvis-construction","cedar-street"].indexOf(b.site);
+    if (path === "/api/admin/stats") { var k = ["tvis-construction","cedar-street","stray-wolf"].indexOf(b.site);
       var S = [{visitors:109,visitorsPrev:91,calls:8,callsPrev:6,leads:3,leadsPrev:1,source:"Google",pages:[{path:"/",title:"TVIS Construction | Excavation and Site Work",views:182},{path:"/services/",title:"Services",views:74},{path:"/projects/",title:"Projects",views:41}]},
-        {visitors:268,visitorsPrev:280,calls:31,callsPrev:27,leads:0,leadsPrev:0,source:"Instagram",pages:[{path:"/",title:"Cedar Street Barbers",views:301},{path:"/prices/",title:"Prices",views:122},{path:"/book/",title:"Book a cut",views:96}]}][k];
+        {visitors:268,visitorsPrev:280,calls:31,callsPrev:27,leads:0,leadsPrev:0,source:"Instagram",pages:[{path:"/",title:"Cedar Street Barbers",views:301},{path:"/prices/",title:"Prices",views:122},{path:"/book/",title:"Book a cut",views:96}]},
+        {visitors:64,visitorsPrev:52,calls:1,callsPrev:0,leads:3,leadsPrev:2,source:"Google",pages:[{path:"/",title:"Stray Wolf Technology",views:88},{path:"/work/",title:"Our work",views:31},{path:"/contact/",title:"Contact",views:19}]}][k];
       if (!S) return {ok:false,status:404,error:"No Google Analytics set up for this site."};
       var ch = function(a, z){ return z ? Math.round((a - z) / z * 100) : 0; }, st = new Date(Date.now() - 28 * 864e5);
       return Object.assign({ok:true,days:28,sample:true,property:"",visitorsChange:ch(S.visitors,S.visitorsPrev),callsChange:ch(S.calls,S.callsPrev),leadsChange:ch(S.leads,S.leadsPrev),
@@ -612,6 +636,7 @@ button.ga-row:hover{background:var(--hover)}
     return f.s || f.p || f.t ? base + "#sw-find=" + encodeURIComponent(JSON.stringify(f)) : base;
   }
   function isPortalNote(n){ return n.title === "Client Portal" || /\/portal\/?(index\.html)?$/.test(n.page || ""); }
+  function pageWords(t){ return !t || t === "Home" ? "Home page" : /\bpage$/i.test(t) ? t : t + " page"; }
   function spotWords(py){ return py == null ? "" : py < .25 ? "Near the top" : py < .75 ? "Middle of the page" : "Near the bottom"; }
   function deviceWords(vw){ return !vw ? "" : vw < 700 ? "On a phone" : vw < 1100 ? "On a tablet" : "On a computer"; }
   function whereBox(n, site){
@@ -621,10 +646,20 @@ button.ga-row:hover{background:var(--hover)}
     try { path = link ? new URL(link).pathname : (n.page || ""); } catch(e){ path = n.page || ""; }
     var bits = [spotWords(n.py), deviceWords(n.vw)].filter(Boolean);
     var map = n.py != null ? el("span",{class:"pmap","aria-hidden":"true",title:spotWords(n.py)},[el("span",{class:"pdot",style:"top:" + (6 + n.py * 76) + "%"})]) : el("span",{class:"where-ico","aria-hidden":"true"},[ico("pin",14)]);
-    var lines = [el("div",{class:"where-1"},[el("b",{text:n.title === "Home" ? "Home page" : (n.title || "A page")}), path && path !== "/" ? el("span",{class:"mono where-path",text:path}) : null].concat(bits.length ? [" \u00b7 " + bits.join(" \u00b7 ")] : []))];
-    if (n.on) lines.push(el("div",{class:"where-2",text:n.on}));
-    if (n.snip && (n.on || "").toLowerCase().indexOf(n.snip.toLowerCase().slice(0, 40)) < 0) lines.push(el("div",{class:"where-3",text:"\u201c" + n.snip + "\u201d"}));
-    return el("div",{class:"where"},[map, el("div",{class:"where-txt"},lines),
+    var spot = [pageWords(n.title)].concat(bits).join(" \u00b7 ");
+    if (n.shot) {   // a small snapshot of the spot, taken by the portal when the note was left
+      var shotImg = el("img",{alt:"Snapshot of the spot"});
+      var thumb = el("button",{class:"shot",type:"button",title:"See it bigger","aria-label":"See the snapshot of the spot bigger",onclick:function(){ viewer(n.shot, "", 0, {spot:spot, link:exact ? link : ""}); }},[shotImg]);
+      var pageMap = map, noShot = function(){ if (thumb.parentNode) { thumb.parentNode.classList.remove("has-shot"); thumb.replaceWith(pageMap); } };   // missing or broken: show the page map instead
+      shotImg.addEventListener("error", noShot);
+      picSrc(n.shot).then(function(src){ if (src) shotImg.src = src; else noShot(); });
+      map = thumb;
+    }
+    var lines = [el("div",{class:"where-1"},[el("b",{text:pageWords(n.title)}), path && path !== "/" ? el("span",{class:"mono where-path",text:path}) : null].concat(bits.length ? [" \u00b7 " + bits.join(" \u00b7 ")] : []))];
+    // Lead with the words that were on the spot; the portal's longer label (section: thing) goes in the hover.
+    var words = n.snip && !/\.(jpe?g|png|gif|webp|avif|svg)$/i.test(n.snip) ? "\u201c" + n.snip + "\u201d" : (n.on || "");
+    if (words) lines.push(el("div",{class:"where-2",text:words,title:n.on && n.on !== words ? n.on : null}));
+    return el("div",{class:"where" + (n.shot ? " has-shot" : "")},[map, el("div",{class:"where-txt"},lines),
       link ? el("a",{class:"btn sm" + (exact ? "" : " plain"),href:link,target:"_blank",rel:"noopener",title:exact ? "Opens the page, scrolls to the spot and highlights it" : "This request was sent before exact spots were saved"},[ico(exact ? "pin" : "ext",14), exact ? "Show me on the site" : "Open this page"]) : null]);
   }
 
@@ -636,13 +671,14 @@ button.ga-row:hover{background:var(--hover)}
     if (!tail || text.slice(-tail.length) !== tail) return text;
     return text.slice(0, -tail.length).replace(/\s+$/,"");
   }
-  function viewer(key, cap, num){
-    var img = el("img",{alt:cap || "Picture from the client"}), save = el("a",{text:"Save picture",download:key.replace(/[^\w-]+/g,"-") + ".jpg",target:"_blank",rel:"noopener"});
+  function viewer(key, cap, num, opts){
+    opts = opts || {};
+    var img = el("img",{alt:opts.spot ? "Snapshot of the spot" : cap || "Picture from the client"}), save = el("a",{text:"Save picture",download:key.replace(/[^\w-]+/g,"-") + ".jpg",target:"_blank",rel:"noopener"});
     function close(){ veil.remove(); document.removeEventListener("keydown", onKey); }
     function onKey(e){ if (e.key === "Escape") close(); }
-    var veil = el("div",{class:"veil",role:"dialog","aria-label":cap ? "Picture " + num + ": " + cap : "Picture",onclick:function(e){ if (e.target === veil) close(); }},[img,
-      cap ? el("p",{class:"veil-cap"},[el("b",{text:"Photo " + num + ": "}), cap]) : null,
-      el("div",{class:"row"},[save, el("button",{type:"button",text:"Close",onclick:close})])]);
+    var veil = el("div",{class:"veil",role:"dialog","aria-label":opts.spot ? "Snapshot of the spot" : cap ? "Picture " + num + ": " + cap : "Picture",onclick:function(e){ if (e.target === veil) close(); }},[img,
+      opts.spot ? el("p",{class:"veil-cap"},[el("b",{text:"Where they left it: "}), opts.spot]) : cap ? el("p",{class:"veil-cap"},[el("b",{text:"Photo " + num + ": "}), cap]) : null,
+      el("div",{class:"row"},[opts.link ? el("a",{class:"veil-go",href:opts.link,target:"_blank",rel:"noopener"},[ico("pin",14), "Show me on the site"]) : null, save, el("button",{type:"button",text:"Close",onclick:close})])]);
     picSrc(key).then(function(src){ img.src = src; save.href = src; });
     document.addEventListener("keydown", onKey);
     document.body.appendChild(veil);
@@ -797,6 +833,12 @@ button.ga-row:hover{background:var(--hover)}
 
   /* ---------- Analytics: plain-words headline numbers per client, from Google Analytics ---------- */
   var gaCache = {}, gaCur = null;
+  // Stray Wolf's own website. Analytics only: it isn't a portal client, so it never shows in Requests,
+  // Contacts or Clients, and isn't counted in the All clients totals. Numbers come from ga:stray-wolf.
+  var OWN = {site:"stray-wolf", name:"Stray Wolf Technology", url:"straywolftech.com", own:true};
+  function isOwn(c){ return c.site === OWN.site || bare(c.url || "") === OWN.url; }
+  function ownSite(){ return data.clients.some(isOwn) ? null : OWN; }
+  function gaSites(){ var o = ownSite(); return o ? data.clients.concat([o]) : data.clients; }
   function stats(site){ return gaCache[site] || (gaCache[site] = call("/api/admin/stats",{site:site}).then(function(d){ if (!d.ok) delete gaCache[site]; return d; })); }
   function num(n){ return Number(n || 0).toLocaleString(); }
   var HELP = {
@@ -886,15 +928,16 @@ button.ga-row:hover{background:var(--hover)}
   function gaLink(d){ return d && d.property ? "https://analytics.google.com/analytics/web/#/p" + d.property + "/reports/intelligenthome" : "https://analytics.google.com/"; }
 
   function drawAnalytics(main){
-    if (gaCur && !data.clients.some(function(c){ return c.site === gaCur; })) gaCur = null;
-    var ul = el("ul",{class:"clients"});
-    [null].concat(data.clients).forEach(function(c){
+    if (gaCur && !gaSites().some(function(c){ return c.site === gaCur; })) gaCur = null;
+    var ul = el("ul",{class:"clients"}), own = ownSite();
+    [null].concat(data.clients, own ? ["sep", own] : []).forEach(function(c){
+      if (c === "sep") { ul.appendChild(el("li",{class:"label side-sep",text:"Your website"})); return; }
       var site = c ? c.site : null, v = el("span",{class:"gv"});
       if (c) stats(site).then(function(d){ v.textContent = d.ok ? num(reachedOf(d)) + " reached out" : /No Google Analytics/.test(d.error || "") ? "Not set up" : "Problem"; if (d.ok) v.title = "Reached out in the last 28 days"; });
       ul.appendChild(el("li",{},[el("button",{type:"button","aria-current":String(site === gaCur),onclick:function(){ gaCur = site; draw(); }},[el("b",{text:c ? c.name : "All clients"}), c ? v : null])]));
     });
     main.appendChild(el("nav",{class:"side","aria-label":"Clients"},[el("p",{class:"label",text:"Analytics by client"}), ul]));
-    var cur = data.clients.filter(function(c){ return c.site === gaCur; })[0];
+    var cur = gaSites().filter(function(c){ return c.site === gaCur; })[0];
     return cur ? drawGaClient(main, cur) : drawGaAll(main);
   }
   /* shared pieces for both Analytics pages */
@@ -930,7 +973,9 @@ button.ga-row:hover{background:var(--hover)}
     var body = el("div",{class:"quiet",text:data.clients.length ? "Loading…" : "No clients yet."});
     card.appendChild(body); main.appendChild(card);
     if (!data.clients.length) return;
-    Promise.all(data.clients.map(function(c){ return stats(c.site).then(function(d){ return {c:c, d:d}; }); })).then(function(all){
+    var mine = ownSite();
+    Promise.all(data.clients.concat(mine ? [mine] : []).map(function(c){ return stats(c.site).then(function(d){ return {c:c, d:d}; }); })).then(function(all){
+      var own = mine ? all.pop() : null;   // your own site gets its own row below the clients, outside the totals
       var on = all.filter(function(x){ return x.d.ok; }), kids = [], rows = [];
       if (on.length) {
         sub.textContent = periodText(on[0].d) + " · ▲▼ = change from the 4 weeks before";
@@ -960,7 +1005,7 @@ button.ga-row:hover{background:var(--hover)}
       }
       // one row per client
       rows.push(el("div",{class:"ga-row ga-head mid"},[el("span",{text:"Client"}), el("span",{text:"Visitors each day"}), el("span",{text:"Reached out"}), el("span",{text:"Visitors"}), el("span",{text:"Phone calls"}), el("span",{text:"Form requests"})]));
-      all.forEach(function(x){
+      function rowFor(x){
         var c = x.c, d = x.d, who = el("span",{class:"ga-who"},[el("span",{class:"mono-av","aria-hidden":"true",text:initials(c.name)}), el("span",{style:"min-width:0"},[el("b",{text:c.name}), el("span",{class:"sub",text:bare(c.url) + (d.ok && d.source ? " · mostly " + d.source : "")})])]);
         var row = el("button",{type:"button",class:"ga-row",onclick:function(){ gaCur = c.site; draw(); }},[who]);
         if (!d.ok) row.appendChild(el("span",{class:"ga-off-row",text:/No Google Analytics/.test(d.error || "") ? "Google Analytics isn't set up for this site yet" : "Couldn't get the numbers: " + (d.error || "try Refresh")}));
@@ -972,8 +1017,10 @@ button.ga-row:hover{background:var(--hover)}
           row.appendChild(cell("Reached out", reachedOf(d), reachedPrev(d), null, true)); row.appendChild(cell("Visitors", d.visitors, prevOf(d,"visitors"), d.visitorsChange));
           row.appendChild(cell("Phone calls", d.calls, prevOf(d,"calls"), d.callsChange)); row.appendChild(cell("Form requests", d.leads, prevOf(d,"leads"), d.leadsChange));
         }
-        rows.push(row);
-      });
+        return row;
+      }
+      all.forEach(function(x){ rows.push(rowFor(x)); });
+      if (own) rows.push(el("div",{class:"ga-sep label",text:"Your website"}), rowFor(own));
       var at = on.length ? 2 : 0; // after the summary line and the four numbers
       kids.splice.apply(kids, [at, 0].concat(rows));
       kids.push(el("div",{class:"ga-foot"},[el("span",{class:"sub",text:"From Google Analytics"})]));
