@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-EW8OJ/RsrA7zG01BqzVxE0A35YJH3lxX0tWZ4/1bWco='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-rZ6Kf9mvnVoeV2x/tWGI4B2fUOmUW2EASIkr5ICmOmA='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300..700;1,300..700&family=Zilla+Slab:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -571,7 +571,16 @@ button.ga-row:hover{background:var(--hover)}
   var API = String(window.SITE_NOTES_API || "demo").replace(/\/+$/,""), DEMO = API === "demo";
   var TOKEN_KEY = "swn-admin-token", ORDER_KEY = "swn-admin-order";
   var token = null, data = { clients: [], batches: [] }, view = "home", cur = null, show = "open", lastAdded = null;
-  try { token = localStorage.getItem(TOKEN_KEY); } catch(e){}
+  /* ---------- the login session ----------
+     Saved as {t: token, at: logged in, seen: last activity}. It ends after 30 minutes with nothing done,
+     or 8 hours after logging in, whichever comes first (the service checks the same limits).
+     A bare token from an older version has no times, so it counts as ended: log in once more. */
+  var IDLE_MS = 30 * 6e4, MAX_MS = 8 * 36e5, lastTouch = 0;
+  function sessRead(){ var s = null; try { s = JSON.parse(localStorage.getItem(TOKEN_KEY) || "null"); } catch(e){} return s && typeof s.t === "string" && s.at > 0 && s.seen > 0 ? s : null; }
+  function sessLive(s, now){ now = now || Date.now(); return !!s && now - s.seen < IDLE_MS && now - s.at < MAX_MS && s.at <= now + 6e4; }
+  function sessSave(s){ try { s ? localStorage.setItem(TOKEN_KEY, JSON.stringify(s)) : localStorage.removeItem(TOKEN_KEY); } catch(e){} }
+  function touch(){ var now = Date.now(); if (!token || now - lastTouch < 3e4) return; lastTouch = now; var s = sessRead(); if (sessLive(s, now) && s.t === token) { s.seen = now; sessSave(s); } }
+  (function(){ var s = sessRead(); if (sessLive(s)) token = s.t; else sessSave(null); })();
   var $ = function(id){ return document.getElementById(id); };
   function el(t, props, kids){
     var e = document.createElement(t), k;
@@ -696,11 +705,12 @@ button.ga-row:hover{background:var(--hover)}
   }
   function call(path, body){
     if (DEMO) return Promise.resolve(demoCall(path, body));
+    if (token && path !== "/api/admin/login") { if (!sessLive(sessRead())) { logout("For safety you're logged out after 30 minutes without activity, or 8 hours after logging in. Please log in again."); return Promise.resolve({ ok:false, status:401 }); } touch(); }
     var headers = token ? { authorization: "Bearer " + token } : {};
     return fetch(API + path, { method: body ? "POST" : "GET", headers: headers, body: body ? JSON.stringify(body) : undefined })
       .then(function(r){ return r.json().then(function(d){ d.status = r.status; return d; }); })
       .catch(function(){ return { ok:false, status:0, error:"Couldn't reach the service. Check your internet and try again." }; })
-      .then(function(d){ if (d.status === 401 && path !== "/api/admin/login") { logout("Please log in again."); } return d; });
+      .then(function(d){ if (d.status === 401 && path !== "/api/admin/login" && token) { logout("Please log in again.", true); } return d; });
   }
   function demoCall(path, b){
     if (path === "/api/admin/login") return b.password.trim().toLowerCase() === "wolf" ? {ok:true, token:"demo"} : {ok:false, error:'That password isn\'t right. In this demo it\'s "wolf".'};
@@ -743,13 +753,25 @@ button.ga-row:hover{background:var(--hover)}
 
   /* ---------- login ---------- */
   function showGate(msg){ $("app").hidden = true; $("gate").hidden = false; $("demo-note").hidden = !DEMO; $("err").hidden = !msg; $("err").textContent = msg || ""; $("pw").value = ""; $("pw").focus(); }
-  function logout(msg){ token = null; try { localStorage.removeItem(TOKEN_KEY); } catch(e){} showGate(msg); }
+  function logout(msg, quiet){
+    if (token && !DEMO && !quiet) { try { fetch(API + "/api/admin/logout", { method:"POST", headers:{ authorization:"Bearer " + token }, body:"{}", keepalive:true }).catch(function(){}); } catch(e){} }
+    token = null; sessSave(null);
+    // passwords and requests shouldn't stay in the page behind the login box
+    data = { clients: [], batches: [] }; $("main").textContent = "";
+    Object.keys(picCache).forEach(function(k){ picCache[k].then(function(u){ if (u && u.indexOf("blob:") === 0) URL.revokeObjectURL(u); }); delete picCache[k]; });
+    showGate(msg);
+  }
+  // Activity, a once-a-minute check, and other tabs: logging out in one tab logs out all of them.
+  ["pointerdown","keydown"].forEach(function(ev){ addEventListener(ev, touch, { passive:true, capture:true }); });
+  setInterval(function(){ if (token && !sessLive(sessRead())) logout("For safety you're logged out after 30 minutes without activity, or 8 hours after logging in. Please log in again.", true); }, 3e4);
+  addEventListener("storage", function(e){ if (e.key === TOKEN_KEY && token && !sessLive(sessRead())) logout("You logged out in another tab.", true); });
+  document.addEventListener("visibilitychange", function(){ if (document.visibilityState === "visible" && token && !sessLive(sessRead())) logout("For safety you're logged out after 30 minutes without activity, or 8 hours after logging in. Please log in again.", true); });
   $("login").addEventListener("submit", function(e){
     e.preventDefault(); $("go").disabled = true;
     call("/api/admin/login", { password: $("pw").value }).then(function(d){
       $("go").disabled = false;
       if (!d.ok) { $("err").textContent = d.error || "That password isn't right."; $("err").hidden = false; return; }
-      token = d.token; try { localStorage.setItem(TOKEN_KEY, token); } catch(e){}
+      token = d.token; var now = Date.now(); sessSave({ t: token, at: now, seen: now }); lastTouch = now;
       load();
     });
   });
