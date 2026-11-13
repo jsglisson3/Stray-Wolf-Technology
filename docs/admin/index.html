@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-8/nn9YeBeDRiwvMjirqQxQ/1LTtIfJqS+LsYLteGQ5A='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-r3TRvewbLpaamn1vnNi5XIdnfoydGtewFiOP8nZ0870='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Zilla+Slab:wght@500&display=swap">
@@ -905,7 +905,14 @@ button.ga-row:hover{background:var(--hover)}
   function isOwn(c){ return c.site === OWN.site || bare(c.url || "") === OWN.url; }
   function ownSite(){ return data.clients.some(isOwn) ? null : OWN; }
   function gaSites(){ var o = ownSite(); return o ? data.clients.concat([o]) : data.clients; }
-  function stats(site){ return gaCache[site] || (gaCache[site] = call("/api/admin/stats",{site:site}).then(function(d){ if (!d.ok) delete gaCache[site]; return d; })); }
+  // Each site's numbers on their own, with a time limit, so one slow site never holds up the page.
+  var GA_WAIT = 20000, STALE_TIP = "Google didn't answer just now, so these are the last numbers saved. Tap Refresh later for fresh ones.";
+  function stats(site){
+    return gaCache[site] || (gaCache[site] = Promise.race([call("/api/admin/stats",{site:site}),
+      new Promise(function(done){ setTimeout(function(){ done({ok:false, slow:true, error:"Google Analytics didn't answer in time. Tap Refresh to try again."}); }, GA_WAIT); })])
+      .then(function(d){ if (!d.ok) delete gaCache[site]; return d; }));
+  }
+  function staleTag(){ return el("span",{class:"tag-s",title:STALE_TIP,text:"Last saved numbers"}); }
   function num(n){ return Number(n || 0).toLocaleString(); }
   var HELP = {
     reached: "Phone calls plus form requests. The clearest sign the website is bringing in work.",
@@ -1014,7 +1021,7 @@ button.ga-row:hover{background:var(--hover)}
     [null].concat(data.clients, own ? ["sep", own] : []).forEach(function(c){
       if (c === "sep") { ul.appendChild(el("li",{class:"label side-sep",text:"Your website"})); return; }
       var site = c ? c.site : null, v = el("span",{class:"gv"});
-      if (c) stats(site).then(function(d){ v.textContent = d.ok ? num(reachedOf(d)) + " reached out" : /No Google Analytics/.test(d.error || "") ? "Not set up" : "Problem"; if (d.ok) v.title = "Reached out in the last 28 days"; });
+      if (c) stats(site).then(function(d){ v.textContent = d.ok ? num(reachedOf(d)) + " reached out" : /No Google Analytics/.test(d.error || "") ? "Not set up" : d.slow ? "Try Refresh" : "Problem"; v.title = d.ok ? (d.stale ? STALE_TIP : "Reached out in the last 28 days") : (d.error || ""); });
       ul.appendChild(el("li",{},[el("button",{type:"button","aria-current":String(site === gaCur),onclick:function(){ gaCur = site; draw(); }},[el("b",{text:c ? c.name : "All clients"}), c ? v : null])]));
     });
     main.appendChild(el("nav",{class:"side","aria-label":"Clients"},[el("p",{class:"label",text:"Analytics by client"}), ul]));
@@ -1026,13 +1033,13 @@ button.ga-row:hover{background:var(--hover)}
     return el("div",{class:"ga-n" + (hero ? " hero" : "")},[el("div",{class:"t-label"},[label, help(HELP[key], label.toLowerCase())]), el("div",{class:"t-num big",text:num(v)}), delta(v, prev, pct), sp ? spark(sp) : null]);
   }
   function addUp(a, b){ return a.map(function(x, i){ return x + (b[i] || 0); }); }
-  function topPagesBox(pages, title, withClient){
+  function topPagesBox(pages, title, withClient, empty){
     var most = pages.length ? Math.max.apply(null, pages.map(function(x){ return x.views || 0; }).concat([1])) : 1;
     return el("div",{class:"ga-box"},[el("h3",{},[title, help(HELP.pages, "top pages")]),
       pages.length ? el("ol",{class:"tp"}, pages.map(function(pg, i){ return el("li",{},[el("span",{class:"tp-n",text:String(i + 1)}), el("div",{class:"tp-body"},[
           el("div",{class:"tp-top"},[el("span",{class:"tp-name"},[el("b",{text:pageName(pg)}), withClient && pg.client ? el("span",{class:"tp-c",text:" · " + pg.client}) : null]), el("span",{class:"tp-v",text:plural(pg.views || 0,"view","views")})]),
           el("div",{class:"tp-bar"},[el("span",{style:"width:" + Math.max(2, (pg.views || 0) / most * 100) + "%"})])])]); }))
-        : el("p",{class:"sub",style:"margin:8px 0 0",text:"Shows up once the notes service sends page numbers."})]);
+        : el("p",{class:"sub",style:"margin:8px 0 0",text:empty || "No page views yet."})]);
   }
   function fact(label, big, small, helpKey){ return el("div",{class:"fact"},[el("h3",{},[label, helpKey ? help(HELP[helpKey], label.toLowerCase()) : null]), el("div",{class:"src",text:big}), small ? el("div",{class:"sub",text:small}) : null]); }
   function dayKey(dt){ return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate(); }
@@ -1065,7 +1072,7 @@ button.ga-row:hover{background:var(--hover)}
         if (on.length === 1) ["visitors","calls","leads"].forEach(function(k){ pct[k] = on[0].d[k + "Change"]; });
         var comb = combineDaily(on.map(function(x){ return x.d; })), cd = comb && comb.daily;
         var tot = {visitors:T.visitors, calls:T.calls, leads:T.leads};
-        kids.push(el("div",{class:"ga-summary"},[summaryFor(tot), on.some(function(x){ return x.d.sample; }) ? el("span",{class:"tag-s",text:"Sample numbers"}) : null]));
+        kids.push(el("div",{class:"ga-summary"},[summaryFor(tot), on.some(function(x){ return x.d.sample; }) ? el("span",{class:"tag-s",text:"Sample numbers"}) : null, on.some(function(x){ return x.d.stale; }) ? staleTag() : null]));
         kids.push(el("div",{class:"ga-nums four"},[
           gaTile("reached","Reached out", T.calls + T.leads, havePrev ? P.calls + P.leads : null, null, cd && addUp(cd.calls, cd.leads), true),
           gaTile("visitors","Visitors", T.visitors, havePrev ? P.visitors : null, havePrev ? null : pct.visitors, cd && cd.visitors),
@@ -1082,7 +1089,7 @@ button.ga-row:hover{background:var(--hover)}
         if (topSrc) facts.push(fact("How they found you", topSrc, on.length > 1 ? "Most visits, all sites" : "", "source"));
         if (on.length > 1) { var best = on.slice().sort(function(a, z){ return reachedOf(z.d) - reachedOf(a.d) || z.d.visitors - a.d.visitors; })[0];
           facts.push(fact("Most reached out", best.c.name, num(reachedOf(best.d)) + " reached out")); }
-        kids.push(el("div",{class:"ga-split"},[topPagesBox(pages.slice(0, on.length > 1 ? 5 : 3), on.length > 1 ? "Top pages, all sites" : "Top pages", on.length > 1), el("div",{class:"ga-box facts"},facts)]));
+        kids.push(el("div",{class:"ga-split"},[topPagesBox(pages.slice(0, on.length > 1 ? 5 : 3), on.length > 1 ? "Top pages, all sites" : "Top pages", on.length > 1, on.some(function(x){ return x.d.pages; }) ? "" : "Couldn't get the top pages just now. Tap Refresh to try again."), el("div",{class:"ga-box facts"},facts)]));
       }
       // one row per client
       rows.push(el("div",{class:"ga-row ga-head mid"},[el("span",{text:"Client"}), el("span",{text:"Visitors each day"}), el("span",{text:"Reached out"}), el("span",{text:"Visitors"}), el("span",{text:"Phone calls"}), el("span",{text:"Form requests"})]));
@@ -1120,14 +1127,14 @@ button.ga-row:hover{background:var(--hover)}
       var days = dayList(d), daily = d.daily && d.daily.visitors && d.daily.visitors.length ? d.daily : null;
       var tile = function(key, label, v, prev, pct, sp, hero){ return gaTile(key, label, v, prev, pct, daily ? sp : null, hero); };
       var reachDaily = daily && daily.calls && daily.leads ? daily.calls.map(function(x, i){ return x + (daily.leads[i] || 0); }) : null;
-      var kids = [el("div",{class:"ga-summary"},[summaryFor(d), d.sample ? el("span",{class:"tag-s",text:"Sample numbers"}) : null]),
+      var kids = [el("div",{class:"ga-summary"},[summaryFor(d), d.sample ? el("span",{class:"tag-s",text:"Sample numbers"}) : null, d.stale ? staleTag() : null]),
         el("div",{class:"ga-nums four"},[
           tile("reached","Reached out", reachedOf(d), reachedPrev(d), null, reachDaily, true),
           tile("visitors","Visitors", d.visitors, prevOf(d,"visitors"), d.visitorsChange, daily && daily.visitors),
           tile("calls","Phone calls", d.calls, prevOf(d,"calls"), d.callsChange, daily && daily.calls),
           tile("leads","Form requests", d.leads, prevOf(d,"leads"), d.leadsChange, daily && daily.leads)])];
       if (daily) kids.push(el("div",{class:"ga-chart"},[el("div",{class:"ga-chart-hd"},[el("h3",{text:"Visitors each day"})]), dayChart(days, daily.visitors, "Visitors"), dayTable(days, d)]));
-      kids.push(el("div",{class:"ga-split"},[topPagesBox((d.pages || []).slice(0, 3), "Top pages", false),
+      kids.push(el("div",{class:"ga-split"},[topPagesBox((d.pages || []).slice(0, 3), "Top pages", false, d.pages ? "" : "Couldn't get the top pages just now. Tap Refresh to try again."),
         el("div",{class:"ga-box"},[el("h3",{},["How they found you", help(HELP.source, "how they found you")]), el("div",{class:"src",text:d.source || "Not sure yet"})])]));
       kids.push(el("div",{class:"ga-foot"},[el("span",{class:"sub ga-from"},[gaLogo(13),"From Google Analytics"])]));
       body.replaceWith(el("div",{},kids));
