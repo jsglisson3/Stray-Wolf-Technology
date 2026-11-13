@@ -1,5 +1,7 @@
 # Pick up here (Stray Wolf Technology)
 
+> **Read `SYNC.md` first.** It holds the shared state for all three projects: who owns what, the live Worker version (source in `worker/worker.js`), the latest commits in this repo, TVIS and FOTCL, and the start and end steps.
+
 Last updated November 9, 2026, after the V12 round (V11's "print plate" redesign of the whole site, then a much calmer hero and three new pages: Pricing, Care plan and Reviews). This repository (`jsglisson3/Stray-Wolf-Technology`) replaces `jsglisson3/Firemark` for the new brand.
 
 ## Where things stand

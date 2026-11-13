@@ -3,7 +3,7 @@
 The website for Stray Wolf Technology: bespoke websites, by referral, for owner-run businesses.
 This is the rebrand of the Firemark site. The Firemark site and its notes stay in the old `jsglisson3/Firemark` repository.
 
-Start with **PICKUP.md**. It has where things stand, the before-launch list and how to publish.
+Start with **SYNC.md** (three Claude projects share this repo: who owns what, version numbers, the start and end steps). Then **PICKUP.md**. It has where things stand, the before-launch list and how to publish.
 
 ## What's where
 
