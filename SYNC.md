@@ -65,6 +65,7 @@ Format: `- [Project] repo: changed files. One-line summary. (time UTC)`
 
 ## Log (newest first, one line each)
 
+- 2026-11-13 15:27 UTC, Client Portal (main project thread): TVIS + FOTCL portal Edit mode card now shows a light framed picture of their website (brand/site-preview.jpg). Pushed: TVIS 462f8b2, FOTCL ec32571. (Main)
 - Nov 13 2026: Main signed off Portal's handoff: SYNC.md, README.md, PICKUP.md pointer, worker/ (worker.js 13i, tests 118 pass). TVIS 04de78a and FOTCL cda6ceb already committed; admin page unchanged since 52bd60a. (Main)
 - Nov 13 2026: Worker 2026-11-13i live in Cloudflare and saved to `worker/worker.js`; shared state and sign-off entry added here. (Portal)
 - Nov 13 2026: Worker 2026-11-13i checked: login sessions (admin 30 min idle / 8 h max, clients 2 h / 24 h, real log out, new password ends logins, per-login lockout, picture checks, admin answers only straywolftech.com) all pass with invoices: 118 checks + invoice checks in `worker/test-worker.mjs` (`node worker/test-worker.mjs`). No Worker code change. (Portal)
