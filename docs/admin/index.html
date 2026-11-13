@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-R9HKCSuafycFiureB47RQp9EMMjk81aLpsCBC+dHmkM='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-F0YQ8iD3GtkhcI0cWzXlHeKpa0PafF3MHjyWtWjRq2s='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Zilla+Slab:wght@600&display=swap">
@@ -756,17 +756,18 @@ button.ga-row:hover{background:var(--hover)}
   function reachedPrev(d){ var a = prevOf(d,"calls"), b = prevOf(d,"leads"); return a == null || b == null ? null : a + b; }
   // Change vs. the 28 days before: exact counts when the service sends them, otherwise its percent.
   function delta(now, prev, pct, short){
-    var cls = "chg", txt;
+    var cls = "chg", txt, tip = "";
     if (prev == null && pct == null) return null; // nothing to compare with
     if (prev != null) {
       var diff = now - prev;
-      if (prev === 0 && now > 0) txt = short ? "New" : "None before to compare";
-      else if (diff > 0) { cls += " up"; txt = short ? "+" + num(diff) : "▲ " + num(diff) + " more than before"; }
-      else if (diff < 0) { cls += " down"; txt = short ? "−" + num(-diff) : "▼ " + num(-diff) + " fewer than before"; }
-      else txt = short ? "Same" : "Same as before";
-    } else if (pct) { cls += pct > 0 ? " up" : " down"; txt = (pct > 0 ? "▲ " : "▼ ") + Math.abs(pct) + "%" + (short ? "" : (pct > 0 ? " more" : " fewer") + " than before"); }
-    else txt = short ? "0%" : "No change from before";
-    return el("div",{class:cls,text:txt});
+      if (prev === 0 && now > 0) txt = short ? "New" : "Nothing in the 4 weeks before";
+      else if (diff > 0) { cls += " up"; txt = short ? "▲ " + num(diff) : "▲ " + num(diff) + " more than the 4 weeks before"; }
+      else if (diff < 0) { cls += " down"; txt = short ? "▼ " + num(-diff) : "▼ " + num(-diff) + " fewer than the 4 weeks before"; }
+      else txt = "Same" + (short ? "" : " as the 4 weeks before");
+      tip = diff > 0 ? num(diff) + " more than the 4 weeks before" : diff < 0 ? num(-diff) + " fewer than the 4 weeks before" : prev === 0 && now > 0 ? "Nothing in the 4 weeks before" : "Same as the 4 weeks before";
+    } else if (pct) { cls += pct > 0 ? " up" : " down"; txt = (pct > 0 ? "▲ " : "▼ ") + Math.abs(pct) + "%" + (short ? "" : (pct > 0 ? " more" : " fewer") + " than the 4 weeks before"); tip = Math.abs(pct) + "%" + (pct > 0 ? " more" : " fewer") + " than the 4 weeks before"; }
+    else { txt = short ? "Same" : "Same as the 4 weeks before"; tip = "Same as the 4 weeks before"; }
+    return el("div",{class:cls,text:txt,title:short ? tip : false});
   }
   function ymd(s){ var m = /^(\d{4})-?(\d{2})-?(\d{2})$/.exec(s || ""); return m ? new Date(+m[1], m[2] - 1, +m[3]) : null; }
   function dayList(d){ var n = d.daily && d.daily.visitors ? d.daily.visitors.length : (d.days || 28), start = d.daily && ymd(d.daily.start);
@@ -853,7 +854,7 @@ button.ga-row:hover{background:var(--hover)}
         left--; row.replaceChildren(row.firstChild);
         if (!d.ok) row.appendChild(el("span",{class:"ga-off-row",text:/No Google Analytics/.test(d.error || "") ? "Google Analytics isn't set up for this site yet" : "Couldn't get the numbers: " + (d.error || "try Refresh")}));
         else {
-          got.push({c:c, d:d}); if (!sub.dataset.p) { sub.dataset.p = 1; sub.textContent = periodText(d); }
+          got.push({c:c, d:d}); if (!sub.dataset.p) { sub.dataset.p = 1; sub.textContent = periodText(d) + " \u00b7 \u25b2\u25bc = change from the 4 weeks before"; }
           function cell(label, v, prev, pct, hero){ return el("span",{class:"ga-cell" + (hero ? " hero" : "")},[el("span",{class:"ga-k",text:label}), el("span",{class:"ga-v",text:num(v)}), delta(v, prev, pct, true)]); }
           row.appendChild(cell("Reached out", reachedOf(d), reachedPrev(d), null, true)); row.appendChild(cell("Visitors", d.visitors, prevOf(d,"visitors"), d.visitorsChange));
           row.appendChild(cell("Phone calls", d.calls, prevOf(d,"calls"), d.callsChange)); row.appendChild(cell("Form requests", d.leads, prevOf(d,"leads"), d.leadsChange));
