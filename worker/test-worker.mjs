@@ -159,7 +159,7 @@ r = await call("/api/admin/stats", { token: admin, body: { site: "Bad Site!" } }
 globalThis.fetch = realFetch; delete env.GA_SA_JSON;
 
 // ---- setup check page + forgiving property IDs ----
-r = await call("/api"); ok("health shows version", /^2026-11-13i/.test(r.data.version));
+r = await call("/api"); ok("health shows version", /^2026-11-13j/.test(r.data.version));
 await env.NOTES.put("ga:quoted", '"562482788" '); env.GA_SA_JSON = JSON.stringify(SA); globalThis.fetch = gFetch;
 r = await call("/api/admin/stats", { token: admin, body: { site: "quoted" } }); ok("quotes around the ID forgiven", r.data.ok && lastProp === "562482788");
 await env.NOTES.put("ga:measure", "G-ABC123XYZ");
@@ -168,6 +168,53 @@ r = await call("/api/check?site=quoted"); ok("check page", r.data.googleKeySaved
 r = await call("/api/check?site=nobody"); ok("check page, no ID", r.data.propertyIdSaved === false);
 globalThis.fetch = realFetch; delete env.GA_SA_JSON;
 r = await call("/api/check"); ok("check page, no key", r.data.googleKeySaved === false);
+
+// ---- 13j: Google that hangs. Reports go one at a time, each with its own time limit and one retry ----
+{
+  let inFlight = 0, most = 0, hang = 0, hangBody = 0, hangAll = false, reports = 0;
+  const never = (signal) => new Promise((_, no) => signal && signal.addEventListener("abort", () => no(signal.reason || new Error("aborted"))));
+  globalThis.fetch = async (u, o) => {
+    if (!/:runReport$/.test(String(u))) return gFetch(u, o);
+    reports++; inFlight++; most = Math.max(most, inFlight);
+    try {
+      if (hangAll || hang > 0) { hang--; return await never(o.signal); }   // never answers
+      const real = await gFetch(u, o);
+      if (hangBody > 0) { hangBody--;                                       // answers, then the body never ends
+        return new Response(new ReadableStream({ start() {} }), { status: 200, headers: { "content-type": "application/json" } }); }
+      return real;
+    } finally { inFlight--; }
+  };
+  env.GA_SA_JSON = JSON.stringify(SA); await env.NOTES.put("ga:hangs", "577777777");
+  let t = Date.now(); hang = 1;
+  r = await call("/api/admin/stats", { token: admin, body: { site: "hangs" } });
+  ok("hung report is dropped and asked again", r.data.ok && !r.data.stale && r.data.visitors === 412 && r.data.source === "Facebook" && r.data.pages.length === 3 && reports === 7);
+  ok("reports never run at the same time", most === 1);
+  ok("a retry finishes inside the admin's 20 s wait", Date.now() - t < 9000);
+  ok("a fully good fetch leaves no problem", (await env.NOTES.get("gaerr:hangs", "json")) === null);
+  await env.NOTES.delete("stats:hangs"); hangBody = 1; reports = 0; t = Date.now();
+  r = await call("/api/admin/stats", { token: admin, body: { site: "hangs" } });
+  ok("answer whose body never ends is dropped and asked again", r.data.ok && !r.data.stale && r.data.visitors === 412 && reports === 7 && Date.now() - t < 9000);
+  // Google hangs on everything: the last saved numbers come back, marked stale, before the admin gives up
+  await env.NOTES.delete("stats:hangs"); hangAll = true; reports = 0; t = Date.now();
+  r = await call("/api/admin/stats", { token: admin, body: { site: "hangs" } });
+  const took = Date.now() - t;
+  ok("Google hangs: last numbers shown, marked stale", r.data.ok && r.data.stale === true && r.data.visitors === 412);
+  ok("Google hangs: answer in under 17 s", took < 17000);
+  const p2 = await env.NOTES.get("gaerr:hangs", "json");
+  ok("check page problem says which step and lists timings", p2 && /headline numbers \(visitors\)/.test(p2.what) && /longer than/.test(p2.said) && p2.steps.length >= 2 && p2.steps[0].step === "sign-in");
+  hangAll = false;
+  // &test=1 times each step, one after another; &test=2 asks all 3 at once
+  most = 0; r = await call("/api/check?site=hangs&test=1");
+  ok("test=1: sign-in and 3 reports, each timed", r.data.test.signIn === "ok" && r.data.test.report === "ok" && r.data.test.steps.length === 3 && /^visitors: ok in [\d.]+ s$/.test(r.data.test.steps[0]) && most === 1);
+  ok("test=1: no numbers or IDs shown", !JSON.stringify(r.data).includes("577777777") && !JSON.stringify(r.data).includes("412"));
+  r = await call("/api/check?site=hangs&test=1"); ok("test=1 once a minute", /minute/.test(r.data.test.skipped));
+  await env.NOTES.delete("gatest:hangs"); most = 0;
+  r = await call("/api/check?site=hangs&test=2"); ok("test=2: 3 at once", r.data.test.report === "ok" && most === 3 && /at once/.test(r.data.test.mode));
+  // 403 (no Viewer access) is not asked again
+  await env.NOTES.put("ga:noaccess", "588888888"); gMode = "403"; reports = 0;
+  r = await call("/api/admin/stats", { token: admin, body: { site: "noaccess" } }); ok("403 asked once, plain message", r.status === 502 && /Viewer/.test(r.data.error) && reports === 1);
+  gMode = "ok"; globalThis.fetch = realFetch; delete env.GA_SA_JSON;
+}
 
 // ---- the right password clears earlier wrong tries ----
 for (let i = 0; i < 6; i++) await call("/api/login", { body: { site: "cedar-street", password: "oops" + i } });

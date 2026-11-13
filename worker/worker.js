@@ -42,7 +42,7 @@
  *   inv:{number}         one invoice, for example inv:SW-0002 (see cleanInvoice for its fields)
  */
 
-const VERSION = "2026-11-13i (contacts, analytics with each day and top pages, captions, where each note was left, snapshot of the spot, which photos are on the site, invoices; server-side logins with time limits and a real log out, per-login lockout, picture checks, admin answers only its own page)";
+const VERSION = "2026-11-13j (Google reports asked one at a time, each with its own time limit and one retry; contacts, analytics with each day and top pages, captions, where each note was left, snapshot of the spot, which photos are on the site, invoices; server-side logins with time limits and a real log out, per-login lockout, picture checks, admin answers only its own page)";
 const LIMITS = { notes: 40, text: 2000, label: 300, caption: 140, pics: 20, picBytes: 3 * 1024 * 1024, contacts: 25, jsonBytes: 256 * 1024 };
 const PIC_TYPES = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
 const PIC_KEY = /^pic:[a-z0-9-]+:[\w-]+$/;
@@ -412,6 +412,9 @@ async function adminPic(url, env) {
 // 4 times a day per site, and the portal and the admin share that answer.
 
 const GA = { days: 28, cacheSeconds: 6 * 3600, events: { calls: "phone_call_click", leads: "generate_lead" },
+  // Time limits. The admin page waits 20 seconds, so everything here ends by about 16.
+  // Each report gets its own try (tryMs); one that hangs is dropped and asked once more.
+  tryMs: 6000, tokenMs: 8000, totalMs: 16000,
   // the time zone the GA4 properties report in, used only to line up the "each day" numbers
   tz: "America/Chicago" };
 
@@ -425,32 +428,23 @@ async function statsFor(site, env) {
   const cached = await env.NOTES.get("stats:" + site, "json");
   if (cached && cached.property === property && "daily" in cached) return json(cached);
 
+  const started = Date.now(), deadline = started + GA.totalMs, steps = [];
   let token;
-  try { token = await googleToken(env); }
-  catch (e) { await gaProblem(env, site, "sign-in", e); return fail(502, "Couldn't sign in to Google Analytics. Check the GA_SA_JSON secret."); }
+  try { token = await googleToken(env); steps.push({ step: "sign-in", ok: true, s: gaSecs(started) }); }
+  catch (e) { steps.push({ step: "sign-in", ok: false, s: gaSecs(started) }); await gaProblem(env, site, "sign-in", e, steps); return fail(502, "Couldn't sign in to Google Analytics. Check the GA_SA_JSON secret."); }
+  const q = gaQueries();
   try {
-    const ranges = [
-      { startDate: GA.days + "daysAgo", endDate: "yesterday" },
-      { startDate: (GA.days * 2) + "daysAgo", endDate: (GA.days + 1) + "daysAgo" },
-    ];
-    const eventFilter = { filter: { fieldName: "eventName", inListFilter: { values: [GA.events.calls, GA.events.leads] } } };
-    // The headline numbers: three small reports, the same way that worked from the start.
-    const [users, events, sources] = await Promise.all([
-      runReport(property, token, { dateRanges: ranges, metrics: [{ name: "activeUsers" }] }, 15000),
-      // the names the site sends: tapping a phone number, and sending the estimate form
-      runReport(property, token, { dateRanges: ranges, dimensions: [{ name: "eventName" }], metrics: [{ name: "eventCount" }], dimensionFilter: eventFilter }, 15000),
-      runReport(property, token, { dateRanges: [ranges[0]], dimensions: [{ name: "sessionSource" }], metrics: [{ name: "sessions" }], orderBys: [{ metric: { metricName: "sessions" }, desc: true }], limit: 5 }, 15000),
-    ]);
-    // The extras (each day, top pages) come after, with a shorter wait. If they fail, the numbers still show.
+    // The headline numbers: three small reports, asked one after another (never all at once).
+    const users = await gaReport(property, token, q.users, "visitors", deadline, steps);
+    const events = await gaReport(property, token, q.events, "calls and forms", deadline, steps);
+    const sources = await gaReport(property, token, q.sources, "where from", deadline, steps);
+    // The extras (each day, top pages) come after, one at a time, only while there's time left.
+    // If they fail, the numbers still show and the extras are tried again in 30 minutes.
     let extraErr = null;
-    const extra = (q) => runReport(property, token, q, 8000).catch((e) => { extraErr = extraErr || e; return null; });
-    const [dayUsers, dayEvents, pages] = await Promise.all([
-      // each day of the last 28: visitors, and phone taps + form sends
-      extra({ dateRanges: [ranges[0]], dimensions: [{ name: "date" }], metrics: [{ name: "activeUsers" }], limit: 100 }),
-      extra({ dateRanges: [ranges[0]], dimensions: [{ name: "date" }, { name: "eventName" }], metrics: [{ name: "eventCount" }], dimensionFilter: eventFilter, limit: 500 }),
-      // the pages people opened most
-      extra({ dateRanges: [ranges[0]], dimensions: [{ name: "pagePath" }, { name: "pageTitle" }], metrics: [{ name: "screenPageViews" }], orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }], limit: 15 }),
-    ]);
+    const extra = (query, label) => gaReport(property, token, query, label, deadline, steps, 1).catch((e) => { extraErr = extraErr || e; return null; });
+    const dayUsers = await extra(q.dayUsers, "each day: visitors");
+    const dayEvents = dayUsers ? await extra(q.dayEvents, "each day: calls and forms") : null;
+    const pages = await extra(q.pages, "top pages");
     const v = gaPick(users), c = gaPick(events, GA.events.calls), l = gaPick(events, GA.events.leads);
     const answer = {
       ok: true, days: GA.days, property,
@@ -465,12 +459,12 @@ async function statsFor(site, env) {
     // if the extras failed, try them again sooner (30 minutes) instead of waiting 6 hours
     await env.NOTES.put("stats:" + site, JSON.stringify(answer), { expirationTtl: extraErr ? 1800 : GA.cacheSeconds });
     await env.NOTES.put("statslast:" + site, JSON.stringify(answer));   // kept, in case Google has a bad moment later
-    if (extraErr) await gaProblem(env, site, "each day / top pages", extraErr);
+    if (extraErr) await gaProblem(env, site, "each day / top pages", extraErr, steps);
     else await env.NOTES.delete("gaerr:" + site);
     return json(answer);
   } catch (e) {
     if (e && e.status === 401) await env.NOTES.delete("gatoken");
-    await gaProblem(env, site, "headline numbers", e);
+    await gaProblem(env, site, "headline numbers", e, steps);
     // Google had a problem: show the last numbers we got rather than nothing (marked stale), unless access was taken away.
     const last = e && e.status === 403 ? null : await env.NOTES.get("statslast:" + site, "json");
     if (last && last.property === property) return json({ ...last, stale: true });
@@ -480,11 +474,56 @@ async function statsFor(site, env) {
   }
 }
 
+// The six reports, by name. Two date ranges = the last 28 days and the 28 before.
+function gaQueries() {
+  const ranges = [
+    { startDate: GA.days + "daysAgo", endDate: "yesterday" },
+    { startDate: (GA.days * 2) + "daysAgo", endDate: (GA.days + 1) + "daysAgo" },
+  ];
+  // the names the site sends: tapping a phone number, and sending the estimate form
+  const eventFilter = { filter: { fieldName: "eventName", inListFilter: { values: [GA.events.calls, GA.events.leads] } } };
+  return {
+    users: { dateRanges: ranges, metrics: [{ name: "activeUsers" }] },
+    events: { dateRanges: ranges, dimensions: [{ name: "eventName" }], metrics: [{ name: "eventCount" }], dimensionFilter: eventFilter },
+    sources: { dateRanges: [ranges[0]], dimensions: [{ name: "sessionSource" }], metrics: [{ name: "sessions" }], orderBys: [{ metric: { metricName: "sessions" }, desc: true }], limit: 5 },
+    // each day of the last 28: visitors, and phone taps + form sends
+    dayUsers: { dateRanges: [ranges[0]], dimensions: [{ name: "date" }], metrics: [{ name: "activeUsers" }], limit: 100 },
+    dayEvents: { dateRanges: [ranges[0]], dimensions: [{ name: "date" }, { name: "eventName" }], metrics: [{ name: "eventCount" }], dimensionFilter: eventFilter, limit: 500 },
+    // the pages people opened most
+    pages: { dateRanges: [ranges[0]], dimensions: [{ name: "pagePath" }, { name: "pageTitle" }], metrics: [{ name: "screenPageViews" }], orderBys: [{ metric: { metricName: "screenPageViews" }, desc: true }], limit: 15 },
+  };
+}
+
+const gaSecs = (t) => Math.round(Date.now() - t) / 1000;
+
+// One report, with its own time limit, asked again once if Google hangs or has a hiccup (5xx).
+// Never waits past the deadline. Every try is written down in steps (name, try, ok, seconds).
+async function gaReport(property, token, request, label, deadline, steps, tries) {
+  let last;
+  for (let n = 1; n <= (tries || 2); n++) {
+    const left = deadline - Date.now();
+    if (left < 1500) { const e = last || new Error("No time left to ask Google"); e.step = e.step || label; throw e; }
+    const t = Date.now();
+    try {
+      const rep = await runReport(property, token, request, Math.min(GA.tryMs, left));
+      steps.push({ step: label, try: n, ok: true, s: gaSecs(t) });
+      return rep;
+    } catch (e) {
+      e.step = label;
+      steps.push({ step: label, try: n, ok: false, s: gaSecs(t), said: str((e.status ? e.status + " " : "") + (e.detail || e.message || ""), 120) });
+      if (e.status && e.status < 500) throw e;   // Google said no (bad ID, no access, quota): asking again won't help
+      last = e;
+    }
+  }
+  throw last;
+}
+
 function gaTry(fn, onErr) { try { return fn(); } catch (e) { onErr(e); return null; } }
 
 // Remember what went wrong, so /api/check can show it (no keys or IDs, just Google's words).
-async function gaProblem(env, site, what, e) {
-  const p = { at: new Date().toISOString(), what, status: (e && e.status) || 0, said: str((e && (e.detail || e.message)) || "unknown", 300) };
+async function gaProblem(env, site, what, e, steps) {
+  const p = { at: new Date().toISOString(), what: what + (e && e.step ? " (" + e.step + ")" : ""), status: (e && e.status) || 0, said: str((e && (e.detail || e.message)) || "unknown", 300) };
+  if (steps && steps.length) p.steps = steps;
   try { await env.NOTES.put("gaerr:" + site, JSON.stringify(p), { expirationTtl: 86400 }); } catch {}
 }
 
@@ -511,25 +550,33 @@ async function setupCheck(url, env) {
     out.numbersCached = (await env.NOTES.get("stats:" + site)) !== null;   // false just means nobody asked in the last 6 hours
     const prob = await env.NOTES.get("gaerr:" + site, "json");
     if (prob) out.lastGoogleProblem = prob;
-    // &test=1 asks Google one tiny question right now and says how long it took (no numbers shown). Once a minute at most.
-    if (url.searchParams.get("test") && ga.property && env.GA_SA_JSON) out.test = await gaTest(site, ga.property, env);
+    // &test=1 signs in fresh and asks Google the 3 headline reports one after another, the same way the
+    // real numbers are fetched, and says how long each step took (no numbers shown). Once a minute at most.
+    // &test=2 asks the same 3 all at once instead, to compare.
+    const test = url.searchParams.get("test");
+    if (test && ga.property && env.GA_SA_JSON) out.test = await gaTest(site, ga.property, env, test === "2");
   }
   return json(out);
 }
 
-async function gaTest(site, property, env) {
+async function gaTest(site, property, env, together) {
   if (await env.NOTES.get("gatest:" + site)) return { skipped: "Tested less than a minute ago. Try again in a minute." };
   await env.NOTES.put("gatest:" + site, "1", { expirationTtl: 60 });
-  const out = {}, t0 = Date.now();
+  const out = { mode: together ? "3 reports at once" : "3 reports one after another" }, t0 = Date.now();
   let token;
   try { await env.NOTES.delete("gatoken"); token = await googleToken(env); out.signIn = "ok"; }
   catch (e) { out.signIn = "failed: " + str(e && (e.detail || e.message), 200); }
-  out.signInSeconds = (Date.now() - t0) / 1000;
+  out.signInSeconds = gaSecs(t0);
   if (token) {
-    const t1 = Date.now();
-    try { await runReport(property, token, { dateRanges: [{ startDate: "7daysAgo", endDate: "yesterday" }], metrics: [{ name: "activeUsers" }] }, 20000); out.report = "ok"; }
-    catch (e) { out.report = "failed" + (e && e.status ? " (" + e.status + ")" : "") + ": " + str(e && (e.detail || e.message), 200); }
-    out.reportSeconds = (Date.now() - t1) / 1000;
+    const t1 = Date.now(), q = gaQueries(), steps = [], deadline = t1 + GA.totalMs;
+    const ask = (query, label) => gaReport(property, token, query, label, deadline, steps);
+    try {
+      if (together) await Promise.all([ask(q.users, "visitors"), ask(q.events, "calls and forms"), ask(q.sources, "where from")]);
+      else { await ask(q.users, "visitors"); await ask(q.events, "calls and forms"); await ask(q.sources, "where from"); }
+      out.report = "ok";
+    } catch (e) { out.report = "failed" + (e && e.status ? " (" + e.status + ")" : "") + (e && e.step ? " at " + e.step : "") + ": " + str(e && (e.detail || e.message), 200); }
+    out.reportSeconds = gaSecs(t1);
+    out.steps = steps.map((x) => x.step + (x.try > 1 ? " (try " + x.try + ")" : "") + ": " + (x.ok ? "ok" : "failed" + (x.said ? " (" + x.said + ")" : "")) + " in " + x.s + " s");
   }
   return out;
 }
@@ -600,21 +647,38 @@ function friendlySource(rep) {
   return raw.slice(0, 60);
 }
 
-// A signal that stops a call to Google that takes too long.
-function giveUpAfter(ms) { const c = new AbortController(); setTimeout(() => c.abort(new Error("Google took longer than " + Math.round(ms / 1000) + " seconds")), ms); return c.signal; }
-
-// One report from Google. Gives up after a while, so the page never waits forever.
-async function runReport(property, token, request, ms) {
-  const r = await fetch("https://analyticsdata.googleapis.com/v1beta/properties/" + property + ":runReport", {
-    method: "POST", headers: { authorization: "Bearer " + token, "content-type": "application/json" },
-    body: JSON.stringify(request), signal: giveUpAfter(ms || 15000),
+// One call to Google with its own time limit. Each call makes its own stop switch (never shared),
+// the timer covers both the wait for an answer and reading the answer, and it is cleared when done.
+async function googleFetch(url, init, ms) {
+  const stop = new AbortController();
+  let timer;
+  const timeUp = new Promise((_, no) => {
+    timer = setTimeout(() => {
+      const e = new Error("Google took longer than " + Math.round(ms / 100) / 10 + " seconds"); e.timeout = true;
+      no(e); try { stop.abort(e); } catch {}
+    }, ms);
   });
-  if (!r.ok) {
-    const e = new Error("GA " + r.status); e.status = r.status;
-    try { const j = await r.json(); e.detail = (j && j.error && j.error.message) || ""; } catch {}
+  timeUp.catch(() => {});
+  try {
+    const r = await Promise.race([fetch(url, { ...init, signal: stop.signal }), timeUp]);
+    const text = await Promise.race([r.text(), timeUp]);
+    let data = null; try { data = JSON.parse(text); } catch {}
+    return { ok: r.ok, status: r.status, data };
+  } finally { clearTimeout(timer); }
+}
+
+// One report from Google. Gives up after ms, so the page never waits forever.
+async function runReport(property, token, request, ms) {
+  const r = await googleFetch("https://analyticsdata.googleapis.com/v1beta/properties/" + property + ":runReport", {
+    method: "POST", headers: { authorization: "Bearer " + token, "content-type": "application/json" },
+    body: JSON.stringify(request),
+  }, ms || GA.tryMs);
+  if (!r.ok || !r.data) {
+    const e = new Error("GA " + r.status); e.status = r.ok ? 502 : r.status;
+    e.detail = (r.data && r.data.error && r.data.error.message) || (r.ok ? "Google sent an answer that couldn't be read" : "");
     throw e;
   }
-  return r.json();
+  return r.data;
 }
 
 // Service account -> short-lived Google access token (a signed JWT, RS256, using WebCrypto).
@@ -632,12 +696,11 @@ async function googleToken(env) {
   const key = await crypto.subtle.importKey("pkcs8", Uint8Array.from(atob(pem), (ch) => ch.charCodeAt(0)),
     { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" }, false, ["sign"]);
   const jwt = unsigned + "." + b64url(await crypto.subtle.sign("RSASSA-PKCS1-v1_5", key, enc.encode(unsigned)));
-  const r = await fetch("https://oauth2.googleapis.com/token", {
+  const r = await googleFetch("https://oauth2.googleapis.com/token", {
     method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" },
     body: "grant_type=" + encodeURIComponent("urn:ietf:params:oauth:grant-type:jwt-bearer") + "&assertion=" + jwt,
-    signal: giveUpAfter(12000),
-  });
-  const d = await r.json().catch(() => ({}));
+  }, GA.tokenMs);
+  const d = r.data || {};
   if (!d.access_token) throw new Error("no Google token");
   await env.NOTES.put("gatoken", d.access_token, { expirationTtl: 3000 });
   return d.access_token;
