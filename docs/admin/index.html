@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-F0YQ8iD3GtkhcI0cWzXlHeKpa0PafF3MHjyWtWjRq2s='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-IE7blBaxrpblB5UIjOy+GYwfD3bfKnuC5crLMnDijOA='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Zilla+Slab:wght@600&display=swap">
@@ -83,6 +83,22 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .batch-hd+.req{border-top:0}
 .num{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:var(--pin);color:var(--on-pin);font-size:12px;font-weight:600}
 .says{overflow-wrap:anywhere;white-space:pre-line}
+.where{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:10px 12px;margin:0 0 8px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.where.portal{grid-template-columns:auto minmax(0,1fr)}
+.where-txt{min-width:0;display:grid;gap:2px}
+.where-1{font-size:13.5px;color:var(--muted)}
+.where-1 b{color:var(--ink);font-weight:600}
+.where-path{margin-left:6px;color:var(--muted)}
+.where-2{font-size:13.5px;color:var(--ink);overflow-wrap:anywhere}
+.where-3{font-size:13px;color:var(--muted);font-style:italic;overflow-wrap:anywhere}
+.where-ico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--pin) 14%,transparent);color:var(--pin)}
+.pmap{position:relative;width:28px;height:40px;border:1.5px solid color-mix(in srgb,var(--muted) 55%,transparent);border-radius:5px;background:repeating-linear-gradient(to bottom,transparent 0 7px,color-mix(in srgb,var(--muted) 18%,transparent) 7px 8px);background-clip:content-box;padding:4px 5px}
+.pdot{position:absolute;left:50%;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--bg);transform:translate(-50%,-50%)}
+.where .btn{white-space:nowrap}
+.req-body{min-width:0}
+@media (max-width:640px){.req{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"num done" "body body";gap:8px 10px}.req>.num{grid-area:num}.req>.done{grid-area:done;justify-self:end}.req>.req-body{grid-area:body}.where{grid-template-columns:auto minmax(0,1fr);padding:10px}.where .btn{grid-column:1/-1;justify-self:stretch;justify-content:center}}
+.says{font-size:15.5px}
+
 .pics{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .pics button{width:88px;height:66px;border-radius:8px;border:1px solid var(--line);background:var(--bg);padding:0;overflow:hidden;font-size:11px;color:var(--muted)}
 .pics img{width:100%;height:100%;object-fit:cover;display:block}
@@ -333,6 +349,16 @@ button.ga-row:hover{background:var(--hover)}
 .tp-bar{height:6px;border-radius:3px;background:color-mix(in srgb,var(--muted) 14%,transparent);margin-top:6px}
 .tp-bar span{display:block;height:100%;border-radius:3px;background:var(--accent)}
 .src{font:600 24px/1.25 var(--text);letter-spacing:-.01em;margin-top:10px}
+.ga-row{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) repeat(4,minmax(0,.7fr))}
+.ga-trend .row-spark{margin-top:0;height:26px;max-width:150px}
+.ga-box.facts{display:grid;gap:18px;align-content:start}
+.fact h3{margin-bottom:2px}
+.fact .src{margin-top:4px;font-size:19px}
+.ga-head.mid{border-top:1px solid var(--line)}
+.tp-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tp-c{color:var(--muted);font-weight:400}
+@media (max-width:700px){.ga-trend{grid-column:1/-1}.ga-trend .row-spark{max-width:none}}
+
 
 
 </style>
@@ -386,7 +412,7 @@ button.ga-row:hover{background:var(--hover)}
   }
   var ICONS = { check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>', copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>', send:'<path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/>', key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M17 6l3 3"/>', shuffle:'<path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/>', ext:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
     phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>', mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
-    search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>', plus:'<path d="M12 5v14M5 12h14"/>', chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>', plus:'<path d="M12 5v14M5 12h14"/>', chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', pin:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
     up:'<path d="M12 19V5M6 11l6-6 6 6"/>', down:'<path d="M12 5v14M6 13l6 6 6-6"/>', sort:'<path d="M8 4v16M4 8l4-4 4 4M16 20V4M12 16l4 4 4-4"/>',
     grip:'<circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/>' };
   function ico(name, size){ var w = document.createElement("span"); w.className = "ico"; w.setAttribute("aria-hidden","true"); w.style.display = "inline-grid"; w.innerHTML = '<svg viewBox="0 0 24 24" width="' + (size || 15) + '" height="' + (size || 15) + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICONS[name] + '</svg>'; return w; }
@@ -414,12 +440,12 @@ button.ga-row:hover{background:var(--hover)}
         {site:"juniper-bakery", name:"Juniper Bakery (sample)", url:"juniperbakery.com", password:"ember-2206", created:hrs(200), contacts:[]} ],
       batches: [
         {id:"b3", site:"tvis-construction", at:hrs(2), notes:[
-          {n:1, title:"Home", on:"Top of the page: Groundwork Done Right.", text:"Can we add the new excavator picture here?\n\nPhoto 1: The new CAT 320, front view\nPhoto 2: Same machine on the Hixson job", pics:["demo:1","demo:2"], picNotes:["The new CAT 320, front view","Same machine on the Hixson job"], done:false},
-          {n:2, title:"Home", on:"Menu: Call 423-225-7038", text:"We're getting a second number for the office. I'll send it Friday.", pics:[], done:false},
-          {n:3, title:"Projects", on:"Pictures for the site", text:"New photos from the Hixson driveway job.\n\nPhoto 1: Before we started\nPhoto 3: Finished driveway, from the road", pics:["demo:3","demo:4","demo:5"], picNotes:["Before we started","","Finished driveway, from the road"], done:false}]},
+          {n:1, page:"/", url:"https://tvisconstruction.com/", sel:"#top h1", path:[1,0,0], fx:.42, fy:.55, py:.03, snip:"Groundwork Done Right.", vw:390, title:"Home", on:"Top of the page: Groundwork Done Right.", text:"Can we add the new excavator picture here?\n\nPhoto 1: The new CAT 320, front view\nPhoto 2: Same machine on the Hixson job", pics:["demo:1","demo:2"], picNotes:["The new CAT 320, front view","Same machine on the Hixson job"], done:false},
+          {n:2, page:"/", url:"https://tvisconstruction.com/", sel:"header nav a.call", path:[0,1,4], fx:.5, fy:.5, py:0, snip:"Call 423-225-7038", vw:1440, title:"Home", on:"Menu: Call 423-225-7038", text:"We're getting a second number for the office. I'll send it Friday.", pics:[], done:false},
+          {n:3, page:"/portal/", title:"Client Portal", on:"Pictures for the site", text:"New photos from the Hixson driveway job.\n\nPhoto 1: Before we started\nPhoto 3: Finished driveway, from the road", pics:["demo:3","demo:4","demo:5"], picNotes:["Before we started","","Finished driveway, from the road"], done:false}]},
         {id:"b2", site:"cedar-street", at:hrs(26), notes:[
-          {n:1, title:"Home", on:"Services: Haircut · $30", text:"Change this to $32.", pics:[], done:false},
-          {n:2, title:"Home", on:"Hours: Saturday · 8 am – 3 pm", text:"We now close at 4 on Saturdays.", pics:[], done:true}]},
+          {n:1, page:"/", url:"https://cedarstreetbarbers.com/", sel:"#services li:nth-of-type(1)", fx:.8, fy:.4, py:.46, snip:"Haircut · $30", vw:1280, title:"Home", on:"Services: Haircut · $30", text:"Change this to $32.", pics:[], done:false},
+          {n:2, page:"/", title:"Home", on:"Hours: Saturday · 8 am – 3 pm", text:"We now close at 4 on Saturdays.", pics:[], done:true}]},
         {id:"b1", site:"juniper-bakery", at:hrs(190), notes:[
           {n:1, title:"Welcome", on:"Pictures for the site", text:"Here's our logo and a few shots of the shop.", pics:["demo:6","demo:7"], done:true}]} ] };
   }
@@ -562,7 +588,7 @@ button.ga-row:hover{background:var(--hover)}
         }}); cb.checked = !!n.done;
         box.appendChild(el("div",{class:"req" + (n.done ? " is-done" : "")},[
           el("span",{class:"num",text:String(n.n)}),
-          el("div",{},[el("div",{class:"sub",text:(n.title ? n.title + " · " : "") + n.on}), el("div",{class:"says",text:saysText(n) || "(pictures only)"}), pics]),
+          el("div",{class:"req-body"},[whereBox(n, b.site), el("div",{class:"says",text:saysText(n) || "(pictures only)"}), pics]),
           el("label",{class:"done"},[cb,"Done"])]));
       });
       card.appendChild(box);
@@ -570,6 +596,38 @@ button.ga-row:hover{background:var(--hover)}
     if (!any) card.appendChild(show === "open" ? el("div",{class:"none"},[el("span",{class:"ok-dot"},[ico("check",22)]), el("b",{text:"All caught up"}), el("span",{text:"Nothing open" + (cur ? " for " + nameOf(cur) : "") + ". New requests show up here."})]) : el("div",{class:"none"},[el("span",{text:"Nothing here yet."})]));
     main.appendChild(card);
   }
+  /* ---------- where on the site a request was left ---------- */
+  // Notes from the updated portal carry url, sel, path, fx, fy, py, snip and vw. Older ones only
+  // have page, title and on, so they get "Open this page" instead of the exact spot.
+  function siteOrigin(site){ var c = data.clients.filter(function(x){ return x.site === site; })[0]; try { return c && c.url ? new URL(full(c.url)).origin : ""; } catch(e){ return ""; } }
+  function pageUrl(n, site){
+    var origin = siteOrigin(site), u = null;
+    if (n.url) { try { u = new URL(n.url); } catch(e){ u = null; } }
+    if (u && /^https?:$/.test(u.protocol) && (!origin || u.origin === origin)) return u.origin + u.pathname; // only the client's own site
+    return origin && n.page ? origin + (n.page.charAt(0) === "/" ? n.page : "/" + n.page) : "";
+  }
+  function findLink(n, site){
+    var base = pageUrl(n, site); if (!base) return "";
+    var f = {}; if (n.sel) f.s = n.sel; if (n.path && n.path.length) f.p = n.path; if (n.fx != null) f.x = n.fx; if (n.fy != null) f.y = n.fy; if (n.snip) f.t = n.snip; if (n.vw) f.w = n.vw;
+    return f.s || f.p || f.t ? base + "#sw-find=" + encodeURIComponent(JSON.stringify(f)) : base;
+  }
+  function isPortalNote(n){ return n.title === "Client Portal" || /\/portal\/?(index\.html)?$/.test(n.page || ""); }
+  function spotWords(py){ return py == null ? "" : py < .25 ? "Near the top" : py < .75 ? "Middle of the page" : "Near the bottom"; }
+  function deviceWords(vw){ return !vw ? "" : vw < 700 ? "On a phone" : vw < 1100 ? "On a tablet" : "On a computer"; }
+  function whereBox(n, site){
+    if (isPortalNote(n)) return el("div",{class:"where portal"},[el("span",{class:"where-ico","aria-hidden":"true"},[ico("send",14)]),
+      el("div",{class:"where-txt"},[el("div",{class:"where-1"},[el("b",{text:"From the portal"}), " \u00b7 " + (n.on || "a box")])])]);
+    var link = findLink(n, site), exact = /#sw-find=/.test(link), path = "";
+    try { path = link ? new URL(link).pathname : (n.page || ""); } catch(e){ path = n.page || ""; }
+    var bits = [spotWords(n.py), deviceWords(n.vw)].filter(Boolean);
+    var map = n.py != null ? el("span",{class:"pmap","aria-hidden":"true",title:spotWords(n.py)},[el("span",{class:"pdot",style:"top:" + (6 + n.py * 76) + "%"})]) : el("span",{class:"where-ico","aria-hidden":"true"},[ico("pin",14)]);
+    var lines = [el("div",{class:"where-1"},[el("b",{text:n.title === "Home" ? "Home page" : (n.title || "A page")}), path && path !== "/" ? el("span",{class:"mono where-path",text:path}) : null].concat(bits.length ? [" \u00b7 " + bits.join(" \u00b7 ")] : []))];
+    if (n.on) lines.push(el("div",{class:"where-2",text:n.on}));
+    if (n.snip && (n.on || "").toLowerCase().indexOf(n.snip.toLowerCase().slice(0, 40)) < 0) lines.push(el("div",{class:"where-3",text:"\u201c" + n.snip + "\u201d"}));
+    return el("div",{class:"where"},[map, el("div",{class:"where-txt"},lines),
+      link ? el("a",{class:"btn sm" + (exact ? "" : " plain"),href:link,target:"_blank",rel:"noopener",title:exact ? "Opens the page, scrolls to the spot and highlights it" : "This request was sent before exact spots were saved"},[ico(exact ? "pin" : "ext",14), exact ? "Show me on the site" : "Open this page"]) : null]);
+  }
+
   // The portal also adds each caption to the note text ("Photo 1: ..."). Captions show under
   // their pictures here, so take that copy back off the end of the text (only if it matches exactly).
   function saysText(n){
@@ -760,7 +818,7 @@ button.ga-row:hover{background:var(--hover)}
     if (prev == null && pct == null) return null; // nothing to compare with
     if (prev != null) {
       var diff = now - prev;
-      if (prev === 0 && now > 0) txt = short ? "New" : "Nothing in the 4 weeks before";
+      if (prev === 0 && now > 0) return null; // nothing counted in the 4 weeks before (tracking is newer than that): no change line
       else if (diff > 0) { cls += " up"; txt = short ? "▲ " + num(diff) : "▲ " + num(diff) + " more than the 4 weeks before"; }
       else if (diff < 0) { cls += " down"; txt = short ? "▼ " + num(-diff) : "▼ " + num(-diff) + " fewer than the 4 weeks before"; }
       else txt = "Same" + (short ? "" : " as the 4 weeks before");
@@ -839,36 +897,90 @@ button.ga-row:hover{background:var(--hover)}
     var cur = data.clients.filter(function(c){ return c.site === gaCur; })[0];
     return cur ? drawGaClient(main, cur) : drawGaAll(main);
   }
+  /* shared pieces for both Analytics pages */
+  function gaTile(key, label, v, prev, pct, sp, hero){
+    return el("div",{class:"ga-n" + (hero ? " hero" : "")},[el("div",{class:"t-label"},[label, help(HELP[key], label.toLowerCase())]), el("div",{class:"t-num big",text:num(v)}), delta(v, prev, pct), sp ? spark(sp) : null]);
+  }
+  function addUp(a, b){ return a.map(function(x, i){ return x + (b[i] || 0); }); }
+  function topPagesBox(pages, title, withClient){
+    var most = pages.length ? Math.max.apply(null, pages.map(function(x){ return x.views || 0; }).concat([1])) : 1;
+    return el("div",{class:"ga-box"},[el("h3",{},[title, help(HELP.pages, "top pages")]),
+      pages.length ? el("ol",{class:"tp"}, pages.map(function(pg, i){ return el("li",{},[el("span",{class:"tp-n",text:String(i + 1)}), el("div",{class:"tp-body"},[
+          el("div",{class:"tp-top"},[el("span",{class:"tp-name"},[el("b",{text:pageName(pg)}), withClient && pg.client ? el("span",{class:"tp-c",text:" · " + pg.client}) : null]), el("span",{class:"tp-v",text:plural(pg.views || 0,"view","views")})]),
+          el("div",{class:"tp-bar"},[el("span",{style:"width:" + Math.max(2, (pg.views || 0) / most * 100) + "%"})])])]); }))
+        : el("p",{class:"sub",style:"margin:8px 0 0",text:"Shows up once the notes service sends page numbers."})]);
+  }
+  function fact(label, big, small, helpKey){ return el("div",{class:"fact"},[el("h3",{},[label, helpKey ? help(HELP[helpKey], label.toLowerCase()) : null]), el("div",{class:"src",text:big}), small ? el("div",{class:"sub",text:small}) : null]); }
+  function dayKey(dt){ return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate(); }
+  // Every connected site's day-by-day numbers added together, lined up by date.
+  function combineDaily(list){
+    var map = {}, out = [];
+    list.forEach(function(d){ if (!(d.daily && d.daily.visitors && d.daily.visitors.length)) return;
+      dayList(d).forEach(function(dt, i){ var k = dayKey(dt); if (!map[k]) { map[k] = {dt:dt, v:0, c:0, l:0}; out.push(map[k]); }
+        map[k].v += d.daily.visitors[i] || 0; map[k].c += (d.daily.calls || [])[i] || 0; map[k].l += (d.daily.leads || [])[i] || 0; }); });
+    if (!out.length) return null;
+    out.sort(function(a, z){ return a.dt - z.dt; });
+    return { days: out.map(function(r){ return r.dt; }), daily: { visitors: out.map(function(r){ return r.v; }), calls: out.map(function(r){ return r.c; }), leads: out.map(function(r){ return r.l; }) } };
+  }
+
   function drawGaAll(main){
     var sub = el("div",{class:"sub",text:"Last 28 days"});
-    var sum = el("div",{class:"ga-summary",hidden:true});
     var card = el("section",{class:"card"},[el("div",{class:"card-hd"},[el("div",{},[el("h2",{text:"All clients"}), sub]),
-      el("a",{class:"btn sm plain",href:"https://analytics.google.com/",target:"_blank",rel:"noopener"},[ico("chart",14),"Open Google Analytics"])]), sum]);
-    if (!data.clients.length) card.appendChild(el("div",{class:"quiet",text:"No clients yet."}));
-    else card.appendChild(el("div",{class:"ga-row ga-head"},[el("span",{text:"Client"}), el("span",{text:"Reached out"}), el("span",{text:"Visitors"}), el("span",{text:"Phone calls"}), el("span",{text:"Form requests"})]));
-    var got = [], left = data.clients.length;
-    data.clients.forEach(function(c){
-      var row = el("button",{type:"button",class:"ga-row",onclick:function(){ gaCur = c.site; draw(); }},[el("span",{class:"ga-who"},[el("span",{class:"mono-av","aria-hidden":"true",text:initials(c.name)}), el("span",{style:"min-width:0"},[el("b",{text:c.name}), el("span",{class:"sub",text:bare(c.url)})])]), el("span",{class:"sub",text:"Loading…"})]);
-      card.appendChild(row);
-      stats(c.site).then(function(d){
-        left--; row.replaceChildren(row.firstChild);
+      el("a",{class:"btn sm plain",href:"https://analytics.google.com/",target:"_blank",rel:"noopener"},[ico("chart",14),"Open Google Analytics"])])]);
+    var body = el("div",{class:"quiet",text:data.clients.length ? "Loading…" : "No clients yet."});
+    card.appendChild(body); main.appendChild(card);
+    if (!data.clients.length) return;
+    Promise.all(data.clients.map(function(c){ return stats(c.site).then(function(d){ return {c:c, d:d}; }); })).then(function(all){
+      var on = all.filter(function(x){ return x.d.ok; }), kids = [], rows = [];
+      if (on.length) {
+        sub.textContent = periodText(on[0].d) + " · ▲▼ = change from the 4 weeks before";
+        var T = {visitors:0, calls:0, leads:0}, P = {visitors:0, calls:0, leads:0}, havePrev = true, pct = {};
+        on.forEach(function(x){ ["visitors","calls","leads"].forEach(function(k){ T[k] += x.d[k] || 0; var pv = prevOf(x.d, k); if (pv == null) havePrev = false; else P[k] += pv; }); });
+        if (on.length === 1) ["visitors","calls","leads"].forEach(function(k){ pct[k] = on[0].d[k + "Change"]; });
+        var comb = combineDaily(on.map(function(x){ return x.d; })), cd = comb && comb.daily;
+        var tot = {visitors:T.visitors, calls:T.calls, leads:T.leads};
+        kids.push(el("div",{class:"ga-summary"},[summaryFor(tot), on.some(function(x){ return x.d.sample; }) ? el("span",{class:"tag-s",text:"Sample numbers"}) : null]));
+        kids.push(el("div",{class:"ga-nums four"},[
+          gaTile("reached","Reached out", T.calls + T.leads, havePrev ? P.calls + P.leads : null, null, cd && addUp(cd.calls, cd.leads), true),
+          gaTile("visitors","Visitors", T.visitors, havePrev ? P.visitors : null, havePrev ? null : pct.visitors, cd && cd.visitors),
+          gaTile("calls","Phone calls", T.calls, havePrev ? P.calls : null, havePrev ? null : pct.calls, cd && cd.calls),
+          gaTile("leads","Form requests", T.leads, havePrev ? P.leads : null, havePrev ? null : pct.leads, cd && cd.leads)]));
+        if (comb) kids.push(el("div",{class:"ga-chart"},[el("div",{class:"ga-chart-hd"},[el("h3",{text:on.length > 1 ? "Visitors each day, all sites" : "Visitors each day"})]), dayChart(comb.days, cd.visitors, "Visitors"), dayTable(comb.days, comb)]));
+        // pages across sites, the busiest day, and where people came from
+        var pages = []; on.forEach(function(x){ (x.d.pages || []).forEach(function(pg){ pages.push({path:pg.path, title:pg.title, views:pg.views, client:x.c.name}); }); });
+        pages.sort(function(a, z){ return (z.views || 0) - (a.views || 0); });
+        var facts = [];
+        if (cd) { var bi = cd.visitors.indexOf(Math.max.apply(null, cd.visitors)); if (cd.visitors[bi] > 0) facts.push(fact("Busiest day", comb.days[bi].toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"}), plural(cd.visitors[bi],"visitor","visitors"))); }
+        var src = {}; on.forEach(function(x){ if (x.d.source) src[x.d.source] = (src[x.d.source] || 0) + (x.d.visitors || 0); });
+        var topSrc = Object.keys(src).sort(function(a, z){ return src[z] - src[a]; })[0];
+        if (topSrc) facts.push(fact("How they found you", topSrc, on.length > 1 ? "Most visits, all sites" : "", "source"));
+        if (on.length > 1) { var best = on.slice().sort(function(a, z){ return reachedOf(z.d) - reachedOf(a.d) || z.d.visitors - a.d.visitors; })[0];
+          facts.push(fact("Most reached out", best.c.name, num(reachedOf(best.d)) + " reached out")); }
+        kids.push(el("div",{class:"ga-split"},[topPagesBox(pages.slice(0, on.length > 1 ? 5 : 3), on.length > 1 ? "Top pages, all sites" : "Top pages", on.length > 1), el("div",{class:"ga-box facts"},facts)]));
+      }
+      // one row per client
+      rows.push(el("div",{class:"ga-row ga-head mid"},[el("span",{text:"Client"}), el("span",{text:"Visitors each day"}), el("span",{text:"Reached out"}), el("span",{text:"Visitors"}), el("span",{text:"Phone calls"}), el("span",{text:"Form requests"})]));
+      all.forEach(function(x){
+        var c = x.c, d = x.d, who = el("span",{class:"ga-who"},[el("span",{class:"mono-av","aria-hidden":"true",text:initials(c.name)}), el("span",{style:"min-width:0"},[el("b",{text:c.name}), el("span",{class:"sub",text:bare(c.url) + (d.ok && d.source ? " · mostly " + d.source : "")})])]);
+        var row = el("button",{type:"button",class:"ga-row",onclick:function(){ gaCur = c.site; draw(); }},[who]);
         if (!d.ok) row.appendChild(el("span",{class:"ga-off-row",text:/No Google Analytics/.test(d.error || "") ? "Google Analytics isn't set up for this site yet" : "Couldn't get the numbers: " + (d.error || "try Refresh")}));
         else {
-          got.push({c:c, d:d}); if (!sub.dataset.p) { sub.dataset.p = 1; sub.textContent = periodText(d) + " \u00b7 \u25b2\u25bc = change from the 4 weeks before"; }
-          function cell(label, v, prev, pct, hero){ return el("span",{class:"ga-cell" + (hero ? " hero" : "")},[el("span",{class:"ga-k",text:label}), el("span",{class:"ga-v",text:num(v)}), delta(v, prev, pct, true)]); }
+          function cell(label, v, prev, p, hero){ return el("span",{class:"ga-cell" + (hero ? " hero" : "")},[el("span",{class:"ga-k",text:label}), el("span",{class:"ga-v",text:num(v)}), delta(v, prev, p, true)]); }
+          var sp = d.daily && d.daily.visitors && d.daily.visitors.length ? spark(d.daily.visitors) : el("span",{class:"sub",text:"—"});
+          if (sp.setAttribute) sp.setAttribute("class", (sp.getAttribute("class") || "") + " row-spark");
+          row.appendChild(el("span",{class:"ga-cell ga-trend"},[el("span",{class:"ga-k",text:"Visitors, last 28 days"}), sp]));
           row.appendChild(cell("Reached out", reachedOf(d), reachedPrev(d), null, true)); row.appendChild(cell("Visitors", d.visitors, prevOf(d,"visitors"), d.visitorsChange));
           row.appendChild(cell("Phone calls", d.calls, prevOf(d,"calls"), d.callsChange)); row.appendChild(cell("Form requests", d.leads, prevOf(d,"leads"), d.leadsChange));
         }
-        if (!left && got.length) {
-          var V = 0, C = 0, L = 0; got.forEach(function(g){ V += g.d.visitors || 0; C += g.d.calls || 0; L += g.d.leads || 0; });
-          var kids = [el("b",{text:plural(V,"person","people")}), " visited. ", C + L ? el("b",{text:num(C + L) + " reached out"}) : "Nobody reached out yet", ". "];
-          if (got.some(function(g){ return g.d.sample; })) kids.push(el("span",{class:"tag-s",style:"margin-left:8px",text:"Sample numbers"}));
-          sum.replaceChildren(el("p",{class:"ga-sum-line"},kids)); sum.hidden = false;
-        }
+        rows.push(row);
       });
+      var at = on.length ? 2 : 0; // after the summary line and the four numbers
+      kids.splice.apply(kids, [at, 0].concat(rows));
+      kids.push(el("div",{class:"ga-foot"},[el("span",{class:"sub",text:"From Google Analytics"})]));
+      body.replaceWith(el("div",{},kids));
     });
-    main.appendChild(card);
   }
+
   function drawGaClient(main, cur){
     var sub = el("div",{class:"sub",text:"Last 28 days"}), act = el("div");
     var card = el("section",{class:"card"},[el("div",{class:"card-hd"},[el("div",{style:"min-width:0"},[el("h2",{text:cur.name}), sub]), act])]), body = el("div",{class:"quiet",text:"Loading…"});
@@ -878,9 +990,7 @@ button.ga-row:hover{background:var(--hover)}
       sub.textContent = periodText(d) + (cur.url ? " · " + bare(cur.url) : "");
       act.replaceWith(el("a",{class:"btn sm plain",href:gaLink(d),target:"_blank",rel:"noopener"},[ico("chart",14),"Open in Google Analytics"]));
       var days = dayList(d), daily = d.daily && d.daily.visitors && d.daily.visitors.length ? d.daily : null;
-      function tile(key, label, v, prev, pct, sp, hero){
-        return el("div",{class:"ga-n" + (hero ? " hero" : "")},[el("div",{class:"t-label"},[label, help(HELP[key], label.toLowerCase())]), el("div",{class:"t-num big",text:num(v)}), delta(v, prev, pct), sp && daily ? spark(sp) : null]);
-      }
+      var tile = function(key, label, v, prev, pct, sp, hero){ return gaTile(key, label, v, prev, pct, daily ? sp : null, hero); };
       var reachDaily = daily && daily.calls && daily.leads ? daily.calls.map(function(x, i){ return x + (daily.leads[i] || 0); }) : null;
       var kids = [el("div",{class:"ga-summary"},[summaryFor(d), d.sample ? el("span",{class:"tag-s",text:"Sample numbers"}) : null]),
         el("div",{class:"ga-nums four"},[
@@ -889,11 +999,7 @@ button.ga-row:hover{background:var(--hover)}
           tile("calls","Phone calls", d.calls, prevOf(d,"calls"), d.callsChange, daily && daily.calls),
           tile("leads","Form requests", d.leads, prevOf(d,"leads"), d.leadsChange, daily && daily.leads)])];
       if (daily) kids.push(el("div",{class:"ga-chart"},[el("div",{class:"ga-chart-hd"},[el("h3",{text:"Visitors each day"})]), dayChart(days, daily.visitors, "Visitors"), dayTable(days, d)]));
-      var pages = (d.pages || []).slice(0, 3), most = pages.length ? Math.max.apply(null, pages.map(function(x){ return x.views || 0; }).concat([1])) : 1;
-      kids.push(el("div",{class:"ga-split"},[
-        el("div",{class:"ga-box"},[el("h3",{},["Top pages", help(HELP.pages, "top pages")]),
-          pages.length ? el("ol",{class:"tp"}, pages.map(function(pg, i){ return el("li",{},[el("span",{class:"tp-n",text:String(i + 1)}), el("div",{class:"tp-body"},[el("div",{class:"tp-top"},[el("b",{text:pageName(pg)}), el("span",{class:"tp-v",text:plural(pg.views || 0,"view","views")})]), el("div",{class:"tp-bar"},[el("span",{style:"width:" + Math.max(2, (pg.views || 0) / most * 100) + "%"})])])]); }))
-            : el("p",{class:"sub",style:"margin:8px 0 0",text:"Shows up once the notes service sends page numbers."})]),
+      kids.push(el("div",{class:"ga-split"},[topPagesBox((d.pages || []).slice(0, 3), "Top pages", false),
         el("div",{class:"ga-box"},[el("h3",{},["How they found you", help(HELP.source, "how they found you")]), el("div",{class:"src",text:d.source || "Not sure yet"})])]));
       kids.push(el("div",{class:"ga-foot"},[el("span",{class:"sub",text:"From Google Analytics"})]));
       body.replaceWith(el("div",{},kids));
