@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-2hXrd3BHgp4zbM8pwiZHxwQtrPxREXb6D6N3O2TQ9DE='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-ELdIdfv9cj4KmGowxqoq1LNhAmd2qr7r+uzpFncS5O0='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Zilla+Slab:wght@600&display=swap">
@@ -86,6 +86,12 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .pics{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .pics button{width:88px;height:66px;border-radius:8px;border:1px solid var(--line);background:var(--bg);padding:0;overflow:hidden;font-size:11px;color:var(--muted)}
 .pics img{width:100%;height:100%;object-fit:cover;display:block}
+.pics.with-caps{gap:12px}
+.pic{margin:0;width:132px;display:grid;gap:5px}
+.pics .pic button{width:132px;height:99px}
+.pic figcaption{font-size:12.5px;line-height:1.35;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.pic figcaption.no-cap{color:var(--muted);font-style:italic}
+@media (max-width:560px){.pic,.pics .pic button{width:calc(50vw - 64px)}.pics .pic button{height:auto;aspect-ratio:4/3}}
 .done{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:600;white-space:nowrap;color:var(--muted)}
 .done input{width:18px;height:18px;accent-color:var(--ok)}
 .req.is-done .says{text-decoration:line-through;color:var(--muted)}
@@ -140,7 +146,9 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .send-hd{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line)}
 .send-hd .label{margin:0}
 .sendbox{padding:14px 16px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;user-select:all}
-.veil{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.8);display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;place-items:center;padding:20px}
+.veil{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.85);display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:12px;place-items:center;padding:20px}
+.veil-cap{margin:0;color:#fff;font-size:16px;text-align:center;max-width:60ch;overflow-wrap:anywhere}
+.veil-cap b{font-weight:600;opacity:.75}
 .veil img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;background:#fff}
 .veil .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .veil a,.veil button{background:#fff;color:#24221f;border:0;border-radius:6px;padding:9px 14px;font-weight:600;text-decoration:none;font-size:14px}
@@ -406,9 +414,9 @@ button.ga-row:hover{background:var(--hover)}
         {site:"juniper-bakery", name:"Juniper Bakery (sample)", url:"juniperbakery.com", password:"ember-2206", created:hrs(200), contacts:[]} ],
       batches: [
         {id:"b3", site:"tvis-construction", at:hrs(2), notes:[
-          {n:1, title:"Home", on:"Top of the page: Groundwork Done Right.", text:"Can we add the new excavator picture here?", pics:["demo:1","demo:2"], done:false},
+          {n:1, title:"Home", on:"Top of the page: Groundwork Done Right.", text:"Can we add the new excavator picture here?\n\nPhoto 1: The new CAT 320, front view\nPhoto 2: Same machine on the Hixson job", pics:["demo:1","demo:2"], picNotes:["The new CAT 320, front view","Same machine on the Hixson job"], done:false},
           {n:2, title:"Home", on:"Menu: Call 423-225-7038", text:"We're getting a second number for the office. I'll send it Friday.", pics:[], done:false},
-          {n:3, title:"Projects", on:"Pictures for the site", text:"New photos from the Hixson driveway job.", pics:["demo:3","demo:4","demo:5"], done:false}]},
+          {n:3, title:"Projects", on:"Pictures for the site", text:"New photos from the Hixson driveway job.\n\nPhoto 1: Before we started\nPhoto 3: Finished driveway, from the road", pics:["demo:3","demo:4","demo:5"], picNotes:["Before we started","","Finished driveway, from the road"], done:false}]},
         {id:"b2", site:"cedar-street", at:hrs(26), notes:[
           {n:1, title:"Home", on:"Services: Haircut · $30", text:"Change this to $32.", pics:[], done:false},
           {n:2, title:"Home", on:"Hours: Saturday · 8 am – 3 pm", text:"We now close at 4 on Saturdays.", pics:[], done:true}]},
@@ -541,18 +549,20 @@ button.ga-row:hover{background:var(--hover)}
       }});
       var box = el("div",{class:"batch"},[el("div",{class:"batch-hd"},[el("h3",{text:(cur ? "" : nameOf(b.site) + " · ") + "Sent " + when(b.at)}), del])]);
       rows.forEach(function(n){
-        var pics = n.pics.length ? el("div",{class:"pics"}) : null;
+        var caps = Array.isArray(n.picNotes) ? n.picNotes : [], hasCaps = caps.some(Boolean);
+        var pics = n.pics.length ? el("div",{class:"pics" + (hasCaps ? " with-caps" : "")}) : null;
         n.pics.forEach(function(key, i){
-          var btn = el("button",{type:"button","aria-label":"Open picture " + (i + 1),text:"…",onclick:function(){ viewer(key); }});
-          picSrc(key).then(function(src){ btn.textContent = ""; if (src) btn.appendChild(el("img",{src:src,alt:""})); else btn.textContent = "missing"; });
-          pics.appendChild(btn);
+          var cap = caps[i] || "";
+          var btn = el("button",{type:"button","aria-label":"Open picture " + (i + 1) + (cap ? ": " + cap : ""),text:"…",onclick:function(){ viewer(key, cap, i + 1); }});
+          picSrc(key).then(function(src){ btn.textContent = ""; if (src) btn.appendChild(el("img",{src:src,alt:cap})); else btn.textContent = "missing"; });
+          pics.appendChild(hasCaps ? el("figure",{class:"pic"},[btn, el("figcaption",{class:cap ? "" : "no-cap",title:cap,text:cap || "No words"})]) : btn);
         });
         var cb = el("input",{type:"checkbox",id:"cb-" + b.id + "-" + n.n,onchange:function(){
           n.done = cb.checked; call("/api/admin/done",{batch:b.id,n:n.n,done:cb.checked}).then(function(d){ if (!d.ok) toast(d.error || "That didn't save."); draw(); });
         }}); cb.checked = !!n.done;
         box.appendChild(el("div",{class:"req" + (n.done ? " is-done" : "")},[
           el("span",{class:"num",text:String(n.n)}),
-          el("div",{},[el("div",{class:"sub",text:(n.title ? n.title + " · " : "") + n.on}), el("div",{class:"says",text:n.text || "(pictures only)"}), pics]),
+          el("div",{},[el("div",{class:"sub",text:(n.title ? n.title + " · " : "") + n.on}), el("div",{class:"says",text:saysText(n) || "(pictures only)"}), pics]),
           el("label",{class:"done"},[cb,"Done"])]));
       });
       card.appendChild(box);
@@ -560,10 +570,23 @@ button.ga-row:hover{background:var(--hover)}
     if (!any) card.appendChild(show === "open" ? el("div",{class:"none"},[el("span",{class:"ok-dot"},[ico("check",22)]), el("b",{text:"All caught up"}), el("span",{text:"Nothing open" + (cur ? " for " + nameOf(cur) : "") + ". New requests show up here."})]) : el("div",{class:"none"},[el("span",{text:"Nothing here yet."})]));
     main.appendChild(card);
   }
-  function viewer(key){
-    var img = el("img",{alt:"Picture from the client"}), save = el("a",{text:"Save picture",download:key.replace(/[^\w-]+/g,"-") + ".jpg",target:"_blank",rel:"noopener"});
-    var veil = el("div",{class:"veil",role:"dialog","aria-label":"Picture",onclick:function(e){ if (e.target === veil) veil.remove(); }},[img, el("div",{class:"row"},[save, el("button",{type:"button",text:"Close",onclick:function(){ veil.remove(); }})])]);
+  // The portal also adds each caption to the note text ("Photo 1: ..."). Captions show under
+  // their pictures here, so take that copy back off the end of the text (only if it matches exactly).
+  function saysText(n){
+    var text = String(n.text || ""), caps = Array.isArray(n.picNotes) ? n.picNotes : [];
+    var tail = caps.map(function(c, k){ return c ? "Photo " + (k + 1) + ": " + c : ""; }).filter(Boolean).join("\n");
+    if (!tail || text.slice(-tail.length) !== tail) return text;
+    return text.slice(0, -tail.length).replace(/\s+$/,"");
+  }
+  function viewer(key, cap, num){
+    var img = el("img",{alt:cap || "Picture from the client"}), save = el("a",{text:"Save picture",download:key.replace(/[^\w-]+/g,"-") + ".jpg",target:"_blank",rel:"noopener"});
+    function close(){ veil.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e){ if (e.key === "Escape") close(); }
+    var veil = el("div",{class:"veil",role:"dialog","aria-label":cap ? "Picture " + num + ": " + cap : "Picture",onclick:function(e){ if (e.target === veil) close(); }},[img,
+      cap ? el("p",{class:"veil-cap"},[el("b",{text:"Photo " + num + ": "}), cap]) : null,
+      el("div",{class:"row"},[save, el("button",{type:"button",text:"Close",onclick:close})])]);
     picSrc(key).then(function(src){ img.src = src; save.href = src; });
+    document.addEventListener("keydown", onKey);
     document.body.appendChild(veil);
   }
 
