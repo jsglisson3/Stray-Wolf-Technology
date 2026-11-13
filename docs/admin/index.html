@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-ELdIdfv9cj4KmGowxqoq1LNhAmd2qr7r+uzpFncS5O0='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-R9HKCSuafycFiureB47RQp9EMMjk81aLpsCBC+dHmkM='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Zilla+Slab:wght@600&display=swap">
@@ -751,7 +751,6 @@ button.ga-row:hover{background:var(--hover)}
   };
   function pageName(pg){ var p = String(pg.path || "/").replace(/index\.html$/,""); if (/^\/([^/]+\/?)?$/.test(p) && (p === "/" || !pg.title || /home/i.test(pg.title))) return "Home page";
     var t = String(pg.title || "").split(/\s[|–—-]\s/)[0].trim(); return t || p; }
-  function srcPlain(src){ return !src ? "" : src === "Typed it in" ? "They typed the address in or used a bookmark." : /^(Google|Bing|Yahoo|DuckDuckGo)$/.test(src) ? "Most visits started from a search on " + src + "." : /^(Facebook|Instagram)$/.test(src) ? "Most visits started from " + src + " (a post, ad or profile)." : "Most visits started from " + src + "."; }
   function prevOf(d, k){ var p = d[k + "Prev"]; return typeof p === "number" ? p : null; }
   function reachedOf(d){ return (d.calls || 0) + (d.leads || 0); }
   function reachedPrev(d){ var a = prevOf(d,"calls"), b = prevOf(d,"leads"); return a == null || b == null ? null : a + b; }
@@ -775,17 +774,9 @@ button.ga-row:hover{background:var(--hover)}
     var out = []; for (var i = 0; i < n; i++) { var x = new Date(start); x.setDate(start.getDate() + i); out.push(x); } return out; }
   function short(dt){ return dt.toLocaleDateString(undefined,{month:"short",day:"numeric"}); }
   function periodText(d){ var days = dayList(d); return "Last " + days.length + " days · " + short(days[0]) + " – " + short(days[days.length - 1]); }
-  function foundVia(src){ if (!src) return ""; if (src === "Typed it in") return "Most typed the address in directly.";
-    return /^(Google|Bing|Facebook|Instagram|Yahoo|DuckDuckGo)$/.test(src) ? "Most found it on " + src + "." : "Most came from " + src + "."; }
-  function summaryFor(d){
-    var r = reachedOf(d), kids = [el("b",{text:plural(d.visitors,"person","people")}), " visited the site. "];
-    if (r) { kids.push(el("b",{text:num(r) + " reached out"})); var how = []; if (d.calls) how.push(num(d.calls) + " by phone"); if (d.leads) how.push(num(d.leads) + " by form"); kids.push(": " + how.join(" and ") + ". "); }
-    else kids.push("Nobody called or sent a form yet. ");
-    var f = foundVia(d.source); if (f) kids.push(f + " ");
-    var vp = prevOf(d,"visitors");
-    if (vp != null && vp > 0 && d.visitors !== vp) kids.push("That’s " + num(Math.abs(d.visitors - vp)) + (d.visitors > vp ? " more" : " fewer") + " visitors than the 28 days before.");
-    else if (vp == null && d.visitorsChange) kids.push("Visitors are " + (d.visitorsChange > 0 ? "up " : "down ") + Math.abs(d.visitorsChange) + "% from the 28 days before.");
-    return el("p",{class:"ga-sum-line"},kids);
+  function summaryFor(d){ // short: "109 people visited. 11 reached out."
+    var r = reachedOf(d);
+    return el("p",{class:"ga-sum-line"},[el("b",{text:plural(d.visitors,"person","people")}), " visited. ", r ? el("b",{text:num(r) + " reached out"}) : "Nobody reached out yet", "."]);
   }
   var tipOpen = null;
   function closeTip(){ if (tipOpen) { tipOpen.setAttribute("aria-expanded","false"); tipOpen = null; } }
@@ -848,7 +839,7 @@ button.ga-row:hover{background:var(--hover)}
     return cur ? drawGaClient(main, cur) : drawGaAll(main);
   }
   function drawGaAll(main){
-    var sub = el("div",{class:"sub",text:"Last 28 days, compared with the 28 days before. Tap a client for their own page."});
+    var sub = el("div",{class:"sub",text:"Last 28 days"});
     var sum = el("div",{class:"ga-summary",hidden:true});
     var card = el("section",{class:"card"},[el("div",{class:"card-hd"},[el("div",{},[el("h2",{text:"All clients"}), sub]),
       el("a",{class:"btn sm plain",href:"https://analytics.google.com/",target:"_blank",rel:"noopener"},[ico("chart",14),"Open Google Analytics"])]), sum]);
@@ -862,16 +853,14 @@ button.ga-row:hover{background:var(--hover)}
         left--; row.replaceChildren(row.firstChild);
         if (!d.ok) row.appendChild(el("span",{class:"ga-off-row",text:/No Google Analytics/.test(d.error || "") ? "Google Analytics isn't set up for this site yet" : "Couldn't get the numbers: " + (d.error || "try Refresh")}));
         else {
-          got.push({c:c, d:d}); if (!sub.dataset.p) { sub.dataset.p = 1; sub.textContent = periodText(d) + ", compared with the 28 days before. Tap a client for their own page."; }
+          got.push({c:c, d:d}); if (!sub.dataset.p) { sub.dataset.p = 1; sub.textContent = periodText(d); }
           function cell(label, v, prev, pct, hero){ return el("span",{class:"ga-cell" + (hero ? " hero" : "")},[el("span",{class:"ga-k",text:label}), el("span",{class:"ga-v",text:num(v)}), delta(v, prev, pct, true)]); }
           row.appendChild(cell("Reached out", reachedOf(d), reachedPrev(d), null, true)); row.appendChild(cell("Visitors", d.visitors, prevOf(d,"visitors"), d.visitorsChange));
           row.appendChild(cell("Phone calls", d.calls, prevOf(d,"calls"), d.callsChange)); row.appendChild(cell("Form requests", d.leads, prevOf(d,"leads"), d.leadsChange));
         }
         if (!left && got.length) {
           var V = 0, C = 0, L = 0; got.forEach(function(g){ V += g.d.visitors || 0; C += g.d.calls || 0; L += g.d.leads || 0; });
-          var topSite = got.slice().sort(function(a, z){ return reachedOf(z.d) - reachedOf(a.d) || z.d.visitors - a.d.visitors; })[0];
-          var kids = ["Across " + plural(got.length,"site","sites") + " with Google Analytics, ", el("b",{text:plural(V,"person","people")}), " visited and ", el("b",{text:num(C + L) + " reached out"}), " (" + num(C) + " by phone, " + num(L) + " by form). "];
-          if (got.length > 1) kids.push(topSite.c.name + " brought in the most" + (reachedOf(topSite.d) ? " leads." : " visitors."));
+          var kids = [el("b",{text:plural(V,"person","people")}), " visited. ", C + L ? el("b",{text:num(C + L) + " reached out"}) : "Nobody reached out yet", ". "];
           if (got.some(function(g){ return g.d.sample; })) kids.push(el("span",{class:"tag-s",style:"margin-left:8px",text:"Sample numbers"}));
           sum.replaceChildren(el("p",{class:"ga-sum-line"},kids)); sum.hidden = false;
         }
@@ -885,7 +874,7 @@ button.ga-row:hover{background:var(--hover)}
     card.appendChild(body); main.appendChild(card);
     stats(cur.site).then(function(d){
       if (!d.ok) { body.replaceWith(notSetUp(cur, d)); if (cur.url) sub.replaceWith(el("a",{class:"sub",href:full(cur.url),target:"_blank",rel:"noopener",text:bare(cur.url)})); return; }
-      sub.textContent = periodText(d) + ", compared with the 28 days before" + (cur.url ? " · " + bare(cur.url) : "");
+      sub.textContent = periodText(d) + (cur.url ? " · " + bare(cur.url) : "");
       act.replaceWith(el("a",{class:"btn sm plain",href:gaLink(d),target:"_blank",rel:"noopener"},[ico("chart",14),"Open in Google Analytics"]));
       var days = dayList(d), daily = d.daily && d.daily.visitors && d.daily.visitors.length ? d.daily : null;
       function tile(key, label, v, prev, pct, sp, hero){
@@ -898,14 +887,14 @@ button.ga-row:hover{background:var(--hover)}
           tile("visitors","Visitors", d.visitors, prevOf(d,"visitors"), d.visitorsChange, daily && daily.visitors),
           tile("calls","Phone calls", d.calls, prevOf(d,"calls"), d.callsChange, daily && daily.calls),
           tile("leads","Form requests", d.leads, prevOf(d,"leads"), d.leadsChange, daily && daily.leads)])];
-      if (daily) kids.push(el("div",{class:"ga-chart"},[el("div",{class:"ga-chart-hd"},[el("h3",{text:"Visitors each day"}), el("span",{class:"sub",text:"Point at or tap a day to see its number"})]), dayChart(days, daily.visitors, "Visitors"), dayTable(days, d)]));
+      if (daily) kids.push(el("div",{class:"ga-chart"},[el("div",{class:"ga-chart-hd"},[el("h3",{text:"Visitors each day"})]), dayChart(days, daily.visitors, "Visitors"), dayTable(days, d)]));
       var pages = (d.pages || []).slice(0, 3), most = pages.length ? Math.max.apply(null, pages.map(function(x){ return x.views || 0; }).concat([1])) : 1;
       kids.push(el("div",{class:"ga-split"},[
         el("div",{class:"ga-box"},[el("h3",{},["Top pages", help(HELP.pages, "top pages")]),
           pages.length ? el("ol",{class:"tp"}, pages.map(function(pg, i){ return el("li",{},[el("span",{class:"tp-n",text:String(i + 1)}), el("div",{class:"tp-body"},[el("div",{class:"tp-top"},[el("b",{text:pageName(pg)}), el("span",{class:"tp-v",text:plural(pg.views || 0,"view","views")})]), el("div",{class:"tp-bar"},[el("span",{style:"width:" + Math.max(2, (pg.views || 0) / most * 100) + "%"})])])]); }))
             : el("p",{class:"sub",style:"margin:8px 0 0",text:"Shows up once the notes service sends page numbers."})]),
-        el("div",{class:"ga-box"},[el("h3",{},["How they found you", help(HELP.source, "how they found you")]), el("div",{class:"src",text:d.source || "Not sure yet"}), el("p",{class:"sub",style:"margin:4px 0 0",text:srcPlain(d.source)})])]));
-      kids.push(el("div",{class:"ga-foot"},[el("span",{class:"sub",text:"From Google Analytics. Updated every few hours. Real numbers can be a little higher, since some people block tracking."})]));
+        el("div",{class:"ga-box"},[el("h3",{},["How they found you", help(HELP.source, "how they found you")]), el("div",{class:"src",text:d.source || "Not sure yet"})])]));
+      kids.push(el("div",{class:"ga-foot"},[el("span",{class:"sub",text:"From Google Analytics"})]));
       body.replaceWith(el("div",{},kids));
     });
   }
