@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-Ij5u/xb5cmYy5TibAR1TWZoJeZkd16l/U0OrtPiSXaw='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Bk3+s4D1k1DK6Q2gpYMZqAGBiq2H4oYvzw53EyDBtg4=' 'sha256-8/nn9YeBeDRiwvMjirqQxQ/1LTtIfJqS+LsYLteGQ5A='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://site-notes.jsglisson.workers.dev; img-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <style>[hidden]{display:none!important}body{margin:0}</style>
 <title>Stray Wolf Admin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Zilla+Slab:wght@500&display=swap">
@@ -100,7 +100,6 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .shot{width:136px;aspect-ratio:16/10;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);cursor:zoom-in;display:block}
 .shot img{width:100%;height:100%;object-fit:cover;display:block}
 .shot:hover,.shot:focus-visible{border-color:var(--accent)}
-.veil .veil-go{background:var(--accent);color:#fff;display:inline-flex;align-items:center;gap:6px}
 .req-body{min-width:0}
 @media (max-width:640px){.req{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"num done" "body body";gap:8px 10px}.req>.num{grid-area:num}.req>.done{grid-area:done;justify-self:end}.req>.req-body{grid-area:body}.where{grid-template-columns:auto minmax(0,1fr);padding:10px}.where .btn{grid-column:1/-1;justify-self:stretch;justify-content:center}.where.has-shot{grid-template-columns:minmax(0,1fr)}.where.has-shot .shot{width:100%}}
 .says{font-size:15.5px}
@@ -135,6 +134,11 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .btn.danger{background:none;border:1px solid transparent;color:var(--bad)}
 .btn.danger:hover{border-color:color-mix(in srgb,var(--bad) 40%,transparent);filter:none}
 .btn[disabled]{opacity:.5;cursor:default}
+.confirm{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px 8px;padding:4px 4px 4px 12px;border:1px solid color-mix(in srgb,var(--bad) 30%,var(--line));background:color-mix(in srgb,var(--bad) 6%,var(--paper));border-radius:10px;font-size:13px;line-height:1.35;color:var(--ink);max-width:100%}
+.confirm .q{flex:1 1 auto;min-width:0}
+.confirm .acts{display:inline-flex;gap:6px;flex:none}
+.btn.danger.go{background:var(--bad);color:#fff;border-color:transparent}
+.btn.danger.go:hover{filter:brightness(1.08)}
 .gate{max-width:440px;margin:12vh auto 0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:36px 34px 30px;display:grid;gap:12px;text-align:center;box-shadow:0 18px 50px -24px rgb(0 0 0 / .35)}
 .gate p{margin:0;font-size:13px;color:var(--muted)}
 .gate-logo{display:block;margin:0 auto 6px}.gate-logo img{display:block;width:200px;height:auto;margin:0 auto}
@@ -173,13 +177,23 @@ a.sub{text-decoration:none}a.sub:hover{text-decoration:underline;color:var(--ink
 .send-hd{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line)}
 .send-hd .label{margin:0}
 .sendbox{padding:14px 16px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;user-select:all}
-.veil{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.85);display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:12px;place-items:center;padding:20px}
+.veil{position:fixed;inset:0;z-index:50;background:rgb(18 17 15 / .94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:12px;place-items:center;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));overscroll-behavior:contain}
+.veil:focus{outline:none}
+.veil-top{justify-self:stretch;display:flex;justify-content:flex-end}
+.veil .veil-x{width:44px;height:44px;padding:0;border-radius:50%;background:rgb(255 255 255 / .12);color:#fff;display:grid;place-items:center}
+.veil .veil-x:hover{background:rgb(255 255 255 / .22)}
+.veil :focus-visible{outline:2px solid #fff;outline-offset:3px}
 .veil-cap{margin:0;color:#fff;font-size:16px;text-align:center;max-width:60ch;overflow-wrap:anywhere}
 .veil-cap b{font-weight:470;opacity:.75}
 .veil img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;background:#fff}
 .veil .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.veil a,.veil button{background:#fff;color:#24221f;border:0;border-radius:6px;padding:9px 14px;font-weight:470;text-decoration:none;font-size:14px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-weight:470;font-size:14px;max-width:calc(100% - 32px);text-align:center}
+.veil .row a,.veil .row button{background:#fff;color:#24221f;border:0;border-radius:8px;min-height:40px;padding:0 16px;display:inline-flex;align-items:center;font-weight:470;text-decoration:none;font-size:14px}
+.veil .row .veil-go{background:var(--accent);color:#fff;gap:6px}
+@media (max-width:640px){.veil .row{flex-direction:column;align-items:stretch;width:100%;max-width:420px}.veil .row a,.veil .row button{justify-content:center;min-height:46px}}
+.toast{position:fixed;left:50%;transform:translate(-50%,8px);bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:12px;font-weight:470;font-size:14px;line-height:1.4;width:max-content;max-width:min(460px,calc(100% - 32px));text-align:center;box-shadow:0 10px 30px -10px rgb(0 0 0 / .45);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto;cursor:default}
+.toast:empty{padding:0}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
 
 /* ---------- Overview (the cockpit) ---------- */
 .home{display:grid;gap:22px;width:100%}
@@ -315,10 +329,10 @@ button.ga-row:hover{background:var(--hover)}
 .help-w{position:relative;display:inline-flex}
 .help{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--muted);font:565 11px/1 var(--text);letter-spacing:0;display:inline-grid;place-items:center;padding:0}
 .help:hover,.help[aria-expanded="true"]{color:var(--ink);border-color:var(--muted)}
-.tip{display:none;position:absolute;left:-10px;top:calc(100% + 8px);z-index:30;width:250px;background:var(--ink);color:var(--paper);font:365 13px/1.45 var(--text);letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:8px;box-shadow:0 8px 24px -8px rgb(0 0 0 / .45)}
+.tip{display:none;position:absolute;left:-10px;top:calc(100% + 8px);z-index:30;width:min(260px,calc(100vw - 24px));background:var(--ink);color:var(--paper);font:365 13px/1.45 var(--text);letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:8px;box-shadow:0 8px 24px -8px rgb(0 0 0 / .45)}
 .help:hover+.tip,.help:focus-visible+.tip,.help[aria-expanded="true"]+.tip{display:block}
-.ga-n:nth-child(even) .tip,.ga-n:nth-child(3) .tip,.ga-box:last-child .tip{left:auto;right:-10px}
-@media (max-width:1000px){.ga-n:nth-child(3) .tip{left:-10px;right:auto}}
+.tip.up{top:auto;bottom:calc(100% + 8px)}
+.help{position:relative}.help::after{content:"";position:absolute;inset:-12px}
 .spark{display:block;width:100%;height:30px;margin-top:14px}
 .spark rect{fill:color-mix(in srgb,var(--muted) 45%,transparent)}
 .spark rect.zero{fill:color-mix(in srgb,var(--muted) 22%,transparent)}
@@ -426,12 +440,41 @@ button.ga-row:hover{background:var(--hover)}
   var ICONS = { check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>', copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>', send:'<path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/>', key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9"/><path d="M17 6l3 3"/>', shuffle:'<path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/>', ext:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
     phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>', mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
     search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>', plus:'<path d="M12 5v14M5 12h14"/>', chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', pin:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
-    up:'<path d="M12 19V5M6 11l6-6 6 6"/>', down:'<path d="M12 5v14M6 13l6 6 6-6"/>', sort:'<path d="M8 4v16M4 8l4-4 4 4M16 20V4M12 16l4 4 4-4"/>',
+    up:'<path d="M12 19V5M6 11l6-6 6 6"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', down:'<path d="M12 5v14M6 13l6 6 6-6"/>', sort:'<path d="M8 4v16M4 8l4-4 4 4M16 20V4M12 16l4 4 4-4"/>',
     grip:'<circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/>' };
   // The Google Analytics mark (its own colors), next to anything that comes from or opens Google Analytics.
   function gaLogo(size){ var w = document.createElement("span"); w.className = "ico ga-logo"; w.setAttribute("aria-hidden","true"); w.innerHTML = '<svg viewBox="0 0 24 24" width="' + (size || 14) + '" height="' + (size || 14) + '"><rect x="16" y="2" width="6" height="20" rx="3" fill="#F9AB00"/><rect x="9" y="9" width="6" height="13" rx="3" fill="#E37400"/><circle cx="4.5" cy="18.5" r="3.5" fill="#E37400"/></svg>'; return w; }
   function ico(name, size){ var w = document.createElement("span"); w.className = "ico"; w.setAttribute("aria-hidden","true"); w.style.display = "inline-grid"; w.innerHTML = '<svg viewBox="0 0 24 24" width="' + (size || 15) + '" height="' + (size || 15) + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICONS[name] + '</svg>'; return w; }
-  function toast(text){ var t = el("div",{class:"toast",role:"status",text:text}); document.body.appendChild(t); setTimeout(function(){ t.remove(); }, 2600); }
+  // One message area that stays on the page, so screen readers hear each message; longer ones stay up longer. Click to dismiss.
+  var toastEl = null, toastT = 0;
+  function toast(text){
+    if (!toastEl) { toastEl = el("div",{class:"toast",role:"status",onclick:function(){ toastEl.classList.remove("on"); }}); document.body.appendChild(toastEl); }
+    clearTimeout(toastT); toastEl.textContent = text; toastEl.classList.add("on");
+    toastT = setTimeout(function(){ toastEl.classList.remove("on"); toastT = setTimeout(function(){ toastEl.textContent = ""; }, 250); }, Math.min(9000, Math.max(2800, String(text).length * 70)));
+  }
+  // "Delete" / "Remove": the first click asks right there, in plain words, with the real button next to Keep.
+  // Nothing happens until they confirm; Keep or Escape puts it back.
+  function confirmBtn(label, question, act){
+    var wrap = el("span",{class:"confirm-w"}), b = el("button",{class:"btn sm danger",type:"button",text:label});
+    function back(focus){ wrap.replaceChildren(b); if (focus) b.focus(); }
+    b.onclick = function(){
+      var q = el("span",{class:"q",id:"cq-" + Math.random().toString(36).slice(2),text:question});
+      var keep = el("button",{class:"btn sm plain",type:"button",text:"Keep",onclick:function(){ back(true); }});
+      var yes = el("button",{class:"btn sm danger go",type:"button",text:label,onclick:function(){ yes.disabled = keep.disabled = true; act(function(){ yes.disabled = keep.disabled = false; }); }});
+      var box = el("span",{class:"confirm",role:"group","aria-labelledby":q.id,onkeydown:function(e){ if (e.key === "Escape") { e.stopPropagation(); back(true); } }},[q, el("span",{class:"acts"},[keep, yes])]);
+      wrap.replaceChildren(box); keep.focus();
+    };
+    wrap.appendChild(b); return wrap;
+  }
+  // Pop-ups that need attention (the picture viewer): Tab stays inside, and focus goes back where it was after.
+  function trapTab(box, e){
+    if (e.key !== "Tab") return;
+    var f = Array.prototype.filter.call(box.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),[tabindex]:not([tabindex="-1"])'), function(x){ return x.getClientRects().length; });
+    if (!f.length) return;
+    var a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === a || !box.contains(document.activeElement))) { e.preventDefault(); z.focus(); }
+    else if (!e.shiftKey && (document.activeElement === z || !box.contains(document.activeElement))) { e.preventDefault(); a.focus(); }
+  }
   function copy(text){ try { navigator.clipboard.writeText(text).then(function(){ toast("Copied."); }, function(){ toast("Select the text and copy it."); }); } catch(e){ toast("Select the text and copy it."); } }
   function when(iso){ var d = new Date(iso); return isNaN(d) ? iso : d.toLocaleString(undefined,{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}); }
   function ago(iso){ var d = new Date(iso), m = (Date.now() - d) / 6e4; if (isNaN(m)) return "";
@@ -603,10 +646,9 @@ button.ga-row:hover{background:var(--hover)}
       if (cur && b.site !== cur) return;
       var rows = b.notes.filter(function(n){ return show === "all" || (show === "done") === !!n.done; });
       if (!rows.length) return; any = true;
-      var del = el("button",{class:"btn sm danger",type:"button",text:"Delete",onclick:function(){
-        if (del.textContent === "Delete") { del.textContent = "Really delete these notes and pictures?"; setTimeout(function(){ del.textContent = "Delete"; }, 4000); return; }
-        call("/api/admin/batch/delete",{batch:b.id}).then(function(d){ if (d.ok) { toast("Deleted."); load(); } });
-      }});
+      var del = confirmBtn("Delete", "Delete these notes and pictures for good?", function(undo){
+        call("/api/admin/batch/delete",{batch:b.id}).then(function(d){ if (d.ok) { toast("Deleted."); load(); } else { undo(); toast(d.error || "That didn't delete. Try again."); } });
+      });
       var box = el("div",{class:"batch"},[el("div",{class:"batch-hd"},[el("h3",{text:(cur ? "" : nameOf(b.site) + " · ") + "Sent " + when(b.at)}), del])]);
       rows.forEach(function(n){
         var caps = Array.isArray(n.picNotes) ? n.picNotes : [], hasCaps = caps.some(Boolean);
@@ -693,16 +735,21 @@ button.ga-row:hover{background:var(--hover)}
   }
   function viewer(key, cap, num, opts){
     opts = opts || {};
+    var from = document.activeElement, scrollWas = document.documentElement.style.overflow;
     var img = el("img",{alt:opts.spot ? "Snapshot of the spot" : cap || "Picture from the client"}), save = el("a",{text:"Save picture",download:key.replace(/[^\w-]+/g,"-") + ".jpg",target:"_blank",rel:"noopener"});
-    function close(){ veil.remove(); document.removeEventListener("keydown", onKey); }
-    function onKey(e){ if (e.key === "Escape") close(); }
-    var veil = el("div",{class:"veil",role:"dialog","aria-label":opts.spot ? "Snapshot of the spot" : cap ? "Picture " + num + ": " + cap : "Picture",onclick:function(e){ if (e.target === veil) close(); }},[img,
+    function close(){ veil.remove(); document.removeEventListener("keydown", onKey); document.documentElement.style.overflow = scrollWas; if (from && from.isConnected) try { from.focus({preventScroll:true}); } catch(e){} }
+    function onKey(e){ if (e.key === "Escape") { e.preventDefault(); close(); } else trapTab(veil, e); }
+    var x = el("button",{type:"button",class:"veil-x","aria-label":"Close",onclick:close},[ico("x",20)]);
+    var veil = el("div",{class:"veil",role:"dialog","aria-modal":"true","aria-label":opts.spot ? "Snapshot of the spot" : cap ? "Picture " + num + ": " + cap : "Picture",onclick:function(e){ if (e.target === veil) close(); }},[el("div",{class:"veil-top"},[x]), img,
       opts.spot ? el("p",{class:"veil-cap"},[el("b",{text:"Where they left it: "}), opts.spot]) : cap ? el("p",{class:"veil-cap"},[el("b",{text:"Photo " + num + ": "}), cap]) : null,
-      el("div",{class:"row"},[opts.link ? el("a",{class:"veil-go",href:opts.link,target:"_blank",rel:"noopener"},[ico("pin",14), "Show me on the site"]) : null, save, el("button",{type:"button",text:"Close",onclick:close})])]);
+      el("div",{class:"row"},[opts.link ? el("a",{class:"veil-go",href:opts.link,target:"_blank",rel:"noopener"},[ico("pin",14), "Show me on the site"]) : null, save])]);
     picSrc(key).then(function(src){ img.src = src; save.href = src; });
     document.addEventListener("keydown", onKey);
     document.body.appendChild(veil);
+    document.documentElement.style.overflow = "hidden";
+    x.focus();
   }
+
 
 
   /* ---------- Overview: the page you land on ---------- */
@@ -813,10 +860,9 @@ button.ga-row:hover{background:var(--hover)}
         if (!list.length && conEdit !== c.site + ":new") card.appendChild(el("div",{class:"quiet",style:"padding:18px 20px;text-align:left",text:"No contacts yet."}));
         rows.forEach(function(x){
           if (conEdit === c.site + ":" + x.i) { card.appendChild(personForm(c, x.i)); return; }
-          var p = x.p, rm = el("button",{class:"btn sm danger",type:"button",text:"Remove",onclick:function(){
-            if (rm.textContent === "Remove") { rm.textContent = "Really remove?"; setTimeout(function(){ rm.textContent = "Remove"; }, 4000); return; }
+          var p = x.p, rm = confirmBtn("Remove", "Remove " + (p.name || "this person") + "?", function(){
             saveContacts(c, list.filter(function(_, j){ return j !== x.i; }), "Removed.");
-          }});
+          });
           card.appendChild(el("div",{class:"person"},[
             el("div",{style:"min-width:0"},[el("b",{text:p.name}), p.role ? el("div",{class:"role",text:p.role}) : null]),
             el("div",{class:"reach"},[p.phone ? el("a",{href:"tel:" + p.phone.replace(/[^\d+]/g,"")},[ico("phone",14), p.phone]) : null, p.email ? el("a",{href:"mailto:" + p.email},[ico("mail",14), p.email]) : null, !p.phone && !p.email ? el("span",{class:"sub",text:"No phone or email yet"}) : null]),
@@ -902,8 +948,23 @@ button.ga-row:hover{background:var(--hover)}
   var tipOpen = null;
   function closeTip(){ if (tipOpen) { tipOpen.setAttribute("aria-expanded","false"); tipOpen = null; } }
   document.addEventListener("click", closeTip); document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeTip(); });
-  function help(text, label){ var b = el("button",{type:"button",class:"help","aria-label":"What is " + label + "?","aria-expanded":"false",text:"?",onclick:function(e){ e.stopPropagation(); var on = b.getAttribute("aria-expanded") !== "true"; closeTip(); if (on) { b.setAttribute("aria-expanded","true"); tipOpen = b; } }});
-    return el("span",{class:"help-w"},[b, el("span",{class:"tip",role:"tooltip",text:text})]); }
+  // A "?" next to a number: hover, focus or tap shows a short note in plain words. It stays on screen:
+  // near an edge it slides over, and near the bottom it opens upward.
+  var tipN = 0;
+  function fitTip(tip){
+    tip.style.left = ""; tip.style.right = ""; tip.classList.remove("up");
+    var vw = document.documentElement.clientWidth, r = tip.getBoundingClientRect(), dx = 0;
+    if (!r.width) return;
+    if (r.right > vw - 12) dx = vw - 12 - r.right;
+    if (r.left + dx < 12) dx = 12 - r.left;
+    if (dx) { tip.style.left = (-10 + dx) + "px"; tip.style.right = "auto"; }
+    if (r.bottom > window.innerHeight - 8 && r.top - r.height - 40 > 0) tip.classList.add("up");
+  }
+  function help(text, label){
+    var id = "tip-" + (++tipN), tip = el("span",{class:"tip",role:"tooltip",id:id,text:text});
+    var b = el("button",{type:"button",class:"help","aria-label":"What is " + label + "?","aria-describedby":id,"aria-expanded":"false",text:"?",onclick:function(e){ e.stopPropagation(); var on = b.getAttribute("aria-expanded") !== "true"; closeTip(); if (on) { b.setAttribute("aria-expanded","true"); tipOpen = b; fitTip(tip); } }});
+    b.addEventListener("focus", function(){ requestAnimationFrame(function(){ fitTip(tip); }); });
+    return el("span",{class:"help-w",onmouseenter:function(){ requestAnimationFrame(function(){ fitTip(tip); }); }},[b, tip]); }
   function spark(vals){ // a small strip of one bar per day; the last day in the accent color
     var n = vals.length, max = Math.max.apply(null, vals.concat([1])), NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS,"svg");
     svg.setAttribute("viewBox","0 0 " + (n * 10) + " 30"); svg.setAttribute("preserveAspectRatio","none"); svg.setAttribute("class","spark"); svg.setAttribute("aria-hidden","true");
@@ -1107,10 +1168,9 @@ button.ga-row:hover{background:var(--hover)}
     card.appendChild(el("div",{class:"card-hd"},[el("h2",{text:"Your clients"}), el("span",{class:"sub",text:data.clients.length === 1 ? "1 client" : data.clients.length + " clients"})]));
     if (!data.clients.length) card.appendChild(el("div",{class:"none"},[el("span",{text:"No clients yet. Add one below."})]));
     data.clients.forEach(function(c){
-      var rm = el("button",{class:"btn sm danger",type:"button",text:"Remove",onclick:function(){
-        if (rm.textContent === "Remove") { rm.textContent = "Really remove? Their login stops working."; setTimeout(function(){ rm.textContent = "Remove"; }, 4000); return; }
-        call("/api/admin/client/delete",{site:c.site}).then(function(d){ if (d.ok) { toast("Removed."); load(); } });
-      }});
+      var rm = confirmBtn("Remove", "Remove " + c.name + "? Their login stops working.", function(undo){
+        call("/api/admin/client/delete",{site:c.site}).then(function(d){ if (d.ok) { toast("Removed."); load(); } else { undo(); toast(d.error || "That didn't save. Try again."); } });
+      });
       var pwBox = el("div",{},[el("div",{class:"label",style:"margin-bottom:6px",text:"Password"}), el("div",{class:"pw-chip"},[el("span",{class:"pw",text:c.password}), el("button",{class:"mini",type:"button",title:"Copy password","aria-label":"Copy password for " + c.name,onclick:function(){ copy(c.password); }},[ico("copy",14)])])]);
       // Change password: type any password (6 or more characters), or tap "Make one for me"
       function editPw() {
