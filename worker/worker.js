@@ -42,7 +42,7 @@
  *   inv:{number}         one invoice, for example inv:SW-0002 (see cleanInvoice for its fields)
  */
 
-const VERSION = "2026-11-13j (Google reports asked one at a time, each with its own time limit and one retry; contacts, analytics with each day and top pages, captions, where each note was left, snapshot of the spot, which photos are on the site, invoices; server-side logins with time limits and a real log out, per-login lockout, picture checks, admin answers only its own page)";
+const VERSION = "2026-11-13k (check page &test=3 probes which Google calls answer; Google reports asked one at a time, each with its own time limit and one retry; contacts, analytics with each day and top pages, captions, where each note was left, snapshot of the spot, which photos are on the site, invoices; server-side logins with time limits and a real log out, per-login lockout, picture checks, admin answers only its own page)";
 const LIMITS = { notes: 40, text: 2000, label: 300, caption: 140, pics: 20, picBytes: 3 * 1024 * 1024, contacts: 25, jsonBytes: 256 * 1024 };
 const PIC_TYPES = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
 const PIC_KEY = /^pic:[a-z0-9-]+:[\w-]+$/;
@@ -553,8 +553,10 @@ async function setupCheck(url, env) {
     // &test=1 signs in fresh and asks Google the 3 headline reports one after another, the same way the
     // real numbers are fetched, and says how long each step took (no numbers shown). Once a minute at most.
     // &test=2 asks the same 3 all at once instead, to compare.
+    // &test=3 tries 8 different small Google calls, one at a time, to find which ones answer.
     const test = url.searchParams.get("test");
-    if (test && ga.property && env.GA_SA_JSON) out.test = await gaTest(site, ga.property, env, test === "2");
+    if (test === "3" && ga.property && env.GA_SA_JSON) out.test = await gaProbe(site, ga.property, env);
+    else if (test && ga.property && env.GA_SA_JSON) out.test = await gaTest(site, ga.property, env, test === "2");
   }
   return json(out);
 }
@@ -578,6 +580,47 @@ async function gaTest(site, property, env, together) {
     out.reportSeconds = gaSecs(t1);
     out.steps = steps.map((x) => x.step + (x.try > 1 ? " (try " + x.try + ")" : "") + ": " + (x.ok ? "ok" : "failed" + (x.said ? " (" + x.said + ")" : "")) + " in " + x.s + " s");
   }
+  return out;
+}
+
+// &test=3: which Google calls answer from Cloudflare? Each gets 5 seconds, one after another.
+// Shows only the call's name, Google's status code and the time (no numbers, IDs or keys).
+async function gaProbe(site, property, env) {
+  if (await env.NOTES.get("gatest:" + site)) return { skipped: "Tested less than a minute ago. Try again in a minute." };
+  await env.NOTES.put("gatest:" + site, "1", { expirationTtl: 60 });
+  const out = { mode: "probe: 8 small Google calls, one after another, 5 s each" }, results = [];
+  let token = null;
+  const t0 = Date.now();
+  try { await env.NOTES.delete("gatoken"); token = await googleToken(env); out.signIn = "ok"; }
+  catch (e) { out.signIn = "failed: " + str(e && (e.detail || e.message), 200); }
+  out.signInSeconds = gaSecs(t0);
+  const hide = (t) => String(t || "").replace(/\d{6,}/g, "#").replace(/ya29\.[\w.-]+/g, "#");
+  const DATA = "https://analyticsdata.googleapis.com/v1beta/properties/" + property;
+  const auth = token ? { authorization: "Bearer " + token } : {};
+  const jsonPost = (body, headers) => ({ method: "POST", headers: { ...headers, "content-type": "application/json" }, body: JSON.stringify(body) });
+  const small = { dateRanges: [{ startDate: "7daysAgo", endDate: "yesterday" }], metrics: [{ name: "activeUsers" }] };
+  const probes = [
+    ["1 analytics host, no login (GET)", "https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta", { method: "GET" }],
+    ["2 other Google host, no login (GET)", "https://www.googleapis.com/discovery/v1/apis?name=analyticsdata", { method: "GET" }],
+    ["3 sign-in check (GET)", "https://oauth2.googleapis.com/tokeninfo?access_token=" + encodeURIComponent(token || ""), { method: "GET" }],
+    ["4 GA admin host, logged in (GET)", "https://analyticsadmin.googleapis.com/v1beta/properties/" + property, { method: "GET", headers: auth }],
+    ["5 analytics host, logged in (GET metadata)", DATA + "/metadata", { method: "GET", headers: auth }],
+    ["6 analytics host, logged in (POST small check)", DATA + ":checkCompatibility", jsonPost({ metrics: [{ name: "activeUsers" }] }, auth)],
+    ["7 report, normal (POST)", DATA + ":runReport", jsonPost(small, auth)],
+    ["8 report, login in the address (POST)", DATA + ":runReport?access_token=" + encodeURIComponent(token || ""), jsonPost(small, {})],
+  ];
+  for (const [name, u, init] of probes) {
+    if (!token && /logged in|sign-in|report/.test(name)) { results.push(name + ": skipped (no sign-in)"); continue; }
+    const t = Date.now();
+    try {
+      const r = await googleFetch(u, init, 5000);
+      const said = r.ok ? "" : " " + str(hide(r.data && r.data.error && (r.data.error.message || r.data.error_description || r.data.error)), 100);
+      results.push(name + ": " + r.status + said + " in " + gaSecs(t) + " s");
+    } catch (e) {
+      results.push(name + ": " + (e && e.timeout ? "NO ANSWER in 5 s" : "failed (" + str(hide(e && e.message), 100) + ")") + " after " + gaSecs(t) + " s");
+    }
+  }
+  out.steps = results;
   return out;
 }
 

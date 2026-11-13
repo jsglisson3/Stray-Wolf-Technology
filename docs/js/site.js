@@ -268,7 +268,7 @@
 })();
 
 /* Moon door (Nov 12 2026, Jeremy: "if i hold the moon it starts to slowly go bright and phase into an admin page").
-   Hold the footer moon for 2 seconds: a soft moonlight grows from it, then washes over the whole page, and
+   Hold the footer moon (or, since V49, the header moon) for 2 seconds: a soft moonlight grows from it, then washes over the whole page, and
    /admin/ comes up out of the light (the admin page fades in from the same colour). Let go early and the light
    fades away. Nothing shows or links to it; a normal tap does nothing. Same effect as the client sites' doors. */
 (() => {
@@ -307,9 +307,20 @@
       setTimeout(go, 1200);
     }, HOLD);
   };
-  document.addEventListener('pointerdown', (e) => { const el = e.target.closest && e.target.closest('[data-moon-door]'); if (el) start(e, el); }, true);
+  /* Header moon (V49, Jeremy: "make my admin portal work with the moon in the header too"). It sits in the sky
+     behind the header row, so it can't take the press itself: a press within reach of the moon's disc that isn't on
+     the logo, a link or the Menu button counts as holding it. Same 2-second hold, same light. Nothing visible changes. */
+  const skyMoon = (e) => {
+    const m = document.querySelector('.hdr-moon > i');
+    if (!m || (e.target.closest && e.target.closest('a, button, input, select, textarea, label, [role="button"], .site-nav'))) return null;
+    const r = m.getBoundingClientRect();
+    if (!r.width) return null;   /* hidden on the narrowest phones */
+    const reach = Math.max(24, r.width * 1.1);
+    return Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2)) <= reach ? m : null;
+  };
+  document.addEventListener('pointerdown', (e) => { const el = (e.target.closest && e.target.closest('[data-moon-door]')) || skyMoon(e); if (el) start(e, el); }, true);
   document.addEventListener('pointermove', (e) => { if (timer && Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 14) reset(); }, true);
   ['pointerup', 'pointercancel'].forEach((n) => addEventListener(n, () => { if (timer && !opened) reset(); }, true));
-  document.addEventListener('contextmenu', (e) => { if (e.target.closest && e.target.closest('[data-moon-door]') && (timer || opened)) e.preventDefault(); }, true);
+  document.addEventListener('contextmenu', (e) => { if ((timer || opened) && ((e.target.closest && e.target.closest('[data-moon-door]')) || skyMoon(e))) e.preventDefault(); }, true);
   addEventListener('pageshow', (e) => { if (e.persisted) { opened = false; document.querySelectorAll('[data-moon-light]').forEach((d) => d.remove()); } });
 })();

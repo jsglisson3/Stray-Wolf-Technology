@@ -197,17 +197,15 @@ lost_main = end_page('That page isn’t here.', 'The link may be old, or the add
 page('404.html', 'Page not found | Stray Wolf Technology', 'That page could not be found.', lost_main, body_class='inner lost')
 
 
-# ---------------------------------------------------------------- Pricing (FIRST DRAFT, Nov 9 2026)
-# V35 (Nov 10 2026, Jeremy: "add something ... like doesn't fit? Let's talk it through to make it seem like I can fit everyone"):
-# the price list ends with a "Don't see your job here?" row that says "Let's talk" where the price would be, linking to the Start form.
-# The numbers are settings at the top of tools/build.py (STARTER_FROM, LARGER_FROM, FIX_FROM). Every line here is
-# Jeremy's to confirm or change before launch.
+# ---------------------------------------------------------------- Pricing
+# Nov 13 2026 (Jeremy): no numbers on the site, pricing is "Let's talk". Each row says what the job is; the price
+# column gives its size or promise instead of a dollar figure, and the "Don't see your job here?" row ends with Let's talk.
 
 RATES = [
-    ('A starter site', STARTER_FROM, 'Up to five pages, written with you and built around your business. Domain and email set up.', 'What most owner-run businesses need.'),
-    ('A larger site', LARGER_FROM, 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.', 'More to show, or more to sell.'),
-    ('A mockup first', f'{MOCKUP_FROM}<span> to ${MOCKUP_TO}</span>', 'Your homepage, designed first so you can see it.', '<strong>Credited in full.</strong> Go ahead with the site and every dollar of the mockup comes off your final price.'),
-    ('A fix, a page or a refresh', FIX_FROM, f'A fix from ${FIX_FROM}, a new page from ${PAGE_FROM}, new words and photos from ${REFRESH_FROM}. Days, not weeks.', 'For a website you already have.'),
+    ('A starter site', ('Pages', 'Up to 5'), 'Up to five pages, written with you and built around your business. Domain and email set up.', 'What most owner-run businesses need.'),
+    ('A larger site', ('Pages', '6 or more'), 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.', 'More to show, or more to sell.'),
+    ('A mockup first', ('Credited', 'In full'), 'Your homepage, designed first so you can see it.', '<strong>Credited in full.</strong> Go ahead with the site and every dollar of the mockup comes off your final price.'),
+    ('A fix, a page or a refresh', ('Turnaround', 'Days'), 'A fix, a new page, or new words and photos across the pages you have. Days, not weeks.', 'For a website you already have.'),
 ]
 INCLUDED = [
     ('words', 'Help with the words', 'Clear pages people actually read.'),
@@ -240,17 +238,17 @@ def two_col(hid, h2, lead, body, cls=''):
 rates_html = ''.join(f'''
           <li class="rate" data-reveal>
             <h3 class="rate-name">{n}</h3>
-            <p class="rate-price"><small>From</small>${price}</p>
+            <p class="rate-price"><small>{label}</small>{size}</p>
             <div class="rate-text"><p>{t}</p><p class="rate-who">{who}</p></div>
-          </li>''' for n, price, t, who in RATES)
+          </li>''' for n, (label, size), t, who in RATES)
 
-pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. Here’s where most projects land.',
+pricing_main = page_head('What a website <em>costs.</em>', 'One price for the whole site, in writing, before any work starts. Every job is priced on its own, so let’s talk.',
                          ['A price in writing first', 'A mockup first, credited in full', 'No monthly fees, ever']) + f'''
     <section class="section tex tex-left" aria-labelledby="rates-h">
       <div class="wrap">
         <header class="sec-head">
-          <h2 id="rates-h" class="h2" data-reveal>What projects usually cost.</h2>
-          <p class="lead" data-reveal>Every site is priced on its own. These are the starting points, so you know before we talk.</p>
+          <h2 id="rates-h" class="h2" data-reveal>The jobs I take on.</h2>
+          <p class="lead" data-reveal>Every site is priced on its own. Tell me what you need and you’ll have a price in writing within five days.</p>
         </header>
         <ul class="rates" role="list">{rates_html}
           <li class="rate rate-fit" data-reveal>
@@ -280,7 +278,7 @@ pricing_main = page_head('What a website <em>costs.</em>', 'One price for the wh
 {close_section('pricing-close-h', 'Want a number for yours?')}'''
 
 page('pricing.html', 'Pricing: what a website costs | Stray Wolf Technology',
-     f'What a custom website costs: starter sites from ${STARTER_FROM}, larger sites from ${LARGER_FROM}, one price in writing before anything starts.',
+     'What a custom website costs: every site priced on its own, one price in writing before anything starts, no monthly fees.',
      pricing_main, current='pricing.html')
 
 

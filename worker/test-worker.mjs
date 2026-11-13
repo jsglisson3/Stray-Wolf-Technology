@@ -159,7 +159,7 @@ r = await call("/api/admin/stats", { token: admin, body: { site: "Bad Site!" } }
 globalThis.fetch = realFetch; delete env.GA_SA_JSON;
 
 // ---- setup check page + forgiving property IDs ----
-r = await call("/api"); ok("health shows version", /^2026-11-13j/.test(r.data.version));
+r = await call("/api"); ok("health shows version", /^2026-11-13k/.test(r.data.version));
 await env.NOTES.put("ga:quoted", '"562482788" '); env.GA_SA_JSON = JSON.stringify(SA); globalThis.fetch = gFetch;
 r = await call("/api/admin/stats", { token: admin, body: { site: "quoted" } }); ok("quotes around the ID forgiven", r.data.ok && lastProp === "562482788");
 await env.NOTES.put("ga:measure", "G-ABC123XYZ");
@@ -174,7 +174,9 @@ r = await call("/api/check"); ok("check page, no key", r.data.googleKeySaved ===
   let inFlight = 0, most = 0, hang = 0, hangBody = 0, hangAll = false, reports = 0;
   const never = (signal) => new Promise((_, no) => signal && signal.addEventListener("abort", () => no(signal.reason || new Error("aborted"))));
   globalThis.fetch = async (u, o) => {
-    if (!/:runReport$/.test(String(u))) return gFetch(u, o);
+    if (/tokeninfo|discovery|metadata|checkCompatibility|analyticsadmin/.test(String(u))) return new Response("{}", { status: 200 });   // probe calls, never the real Google
+    if (!/:runReport(\?|$)/.test(String(u))) return gFetch(u, o);
+    u = String(u).replace(/\?.*$/, "");
     reports++; inFlight++; most = Math.max(most, inFlight);
     try {
       if (hangAll || hang > 0) { hang--; return await never(o.signal); }   // never answers
@@ -210,6 +212,13 @@ r = await call("/api/check"); ok("check page, no key", r.data.googleKeySaved ===
   r = await call("/api/check?site=hangs&test=1"); ok("test=1 once a minute", /minute/.test(r.data.test.skipped));
   await env.NOTES.delete("gatest:hangs"); most = 0;
   r = await call("/api/check?site=hangs&test=2"); ok("test=2: 3 at once", r.data.test.report === "ok" && most === 3 && /at once/.test(r.data.test.mode));
+  // &test=3 probes 8 small Google calls; one that hangs shows NO ANSWER, nothing secret shown
+  await env.NOTES.delete("gatest:hangs"); hang = 1; t = Date.now();
+  r = await call("/api/check?site=hangs&test=3");
+  const ps = r.data.test.steps || [];
+  ok("test=3: 8 probes listed", ps.length === 8 && r.data.test.signIn === "ok");
+  ok("test=3: the hung report shows NO ANSWER, the other report answers", /^7 .*NO ANSWER in 5 s/.test(ps[6]) && /^8 .*: 200 in/.test(ps[7]));
+  ok("test=3: no IDs or token shown", !JSON.stringify(r.data).includes("577777777") && !JSON.stringify(r.data).includes("ya29"));
   // 403 (no Viewer access) is not asked again
   await env.NOTES.put("ga:noaccess", "588888888"); gMode = "403"; reports = 0;
   r = await call("/api/admin/stats", { token: admin, body: { site: "noaccess" } }); ok("403 asked once, plain message", r.status === 502 && /Viewer/.test(r.data.error) && reports === 1);

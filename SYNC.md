@@ -1,71 +1,45 @@
-# SYNC: read this first, update it last
+# SYNC: what is happening right now
 
-Jeremy runs three Claude projects on this repository at the same time. They cannot see each other's chats or memory.
-**This file is the shared memory.** Every project reads it before starting work and updates it before handing files over.
-Last updated: Nov 13 2026, 16:10 UTC (analytics fix: Worker 2026-11-13j written, waiting for paste).
-
-## The three projects and who owns what
-
-| Project | Owns | Never touches without saying so here |
-|---|---|---|
-| **Stray Wolf Tech** (main: site and brand) | `src/`, `tools/build.py` (except the SEO settings), the pages in `docs/`, `docs/css/site.css`, `docs/js/site.js` (except the Moon door block at the end), images, logo, copy, `PICKUP.md` version notes | `docs/admin/`, the Worker |
-| **SEO / Google** | `docs/js/analytics.js`, `docs/sitemap.xml`, `docs/robots.txt`, `docs/review/`, meta tags and structured data, the settings `GA4_ID`, `SEARCH_CONSOLE`, `BING_VERIFY`, `SAME_AS`, `GOOGLE_PROFILE_URL`, `GOOGLE_REVIEW_URL`, `SERVICE_AREAS`, the Google bits in `src/pages.py` | page design and layout |
-| **Client Portal / Admin** | `docs/admin/`, the Site Notes Worker (`site-notes.jsglisson.workers.dev`), `site-notes.js` and `/portal` on client sites, the Moon door block at the end of `docs/js/site.js` | page design and layout |
-
-Shared files (`tools/build.py`, `docs/css/site.css`, `src/layout.html`): change only the lines you need, say which in the log below, and never rewrite the whole file from an old copy.
-
-## Version numbers (shared by all three projects)
-
-- Site versions are one sequence for everyone: V47, V48, V49... Any project that changes the site's look, CSS or JS takes the next one and bumps `VERSION` in `tools/build.py` (that also busts the `?v=` cache).
-- **Before naming a version:** read the last lines of `.git/logs/HEAD` in Jeremy's folder (or `git log -5`) AND the log below. Next number = highest V you see + 1.
-- Admin-only commits start `Admin:` and take no V number.
-- Current site version: **V48** (pushed Nov 12).
-
-## Start of every task
-
-1. Jeremy: in VS Code, **Sync** first so your folder matches GitHub.
-2. Claude: read this file from Jeremy's folder `C:\Users\jsgli\Documents\Websites\Stray-Wolf-Technology` (it can be newer than GitHub), then the part of `PICKUP.md` you need.
-3. Check **Working now** below. If another project is in the same files, stop and tell Jeremy.
-4. Add your line to **Working now**.
-
-## End of every task
-
-1. Copy Jeremy's current files from his folder and merge with yours before writing (never overwrite with an older copy).
-2. Write your files to his folder. Only one project writes at a time.
-3. Update this file: remove your **Working now** line, add one **Log** line, update **Pending**.
-4. SEO and Portal: add your files to **Ready for sign-off** and tell Jeremy to check with the main project (no commit message). Main project: end the reply with the exact commit message. Jeremy commits and Syncs **before** switching to another project.
-
-## Shared state (update this whenever you change the Worker, the admin page or site-notes.js)
-
-- **Live Worker:** `2026-11-13i` in Cloudflare. **`2026-11-13j` is saved in `worker/worker.js` and waits for Jeremy to paste and Deploy it** (analytics fix). Once `/api/check` shows 13j, change this line to "13j live". Tests: `node worker/test-worker.mjs` (135 checks).
-- **Worker rule:** whoever changes the Worker takes the next unused version letter (next is `2026-11-13k`, or `YYYY-MM-DDa` on a new day), sets `VERSION` in `worker/worker.js`, saves the file here, and updates this line. Never paste a Worker into Cloudflare that isn't also saved here.
-- **Admin and site-notes.js rule:** start from Jeremy's current file (`docs/admin/index.html` here, `site-notes.js` in FOTCL, `src/assets/site-notes.js` in TVIS), never from an older copy. The admin page has a Content-Security-Policy with `script-src` hashes, so recompute them whenever its scripts change.
-- **Latest commits (Nov 13):** Stray-Wolf-Technology `52bd60a` (login sessions), TVIS `04de78a` (login sessions), FOTCL `cda6ceb` (login sessions).
-
-## Who gives Jeremy commits (Jeremy, Nov 13 2026)
-
-**Only the main project (Stray Wolf Tech) gives Jeremy commit messages.** The SEO and Portal projects never do. When they finish, they list their work under **Ready for sign-off** below and tell Jeremy to check with the main project. The main project reviews it (diff against GitHub, checks nothing clashes), writes one commit message per repo, then moves the lines to the Log.
-
-## Ready for sign-off
-
-Format: `- [Project] repo: changed files. One-line summary. (time UTC)`
-
-- (nothing waiting)
+The one shared notebook for every Claude thread working on these repositories. Read it before starting, update it before handing files over.
+How the system fits together is in `README.md`; the Site Notes service is in `worker/README.md`; past versions are in `CHANGELOG.md`.
+Last updated: Nov 13 2026, 22:50 UTC (V49: code cleanup + header moon).
 
 ## Working now
 
+One line per thread that is changing files: `- what, which files (time UTC)`. Remove your line when your files are written.
+
 - (nobody)
 
-## Pending (things waiting on Jeremy or a push)
+## Current versions
 
-- Paste Worker 13j in Cloudflare (Workers & Pages > site-notes > Edit code > paste > Deploy), confirm 13j on `/api/check?site=stray-wolf&test=1`, then check the admin Analytics tab and the TVIS portal numbers.
-- Confirm the robot `site-notes@stray-wolf-analytics.iam.gserviceaccount.com` is a Viewer on the Stray Wolf GA4 property 563451944 (GA4 Admin > Property access management).
-- Client passwords are stored readable in KV; hashing them is still open. Hashing means the admin can only show a client's password right after setting it (no Copy password later). Jeremy's call. (Portal project)
-- Prices in `tools/build.py` are drafts to confirm. Headshot, phone, booking link still empty. (Main project)
-- Search Console and Bing verification values still empty. (SEO project)
+- **Site:** V49 (`VERSION` in `tools/build.py`). Next site change is V50. Before naming a version, also check the last lines of `.git/logs/HEAD`.
+- **Worker:** `2026-11-13k` live in Cloudflare and saved in `worker/worker.js`. `2026-11-13l` (report retried with different date ranges) was built and tested as a backup, never deployed; its copy is outside the repo. Next unused letter: **`2026-11-13l`** (or `YYYY-MM-DDa` on a new day).
+- **Tests:** `node worker/test-worker.mjs`. GitHub runs it, the build check and the HTML check on every push (Actions tab).
+
+## Rules for every thread
+
+1. **Start:** read this file from Jeremy's folder `C:\Users\jsgli\Documents\Websites\Stray-Wolf-Technology` (it can be newer than GitHub). Add a **Working now** line. If another thread is in the same files, wait.
+2. **Build on Jeremy's current files**, never on older copies. Check his folder matches GitHub `main` before writing; write only the files you changed.
+3. **Never push or commit.** Write files into his folder, then give him the exact commit message, one per repo.
+4. **Site:** edit `src/`, run `python tools/build.py` and ship the rebuilt `docs/` (his PC has no Python). Bump `VERSION` when `site.css` or `site.js` change.
+5. **Worker:** take the next letter above, run the tests, save `worker/worker.js` the same time it is pasted into Cloudflare, update **Current versions**.
+6. **Admin page:** its Content-Security-Policy lists `sha256` hashes of its inline scripts. Change a script, recompute the hash, or the page goes blank.
+7. **Portal:** `site-notes.js` must stay byte-identical in TVIS (`src/assets/site-notes.js`), FOTCL (`site-notes.js`) and the kit. Per-client words go in `data-` settings on the script tag.
+8. **End:** remove your Working now line, add one Log line, update Pending.
+
+## Pending (waiting on Jeremy or a decision)
+
+- Hash client passwords? Today they are stored readable in KV so the admin can show them. Hashing means a password can only be shown right after it is set.
+- Make the repository private (Cloudflare Pages, free, also allows real security headers) or keep it public. While public, keep secrets out of every file.
+- New Web3Forms key registered to info@ (today's key sends leads to the personal Gmail).
+- Google hours feature (read-only pull from Google Places) is built but not installed; files outside the repo.
+- Code cleanup still to do: move the admin page's script and styles into their own files (no more CSP hashes), and tidy the Worker (route table, remove the `&test=2/3` debug probes) once analytics is settled.
+- Owner tasks: request indexing in Search Console, Bing import, check the firemarktech.com redirect, Google Business Profile ownership/description/hours/photos, check SPF/DKIM/DMARC.
 
 ## Log (newest first, one line each)
 
+- 2026-11-13 22:50 UTC: V49. Code cleanup: README with an architecture diagram, `worker/README.md` (routes, KV keys, deploy, versions), `CHANGELOG.md` (replaces PICKUP.md), this file slimmed to one project, GitHub checks (`.github/workflows/checks.yml`), 9 unused images/fonts and unused CSS removed (72 full-page screenshots identical), Pricing shows no dollar amounts ("Let's talk"). Header moon: hold it 2 s to open the admin, same as the footer moon. TVIS + FOTCL: `site-notes.js` now identical (caption example moved to `data-caption-example`), FOTCL `notes/brand/` removed.
+- 2026-11-13 16:15 UTC: 13j live (15:58) but `&test=1` still fails: sign-in OK, the very first report (visitors) gets no answer in 6 s, twice. So it is not the parallel calls. Robot confirmed Viewer on 563451944 (Jeremy). Worker 2026-11-13k written to `worker/worker.js` (not pasted yet): 13j + `&test=3`, which tries 8 small Google calls (discovery, tokeninfo, GA admin, metadata GET, checkCompatibility POST, runReport with header / with token in the address) and shows which answer. Tests 138 pass.
 - 2026-11-13 16:10 UTC: Worker 2026-11-13j written to `worker/worker.js` (not pasted yet). Analytics fix: the 6 Google reports now go one after another, each with its own stop switch and a 6 s limit that also covers reading the answer, one retry if Google hangs or errors (5xx), whole fetch ends by 16 s (admin waits 20 s), last saved numbers shown if Google still fails. `/api/check?...&test=1` now times sign-in and each of the 3 headline reports (`&test=2` asks them all at once, to compare). Tests 135 pass. Wrangler debug (13k-debug) skipped; 13k is free. Hours "Working now" line cleared (hours work still paused).
 - 2026-11-13 15:27 UTC, Client Portal (main project thread): TVIS + FOTCL portal Edit mode card now shows a light framed picture of their website (brand/site-preview.jpg). Pushed: TVIS 462f8b2, FOTCL ec32571. (Main)
 - Nov 13 2026: Main signed off Portal's handoff: SYNC.md, README.md, PICKUP.md pointer, worker/ (worker.js 13i, tests 118 pass). TVIS 04de78a and FOTCL cda6ceb already committed; admin page unchanged since 52bd60a. (Main)
@@ -79,113 +53,4 @@ Format: `- [Project] repo: changed files. One-line summary. (time UTC)`
 
 ## Other repos
 
-- Client sites: `jsglisson3/TVIS-Site-Work-and-Construction`, `jsglisson3/FOTCL` (both with `/portal`), `jsglisson3/GLP-Home-Options`. Same rules: read their notes file first, one writer at a time.
-- The Site Notes Worker lives in this repo at `worker/worker.js` (Jeremy doesn't want a separate repo). Cloudflare runs a pasted copy, so this file is the record of what's live.
-- Project instructions for all three projects: see the bottom of this file.
-
-## Project instructions (paste into each project's settings)
-
-Same text for all three, only the first line changes. Add jsglisson3/Stray-Wolf-Technology to each project's repositories too.
-
-```
-This is the [MAIN SITE / SEO AND GOOGLE / CLIENT PORTAL AND ADMIN] project for Stray Wolf Technology.
-Two other Claude projects work on the same repos at the same time. GitHub is our shared memory.
-Before any work: read SYNC.md in the repo (from my folder C:\Users\jsgli\Documents\Websites\Stray-Wolf-Technology if you can reach it), and follow its start and end steps.
-Stay inside what SYNC.md says this project owns. If a change needs another project's files, say so instead of doing it.
-Version numbers are shared: check .git/logs/HEAD and the SYNC.md log before naming a site version. The live Worker source is worker/worker.js in that repo; read it before changing the Worker, the admin page or site-notes.js, and take the next Worker version letter from SYNC.md's Shared state.
-Never push from the cloud. Write files to my local folder, only after merging with what is there.
-Before you hand over files, update SYNC.md (Working now, Pending, one Log line).
-SEO and Portal projects only: Do NOT give Jeremy commit messages. When done, list your changed files under 'Ready for sign-off' in SYNC.md and tell him to check with the main project.
-Main project only: you are the only project that gives Jeremy commit messages. Review everything under 'Ready for sign-off' first.
-```
-
-## Stray Wolf Tech - Client / Admin Portal (final notes, Nov 13 2026 15:45 UTC)
-
-This project is being folded into one combined project. Everything below is what it knew that isn't elsewhere in this file. The full write-up is `PORTAL-HANDOFF.md` in the Portal project's files (`/mnt/project-files/handoff/`). No secrets here.
-
-### Open work (pick these up first)
-
-1. **Website numbers (Google Analytics) are DOWN** in the admin and on the TVIS portal, on live Worker 13i.
-   - `/api/check?site=stray-wolf&test=1`: Google sign-in OK in 0.36 s, but the report fails with "Google took longer than 20 seconds". Same for tvis-construction.
-   - Google itself is up (answers Jeremy's PC in under 0.1 s). A single test report passed in 0.11 s at 15:37, but the real load (3 headline reports at once) times out at 15-20 s. It comes and goes.
-   - 13g/13h said "The operation was aborted" on the batch call. Last night's 13b (3 plain runReport calls) worked.
-   - **Next:** Jeremy runs `npx wrangler login` on his PC. Then deploy a temporary `13k-debug` (13i + timing logs in runReport + `&test=3` running the 3 reports at once), watch `npx wrangler tail`, fix (likely: run the 3 reports one after another, or check for a shared AbortController / hanging body), remove the logs, ship as the next letter, save to `worker/worker.js`. Jeremy already OK'd the debug deploy.
-   - Also check that the robot is a **Viewer** on the Stray Wolf GA4 property 563451944 (never confirmed).
-   - **Update Nov 13 16:10 UTC:** fix shipped as Worker 13j (see Log) without the wrangler debug step. If 13j still fails, `&test=1` now shows which report and how long each try took.
-2. **Google business hours: built, NOT installed, waits on #1.**
-   - All files: `/mnt/project-files/google-hours/v1/` in the Portal project (admin index.html, TVIS src/notes/index.html + src/assets/site-notes.js, FOTCL site-notes.js, shots, `SETUP-GOOGLE-HOURS.md`). Worker part: `worker-waiting/worker.js` + `hours.diff` (on top of 13i), 145 tests pass.
-   - Worker adds new code only: hours section, 3 routes, `placeId` on clients, `/api/check` shows `placesKeySaved` and `googleListingLinked`. KV `hours:{site}` (1 day), `hourslast:{site}`, `hourserr:{site}`. New secret `PLACES_API_KEY` (Places API (New), in Google Cloud project stray-wolf-analytics).
-   - **Next:** after #1 lands, re-apply `hours.diff` on that Worker with the next letter; re-merge the admin and portal files against Jeremy's CURRENT files (staged copies predate the site-preview card and maybe the sessions work); rehash the admin CSP.
-   - The "Working now" line above about hours (13j) is from this paused work. Remove it when the hours work is picked up or dropped. 13j was never used.
-3. **Kit/template is behind live.** Newest is `site-notes-kit-2026-11-13d.zip` (pop-up audit, Worker 13f). It lacks the login sessions, the site-preview Edit mode card and Worker 13i. Rebuild from the live TVIS files before setting up a new client. `SETUP-GUIDE.md` is behind too.
-4. **Client passwords hashing** (see Pending): still Jeremy's call.
-
-### IDs and settings
-
-- Worker `site-notes`, https://site-notes.jsglisson.workers.dev. KV namespace `site-notes` bound as `NOTES`. Secrets `ADMIN_PASSWORD`, `GA_SA_JSON`; optional variable `ADMIN_ORIGINS`; future `PLACES_API_KEY`.
-- Check page: `/api/check?site=<short name>` (yes/no only); `&test=1` times one Google request.
-- Short names: `tvis-construction`, `friends-of-the-colony-public-library`, `stray-wolf` (Jeremy's own site, built into the admin as "Your website", not in totals).
-- GA4: `ga:tvis-construction` = 562482788 (live since Nov 13 05:21), `ga:stray-wolf` = 563451944. FOTCL GA4 is ON HOLD until the FOTCL site goes live.
-- Google robot: `site-notes@stray-wolf-analytics.iam.gserviceaccount.com` (project "Stray Wolf Analytics", straywolftech.com org). Needs Viewer on each GA4 property. Org policy `disableServiceAccountKeyCreation` was turned off for that one project only.
-- GA4 events counted: `phone_call_click` ("Phone calls"), `generate_lead` ("Form requests").
-- Booking link (Let's talk, `data-booking-url`): https://calendar.app.google/XseK2nweRYW1hea37 on TVIS and FOTCL; template ships empty.
-- Worker KV keys (13i): `client:{site}`, `batch:{id}`, `pic:{site}:{id}`, `sess:{sha}`, `fail:{ip}`, `fail:acct:{site}`, `ga:{site}`, `stats:{site}` (6 h), `statslast:{site}`, `gatoken`, `gaerr:{site}`, `inv:{number}`.
-- Invoices: SW-#### numbering, next is SW-0002 (SW-0001 = Jeremy's hand-made template). When Jeremy asks for **"invoice lines for the admin"**, output one code block in the format of `invoices/v1/PASTE-FORMAT.md` (Portal project files), no prices unless asked.
-- Admin client order is per browser (localStorage `swn-admin-order`). Admin demo mode: `SITE_NOTES_API="demo"` (demo password only); portal demo: `data-api="demo"`.
-- Jeremy's `C:\Users\jsgli\.claude\settings.json` allows `PowerShell(Copy-Item:*)` (keep `"theme": "dark"`), so Remote Control copies don't ask each time.
-
-### Worker version history (Nov 13)
-
-13b contacts + GA4 + captions + check page · 13c daily chart, top pages · 13d where each note was left · 13e spot snapshot · 13f photos on the site (`/api/admin/pic-used`, `/api/my-photos`) · 13g batch calls + stale fallback · 13h FORKED: the other project's sessions/security 13h vs this project's invoices 13h · **13i live** = security 13h + invoices + stats fix (3 runReport, extras after) · 13j reserved by hours, unused · 13k-debug planned, not deployed.
-
-### Gotchas
-
-- **One Worker change at a time, one owner per file.** The "two 13h" fork came from parallel edits. Before any Worker change: check the live version on `/api/check`, read `worker/worker.js`, take the next letter, save back here when pasting.
-- Always build from Jeremy's folder or GitHub main, never from project-files copies (many are stale).
-- Admin CSP script hashes must be recomputed after any inline script change, or the page goes blank.
-- In Cloudflare, Save isn't enough: click **Deploy**, then confirm the version on the check page. "Not connected yet" in the admin meant old code was still live.
-- After a push, the site takes a few minutes to rebuild; Ctrl+Shift+R before judging.
-- Portal changes are universal: TVIS, FOTCL and the template must match. The "On your site now" photo lists (TVIS 45, FOTCL 12) are typed into each portal page: update them after photo changes.
-- FOTCL `site-notes.js` may be hard-linked elsewhere on Jeremy's PC. Older FOTCL copies were restored once (Nov 12, 8:55 PM Central): check sizes before committing.
-- Cloud threads lost folder access on Nov 13 morning (service side). Remote Control on Jeremy's PC worked; his PC asks for his own written OK before overwrites unless allowed in settings.
-- Cloud can't reach workers.dev or the live sites; test in demo mode, Jeremy checks live.
-- Rejected, don't bring back: GLP portal, "Words that matter" and "Sites you like" boxes, "Photos that would help most", idea chips, "Calls tapped" wording, phone-vs-computer analytics, a separate worker repo, two-way Google Business Profile sync (for now). Not built yet, only when Jeremy says go: client email alerts, request status for clients, "My items" shop, sending email from the admin.
-
-## Stray Wolf Tech - SEO, Security, Accessibility
-
-Added Nov 13 2026 ~15:50 UTC by the SEO/Security/Accessibility project before it closes. Everything here is what SYNC.md didn't already say. Full history: `handoff/STRAY-WOLF-SEO-PROJECT-HISTORY.md` in that project's files [CONFIRM it was copied somewhere you can reach]. Nothing from this project is half-done or waiting on a commit; all of its versions are on main.
-
-**What it shipped (all on main):** V19 pre-launch pass (CSP meta tag, contrast, footer pause button, fixed `tools/a11y-check.js`), V27 go-live audit + GA4 + `LAUNCHED = True` (launched Nov 10 ~05:15 UTC), GLP Home Options links, V39/V40/V42 Google Business Profile + review button + `/review/` + G icon, V44 CSS polish, Worker login/security fix (inside 13i), email signature logo `docs/images/brand/stray-wolf-email-signature.png`.
-
-**IDs and settings**
-- GA4 `G-K661V9VYG2`, stream "Stray Wolf Technology", loaded by `docs/js/analytics.js` (sends one `generate_lead` per form lead, Start-a-project and email click events). Linked to Search Console. GTM container `GTM-M3S639H7` exists but is NOT used; adding it double-counts.
-- Search Console: Domain property `straywolftech.com`, verified by DNS TXT in Cloudflare, so `SEARCH_CONSOLE` stays empty on purpose. Sitemap submitted as the full URL `https://straywolftech.com/sitemap.xml` (8 pages, Success).
-- Google Business Profile: service-area business, "Website designer", Dallas / The Colony TX / Chattanooga (= `SERVICE_AREAS`). Owned by Jeremy's personal Gmail. Review link `https://g.page/r/CfdnwlRHO5SNEBM/review`, share link `https://share.google/uQjBeT1gwU9UAhhyP`, `SAME_AS` `https://g.page/r/CfdnwlRHO5SNEBM`.
-- Web3Forms key `0cf93fa5…` was made with Jeremy's personal Gmail, so leads go there, not info@.
-- Decisions: GA4 on with NO cookie banner (Nov 10); privacy/footer copy already rewritten for it.
-
-**Open (owner tasks, status unknown, ask Jeremy)**
-- Search Console: Request indexing for `/`, `/work.html`, `/pricing.html`, `/about.html`.
-- GA4: check Realtime; mark `generate_lead` as a key event; exclude own traffic.
-- Bing Webmaster Tools: Import from Google Search Console (`BING_VERIFY` stays empty if imported).
-- New Web3Forms key registered to info@straywolftech.com, then put it in `WEB3FORMS_KEY` and rebuild Start.
-- GBP: add the work account as Owner (jeremy@ or info@, unclear), transfer primary ownership after ~7 days; description must say "owner-run businesses", not "small businesses"; add phone, hours, photos; send Dani `straywolftech.com/review/`.
-- firemarktech.com: Cloudflare redirect rule "Firemark to Stray Wolf" (301, dynamic `concat("https://straywolftech.com", http.request.uri.path)`), DNS must be proxied (orange). Last check Nov 10 still showed a GitHub 404, so confirm it works. Then unpublish Pages on `jsglisson3/Firemark` and archive that repo.
-- SPF/DKIM/DMARC for the Workspace domain were never checked.
-- Ask TVIS, GLP and FOTCL for a "Website by Stray Wolf Technology" footer link.
-- Undecided: make the repo private (Cloudflare Pages free, recommended, also allows real security headers; or GitHub Pro $4/mo). While public, SYNC.md, PICKUP.md and this section are readable by anyone, so keep secrets out.
-
-**Known leftovers (not urgent)**
-- GitHub Pages can't send security headers; only the CSP meta tag protects pages.
-- Phone LCP ~0.9s slower because the first headings fade in (reveal motion).
-- ~15 unused images/fonts (e.g. `docs/fonts/instrument-serif-latin-400-italic.woff2`); check before deleting.
-- No real screen-reader test yet; never claim WCAG compliance.
-
-**Gotchas**
-- Site pages have a hash-based CSP built in `build.py`; new inline scripts or third-party hosts need it updated. Axe tests need Playwright `bypassCSP`.
-- Don't trust "0 axe issues" results from before V19 (old checker skipped reveal blocks and grain contrast).
-- `docs/images/facets.svg` has a hard bottom edge; texture layers need the `--tex-h` / `--fac-end` mask fade.
-- Full-page screenshots: resize the viewport to the page height first, or the fixed `body::after` grain draws a fake line.
-- Thanks page deliberately has no review ask (form senders aren't customers yet; Google policy).
-- The cloud can't reach straywolftech.com, so live checks (headers, form send, GA hits) must be done by Jeremy.
-- Old zips in that project's files (launch-pass, seo-pass, go-live-audit, google-review, visual-polish, login-sessions) are all superseded. Never re-apply them.
+- Client sites: `jsglisson3/TVIS-Site-Work-and-Construction`, `jsglisson3/FOTCL` (both with `/portal`), `jsglisson3/GLP-Home-Options`. Same rules: one writer at a time, build on Jeremy's current files.

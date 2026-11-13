@@ -1,0 +1,373 @@
+# Changelog
+
+Site versions, newest first. Each site change takes the next V number and bumps `VERSION` in `tools/build.py`.
+Admin-only changes start with "Admin:" in the commit message and take no number. Worker versions are listed in `worker/README.md`.
+
+V39 to V42 (Google profile and review button) and V44 (CSS polish) are described in their commit messages only.
+
+## V49 (Nov 13 2026): header moon, pricing without numbers, code cleanup
+
+- Hold the moon in the header for 2 seconds to open the admin, the same as the footer moon (Moon door block at the end of `docs/js/site.js`).
+- Pricing shows no dollar amounts (Jeremy: pricing is "Let's talk"). Each job's price column shows its size instead: Up to 5 pages, 6 or more, mockup credited in full, fixes in days. The homepage FAQ and the structured data lost their prices too, and the price settings left `tools/build.py`.
+- Removed 9 files nothing loaded (an old font, 240px thumbnails, old FOTCL and GLP images) and unused CSS. Full-page screenshots of all 12 pages at 6 widths are identical before and after.
+- New: `README.md` with an architecture diagram, `worker/README.md`, this changelog (PICKUP.md retired), GitHub checks on every push.
+
+## Login sessions (Nov 13 2026, session-handling thread)
+Jeremy: "just feels like its keeping me logged in". It was: the admin and client portals kept a login key in localStorage that never expired on screen, Log out only deleted the browser's copy, and the Site Notes Worker issued signed keys good for 14 days (admin) / 30 days (clients) that nothing could revoke.
+- **Worker 2026-11-13h** (source kept in the project files, `login-sessions/worker/worker.js`): server-side sessions in KV (`sess:{SHA-256 of the key}`), admin 30 min idle / 8 h max, clients 2 h idle / 24 h max; `/api/logout` and `/api/admin/logout` delete the session; a new client password (or deleting the client) and a new ADMIN_PASSWORD end existing logins. Also: per-login lockout (20 misses / 15 min) on top of per-IP (8), uploads must really be JPG/PNG/WebP, admin routes only answer `https://straywolftech.com` (ADMIN_ORIGINS variable to change), nosniff/sandbox headers on every answer, JSON bodies capped at 256 KB, website addresses checked.
+- **docs/admin/index.html**: stores `{t, at, seen}`, logs out on screen at the same limits, Log out tells the Worker, logging out in one tab logs out all, client passwords are cleared off the page on logout. CSP script hash redone.
+- Client portals (TVIS `src/assets/site-notes.js`, FOTCL `site-notes.js`) got the same on-screen limits and real Log out. Keys saved by older versions are dropped, so everyone logs in once more.
+- Still open: client passwords are stored readable in KV (the admin shows and copies them). Hashing them means the admin can only show a password right after setting it.
+
+## V48: moon door to the admin page (Nov 12 2026, Site Notes thread)
+Jeremy: "if i hold the moon it starts to slowly go bright and phase into an admin page".
+- **docs/admin/index.html** (added as its own commit before V48): the private Site Notes admin (client requests with Done boxes, clients and passwords). Not built by tools/build.py; edit it in /mnt/project-files/site-notes-kit/admin/ and copy it over. Its own tight Content-Security-Policy (script hashes): any edit to its inline scripts needs the hashes redone. Hidden from search.
+- **Moon door:** the footer moon in src/layout.html is wrapped in `<g class="moon-door" data-moon-door>` with a wider see-through circle. Holding it 2 s grows a soft moonlight, washes the page in #FFFDF8 and opens /admin/, which fades in from the same colour (sessionStorage `sw-moonlight`). Code at the END of docs/js/site.js ("Moon door"). A normal tap does nothing. Nothing on the site names or links /admin/; keep it that way (no comments in layout.html either, they ship in the HTML).
+- Client sites get the same effect from site-notes.js (`data-door`), opening their own client page.
+- VERSION '48'.
+
+## V47 (Nov 11 2026): sharper work frames, and a conversation on the mockup card
+
+Jeremy: "Sharpen up all these boxes and frames as well" (the homepage work slider), "sharpen the logo frames and just polish and
+sharpen all these lines and boxes up" (the Work page list), and on the Before the build card "something that shows and implies we
+are talking or going back and forth", "I like what we have but just something on top of it".
+- Mounts (home and Work): a rounded plate with soft facets like the logo (sand on light pages, charcoal in the dark band), the
+  screenshot in a slim browser window (three dots, fine edge, soft shadow), the phone as a real phone (graphite frame, glass, side
+  button). The Work page mount no longer bleeds to the screen edge on phones.
+- Logos sit on a small raised plate (both pages). The rule above the words is a fine line with a short orange tick.
+- Visit the site is a raised key with the arrow on its own small facet (class `button-visit`, set in visit() in tools/build.py).
+- Slider keys are small faceted charcoal plates like the service tiles; the progress bars are rounded and the current one is longer;
+  See all the work has its arrow in a ring that fills orange on hover. All in the Mounts / Recent work block of p11/home.css.
+- Before the build: a short chat over the mockup (generator v47/gen_cards.py, copy in /mnt/project-files/rebrand/site-v47/). Mine on
+  the left in orange with the wolf mark, the client's on the right in blue, typing dots before each reply: "Here's your mockup." /
+  "Love it. One small change?" (the note goes up) / "Done. Here's v2." / "Perfect. Let's build it!", then the APPROVED stamp.
+  The card clock is now 33 s (Me and Us start two seconds later).
+
+## V46 (Nov 11 2026): the service tiles
+
+Jeremy: "Can you make these buttons awesome ?" (the six icon tiles in What I do). Each is now a faceted charcoal plate (four
+conic facets, like the logo wolf) with a soft light that sweeps across it now and then, and its own inline SVG icon (SVC_ICONS in
+tools/build.py; outlines are paths so pathLength works in Safari). When a row scrolls in its icon draws itself, then keeps one quiet
+motion: the page blocks build, the wrench turns, the globe spins (orange meridian), the server lights blink, a new-mail dot pings,
+the magnifier scans the lines. Reduced motion and no-JS show the finished icons; the footer pause stops them. CSS sits after
+#services in p11/home.css. VERSION 46.
+
+## V45 (Nov 11 2026): a mockup checkpoint, four steps, a clearer You card, the handoff
+
+(Built as cloud V44, then merged on top of the separate project's V44 polish, which edited docs/css/site.css directly: --line-2
+borders, body font smoothing, the .has-facets fade, --tex-fade/--tex-h, .svc p, #services padding, .prose p, .ruled li, mobile
+pledges, the story padding, .foot-tag. All of it is now in the p11 parts (base, home, pages, about, footer). Also V45: the missing
+images/work/tvis-phone-600.webp, which phones asked for and showed as a broken square.)
+
+Jeremy: "we need to add a checkpoint phase for mockups before we get to deep on a build", "put some real effort into how to
+include a mockup checkpoint"; the You notes card "does not make sense try again"; the Us step should "sound like we have more of a
+handoff and check list to not be transactional"; he picked the heading "You talk. I build." on a decision card.
+- Four steps now (PHASES in tools/build.py): You. (First) / Us. (Before the build: "See it before I build it.", the homepage
+  mockup from Pricing, credited in full) / Me. (Then: "I take over.", the price line moved to the mockup step) / Us. (Before launch:
+  "A walkthrough, then the handoff."). Both checkpoints are green (your green light); the trail runs blue, green, orange, green.
+- Layout (p11/home.css): four across from 100em, two by two from 64em (each row lined up with subgrid, a gap track between rows,
+  the second step's trail stops at its own edge), one column with the trail down the left below 64em.
+- Mockup scene (v44/gen_cards.py, scenem/animm): a printed TVIS homepage mockup taped to the wall with a grey "Your photo here" box,
+  a pale blue client note "Use my photo here?", the box dissolves into the real photo, v1 turns to v2, an orange tick on the note,
+  then a green APPROVED stamp lands. The wolf sits under it and looks up. Note: in the scenes, any left/top on an element that
+  also sets its own font-size is in THAT element's em (the stamp and the note's tick).
+- The clock is 31 s now (Me and Us moved on by 6.85 s); wolves are cw-1 (You), cw-2 (mockup), cw-3 (Me), cw-4 (Us, resting).
+- You card: three questions, the chat scrolls up (v44/chat.js measures it into v44/chat.txt), notes "Website now / Your work /
+  The goal", no NEXT row.
+- Heading "You talk. I build." and the lead "One conversation to start, and I handle the rest. Before launch, I walk you through it
+  and hand it over, all in your name." (balanced, two lines on desktop). VERSION 45.
+
+## V43 (Nov 11 2026): How it works becomes the centrepiece
+
+(Built as cloud V42, then merged on top of the separate project's V42, the Google G mark: #i-g in the sprite, .g-mark in
+google_profile_link() and google_review_badge() in tools/build.py, its CSS kept at the end of p11/motion.css. All of it is kept.)
+
+Jeremy: "make the dog movment smoother, and make all the spacing loook better. and just mkae this whole sectiono look like the key
+selling point.. like it does not get more important than this. we are explaining our whole purpose". And for Me: "something generic
+about just solving tech problems for them"; he picked "You don't have to deal with the tech. That's my job." on a decision card.
+- The section (#how in src/home.html) has its own stage (.how-stage): more room, a soft light behind the scenes, a wider column
+  (.wrap-how, 1880px, so the scenes are about 25% bigger on desktop), a centred heading under a "How it works" label with the three
+  step colours. The facet texture fades out by 44rem so it no longer leaves a hard edge through the lists.
+- Desktop: the three steps line up row by row with CSS subgrid (scene, label, name, line, list). The scenes have rounded corners and a
+  deeper shadow. Tablet scenes may be 40rem wide.
+- Me briefly had a second line ("You don't have to deal with the tech. That's my job."); Jeremy had it deleted. phases() still
+  accepts an optional 5th field (.phase-sub). Under the steps, one closing row (.phases-end): the "Once I take the job" note
+  and a Start a project button.
+- The wolf (v42/gen_cards.py): a steady trot, legs 0.2 s a step at 24 degrees so the paws keep up with the ground (no skating),
+  walks ease into each stop, the sit pose fades in over the walk (never see-through), new timeline with HANDOVERS to match.
+- The Me list's last line is now "Set up so Google, Bing and DuckDuckGo can find it (SEO)" (Jeremy: plainer, "put SEO in () at the end").
+- CSS for the section is in p11/home.css above the generated block. VERSION 43.
+
+## V41 (Nov 11 2026): You card notes, a tablet in Us, a healthier furry wolf
+
+(Built as cloud V39, then merged on top of the separate project's V39 and V40, the Google Business Profile work:
+GOOGLE_PROFILE_URL / GOOGLE_REVIEW_URL / SERVICE_AREAS in tools/build.py, the g-band in src/pages.py, #i-star in the sprite, the
+.g-review CSS now kept at the end of p11/motion.css, and the /review/ redirect. All of it is kept.)
+
+Jeremy, on V38: "work on the you section still needs work", "put a tablet in the US some how to imply it wroks there",
+"make the wolfs fur better.. he jsut looks sick or something".
+- You: a "Your project / Notes from our chat" card beside the phone fills in as the answers arrive: Now (A Facebook page),
+  Goal (More estimate calls), then Next (A price in writing), each with a blue tick. Blue, like the rest of You. The chat client is
+  not named. Phone at x 214, wolf sits at x 128.
+- Us: laptop (86,40 200x128), a tablet (14,86 92x124, images/work/tvis-tablet-384.webp from a 768x1024 shot of TVIS) and a
+  smaller phone (318,102 56x112); all three glow green at launch. The ask card says "Checked on a computer, a tablet and a phone."
+  The wolf now sits and howls in front, between the devices (x 198); confetti comes from the Live pill (186, 50).
+- Wolf (v39/wolf.py): fur tufts (tufts()) on the ruff, chest, belly, thighs and a bushy tail with a dark tip; a grey wolf's
+  pale cheeks, muzzle, throat, chest and leg fronts (mixp ramp); head carried higher in the walk (WALK_HEAD); calmer facet jitter;
+  the round pale eye the site's other wolves have (V30), plus a dark brow.
+- Generators v39/gen_cards.py + v39/wolf.py (copies in /mnt/project-files/rebrand/site-v39/). VERSION 41.
+
+## V38 (Nov 11 2026): You / Me / Us cards redone after Jeremy's notes
+
+Jeremy, on V37: "the coffee seems so random", "the site choices are terrible use TVIS for every example", "that wolf needs to be a little more musculuar".
+- The mug is gone. The phone in You sits nearer the middle (x 176) and the wolf sits beside it (x 74).
+- Every screen shows TVIS Construction: images/work/tvis-screen-640.webp (laptop, from a 1440x900 shot of the TVIS build) and
+  images/work/tvis-phone-300.webp (phone, from a 390x844 shot at 2x). The Work page still uses the older tvis-desktop-* files.
+  The Me card's address bar and Domain panel say tvisconstruction.com; the Email panel says "On your own domain" (no made-up address).
+  The You chat answers are "No, just a Facebook page." and "Bring in more estimate calls." (not attributed to anyone).
+- The phone in Us leaves a status-bar gap at the top so the camera island no longer covers the site's logo.
+- The wolf (v38/wolf.py) is stockier: deeper chest, level back, a neck ruff, shoulder and haunch picked out in lighter facets,
+  thicker forearms and a real hock on the hind legs, facets lighter towards the top of each part. Sit head offset is W.SIT_HEAD.
+- Generators: v38/gen_cards.py + v38/wolf.py (copies in /mnt/project-files/rebrand/site-v38/). VERSION 38.
+
+## V37 (Nov 11 2026, ~04:50 UTC): the You / Me / Us cards as real devices, with a little faceted wolf
+- Jeremy: the old scenes were "a little bleh" and "too clip arty", "can we make it realistic", "I want that to be fantastic.. maybe even tie a little cute wolf who walks through it". From Dribbble research (FiremarkTech\research-shots\2026-11-11-cards) he picked "Real devices + logo wolf".
+- The three scenes are now HTML (src/partials/how-scenes.html, generated by the scratch script v37/gen_cards.py with v37/wolf.py; the CSS sits between the how-scenes markers in the home part of site.css). Every size is in em where 1em is 1/400 of the card's width (container query units), so each card scales like a picture.
+- **You:** a real phone (graphite frame, glass, camera island) floating over a table in window light, a chat with "A few quick questions": two questions, typing dots, two answers, "Answers sent". A sage mug of coffee on the table.
+- **Me:** a real laptop with yourbusiness.com in the address bar; the GLP Home Options site appears top to bottom behind an orange line, over grey placeholders. Four interface cards check off in orange: Domain, Email, Hosting, Search engines (Google, Bing, DuckDuckGo).
+- **Us:** the same site on a laptop and a phone with a "Private preview" pill; a "Ready to go live?" card, a cursor presses "Yes, launch it", it turns to "Approved", the pill turns to a green "Live", the screens glow green and confetti pops.
+- **The wolf:** a small low-poly wolf in the logo's charcoal facets with its orange inner ear (walk, sit and howl poses; legs, tail and head move on their own). One 24 s clock: it walks into You and sits watching the chat (tilts its head at each answer), walks into Me and watches the build, walks into Us and howls when the site goes live, then walks off. The trail's dot runs as it walks between cards.
+- Reduced motion and no JavaScript: three finished pictures, the wolf sitting in Us. The footer's pause button stops it all.
+- VERSION '37'. Checks: axe 0, no sideways scroll, forms and menu fine, cards checked at 390, 768, 1440, 1900 and 3440.
+
+## V36 (Nov 11 2026, ~04:15 UTC): three animals in the hero
+- Jeremy asked for "something clever and creative" in the hero and then "can we not do them all?". All three run on one 48 s clock (three of the wolf's 16 s cycles), so only one thing happens at a time. Markup in `hero()` in tools/build.py, CSS at the end of the hero part of site.css (search "V36 hero animals"). Outlines are in the hero defs (`#hs-hare-sit`, `#hs-hare-a`, `#hs-hare-b`); the scratch generator was v36/shapes.py + v36/animals.py.
+- **Stray from the pack:** four small wolves (the footer's run gait, mirrored, about 0.075 scale) lope right to left along the far ridge from 3 s to about 28 s, tilting with the slope and passing in front of the sun, while the hero wolf keeps to its oasis. Keyframes `hs-pack` are generated from the ridge points.
+- **Hawk:** a red-tailed hawk seen from below circles high on the right (`.sky-hawk` in the sky layer, 26 s per circle, the circle squashed to an ellipse so it reads as seen from the ground). Its faint shadow (`.hs-hawk-shade`, 9% ink) circles on the sand near x 992 in step with it.
+- **Jackrabbit:** in the third cycle it peeks over a desert shrub (x ~717) while the wolf drinks (ears at 35 s, sits up at 36 s), and bolts to the right with real bounds the moment the wolf howls (38.8 s). The sitting rabbit is behind the near ground so it can rise from behind it; the running one (`.hs-hare-run`, two poses swapped every hop) is in front.
+- Reduced motion: the rabbit sits by its shrub, the hawk hangs in one spot, the pack stays away. The footer's pause button stops all of it. Phones: the first flock of small birds sits a little higher (0.64 of the scene height) so it no longer touches the wolf's ears.
+- VERSION '36'. Checks: axe 0 on all pages, no sideways scroll from 320 to 3440, reduced motion is a still picture, pause stops every hero animation.
+
+## V35 (Nov 10 2026, ~17:15 UTC): "Don't see your job here?" on Pricing, TECHNOLOGY 5% bigger
+- Jeremy: "Can we add something on my sales that is like doesn't fit? Let's talk it through to make it seem like I can fit everyone". The Pricing price list now ends with one more row, above "After launch": **Don't see your job here?** / *Any size* **Let's talk** (orange, where a price would be) / "Most projects don't fit in a box. Tell me what you need, big or small, and I'll work out a version that fits you and your budget." / a "Talk it through with me" link to the Start form. In src/pages.py (the `rates` list) and `.rate-fit` in the Pricing block of the CSS.
+- Jeremy: "make the technology in the logo like 5 percent bigger". TECHNOLOGY in all eight logo lockups went from 1.27 to 1.33 (`data-tech`). The link preview card (docs/images/og-card.jpg) was re-rendered from tools/og-card.html, and one star that sat on the end of TECHNOLOGY there moved to the right. The email signature images in docs/images/email were left alone, as before.
+- Jeremy: "change the link to my website but don't change the preview of the glp home options website so it points to the one I built". GLP Home Options now links to https://jsglisson3.github.io/GLP-Home-Options/ (his repo jsglisson3/GLP-Home-Options, the same pattern as the FOTCL link in V32). The pictures (glp-desktop-*, glp-phone-*, glp-logo) are unchanged. The cloud could not open github.io to test it, so he was asked to click it once.
+- Jeremy: "Can we add some texture to all the site like we did with the hero? It's nice just subtle", then (showing the Work page) "do it everywhere that makes sense". The hero's cut-stone facets (docs/images/facets.svg) now sit, a little quieter, behind the light sections: homepage How, Services and FAQ; Pricing's price list, In every price and What costs extra; Reviews; About (top, Six things, the story); the Start form; Thanks and 404; and on the Work page each site gets its own full-width fan, alternating sides with the layout. Classes `.tex` (fans from the right), `.tex-left`, `.tex-b` (a lower part of the fan, so neighbours don't repeat), in the Base block of the CSS next to `.has-facets`. Each layer fades at its top and bottom, sits under the content (isolation, z-index -1) and adds no overflow, so the sticky columns still work. Privacy and Terms stay plain for reading. The dark Work band keeps its grain.
+- VERSION is '35'. Checks: axe 0 on all 10 pages, no sideways scroll, form and menu tests pass.
+
+## V34 (Nov 10 2026, ~07:35 UTC): bigger Me and Us scenes; the hero wolf drinks at an oasis, then howls; cactus detail; birds and clouds
+- **Jeremy's words.** Me scene: "make this one super cool like i am doing a ton of cool building.. adding google icons and bing icons into their to imply seo optimazation .. some gears and configurations implying teh DNS hookup .. and plugging everyting together.. basically an animation selling all my vaule prop". Us scene: "and the last one as well but i dont have as many ideas". Hero wolf: "can you make this guy walk up on some water and drink a little bit then howl? like an oasis in the desert type of deal?". Cactuses: "maybe add some specs of color and spikes to the cactues as well to make it more realistic". Sky: "and maybe some birds flying around too", "subtle but cool", "also maybe add some clouds as well".
+- **Me scene (the whole build).** A smaller browser on the left builds the site while four cards on the right wake up as a cable plugs each one in: Domain, DNS (two gears turn, two settings switch on), Email, Hosting. Then a search bar under the site lights up and Google, Bing and DuckDuckGo tick off one by one, "and more". At the end a pulse runs down every cable into the site and the browser flashes orange. **The search engines appear BY NAME in small tags, not as their logos**: the logos are trademarks and the stance is safe and conservative (he was told; if he insists on real logos, check each company's brand rules first). Ticks in this scene stay orange; green is kept for Us.
+- **Us scene (private preview, then live).** The site shows on a computer and a phone under a "Private preview" tag with a lock. One change request is pinned on the photo (blue), the photo changes on both screens, the cursor presses "Looks good", the tag turns to a green "Live", both screens flash green, confetti in the three step colours bursts, the moon rises and the wolf howls on top of the browser.
+- **Clock.** The three scenes now share a 20 second clock (it was 16): You 0 to 3.5s, Me 3.7 to 10.9s, Us 10.9 to about 17s, a rest, a soft reset. Generator: the session scratch folder v34/gen_how.py, which mk_gen.py assembles from v33/gen_how.py (shared pieces, scene 1, the CSS writer) plus scene2_block.py and scene3_block.py. Copies are in the project files under rebrand/site-v34/gen/. Run mk_gen.py, then gen_how.py, then the build.
+- **Hero oasis.** The near ground is level from 392 to 622 and holds a small pool (`.hs-oasis`: wet sand rim, water, a shine, reeds with two cattails, a small palm). The wolf still runs in once and stops at 440, now at the pool's edge. On the 16 second clock it shares with the header moon: the head goes down in three quick steps at 18% (`#hs-dip-1`, `-2`, `-3` in the hero's own defs, swapped with step-end keyframes hs-d1 to hs-d3), it drinks until 34.2% while two rings spread on the water (`.hs-rip`), the head comes back up, and the howl at 41.5% to 53% is unchanged and still in step with the moon. The three poses are GENERATED from `#wolf-level` by v34/drink.py (the body is kept point for point; the head is turned and carried down along an arc; two new curves join it to the chest and the withers). If the level wolf is ever redrawn, run drink.py and hero34.py's pose block again.
+- **Cactus detail.** `#hs-cactus-detail` (hero defs) is drawn over `#cactus` on the four hero cactuses: darker ribs, short spines along the edges, cream and orange blooms on the tops, a couple of red fruits. Only the hero: the cactus on the Work band's ridge and the footer's night cactuses are still plain silhouettes.
+- **Sky.** `.hero-sky` is a layer over the desert and under the words (the desert is z-index 0, the sky 1, the words 2): three paper-cut clouds drifting on 120 to 210 second loops and two small flocks of birds (four near ones crossing left to right every 44 seconds just above the hills, two far ones the other way every 67). Sizes are in px and vw, positions hang off `--hs-h` (the desert's height, now a variable on `.hero`).
+- **Rules it follows.** Reduced motion shows a still picture (wolf standing, pool, clouds and one flock sitting in the sky); the footer's pause button stops the wolf, the water, the clouds and the birds (`.scene-paused .hero-sky *` joined the header rule); everything new is aria-hidden decoration. axe 0, no sideways scroll from 320 to 3440.
+- Not built: the materials scene for the "Once I take the job" line (see V33).
+
+## V33 (Nov 10 2026, ~06:55 UTC): step one is three easy questions; You / Me / Us gets animated scenes
+- **Words (in his folder since 06:55, tools/build.py + docs/index.html only).** Jeremy on the You list: "makes it seem like I'm doing the heavy lifting" (he meant the client), "this should go into the 'once i take the job' area", and "the first step should only be about do they have a website? what's their situation and what are they wanting to do? what's the goal of this website?". So step one is only: whether you have a website now / your situation and what you want to do / the goal of the website. The logo, the photos and the wording line ("main headline or slogan, key phrases, wording or other guidelines. I'll write the rest.") moved into PHASE_NOTE, the "Once I take the job" line under the three columns. The "What do you need from me?" answer now starts "To start, just a conversation." **Rule: never make the client's part look like work. Step one is a conversation; the homework comes after he takes the job.**
+- **Scenes (his words on the V29 trail: "well done but just not selling me", "needs a pretty big refresh or maybe something cool in it to animate it").** Each step now has a small animated scene above it, on one 16 second clock that starts when the list scrolls into view: You = three questions and the client's answers as chat bubbles; Me = the address types itself, the site builds piece by piece, a search result card appears; Us = a "Preview" tag, a change request pinned on the photo, the photo changes, a cursor presses "Looks good", the tag turns to "Live" and a small wolf howls on top of the browser. A dot runs along the trail when one step hands over to the next. Then a rest and a soft reset.
+- How it is built: the three SVGs live in src/partials/how-scenes.html and their styles and keyframes sit between the `how-scenes:start` / `how-scenes:end` markers in the Home block of the CSS. Both are GENERATED by one script (the session's scratch folder, v33/gen_how.py: a list of pieces with start times in seconds, turned into percentage keyframes). To change the timing or a drawing, change the generator and run it again; editing the keyframes by hand means recomputing percentages. If the script is gone, the partial and the CSS block are still plain, readable SVG and CSS.
+- Rules it follows: every piece's resting style is its final state, so reduced motion and no JavaScript show three finished pictures; the footer's pause button stops the scenes too (`.scene-paused`); the scenes are decoration (aria-hidden), the lists under them say the same thing. `data-reveal` moved from each step to the whole list (`<ol class="phases">`), so all three scenes share one clock.
+- Colours (Jeremy, on seeing the preview: "This looks so much better!! but shouldn't we switch the colors of US and YOU.. green is like a green light so you want to end there"): You is dusk blue, Me is orange, Us is green, and the trail runs blue to orange to green. Inside the scenes green is kept for the end too: the client's answers and change request are blue, the Me scene's tick is orange, and only the resolved change and the "Live" tag are green.
+- Not built yet: a matching scene for the "Once I take the job" line (the logo, photos and headline arriving). A first version of that drawing is in the generator's backup (v33/gen_how_materials_backup.txt).
+
+## V32 (Nov 10 2026, ~06:40 UTC): Friends of The Colony link
+- Jeremy: "change the URL to this link for the friends of the colony https://jsglisson3.github.io/FOTCL/ but leave the preview URL the way it is". The site's "link" in src/sites.py now points there, so the picture and "Visit the site" on the homepage, Work and Reviews all open his concept instead of the official fotcpl.org. Read "leave the preview" as: keep the picture as it is (docs/images/work/fotcpl-*), no new screenshot. If he meant the picture should still open fotcpl.org, mount() in tools/build.py would need its own link field.
+
+## V31 (Nov 10 2026, ~06:35 UTC): the mockup on Pricing, search engines by name, wider "words" line
+- Four small asks from Jeremy in five minutes, all copy:
+- Pricing, the three points under the headline: "Half to start, half at launch" is now **"A mockup first, credited in full"** (he highlighted the line: "change this to reflect my mockup strategy"). The half-and-half split is still the rule; it lives on Terms (#payments) and in the client agreement, it just isn't a headline point any more. Mockup strategy as it stands: $50 to $100, paid up front, credited in full if the site goes ahead (MOCKUP_FROM / MOCKUP_TO in tools/build.py); the early mockup goes to the client as a picture or PDF in their Drive folder, then a private preview link while building, and nothing goes live until they say yes.
+- Search engines ("include some stuff about SEO optimization for bing/google/duckduckgo and more", then "maybe include SEO optimization in this list" on the Me list). Four places, no new section: a sixth service on the homepage, "Search engine setup" (SERVICES in tools/build.py; the grid is now three across in two rows, `.svc-list` in the Home block of the CSS, it was five across); a fifth line on the Me list, "SEO for Google, Bing, DuckDuckGo and more" (PHASES); Pricing's "In every price" item is now "Set up for search engines" (INCLUDED in src/pages.py); and one new question, "Will my site show up on Google?" (FAQS). **The answer makes a promise Jeremy has to keep on every job: titles and descriptions, structured data, a sitemap, fast pages, and the site submitted to Google (Search Console) and Bing (Webmaster Tools).** DuckDuckGo and Yahoo draw on Bing, which is why the copy says submitting to those two covers them. Still no ranking promises anywhere, and none should be added.
+- You list, third line: "Your main headline or slogan, key phrases, wording or other guidelines. I'll write the rest." (his words: "Your main headline or slogan or key phrases, wording or other guidelines"). The "What do you need from me?" answer says the same. "I'll write the rest." was kept; he did not ask for it to go.
+- Same hour he said the You / Me / Us section is "well done but just not selling me ... needs a pretty big refresh or maybe something cool in it to animate it". That rebuild is the next round (V32) and is shown to him before it is written to his folder.
+
+## V30 (Nov 10 2026, ~06:20 UTC): friendly eyes on every scene wolf
+- Jeremy: "can you give all of our wolfs eyes?" then "not vicious or mean but just almost friendly like a dog". Every wolf in a scene now has one round eye: the hero wolf (standing, howling and running in), the small wolf on the homepage ridge, the footer wolf (standing, howling, running) and the wolf on the link preview card.
+- How: the three pose symbols in src/layout.html (`#wolf-level`, `#wolf-howl`, `#wolf-run`) are now groups holding the body path plus a `.wolf-eye` (a circle, r 3.2, with a small `.wolf-glint` highlight up and to the right). Eye centres in pose units: level (65, -135.5), howl (55, -167.6), run (88.5, -80). The scene sets the colours through custom properties, which inherit into `<use>`: the pale footer wolf keeps the defaults (dark eye, pale glint); the dark wolves set `--eye: var(--paper); --glint: 0` with `--eye-scale` 1.15 on `.hs-wolf` and 1.45 on `.ridge-near` (the ridge wolf is tiny, so its eye is drawn larger to stay about a pixel across).
+- What makes it read friendly and not mean: round, no slant, no brow line, no colour or glow. A pupil inside a pale ring was tried on the dark wolves and looked googly and cartoonish (he rejected a cartoon wolf before), so the dark wolves get a plain pale dot.
+- tools/og-card.html has the same eye drawn inline on its howling wolf, and docs/images/og-card.jpg was re-rendered from it (1200x630, JPEG quality 90). That render also picked up the bigger TECHNOLOGY from V28.
+- Left alone on purpose: the logo wolf (locked Nov 8; its eyes are narrow slits, and they glow orange on the 16s clock in the header) and the stone-cut wolf head on About and 404 (it is the logo drawing). If Jeremy wants those softened too, that is a logo change and needs his say.
+
+## V29 (Nov 10 2026, ~06:02 UTC): You / Me / Us says how Jeremy really works, and gets a trail
+- Jeremy described his real process: he talks the project through first; he looks at a client's current site only once he has taken the job; from the client he wants the logo, as many photos as possible and the few words that matter most (a main headline or slogan), and he writes the rest; once he takes the job he sends a list of what to send and how. He also helps FIND a domain that is available, not just register it. He approved the You column wording and the two matching lines word for word.
+- Words (PHASES and PHASE_NOTE in tools/build.py; the lead line in src/home.html): You = a conversation / your logo and as many photos as you can / your main headline or slogan, "I'll write the rest". Me = price in writing / help finding a domain name that's available / design and build / domain, hosting and email set up. Us unchanged. One note under the three steps says he sends a short list once he takes the job. The homepage answer "What do you need from me?" and the service "Domain search and setup" match. "Your part" on Start and Thanks now reads "You send your logo, photos and key words." Never go back to "the words for each page": the client does not write the pages.
+- The trail (he asked "how can you make this piece special"; built the recommended look from the decision card): one line runs through the three steps and draws itself from You to Us on scroll, green to orange to blue, with a marker where each step starts. On phones and tablets it runs down the left side. CSS only, in the How it works block; `--td` is each stretch's start time. Still shown, and still, with reduced motion.
+- VERSION is '29'. Checks: axe 0 on all 10 pages, no sideways scroll 320 to 1920, form/menu tests pass.
+
+## V28 (Nov 10 2026, ~05:55 UTC): the wolf and cactus stand on the ridge, bigger TECHNOLOGY
+- Jeremy: "the wolf gets cut off so does the cactus" (the ridge above the work band on the homepage). On screens wider than about 2200px the ridge zoomed in with the width and cut off the wolf's head and the top of the cactus. The ridge (src/home.html) is now 2400 wide and scaled by its height, so wider screens show more hills and the figures stay whole and the same size. The wolf and the cactus each stand on a short level ledge, so their feet sit on the line. They sit near the middle (x 1052 and 1361), which is all a phone shows.
+- Jeremy: "make the technology like 7% bigger". TECHNOLOGY in all eight logo lockups went from 1.15 to 1.27 (`data-tech`). 7% alone is under a pixel at header size, so this is about 10%.
+- VERSION is '28'. Checks: axe 0 on all 10 pages, no sideways scroll 320 to 1920, form/menu tests pass.
+
+## V27 (Nov 10 2026, ~05:00 UTC): final go-live audit, GA4 on
+- **Google Analytics 4 is on** (Jeremy chose "GA4 on, no cookie banner", Nov 10). `GA4_ID = 'G-K661V9VYG2'` in tools/build.py; empty turns it off everywhere. The tag is `docs/js/analytics.js` (its own file, so the CSP still allows no inline script); the CSP gains Google's GA4 hosts only when GA4_ID is set. Events: GA4's page views and enhanced measurement, plus `generate_lead` (on arrival at thanks.html, once per session, so refreshes don't double count), `cta_click` (any Start a project link, with where it was: header, hero, close, footer), `email_click` and `phone_click`. In GA4, mark **generate_lead** as the Key event (not form_submit, or leads count twice). The GTM container GTM-M3S639H7 is not used; don't add it as well, or every page view counts twice.
+- Copy that promised "no cookies, no tracking" is rewritten: footer ("No ads, and your details are never sold."), the Start page's Private and secure list, and the privacy page (summary, lead, What this site collects with an opt-out, Who else handles it). The consent checkbox now records the November 10, 2026 version of the terms and privacy policy.
+- SEO: structured data on every public page (WebSite, Organization, WebPage/AboutPage/ContactPage, BreadcrumbList; FAQPage on the homepage; Service with the price list on Pricing), `<lastmod>` dates in sitemap.xml (only bumped when a page's content really changes), and `SAME_AS` / `BING_VERIFY` settings ready to fill. Organization schema: addressRegion TX, areaServed United States (schema only, not shown on the page).
+- Fixes: the Start form no longer pushes the page sideways at 320px with enlarged text spacing (WCAG 1.4.12); "the library's" gets its curly apostrophe; Back to top has a real target (`id="top"` on body); friendlier error for the "What do you do" question; the web manifest's theme colour matches the night header.
+- VERSION is '27'. (Built on V26; the header sky and moon are untouched.)
+- **Launched (Nov 10 2026, ~05:10 UTC):** Jeremy chose to go public. `LAUNCHED = True`: no draft banner, public pages are indexable, robots.txt has no draft note (404, thanks and the redirect pages stay noindex). Next: Search Console (Domain property, TXT in Cloudflare), submit sitemap.xml, Request indexing on the homepage, Bing import, Google Business Profile.
+- Checks: axe 0 issues on all ten pages at 390 and 1440; no sideways scroll on 10 pages at 16 widths from 320 to 3440; keyboard tab-through of every page; reduced motion and the pause button stop all looping motion; form tested end to end (validation, error links, posted fields, landing on thanks, one lead event); html-validate clean; Lighthouse mobile 92 to 97 performance, 100 accessibility and best practices, desktop 100 (SEO 69 only because of the draft noindex).
+
+## V26 (Nov 10 2026, ~03:25 UTC): the header sky, polished
+- Jeremy, right after the moon moved: "Can u work on it alot more polish this up even more". Read as the header and its moon (said so in the thread).
+- The moon is shaded like a moon now, not a flat dot: lit from the upper left, five faint seas, a tight warm halo that fits inside the bar, and a soft ring that goes out and fades with the howl (`.hdr-moon i`, `moonring`, same 16s clock). A patch of plain night behind it hides any star that would touch it. `--moon` is the disc width (18px phone, 22px laptop, 28px wide); everything else is sized from it. The footer scene's moon has the same shading (`#moon-lit`, `#moon-sea` in src/layout.html).
+- Stars: three sizes, two with a faint warm or cool tint, all placed in one evenly spread pass so they never bunch up. Edge stars (`.hdr-sky`, `.hdr-stars`) run the full width along the top and bottom of the bar. Open-sky stars (`.hdr-field`, three layers) are masked out over the logo and over the links, so no star ever sits on a letter. If the logo or the links change width, change the mask numbers in the Header block. The twinkle is gentler (`hdr-twinkle`, 0.5 to 1).
+- Shooting star: a faint tail with a bright head, crossing only open sky (left of the links on desktop, left of the moon on tablets, off on phones). Its travel is set by `--sx`, `--sy`, `--sa`.
+- Sizes and positions in the sky are in % of the bar (`--b`), not vw, so a scrollbar does not shift them.
+- The star maps are generated, not hand-typed. The generator is not in the repo; to change the stars, edit the `background:` lists directly or ask for a new map.
+- VERSION is '26'. Checks: axe 0 on all 10 pages, no sideways scroll 320 to 1920, form/menu tests pass, 0 running animations with reduced motion, pause button stops header + hero.
+
+## V25 (Nov 10 2026, ~02:55 UTC): the moon moves to the top right of the header
+- Jeremy, on the moon rising behind the logo wolf: "okay i see it but dont put it here i dont like that maybe the top right of the header or something". Rule: nothing behind or around the logo. Keep the logo clean.
+- The moon is now `.hdr-moon`, an `<i>` inside `.hdr-sky` (src/layout.html), a small bright disc with a soft halo. `.brand-moon` is gone. Placement by width (Header block of the CSS): 1568px and up, in the open sky right of the button, halfway to the screen edge; 1024 to 1567px, smaller and higher in the top right corner past the button; tablets, just left of the Menu button; phones, midway between the logo and the Menu button; under 360px wide it is hidden (no room).
+- Unchanged: the 16s clock (moon glows, logo wolf's eyes light up, ridge wolf howls), stars, shooting star, ember, pause button, reduced motion. The V24 notes below still describe those; only the moon's place and markup changed.
+- VERSION is '25'. Checks: axe 0 on all 10 pages, no sideways scroll 320 to 1920, form/menu tests pass, 0 running animations with reduced motion, pause button stops header + hero.
+
+## V24 (Nov 10 2026, ~02:35 UTC): the header comes alive, and howls with the hero
+- Jeremy: "add some movement to it", "use all your UI/UX powers", "have a moon involved and tie it in with the wolf", then (with a shot of header + hero) "make them both work together". The idea: one sky. The sun sets on the right in the hero while a full moon comes up on the left in the header.
+- Header (`.hdr-sky` in src/layout.html, CSS at the top of the Header block): stars in two layers that twinkle out of step plus a few still ones, a shooting star about every 23s, an ember that runs along the orange line every 11s, and a pale moon (`.brand-moon`) that rises behind the logo wolf on load. The moon is one square with a radial gradient (disc = inner 58%, halo fades to nothing at the edge) so it never shows a cut edge; it is sized and placed in % of the logo box (head centre is 11.4% across).
+- The shared 16s clock: at 40% to 54% of the loop the moon glows (`moonglow`), the logo wolf's eyes light up orange (`.brand-eyes`, a tiny inline SVG of the two eye paths laid exactly over the logo image), and on the homepage the wolf on the ridge cross-fades to the howling silhouette (`hs-level` / `hs-howl` in hero.css). They stay in step because all three are CSS animations with the same duration that start at page load. If you change one timing, change all three.
+- Reduced motion: nothing moves, the moon is simply there, no glowing eyes. The footer's pause button now also stops the header and the hero (site.js toggles `.scene-paused` on `<html>`).
+
+## V23 (Nov 10 2026, ~02:15 UTC): the night bar header, no more "by hand"
+- Jeremy: "make the header a standout piece". Three options shown (artifact E9dTp4c4owAbsovwiX71Ay: Night bar / Centered sign / Floating plate); he picked **A, Night bar**. The header is charcoal with ten faint stars (radial gradients) and a 2px orange line under it, the same night as the footer scene. Reverse logo, light links, flame underline on the current page; the Start button turns pale on the Start page. The phone menu is a charcoal sheet. theme-color is #24221F. Focus rings inside the header are flame.
+- Logo: Jeremy asked for TECHNOLOGY "like 2 percent bigger". It is 15% bigger in all eight lockups in docs/images/brand (the path is wrapped in `<g data-tech="1.15" transform=...>`, anchored left-top in the horizontal lockup and centre-top in the stacked one). 2% would not have been visible. The email signature PNGs in docs/images/email were made before this and were left alone.
+- **Copy rule (Jeremy, Nov 10): no "by hand", "hand-built" or similar anywhere.** He asked if it was fair to call building with AI "by hand"; it isn't, so every one came out. What the site says now: "custom", "made for one business", "no templates, no page builders", "one site for one business". Hero lead is "Websites that don't look like everyone else's." Work headline is "Sites I've designed and built." Footer tag is "Bespoke websites. By referral, for owner-run businesses."
+- tools/og-card.html is now the real source of the link preview card (night scene); the card was re-rendered with the new logo.
+- Hosting question (same hour): client sites are plain files, so the "$0 a month" line holds on free static hosting. Advice given: Cloudflare Pages in an account in the client's name (GitHub Pages terms don't suit hosting other people's business sites).
+
+## V22 (Nov 10 2026, ~01:10 UTC): final touches
+- Jeremy asked if there were final tweaks to put it over the top. Five small ones, nothing new on the page (plus the email move: privacy page names Google Workspace, legal date Nov 10):
+- Link preview card (docs/images/og-card.jpg, 1200x630): the footer's night scene (howling wolf, moon, cactus) with the headline. Most work comes by referral, so the texted-link preview is often the first impression. Rendered from an HTML page with Playwright; the source lives in the session scratch folder (v22/og.html).
+- Hero sun: a soft filled disc (#EA9C66) with a small glow, half behind the far hills (was an orange ring that read like a button). Keep the glow radius under the sun's distance from the top of the viewBox, or it clips into a box.
+- The wolf runs in: on load the hero wolf gallops in from the left (the footer's run sprite and leg frames) and cross-fades to standing on the ridge, once, 0.6s after load. Reduced motion: it just stands there. Leg colour now comes from `--leg` (footer default #F4F2EE, hero sets var(--ink)), since document CSS can't reach into a `<use>` by descendant selectors but custom properties do inherit.
+- Clean edges: `.two-col` (What costs extra, Reviews) and `.foot-legal` drew their top rule as a border on the `.wrap`, so it ran out past the gutters. Now a `::before` inset by var(--gutter). The form's lock icon is inline again. Work text (homepage slider and Work page) sits level with the middle of the screenshot instead of pinned to the bottom.
+- "Your 10%" is now "Your part" (Start page and the timeline), and the FAQ drops "your 10%".
+- Still open, his to do: a real photo for About; one real sentence from a client for Reviews (suggested hiding Reviews from the menu until then).
+
+## V21 (Nov 10 2026, ~00:50 UTC): hero in one block
+- Jeremy: the hero's right-hand column (lead, buttons, Recently built thumbnail) "looks bolted on". Three options shown (artifact E9dTp4c4owAbsovwiX71Ay); he picked **B, One row**: the headline runs wide across the top, then one ruled row with the sentence left and the buttons right. The Recently built thumbnail and its rotation script are gone (Work is in the menu).
+- Work page note "Made for phones too" is now "Looks right on every screen" (Jeremy: "make that sound better").
+
+## V20 (Nov 10 2026, ~00:30 UTC): numbers band cut
+- Jeremy: "simpler is better", "this seems too sales focused" about the 5 days / 1 price / 30 days / $0 band under the hero. Cut completely (markup, NUMBERS data, CSS, count-up script). The hero now runs straight into How it works.
+
+## V19 (Nov 9 2026, ~22:00 UTC): the horizon hero, deeper footer, mockup credit
+- Jeremy loved the footer scene ("i love this", "this kind of stuff is great") and asked for it in the header or hero. Three previews (Horizon / Night / Window, artifact E9dTp4c4owAbsovwiX71Ay); he picked **A, Horizon**.
+- Hero: a paper-cut desert along the bottom edge (`.hero-scene`, in flow, 12.5vw tall so it never crops): sand hills in --stone-3/-2/stone, the wolf standing on the near ridge in charcoal, cacti in --sage, a thin orange sun, the orange ground line. The wolf and cactus are `<use>`s of the footer defs. Markup in `hero()` of tools/build.py, CSS in the Hero block.
+- Footer scene: far flat-top mesas, a row of distant cacti at 22%, four rocks on the ground line.
+- Pricing mockup card + homepage FAQ now say the mockup is credited in full toward the final price (Jeremy: "make it clearer this will come off their final price").
+- Earlier the same hour: numbers band centred (was stuck left: `.numbers { margin: 0 }` beat `.wrap`), footer scene height 18.67vw / viewBox 1200x224 so the wolf and moon never crop on wide screens, "Us." phase in --dusk (#4A5F75). Jeremy's monitor is ultrawide: screenshot at 1840 too.
+
+## V18 (Nov 9, 2026): the polish pass
+Jeremy (19:56): "do an entire site polish and make sure colors are nice, enhance font where you can, keep polishing up the footer"; "a ton of text, I want nice subtle minimal but impressive, more texture across the site and some colors, it looks very much out of the box templaty".
+- **Fewer words on the homepage:** hero lead is one line; the How section lead is two sentences; each You/Me/Us column has a two-word lead and three ticks; the five service lines are one short sentence each; the close line is one sentence. `PHASES`, `SERVICES`, `LEAD` and `close_section()` in tools/build.py, the leads in src/home.html.
+- **Texture:** the paper grain is up to 8.5%; cut-stone facets (docs/images/facets.svg, a fan of light and dark planes made by a small script, Jeremy rejected the earlier contour lines as "the same squiggly lines") sit faint behind the hero, every inner page head and the close band (`.has-facets`, `.facets-left`), fading into the page; the sand bands have a slight top-to-bottom gradient; a warm haze at the top right of the hero.
+- **Colours:** warmer paper (#F8F5EE) and sand (#EAE3D5); a cactus green `--sage` for the First/Then/Before launch labels, the ticks and the tags; the "Sites I've built" band is charcoal (`.work-band`), with client logos on a paper chip so dark logos read.
+- **Type:** h1/h2 at weight 560, the hero h1 and You./Me./Us. at 600, leads at 430; buttons get a soft shadow on hover.
+- **Footer:** dusk sky gradient with a burnt-orange glow at the horizon, two rows of hills, moon craters, a shooting star once a loop (at 11 s), ground fill under the line, motto at 600.
+- **Motion (round 3):** the hero headline rises word by word (`words()` in build.py wraps each word), the page fades in, the You/Me/Us rules draw in and the columns are colour-coded (sage, orange, ink), the services and rates stagger in, a price turns orange on hover.
+- **Private and secure:** a "Private and secure" block on the Start page aside (`aside-safe` in src/pages.py), a lock on the form's fine print, a shield line in the footer legal row.
+- **Wolf v4 (footer):** three-frame gait, a bob while running, shadows under both wolves, a better howl pose.
+- **Graphics pass (Jeremy: "So much text", "make any graphics or anything cool to break it up"):** a numbers band under the hero (5 days, 1 price, 30 days, $0 a month; `NUMBERS` in build.py); the five services are icon plates (`.plate-ic`, icons from the sprite, new `i-wrench` and `i-search`); the charcoal work band rises out of the page as a ridge of hills with one cactus (inline SVG in src/home.html, `.ridge`); the six pledges on About and the six "in every price" items on Pricing are icon plates too (`pledge_list()` in pages.py); the About story shows the wolf cut in stone (docs/images/brand/stray-wolf-facets.svg, made from the symbol by a script: thin paper lines, flame outline, on charcoal with faint facets); the six Start questions carry big sage numbers 01 to 06 (`.qn` spans in the form partial; site.js strips them from error messages); the homepage FAQ, the rates and the extras are cut to one or two short sentences each, and the prices are big. Second round: the numbers count up from zero when seen (site.js, skipped for reduced motion), a small sitting wolf on the ridge (`<use href="#wolf-sit">`, the footer's own silhouette), icons on the three summary cards of Privacy and Terms, and the 404 page shows the wolf cut in stone on charcoal (`body.lost`).
+- **Work page simplified (Jeremy, 20:41: "no need to give a deep analysis on their site"):** each site is its picture, logo, name, one line and the link. The second pictures with captions (`extra` in src/sites.py) and the domain lines are gone; `work_list()` in build.py. The files docs/images/work/glp-netsheet-*.webp and fotcpl-join-*.webp are now unused and can be deleted.
+- **Wolf v5 (Jeremy: "the wolf specifically needs more improvement"):** redrawn in parts with curves in the footer defs of src/layout.html (`#wolf-sit`, `#wolf-head` hung at the neck joint and rotated to howl, `#wolf-run-body`, `#wolf-legs-1..4`, a four-frame gallop at 0.5 s with upper and lower leg strokes, `.leg-up`/`.leg-lo` in footer.css). The body bounds with the stride, dust puffs trail the paws, the moon glow swells while the wolf howls. The homepage ridge reuses `#wolf-sit` and `#wolf-head`. Drafts in the scratch folder (wolf5/wolf6.html). Then (Jeremy: "keep polishing", "make it incredible"): the tail is its own part (`#wolf-tail`) and wags slowly, one ear flicks every seven seconds (`.ear` inside `#wolf-head`), the wolf leans back a few degrees while it howls (`.howl-lean`), and the running wolf's tail streams (`#wolf-run-tail`, `.run-tail`).
+- **Wolf v6 (Jeremy, 20:58: "in the footer make it way less cartoony", "make it a cool looking wolf"):** the cartoon parts are gone (the fat sitting wolf, the orange sound arcs, the dust puffs, the mound, the moon craters, the chubby cacti). The wolf is now a realistic standing silhouette drawn from point lists smoothed into curves (generator in the session scratch folder, wolf/wolfgen*.py; the paths live in the footer defs of src/layout.html: `#wolf-level`, `#wolf-howl`, `#wolf-far-hind`, `#wolf-far-front`, `#wolf-run`, `#wolf-legs-1..4`). The howl is a quick cross-fade from the level-headed wolf to the one with its head thrown back (`.pose-level`/`.pose-howl`, with the howling one as the still pose for reduced motion); the moon glow swells with it; then the galloping wolf runs out in four frames. Slimmer saguaros, a plain moon. The homepage ridge shows the same standing wolf.
+- **Depth:** the stone facets drift a little with the scroll on the hero, page heads and close bands (`--py` set by site.js, off for reduced motion); the charcoal work band carries the footer's grain (`.ink-grain`) and a flame line along its bottom edge; the After launch plate on Pricing has faint facets.
+- VERSION '18'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll, form/menu/carousel tests pass.
+
+## V17 (Nov 9, 2026): the wolf footer, texture and polish, header fix, legal pages
+Jeremy: "spend the entire day making this page pop.. add some texture.. review spacing and fonts.. add cool UIUX elements"; "make a cool footer of a wolf howling and then running along with a cactus somewhere.. thats gonna be my signature trademark is an animated footer"; "there is a bug in the header too it keeps going back and forth"; "put the business logo right above them" (Work); pricing "make sure the after launch is clear maybe give it a new color"; "something about 30 days for changes to make things right"; the motto "We stray away from the pack" (kept short as "Stray from the pack."); and "i might eventually hire someone .. i dont want to build on solo stuff anywhere".
+- **The footer is the signature.** Charcoal night scene at the top of every page's footer (inline SVG in src/layout.html, styles in the Footer block of site.css): a faceted wolf sits on a rise, tilts its head up and howls (three orange sound marks), fades, then a running wolf trots along the orange ground line past the saguaro and off the right edge, then it loops (18 s). Stars twinkle. People who turn motion off see the wolf howling, still. The wolf shapes are the `#wolf-sit`, `#wolf-head`, `#wolf-run-a/b` paths; the cactus is `#cactus`. Under the scene: the reverse logo, "Stray from **the pack.**", the pages (now with Terms) and the email. To reuse on a client site, copy the `.foot-scene` block and the scene CSS.
+- **Header bug fixed.** The bar no longer changes height on scroll (that reflow near the top made it flip back and forth) and the hide/show uses fixed numbers with slack (hides after 28px of clear downward scroll past 180px, returns after 28px up or near the top). Header is 5.5rem on desktop.
+- **Texture:** a faint paper grain over the whole page (`body::after`, an SVG noise tile at 6%), a light grain on the footer.
+- **Work:** each site's own logo above its name on the home carousel and the Work page (`logo` in src/sites.py; files docs/images/work/tvis-logo.svg, glp-logo.png, fotcpl-logo.webp, taken from the clients' own sites/repos).
+- **Pricing:** the After launch row is a charcoal plate with "$0" in orange and "Thirty days to make it right". INCLUDED wording now matches the client agreement (legal thread).
+- **No solo framing anywhere** (Jeremy may hire): About is "Different, on purpose." with "Stray from the pack." as the story heading; hero lead, tagline, pledges and the 404 list rewritten. "Stray from the pack" = bold, different, built around the client's business.
+- **Legal (from the "Protect my business" thread):** Privacy rewritten, new terms.html (in PUBLIC and the sitemap), a required consent checkbox on the Start form (posts `consent=...` to Web3Forms), site.js counts a required checkbox, legal.css appended.
+- Small touches: the green status dot breathes, the phase columns' rule warms on hover, the mount's phone lifts on hover.
+- VERSION is '17'. Checks: axe 0 on all 10 pages at 390 and 1440, no sideways scroll 320 to 1920, form/menu/carousel tests pass.
+
+## V16 (Nov 9, 2026): How it works, redone
+Jeremy (with a screenshot of the 30-day ruler): "Try to redo this completely." "Make it super super clear they are responsible for everything up front: logo, text, what they want, images, everything, and then it transitions to me and I'll take over. And we will have a checkpoint somewhere."
+- The ruler, the ticks and the five columns are gone (and the script that drew the orange line). In their place: three columns under a heavy rule, "You." / "Me." / "Us.", each with a small label (First, then, before launch), one line and a short checklist. `PHASES` at the top of tools/build.py holds the words.
+- Heading "Your part, then mine." with the lead "You bring everything up front: what you want, the words, the logo, the photos. Then I take over, and we meet once before it goes live. About 30 days, with a price in writing first."
+- VERSION is '16'.
+- Also in V16 (Jeremy, 19:00): prices about 15% down, rounded: starter from $1,500 (was 1,800), larger from $3,000 (3,500), fix from $125 (150), page from $350 (400), refresh from $750 (900). New: a mockup first, $50 to $100 depending on what goes in it, credited against the site if it goes ahead (`MOCKUP_FROM`, `MOCKUP_TO`; a Pricing row and a line in the cost question).
+
+## V15 (Nov 9, 2026): simpler, then polished
+Jeremy: "Simplify everything on this whole site up a touch, it's very busy. If it's not important, get rid of it completely. Then go through and polish everything and make it beautiful." What went:
+- Homepage: the What I do tabs and their animated scenes (now five plain ruled lines, no script), four of the nine questions (smaller jobs, changes after launch, outside my area, social media; the pages already answer them), the little business-name form in the close (now one button), and the "Not on the list" note.
+- About: the "Is this a fit?" yes/no check (the selective paragraph now sits under the lead), the fact chips on the profile card, and the "See the four steps" link.
+- Pricing: the "How paying works" section (the pledges at the top already say half to start, half at launch).
+- Header: the "Hand-built websites / One person, start to finish" tagline. Footer: the "What I do" column and the Start a project card; it is the brand line, Pages and Reach Jeremy now.
+- Code: scenes.css is no longer part of site.css; the tab and fit-check script is gone from site.js; svc_scene, SVC_ICONS, SVC_SCENES, FACTS, FIT_QS and PAY are gone from the source.
+- VERSION is '15'.
+
+## V14.1 (Nov 9, 2026): selective about jobs
+Jeremy: "I am selective about which jobs I take because I only want to do quality work. I will reject things I don't think I can do. I'm not trying to make as much money as possible." Said in plain words in four places: a homepage question "Do you take every job?", the About page's "Is this a fit?" paragraph, the Start page's "Within 5 days" line, and step 2 on the thanks page. Copy only, so VERSION stays '14'.
+
+## V14 (Nov 9, 2026): no monthly fees, the client's 10%, reviews wired, a Search Console slot
+- Jeremy: "I don't want anything monthly, let's lose that, I feel like that's a selling point." The care plan is gone. care.html is now a redirect to pricing.html; it is out of the menu, the footer, the sitemap and the settings (no more CARE_MONTH). Pricing says "No monthly fees, ever" in the pledges and the lead, and the After launch row reads "Monthly $0". On the homepage, "Can I make changes after it's live?" and the "Hosting and small updates" line say the same: no monthly fee, changes quoted per job from $FIX_FROM.
+- Jeremy: make it crystal clear that the client owns the first 10%: being clear about what they want, and the images, logo and text. How it works has five steps now (Day 1, Within 5 days, Your 10%, The build, About day 30). The lead says "The first 10% is yours: be clear about what you want, and send the words, photos and logo. The other 90% is mine." The question "What do you need from me?" says the same. The Start page's "What happens next" and the thanks page steps gained a "Your 10%" line.
+- Reviews: a `REVIEWS` list in the settings (quote, name, business, link). Empty = the coming-soon page as before. Filled = one quote per row with the name, the business and a "Visit the site" link. Real words only, with the client's OK to be named. The message to ask clients with is in /mnt/project-files/rebrand/site-v14/review-request.md (also in the thread).
+- Search Console: a `SEARCH_CONSOLE` setting prints the google-site-verification meta tag on every page once filled (that needs a rebuild, so it is Claude's to do). The easier routes need no build: the HTML-file method (drop Google's google….html file into docs/ and commit) or a DNS TXT record at Cloudflare. The sitemap is at /sitemap.xml and robots.txt points at it. Until LAUNCHED is True every page is noindex, so Google indexes nothing yet; verifying and submitting the sitemap now is still fine.
+- VERSION is '14'.
+- Checks: axe 0 issues on all nine pages at 390 and 1440; no sideways scroll from 320 to 1920; hero rotation, ruler (five steps), service tabs, carousel, questions, close form, start form, fit check and phone menu all tested with no console errors.
+
+## V13 (Nov 9, 2026): smaller jobs, and a much shorter form
+Jeremy wants fixes, single pages and refreshes offered as real work, not only whole sites (he just did one for Snip and Sprout Co). And he wants the Start a project form "much simpler", so nobody gets bogged down.
+- Pricing: a third row, "A fix, a page or a refresh", from `FIX_FROM` ($150, a suggestion to confirm), with `PAGE_FROM` and `REFRESH_FROM` ($400, $900) in the settings for later.
+- What I do: a new second tab, "Fixes and single pages", with its own little scene (a broken form fixed, one new page added). Five tabs now. The lead above the tabs mentions fixes and pages.
+- Homepage question: "Do you take on smaller jobs?" (yes, days not weeks, from $150, price in writing first). "How much does a website cost?" and "Can I make changes after it's live?" still point at Pricing and Care plan.
+- Start a project: fourteen questions in six sections became six questions and your contact details: what do you need (a new website, or changes to the one you have), business name, what you do and who your customers are, what the website should do (pick any), the link to the site you have, and anything else. Name, email and phone at the end. Only business name, what you do, name and email are required. The progress card, the sticky phone bar and the "ready" line are gone (site.js and the CSS too). Every mention of "fourteen questions, about five minutes" is now "six questions, about two minutes" (homepage steps and questions, close, footer, fit check).
+- Field names Web3Forms will show: project_kind, business_name, what_you_do, goal_new_customers, goal_show_work, goal_calls_quotes, goal_bookings, goal_sell_online, current_site, anything_else, name, email, phone.
+- VERSION is '13'.
+- Checks: axe 0 issues on all ten pages at 390 and 1440; no sideways scroll from 320 to 1920; hero rotation, ruler, service tabs (five), carousel, questions, close form, start form (9 fields, 4 required, validation), fit check and phone menu all tested with no console errors.
+- Still waiting on Jeremy: the prices (1,800 / 3,500 / 40 a month / 150 / 400 / 900), a live test send of the form, Dani's OK to list Snip and Sprout on Work.
+
+## V12 (Nov 9, 2026): a much calmer hero, and three new pages
+Jeremy on the V10/V11 hero: "there is so much going on"; the site previews "need to be much much smaller and subtle", but keep "the natural rotation every couple of seconds". He picked option C of three.
+- Hero: only the words. The headline on the left (three lines on a laptop); on the right the lead, the two buttons and one small "Recently built" line under a thin rule: an 88px thumbnail of a client site that changes every 3.2 seconds (`data-every` on the `data-sites` box; site.js reads it), the site's name, and "See the work" to the Work page. The wordmark, the promises strip, the status line and the big stone panel are gone from the hero. Hovering the line pauses it; reduced motion never rotates.
+- How it works is now headed "From first call to launch." (Jeremy wanted "Four steps. One person. No surprises." changed).
+- New pages, all first drafts for Jeremy to confirm: **pricing.html** (what projects usually cost: a starter site from $1,800, a larger site from $3,500, the care plan after launch; what's in every price; what costs extra; how paying works, half to start and half at launch), **care.html** (the care plan: hosting, domain watched, small changes up to an hour a month within five days, fixes, backups, a monthly check; what's not covered; how it works), **reviews.html** (coming soon, with the three sites listed until real quotes exist). The numbers are the `STARTER_FROM`, `LARGER_FROM`, `CARE_MONTH` settings at the top of tools/build.py. The homepage questions "How much does a website cost?" and "Can I make changes after it's live?" now point at these pages.
+- Menu: Work, Pricing, Care plan, Reviews, About, Start a project. The phone menu now shows up to 1023px wide (it was 767px) and the header tagline only from 1280px up, so six items fit. Footer "Pages" and sitemap.xml list the new pages.
+- Thanks and 404 pages: the small labels above the headings are gone. "Your colours" is now "Your colors".
+- VERSION is '12'.
+- Checks: axe 0 issues on all ten pages at 390 and 1440; no sideways scroll from 320 to 1920; the hero rotation, ruler, service tabs, carousel, questions, close form, start form, fit check and phone menu all tested with no console errors.
+
+## V11 (Nov 9, 2026): the whole site, redone the same way as the V10 hero
+Jeremy asked for "a full site overhaul the same way" as the V10 hero, and said the hero still needed work. The look is now "the print plate", taken from the Dribbble research: paper and stone, charcoal type, one orange; square corners; flat surfaces with no resting shadows, gradients or grid textures; thin charcoal rules where a list or a zone needs one; no small uppercase labels above headings; real client sites shown on stone "mounts".
+- Hero: the headline, lead and buttons top left; the full colour wordmark under them (drawn into the page so the cactus grows in after the name wipes on); three promises on a ruled strip along the bottom; one real client site on a stone panel that runs from the header to the bottom rule and off the right edge of the screen. The site still changes every 5.2 seconds; a thin orange line along the rule shows when, and a "1 / 3" count sits by the Next button. On phones: text, wordmark, site, promises.
+- How it works: a 30-day ruler. An orange line runs along it as you scroll, and each of the four steps lights up when the line reaches its day (STEPS in tools/build.py now starts each step with its day).
+- What I do: the four services set large as a list (the chosen one in charcoal with an orange timer line), the scene on a flat stone stage, and the description as a caption under the scene.
+- Recent work: one site at a time on its stone mount (with its phone view when there is one), the name and words beside it; bars, pause and arrows underneath. TVIS first.
+- Questions and the close: ruled rows; the close is a full-width stone band with "Let’s talk about yours." set very large and the business-name box.
+- Header: a plain paper bar, the current page underlined in orange, a charcoal rule once you scroll. Footer: stone, a charcoal rule, plain columns; "Built with love, one site at a time." unchanged.
+- Work page: each site big on its mount, a second page of it beside when `extra` is set in src/sites.py (GLP: the net sheet; FOTCPL: the membership section), words under a rule.
+- About: the same head, the profile on a stone panel off the right edge, the six promises as a ruled grid (no numbers or icons), square Yes/No buttons, the wolf on stone beside the name story (story text unchanged).
+- Start a project: sections under charcoal rules with a "1 / 6" count, square fields and choices, the progress list and "What happens next" as ruled lists. The Web3Forms key slot and the email fallback are untouched.
+- Privacy, thanks and 404 follow the same heads and rules.
+- VERSION is '11'. docs/css/site.css was rewritten from scratch; the old "light pass" overrides are gone.
+- Checks: axe 0 issues on all seven pages at 390 and 1440; no sideways scroll from 320 to 1920; the hero rotation, ruler, service tabs, carousel, questions, close form, start form, fit check and phone menu all tested with no console errors.
+
+## V10 (Nov 9, 2026): the hero, redone from Dribbble research
+- The homepage hero is now: three promises and a "Taking a few projects at a time" status small on the left, the headline in the middle, and the bottom row is the Stray Wolf wordmark (images/brand/stray-wolf-wordmark-color.svg) set across eight columns with one real client site mounted on stone beside it. Built by `hero()` in tools/build.py; styles in docs/css/site.css under "Hero"; script block "The hero" in docs/js/site.js.
+- The site panel rotates through SITES from src/sites.py every 5.2 seconds (first site first), with the name, domain and link following. A mouse over it, keyboard focus or the Next button stops it; reduced motion never rotates. Images come from docs/images/work/<image>-desktop-{640,960,1440}.webp, cropped from the top-left corner.
+- When HEADSHOT = True the panel shows the photo instead (images/jeremy.webp).
+- The old stacked "deck" (build_deck, data-deck) is gone. VERSION is '10'.
+- Dribbble research that drove it lives on Jeremy's PC: Documents\FiremarkTech\research-shots\stray-wolf-hero (research.md, shots.csv, 60 shots).
+
+## Early decisions (Nov 8 and 9, 2026)
+
+- Name **Stray Wolf Technology**; brand shows "Stray Wolf" with small "Technology". Logo locked (Zilla Slab wordmark with the cactus t, faceted wolf).
+- Headline: **"A website built around your needs."**
+- Positioning on the site: bespoke websites made for one business, no templates or page builders; by referral only; a few clients at a time. Never "hand-built" or "by hand" (see V23).
+- Services (What I do): website design and build; domain registration and setup; hosting and small updates; business email setup (renamed from "email at your own domain" Nov 9: a professional address instead of a Gmail, set up and handed over). **Not** Google Business Profile or social media.
+- Client sites: a simple list, one clean image and a link each, never case studies. On the homepage they sit near the end, in a carousel.
+- No Texas or personal-background copy on the site. Jeremy by first name only. Pricing stays "a price in writing", no numbers.
+- Promises: reply within five days; a price in writing before anything starts; live in about 30 days (changed from 45 by Jeremy, Nov 9).
+- Hero: the B layout (paper words, a light stone panel; charcoal panels were lightened Nov 9 because Jeremy found them a bit dark and bold). The panel shows the stacked real sites (v7; the sketch-to-site demo was dropped Nov 9) until `HEADSHOT = True`, then your photo. No "by referral" pill above the headline, and "price in writing" is no longer a hero promise (both Jeremy, Nov 9).

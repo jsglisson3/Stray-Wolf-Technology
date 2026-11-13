@@ -1,0 +1,50 @@
+# Runs on every push and pull request. Results show on the repository's Actions tab:
+# a green check means everything passed; a red X means something needs fixing (GitHub emails you).
+#
+#   1. Site Notes service tests (worker/test-worker.mjs)
+#   2. docs/ is up to date with src/ (rebuilds and checks nothing changed but the sitemap date)
+#   3. The HTML is valid (style-only rules are turned off in .htmlvalidate.json)
+
+name: Checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:   # adds a "Run workflow" button on the Actions tab
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Get the files
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Site Notes service tests
+        run: node worker/test-worker.mjs
+
+      - name: docs/ matches src/
+        run: |
+          python tools/build.py
+          git checkout -- docs/sitemap.xml
+          if [ -n "$(git status --porcelain docs)" ]; then
+            echo "docs/ is out of date. Run python tools/build.py and commit the result. Changed:"
+            git status --porcelain docs
+            exit 1
+          fi
+
+      - name: HTML is valid
+        run: npx --yes html-validate@8.29.0 "docs/*.html" docs/review/index.html docs/admin/index.html

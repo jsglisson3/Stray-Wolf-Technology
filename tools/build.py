@@ -17,7 +17,7 @@ DOMAIN = 'straywolftech.com'  # the site's address. docs/CNAME must say the same
 LAUNCHED = True               # True on launch day: removes the draft banner and the noindex tag from public pages
 HIDDEN = {'404.html', 'thanks.html', 'contact.html', 'brand.html'}   # never listed for search engines
 PUBLIC = ['index.html', 'work.html', 'pricing.html', 'reviews.html', 'about.html', 'start.html', 'privacy.html', 'terms.html']   # listed in sitemap.xml
-VERSION = '48'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
+VERSION = '49'                 # bump when docs/css/site.css or docs/js/site.js change, so visitors get the new files
 
 # ---- Contact details: fill these in when they exist, then rebuild ------------------
 # Anything left empty is simply left off the site (no placeholder text is ever shown).
@@ -28,14 +28,7 @@ HEADSHOT = False              # True once docs/images/jeremy.webp is a real phot
 WEB3FORMS_KEY = '0cf93fa5-b765-42a7-9364-2d5a1517d084'            # the access key from web3forms.com; until then the form opens a pre-filled email
 FALLBACK_EMAIL = 'info@straywolftech.com'   # where the pre-filled email goes if the form service is ever unreachable
 
-# ---- Prices (Nov 9 2026: Jeremy took the first draft down about 15%, rounded; change the numbers here and rebuild) ----------
-STARTER_FROM = '1,500'        # a starter site, up to five pages ("from $...")
-LARGER_FROM = '3,000'         # a larger site: more pages, booking, a menu, a gallery, a small shop
-FIX_FROM = '125'              # smaller jobs on a site that already exists: a fix ...
-PAGE_FROM = '350'             # ... one new page ...
-REFRESH_FROM = '750'          # ... new photos and words across the pages you have
-MOCKUP_FROM = '50'            # a mockup of the homepage before anyone commits, $50 to $100 depending on what's in it; ...
-MOCKUP_TO = '100'             # ... and it comes off the price if the full site goes ahead
+# ---- Prices: the site shows no numbers (Jeremy, Nov 13 2026: pricing is "Let's talk"). Every job gets one price in writing. ----
 # No monthly fees, ever (Jeremy, Nov 9 2026): the care plan is gone; care.html now sends people to pricing.html.
 # -----------------------------------------------------------------------------------
 
@@ -196,7 +189,7 @@ def hero():
       <svg class="hero-scene" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
         <defs><radialGradient id="hs-glow"><stop offset=".4" stop-color="#E0763A" stop-opacity=".22"/><stop offset=".6" stop-color="#E0763A" stop-opacity=".08"/><stop offset="1" stop-color="#E0763A" stop-opacity="0"/></radialGradient>
           <clipPath id="hs-pool-clip"><ellipse cx="536" cy="134.4" rx="74" ry="4.9"/></clipPath>
-          <!-- V34: the head going down to drink, three steps from #wolf-level (generated; see PICKUP.md V34) -->
+          <!-- V34: the head going down to drink, three steps from #wolf-level (generated; see CHANGELOG.md V34) -->
           <g id="hs-dip-1"><path d="M-10.0 -104.0 C-16.7 -101.2 -30.7 -101.8 -40.0 -101.0 C-49.3 -100.2 -58.7 -100.3 -66.0 -99.0 C-73.3 -97.7 -78.7 -95.5 -84.0 -93.0 C-89.3 -90.5 -93.7 -89.2 -98.0 -84.0 C-102.3 -78.8 -107.7 -69.3 -110.0 -62.0 C-112.3 -54.7 -112.7 -46.7 -112.0 -40.0 C-111.3 -33.3 -106.0 -22.0 -106.0 -22.0 C-106.0 -22.0 -100.3 -32.0 -98.0 -38.0 C-95.7 -44.0 -94.0 -52.3 -92.0 -58.0 C-90.0 -63.7 -86.0 -72.0 -86.0 -72.0 C-86.0 -72.0 -90.3 -63.7 -92.0 -58.0 C-93.7 -52.3 -96.3 -44.7 -96.0 -38.0 C-95.7 -31.3 -91.3 -24.0 -90.0 -18.0 C-88.7 -12.0 -88.0 -2.0 -88.0 -2.0 C-88.0 -2.0 -72.0 0.0 -72.0 0.0 C-72.0 0.0 -74.3 -10.3 -76.0 -16.0 C-77.7 -21.7 -83.3 -29.0 -82.0 -34.0 C-80.7 -39.0 -72.0 -42.7 -68.0 -46.0 C-64.0 -49.3 -62.0 -51.7 -58.0 -54.0 C-54.0 -56.3 -51.7 -58.7 -44.0 -60.0 C-36.3 -61.3 -22.0 -62.3 -12.0 -62.0 C-2.0 -61.7 11.3 -61.7 16.0 -58.0 C20.7 -54.3 16.0 -46.7 16.0 -40.0 C16.0 -33.3 16.0 -24.3 16.0 -18.0 C16.0 -11.7 16.0 -2.0 16.0 -2.0 C16.0 -2.0 30.0 0.0 30.0 0.0 C30.0 0.0 29.5 -12.7 30.0 -20.0 C30.5 -27.3 32.0 -36.7 33.0 -44.0 C34.0 -51.3 34.2 -57.7 36.0 -64.0 C37.8 -70.3 42.0 -76.0 44.0 -82.0 C53.7 -87.1 64.3 -87.8 75.4 -92.5 C79.5 -92.5 84.1 -90.1 89.0 -89.2 C93.9 -88.3 100.1 -87.2 105.0 -87.4 C109.9 -87.5 118.1 -90.4 118.1 -90.4 C118.1 -90.4 111.1 -99.6 106.8 -103.4 C102.6 -107.2 96.9 -110.2 92.7 -113.0 C88.5 -115.7 84.6 -118.0 82.0 -119.7 C79.3 -121.4 77.0 -119.1 76.6 -123.0 C76.2 -126.9 79.4 -142.9 79.4 -142.9 C79.4 -142.9 69.1 -129.0 64.9 -125.9 C60.8 -122.7 58.7 -125.6 54.3 -124.3 C42.7 -121.5 20.8 -114.6 -10.0 -104.0 Z"/><g transform="translate(86.3 -107.8)"><g class="wolf-eye"><circle r="3.2"/><circle class="wolf-glint" cx="1.1" cy="-1.1" r="1.05"/></g></g></g>
           <g id="hs-dip-2"><path d="M-10.0 -104.0 C-16.7 -101.2 -30.7 -101.8 -40.0 -101.0 C-49.3 -100.2 -58.7 -100.3 -66.0 -99.0 C-73.3 -97.7 -78.7 -95.5 -84.0 -93.0 C-89.3 -90.5 -93.7 -89.2 -98.0 -84.0 C-102.3 -78.8 -107.7 -69.3 -110.0 -62.0 C-112.3 -54.7 -112.7 -46.7 -112.0 -40.0 C-111.3 -33.3 -106.0 -22.0 -106.0 -22.0 C-106.0 -22.0 -100.3 -32.0 -98.0 -38.0 C-95.7 -44.0 -94.0 -52.3 -92.0 -58.0 C-90.0 -63.7 -86.0 -72.0 -86.0 -72.0 C-86.0 -72.0 -90.3 -63.7 -92.0 -58.0 C-93.7 -52.3 -96.3 -44.7 -96.0 -38.0 C-95.7 -31.3 -91.3 -24.0 -90.0 -18.0 C-88.7 -12.0 -88.0 -2.0 -88.0 -2.0 C-88.0 -2.0 -72.0 0.0 -72.0 0.0 C-72.0 0.0 -74.3 -10.3 -76.0 -16.0 C-77.7 -21.7 -83.3 -29.0 -82.0 -34.0 C-80.7 -39.0 -72.0 -42.7 -68.0 -46.0 C-64.0 -49.3 -62.0 -51.7 -58.0 -54.0 C-54.0 -56.3 -51.7 -58.7 -44.0 -60.0 C-36.3 -61.3 -22.0 -62.3 -12.0 -62.0 C-2.0 -61.7 11.3 -61.7 16.0 -58.0 C20.7 -54.3 16.0 -46.7 16.0 -40.0 C16.0 -33.3 16.0 -24.3 16.0 -18.0 C16.0 -11.7 16.0 -2.0 16.0 -2.0 C16.0 -2.0 30.0 0.0 30.0 0.0 C30.0 0.0 29.5 -12.7 30.0 -20.0 C30.5 -27.3 32.0 -36.7 33.0 -44.0 C34.0 -51.3 34.2 -57.7 36.0 -64.0 C37.8 -70.3 42.0 -76.0 44.0 -82.0 C53.4 -74.4 66.4 -64.5 79.9 -60.3 C83.9 -59.4 87.8 -55.9 92.3 -53.9 C96.9 -51.9 102.7 -49.4 107.5 -48.4 C112.3 -47.4 120.9 -48.2 120.9 -48.2 C120.9 -48.2 116.2 -58.8 113.0 -63.5 C109.8 -68.2 104.9 -72.5 101.5 -76.2 C98.1 -79.8 94.9 -83.0 92.7 -85.2 C90.5 -87.5 87.7 -85.9 88.3 -89.7 C88.8 -93.6 95.6 -108.4 95.6 -108.4 C95.6 -108.4 82.4 -97.3 77.6 -95.2 C72.8 -93.2 71.5 -96.5 66.9 -96.2 C58.6 -112.7 29.7 -113.3 -10.0 -104.0 Z"/><g transform="translate(94.1 -72.7)"><g class="wolf-eye"><circle r="3.2"/><circle class="wolf-glint" cx="1.1" cy="-1.1" r="1.05"/></g></g></g>
           <g id="hs-dip-3"><path d="M-10.0 -104.0 C-16.7 -101.2 -30.7 -101.8 -40.0 -101.0 C-49.3 -100.2 -58.7 -100.3 -66.0 -99.0 C-73.3 -97.7 -78.7 -95.5 -84.0 -93.0 C-89.3 -90.5 -93.7 -89.2 -98.0 -84.0 C-102.3 -78.8 -107.7 -69.3 -110.0 -62.0 C-112.3 -54.7 -112.7 -46.7 -112.0 -40.0 C-111.3 -33.3 -106.0 -22.0 -106.0 -22.0 C-106.0 -22.0 -100.3 -32.0 -98.0 -38.0 C-95.7 -44.0 -94.0 -52.3 -92.0 -58.0 C-90.0 -63.7 -86.0 -72.0 -86.0 -72.0 C-86.0 -72.0 -90.3 -63.7 -92.0 -58.0 C-93.7 -52.3 -96.3 -44.7 -96.0 -38.0 C-95.7 -31.3 -91.3 -24.0 -90.0 -18.0 C-88.7 -12.0 -88.0 -2.0 -88.0 -2.0 C-88.0 -2.0 -72.0 0.0 -72.0 0.0 C-72.0 0.0 -74.3 -10.3 -76.0 -16.0 C-77.7 -21.7 -83.3 -29.0 -82.0 -34.0 C-80.7 -39.0 -72.0 -42.7 -68.0 -46.0 C-64.0 -49.3 -62.0 -51.7 -58.0 -54.0 C-54.0 -56.3 -51.7 -58.7 -44.0 -60.0 C-36.3 -61.3 -22.0 -62.3 -12.0 -62.0 C-2.0 -61.7 11.3 -61.7 16.0 -58.0 C20.7 -54.3 16.0 -46.7 16.0 -40.0 C16.0 -33.3 16.0 -24.3 16.0 -18.0 C16.0 -11.7 16.0 -2.0 16.0 -2.0 C16.0 -2.0 30.0 0.0 30.0 0.0 C30.0 0.0 29.5 -12.7 30.0 -20.0 C30.5 -27.3 32.0 -36.7 33.0 -44.0 C34.0 -51.3 34.2 -57.7 36.0 -64.0 C44.0 -48.0 57.8 -32.8 72.5 -24.0 C76.2 -22.2 79.2 -18.0 83.3 -15.0 C87.3 -12.0 92.4 -8.3 96.8 -6.2 C101.2 -4.2 109.8 -3.1 109.8 -3.1 C109.8 -3.1 107.6 -14.5 105.6 -19.8 C103.5 -25.1 99.7 -30.3 97.2 -34.7 C94.6 -39.0 92.2 -42.7 90.5 -45.4 C88.9 -48.1 85.8 -47.2 87.2 -50.8 C88.6 -54.5 98.5 -67.4 98.5 -67.4 C98.5 -67.4 83.1 -59.5 78.0 -58.5 C72.9 -57.6 72.3 -61.1 67.8 -61.9 C70.8 -89.9 38.0 -112.0 -10.0 -104.0 Z"/><g transform="translate(89.1 -32.9)"><g class="wolf-eye"><circle r="3.2"/><circle class="wolf-glint" cx="1.1" cy="-1.1" r="1.05"/></g></g></g>
@@ -258,7 +251,7 @@ PHASES = [
         'The goal of the website']),
     # V44 (Jeremy, Nov 11 2026: "we need to add a checkpoint phase for mockups before we get to deep on a build", "put some real
     # effort into how to include a mockup checkpoint"). A second Us. step before the build, in the checkpoint green: the homepage
-    # mockup from the Pricing page (MOCKUP_FROM to MOCKUP_TO, credited in full). "Before the build" pairs with "Before launch".
+    # mockup from the Pricing page (credited in full). "Before the build" pairs with "Before launch".
     ('Before the build', 'Us.', 'See it before I build it.', [
         'A price in writing, within five days',
         'Your homepage, designed first as a mockup',
@@ -460,7 +453,7 @@ def work_list(sites):
 
 
 # ---- Questions people ask -------------------------------------------------------------------
-FAQS = [('How much does a website cost?', f'Starter sites from ${STARTER_FROM}, larger ones from ${LARGER_FROM}. Details on the <a class="link" href="pricing.html">Pricing</a> page. Want to see something first? A mockup is ${MOCKUP_FROM} to ${MOCKUP_TO}, and if you go ahead, every dollar of it comes off your final price. One price in writing, before anything starts.'),
+FAQS = [('How much does a website cost?', 'Every site is priced on its own, so let’s talk. You get one price in writing before anything starts. Want to see something first? I can design your homepage as a mockup, and if you go ahead, every dollar of it comes off your final price. More on the <a class="link" href="pricing.html">Pricing</a> page.'),
         ('Do you take every job?', 'No. I take the jobs I know I can do well, a few at a time. If yours isn’t a fit, I’ll say so up front and point you somewhere better.'),
         ('How long does it take?', 'About 30 days from yes. If you have a date that matters, put it in the form.'),
         ('Do I own the website?', 'Yes. Your domain, your content and your site are yours to keep.'),
@@ -587,19 +580,18 @@ def ld_json(file, title, desc):
         graph.append({'@type': 'FAQPage', '@id': url + '#faq', 'isPartOf': {'@id': url + '#webpage'}, 'mainEntity': [
             {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': plain(a)}} for q, a in FAQS]})
     if file == 'pricing.html':
-        def offer(n, low, text):
+        def offer(n, text):
             return {'@type': 'Offer', 'name': n, 'description': text, 'url': url,
-                    'priceSpecification': {'@type': 'PriceSpecification', 'minPrice': int(low.replace(',', '')), 'priceCurrency': 'USD'},
                     'itemOffered': {'@type': 'Service', 'name': n, 'provider': {'@id': base + '#business'}}}
         graph.append({'@type': 'Service', '@id': url + '#service', 'name': 'Website design and build', 'serviceType': 'Website design',
                       'provider': {'@id': base + '#business'}, 'areaServed': business['areaServed'], 'url': url,
                       'hasOfferCatalog': {'@type': 'OfferCatalog', 'name': 'Website projects', 'itemListElement': [
-                          offer('Starter website', STARTER_FROM, 'Up to five pages, written with you and built around your business. Domain and email set up.'),
-                          offer('Larger website', LARGER_FROM, 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.'),
-                          offer('Homepage mockup', MOCKUP_FROM, f'Your homepage designed first. ${MOCKUP_FROM} to ${MOCKUP_TO}, credited in full if the site goes ahead.'),
-                          offer('Fix to an existing website', FIX_FROM, 'A fix to a website you already have.'),
-                          offer('New page on an existing website', PAGE_FROM, 'One new page on a website you already have.'),
-                          offer('Website refresh', REFRESH_FROM, 'New words and photos across the pages you have.')]}})
+                          offer('Starter website', 'Up to five pages, written with you and built around your business. Domain and email set up.'),
+                          offer('Larger website', 'More pages, or a site that does more: booking, a price list you change yourself, a small shop.'),
+                          offer('Homepage mockup', 'Your homepage designed first, credited in full if the site goes ahead.'),
+                          offer('Fix to an existing website', 'A fix to a website you already have.'),
+                          offer('New page on an existing website', 'One new page on a website you already have.'),
+                          offer('Website refresh', 'New words and photos across the pages you have.')]}})
     body = json.dumps({'@context': 'https://schema.org', '@graph': graph}, indent=2, ensure_ascii=False).replace('</', '<\\/')
     return '  <script type="application/ld+json">\n' + body + '\n  </script>\n'
 
@@ -649,7 +641,7 @@ mod.work_list = work_list
 mod.services = services
 mod.close_section = close_section
 for _n in ('icon', 'ARROW', 'faq_section', 'phases', 'mount', 'visit', 'host', 'esc', 'STORY', 'PROMISES', 'HEADSHOT', 'photo_or_mark',
-           'STARTER_FROM', 'LARGER_FROM', 'FIX_FROM', 'PAGE_FROM', 'REFRESH_FROM', 'MOCKUP_FROM', 'MOCKUP_TO', 'REVIEWS',
+           'REVIEWS',
            'google_profile_link', 'google_review_badge', 'GOOGLE_PROFILE_URL', 'GOOGLE_REVIEW_URL'):
     setattr(mod, _n, globals()[_n])
 mod.read = read
